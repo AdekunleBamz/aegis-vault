@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.cache/
+dist/
+
+# Settings with sensitive data
+settings/Mainnet.toml
+settings/Testnet.toml
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Deployment files
+deployments/
+
+# Local development
+scripts/
+docs/
+*.mjs
+*.sh
+history.txt
