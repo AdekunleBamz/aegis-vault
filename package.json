@@ -1,0 +1,29 @@
+{
+  "name": "aegis-vault",
+  "version": "1.0.0",
+  "description": "Decentralized STX staking protocol with AGS token rewards on Stacks blockchain",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "clarinet check",
+    "console": "clarinet console",
+    "fmt": "clarinet format"
+  },
+  "keywords": [
+    "stacks",
+    "clarity",
+    "staking",
+    "defi"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@hirosystems/clarinet-sdk": "^2.3.2",
+    "@stacks/clarinet-sdk": "^3.13.1",
+    "@stacks/network": "^7.3.1",
+    "@stacks/transactions": "^6.17.0",
+    "@stacks/wallet-sdk": "^7.2.0",
+    "vitest": "^1.2.0"
+  }
+}
