@@ -25,5 +25,8 @@
     "@stacks/transactions": "^6.17.0",
     "@stacks/wallet-sdk": "^7.2.0",
     "vitest": "^1.2.0"
+  },
+  "dependencies": {
+    "@stacks/connect": "^8.2.4"
   }
 }
