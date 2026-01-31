@@ -8,3 +8,4 @@ export { Progress, CircularProgress, StepsProgress } from './progress';
 export { Card, CardHeader, CardFooter, StatCard } from './card';
 export { Button } from './button';
 export { Tooltip, InfoTooltip, HelpTooltip } from './tooltip';
+export { Dropdown, SelectDropdown } from './dropdown';
