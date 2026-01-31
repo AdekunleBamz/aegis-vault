@@ -5,5 +5,5 @@ export { Tabs } from './tabs';
 export { Input } from './input';
 export { Badge } from './badge';
 export { Progress } from './progress';
-export { Card, CardHeader } from './card';
+export { Card, CardHeader, CardFooter, StatCard } from './card';
 export { Button } from './button';
