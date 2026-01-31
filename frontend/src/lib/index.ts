@@ -3,3 +3,7 @@ export * from './api';
 export * from './format';
 export * from './staking';
 export * from './stacks';
+export * from './utils';
+export * from './services';
+export * from './errors';
+export * from './types';
