@@ -45,3 +45,9 @@ export { CommandPalette, SearchInput as GlobalSearchInput, QuickActions } from '
 
 // Navigation Components
 export { Breadcrumbs as NavBreadcrumbs, Pagination as NavPagination, SimplePagination, PageSizeSelector as NavPageSizeSelector, LinkTabs, SidebarNav } from './navigation';
+
+// Skeleton Components
+export * from './skeletons';
+
+// Rich Table Components
+export { RichTable, TableColumn, TablePagination } from './rich-table';
