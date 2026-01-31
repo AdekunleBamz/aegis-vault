@@ -1,9 +1,10 @@
 export { Loading, LoadingOverlay, LoadingSkeleton } from './loading';
-export { Modal } from './modal';
-export { ToastProvider, useToast } from './toast';
-export { Tabs } from './tabs';
-export { Input } from './input';
-export { Badge } from './badge';
-export { Progress } from './progress';
+export { Modal, ConfirmModal } from './modal';
+export { ToastProvider, useToast, toast } from './toast';
+export { Tabs, VerticalTabs } from './tabs';
+export { Input, TextArea } from './input';
+export { Badge, StatusBadge, CounterBadge, BadgeGroup } from './badge';
+export { Progress, CircularProgress, StepsProgress } from './progress';
 export { Card, CardHeader, CardFooter, StatCard } from './card';
 export { Button } from './button';
+export { Tooltip, InfoTooltip, HelpTooltip } from './tooltip';
