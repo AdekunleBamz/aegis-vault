@@ -7,3 +7,5 @@ export * from './utils';
 export * from './services';
 export * from './errors';
 export * from './types';
+export * from './validation';
+export * from './test-utils';
