@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useWallet } from '@/context/wallet-context';
 import { useBalances } from '@/hooks/use-balances';
 import { useStaking } from '@/hooks/use-staking';
@@ -14,13 +14,42 @@ export function StakeForm() {
   const { stake, isLoading, error } = useStaking(address || '');
   const [amount, setAmount] = useState('');
   const [success, setSuccess] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  // PR #1: Real-time form validation feedback
+  const numAmount = parseFloat(amount) || 0;
+  const hasError = useMemo(() => {
+    if (!amount) return null;
+    if (numAmount <= 0) return 'Amount must be greater than 0';
+    if (numAmount > Number(stxBalance) / 1e6) return 'Insufficient balance';
+    if (numAmount < 0.000001) return 'Amount is too small';
+    return null;
+  }, [amount, numAmount, stxBalance]);
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+    setValidationError(null);
+  };
 
   const handleStake = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccess(null);
+    setValidationError(null);
 
-    const numAmount = parseFloat(amount);
-    if (isNaN(numAmount) || numAmount <= 0) return;
+    if (hasError) {
+      setValidationError(hasError);
+      return;
+    }
+
+  const handleStake = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSuccess(null);
+    setValidationError(null);
+
+    if (hasError) {
+      setValidationError(hasError);
+      return;
+    }
 
     try {
       const result = await stake(numAmount);
@@ -31,7 +60,6 @@ export function StakeForm() {
     }
   };
 
-  const numAmount = parseFloat(amount) || 0;
   const microAmount = toMicroSTX(numAmount);
   const tier = determineTier(microAmount);
   const apy = calculateAPY(microAmount, tier);
@@ -64,25 +92,36 @@ export function StakeForm() {
                   <input
                     type="number"
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={handleAmountChange}
                     placeholder="0.00"
                     min="0"
                     step="0.000001"
-                    className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white text-lg focus:outline-none focus:border-blue-500"
+                    className={`w-full bg-gray-900 border rounded-lg px-4 py-3 text-white text-lg focus:outline-none transition-colors ${
+                      hasError 
+                        ? 'border-red-500/50 focus:border-red-500' 
+                        : 'border-gray-700 focus:border-blue-500'
+                    }`}
+                    aria-invalid={!!hasError}
+                    aria-describedby={hasError ? 'amount-error' : undefined}
                   />
                   <button
                     type="button"
                     onClick={() =>
                       setAmount((Number(stxBalance) / 1e6).toString())
                     }
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 text-sm hover:text-blue-300"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 text-sm hover:text-blue-300 transition-colors"
                   >
                     MAX
                   </button>
                 </div>
-                <div className="text-gray-500 text-sm mt-1">
-                  Balance: {formatSTX(stxBalance)} STX
-                </div>
+                {hasError && (
+                  <div id="amount-error" className="text-red-400 text-sm mt-2 flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {hasError}
+                  </div>
+                )}
               </div>
 
               <div className="bg-gray-900 rounded-lg p-4 mb-6">
@@ -106,8 +145,20 @@ export function StakeForm() {
               </div>
 
               {error && (
-                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4 text-red-400 text-sm">
-                  {error}
+                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4 text-red-400 text-sm flex items-start gap-2">
+                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  <div>{error}</div>
+                </div>
+              )}
+
+              {validationError && (
+                <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 mb-4 text-orange-400 text-sm flex items-start gap-2">
+                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.487 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  <div>{validationError}</div>
                 </div>
               )}
 
