@@ -8,7 +8,7 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, History, Zap } from 'lucide-react';
+import { ArrowUpRight, History as HistoryIcon, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function RecentActivity() {
@@ -73,7 +73,7 @@ export function RecentActivity() {
           </div>
         ) : transactions.length === 0 ? (
           <div className="text-center py-12 flex flex-col items-center justify-center opacity-40">
-            <History className="w-12 h-12 mb-4 text-gray-600" />
+            <HistoryIcon className="w-12 h-12 mb-4 text-gray-600" />
             <p className="text-gray-500 text-sm font-medium">No recent activity found</p>
           </div>
         ) : (
