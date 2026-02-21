@@ -12,6 +12,9 @@ import { Progress } from '@/components/ui/progress';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { calculateAPY, determineTier } from '@/lib/staking';
 import { Button } from '@/components/ui/button';
+import { Shield, ShieldCheck, Lock, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export function PortfolioSummary() {
   const { address, isConnected, connect } = useWallet();
@@ -29,23 +32,23 @@ export function PortfolioSummary() {
     const agsNum = Number(agsBalance) / 1e6;
     const stakedNum = Number(stakedAmount) / 1e6;
     const rewardsNum = Number(pendingRewards) / 1e6;
-    
+
     // Mock USD rates
     const stxUsdRate = 0.65;
     const agsUsdRate = 0.042;
-    
+
     const totalValueUsd = (stxNum * stxUsdRate) + (agsNum * agsUsdRate) + (stakedNum * stxUsdRate) + (rewardsNum * agsUsdRate);
     const apy = calculateAPY(Number(stakedAmount), tier);
-    
+
     // Next tier progress
     const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
     const currentTierMin = TIERS[tier]?.minStake || 0;
     const nextTierMin = nextTier?.minStake || 0;
-    const progressToNext = nextTier 
+    const progressToNext = nextTier
       ? Math.min(100, ((stakedNum - currentTierMin) / (nextTierMin - currentTierMin)) * 100)
       : 100;
     const amountToNext = nextTier ? nextTierMin - stakedNum : 0;
-    
+
     return {
       totalValueUsd,
       apy,
@@ -81,97 +84,97 @@ export function PortfolioSummary() {
   }
 
   return (
-    <Card>
-      <CardHeader 
-        title="Your Portfolio" 
-        subtitle={isLoading ? 'Loading...' : `Total Value: $${metrics.totalValueUsd.toFixed(2)}`}
-        action={
-          <Badge 
-            variant="info" 
-            style={{ backgroundColor: `${TIERS[tier]?.color}20`, color: TIERS[tier]?.color }}
-          >
-            {TIERS[tier]?.name || 'Bronze'}
-          </Badge>
-        }
-        icon={
-          <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
-            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
+    <div className="glass-dark border border-white/5 rounded-2xl overflow-hidden">
+      <div className="p-6 border-b border-white/5 bg-white/5">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
+              <Shield className="w-5 h-5 text-blue-400" />
+            </div>
+            <div>
+              <h3 className="text-white font-bold">Your Portfolio</h3>
+              <p className="text-gray-500 text-xs">
+                {isLoading ? 'Fetching data...' : `Total Value: $${metrics.totalValueUsd.toLocaleString()}`}
+              </p>
+            </div>
           </div>
-        }
-      />
-      
-      <div className="space-y-5">
+          <div
+            className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border"
+            style={{ backgroundColor: `${TIERS[tier]?.color}10`, color: TIERS[tier]?.color, borderColor: `${TIERS[tier]?.color}30` }}
+          >
+            {TIERS[tier]?.name || 'Bronze'} Tier
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6 space-y-6">
         {/* Wallet Balances */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-900/50 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-orange-500/10 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+          <div className="bg-gray-900/40 border border-white/[0.03] rounded-2xl p-4 hover:border-white/5 transition-colors group">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-1.5 bg-orange-500/10 rounded-lg group-hover:bg-orange-500/20 transition-colors">
+                <Zap className="w-4 h-4 text-orange-400" />
               </div>
-              <span className="text-gray-400 text-sm">STX Balance</span>
+              <span className="text-gray-500 text-xs font-medium">STX Balance</span>
             </div>
             {isLoading ? (
-              <LoadingSkeleton className="w-24 h-7" />
+              <div className="h-7 w-20 bg-white/5 animate-pulse rounded" />
             ) : (
-              <>
-                <p className="text-xl font-bold text-white">{formatSTX(stxBalance)}</p>
-                <p className="text-gray-500 text-xs mt-1">Available</p>
-              </>
+              <div className="tabular-nums">
+                <p className="text-xl font-bold text-white leading-none">{formatSTX(stxBalance)}</p>
+                <p className="text-gray-600 text-[10px] mt-1 uppercase tracking-tight font-bold">Available</p>
+              </div>
             )}
           </div>
-          <div className="bg-gray-900/50 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
+
+          <div className="bg-gray-900/40 border border-white/[0.03] rounded-2xl p-4 hover:border-white/5 transition-colors group">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-1.5 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors">
+                <ShieldCheck className="w-4 h-4 text-purple-400" />
               </div>
-              <span className="text-gray-400 text-sm">AGS Balance</span>
+              <span className="text-gray-500 text-xs font-medium">AGS Balance</span>
             </div>
             {isLoading ? (
-              <LoadingSkeleton className="w-24 h-7" />
+              <div className="h-7 w-20 bg-white/5 animate-pulse rounded" />
             ) : (
-              <>
-                <p className="text-xl font-bold text-purple-400">{formatAGS(agsBalance)}</p>
-                <p className="text-gray-500 text-xs mt-1">Earned Tokens</p>
-              </>
+              <div className="tabular-nums">
+                <p className="text-xl font-bold text-purple-400 leading-none">{formatAGS(agsBalance)}</p>
+                <p className="text-gray-600 text-[10px] mt-1 uppercase tracking-tight font-bold">Earned</p>
+              </div>
             )}
           </div>
         </div>
 
         {/* Staking Position */}
-        <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="text-white font-medium flex items-center gap-2">
-              <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
+        <div className="bg-gradient-to-br from-blue-500/5 to-indigo-500/10 border border-blue-500/20 rounded-2xl p-5 relative overflow-hidden">
+          <div className="flex items-center justify-between mb-5">
+            <h4 className="text-white text-sm font-bold flex items-center gap-2">
+              <Lock className="w-4 h-4 text-blue-400" />
               Staking Position
             </h4>
             {!isLoading && (
-              <span className="text-green-400 text-sm font-medium">{metrics.apy}% APY</span>
+              <div className="flex items-center gap-1.5 px-2 py-0.5 bg-green-500/10 rounded-md">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                <span className="text-green-400 text-[10px] font-bold uppercase">{metrics.apy}% APY</span>
+              </div>
             )}
           </div>
-          
-          <div className="grid grid-cols-2 gap-4">
+
+          <div className="grid grid-cols-2 gap-4 relative z-10">
             <div>
-              <p className="text-gray-400 text-sm mb-1">Staked Amount</p>
+              <p className="text-gray-500 text-[10px] uppercase font-bold tracking-wider mb-1">Staked Amount</p>
               {isLoading ? (
-                <LoadingSkeleton className="w-24 h-6" />
+                <div className="h-6 w-24 bg-white/5 animate-pulse rounded" />
               ) : (
-                <p className="text-white font-bold text-lg">{formatSTX(stakedAmount)} STX</p>
+                <p className="text-white font-bold text-lg tabular-nums">{formatSTX(stakedAmount)} STX</p>
               )}
             </div>
             <div>
-              <p className="text-gray-400 text-sm mb-1">Pending Rewards</p>
+              <p className="text-gray-500 text-[10px] uppercase font-bold tracking-wider mb-1">Pending Rewards</p>
               {isLoading ? (
-                <LoadingSkeleton className="w-20 h-6" />
+                <div className="h-6 w-24 bg-white/5 animate-pulse rounded" />
               ) : (
-                <p className="text-green-400 font-bold text-lg">{formatAGS(pendingRewards)} AGS</p>
+                <p className="text-green-400 font-bold text-lg tabular-nums">{formatAGS(pendingRewards)} AGS</p>
               )}
             </div>
           </div>
@@ -179,34 +182,36 @@ export function PortfolioSummary() {
 
         {/* Next Tier Progress */}
         {metrics.nextTier && !isLoading && (
-          <div className="bg-gray-900/30 rounded-xl p-4">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-400 text-sm">Progress to {metrics.nextTier.name}</span>
-              <span className="text-gray-400 text-sm">{metrics.amountToNext.toLocaleString()} STX more</span>
+          <div className="space-y-3">
+            <div className="flex justify-between items-end">
+              <div>
+                <span className="text-gray-500 text-[10px] uppercase font-bold tracking-wider block mb-0.5">Progress to Next Tier</span>
+                <span className="text-white text-xs font-bold">{metrics.nextTier.name} Level</span>
+              </div>
+              <span className="text-blue-400 text-xs font-bold tabular-nums">
+                {metrics.amountToNext.toLocaleString()} STX to go
+              </span>
             </div>
-            <Progress value={metrics.progressToNext} color="purple" size="sm" />
-            <p className="text-xs text-gray-500 mt-2">
-              Upgrade for higher APY: {metrics.nextTier.name} = {calculateAPY(metrics.nextTier.minStake * 1e6, tier + 1)}% APY
-            </p>
+            <div className="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${metrics.progressToNext}%` }}
+                className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 shadow-[0_0_10px_rgba(59,130,246,0.5)]"
+              />
+            </div>
           </div>
         )}
 
         {/* Quick Actions */}
-        <div className="flex gap-3">
-          <Button as="a" href="/stake" variant="primary" size="sm" className="flex-1">
-            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-            Stake
+        <div className="flex gap-3 pt-2">
+          <Button as="a" href="/stake" className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3">
+            Stake More
           </Button>
-          <Button as="a" href="/claim" variant="secondary" size="sm" className="flex-1">
-            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Claim
+          <Button as="a" href="/claim" variant="secondary" className="flex-1 border-white/10 hover:bg-white/5 font-bold py-3 text-gray-300">
+            Claim Rewards
           </Button>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
