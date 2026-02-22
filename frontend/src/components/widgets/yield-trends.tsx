@@ -51,7 +51,7 @@ export function YieldTrends() {
                             domain={['dataMin - 1', 'dataMax + 1']}
                         />
                         <Tooltip
-                            content={({ active, payload }) => {
+                            content={({ active, payload }: any) => {
                                 if (active && payload && payload.length) {
                                     return (
                                         <div className="bg-gray-950/90 backdrop-blur-xl border border-white/10 p-3 rounded-xl shadow-2xl">

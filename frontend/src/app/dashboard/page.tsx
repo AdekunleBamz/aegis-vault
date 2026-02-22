@@ -6,7 +6,8 @@ import {
   ProtocolStats,
   SecurityDashboard,
   AssetAllocation,
-  PortfolioBalance
+  PortfolioBalance,
+  YieldTrends
 } from '@/components/widgets';
 
 export default function DashboardPage() {
@@ -70,7 +71,7 @@ export default function DashboardPage() {
 
           <SecurityDashboard />
 
-          {/* Visual Analytics Row */}
+          {/* Row 1: High Level Analytics */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <div className="lg:col-span-2">
               <PortfolioBalance />
@@ -80,10 +81,19 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Main Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.15s' }}>
-            <div className="lg:col-span-2 space-y-6">
+          {/* Row 2: Portfolio Details & Yield */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 animate-fade-in" style={{ animationDelay: '0.15s' }}>
+            <div className="lg:col-span-2">
               <PortfolioSummary />
+            </div>
+            <div>
+              <YieldTrends />
+            </div>
+          </div>
+
+          {/* Row 3: Live Feed & Stats */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="lg:col-span-2">
               <RecentActivity />
             </div>
             <div>
