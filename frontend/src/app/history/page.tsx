@@ -6,21 +6,22 @@ import { Footer } from '@/components/layout/footer';
 import { useWallet } from '@/context/wallet-context';
 import { useTransactions } from '@/hooks/use-transactions';
 import { formatRelativeTime, truncateAddress, formatSTX, formatAGS } from '@/lib/format';
-import { Card, CardHeader } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { LoadingSkeleton } from '@/components/ui/loading';
-import { Tabs } from '@/components/ui/tabs';
+import { HistoryFilters } from '@/components/widgets';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Action configuration
-const ACTION_CONFIG: Record<string, { 
-  name: string; 
-  icon: JSX.Element; 
+const ACTION_CONFIG: Record<string, {
+  name: string;
+  icon: JSX.Element;
   color: string;
   bgColor: string;
 }> = {
-  stake: { 
-    name: 'Stake', 
+  stake: {
+    name: 'Stake',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -29,8 +30,8 @@ const ACTION_CONFIG: Record<string, {
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
   },
-  'request-withdrawal': { 
-    name: 'Withdrawal Request', 
+  'request-withdrawal': {
+    name: 'Withdrawal Request',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -39,8 +40,8 @@ const ACTION_CONFIG: Record<string, {
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/20',
   },
-  'complete-withdrawal': { 
-    name: 'Withdrawal Complete', 
+  'complete-withdrawal': {
+    name: 'Withdrawal Complete',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -49,8 +50,8 @@ const ACTION_CONFIG: Record<string, {
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
   },
-  'claim-rewards': { 
-    name: 'Claim Rewards', 
+  'claim-rewards': {
+    name: 'Claim Rewards',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -76,6 +77,9 @@ export default function HistoryPage() {
   const { address, isConnected, connect } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 50);
   const [filter, setFilter] = useState<'all' | 'stake' | 'withdraw' | 'claim'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('date-desc');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const getActionConfig = (functionName: string) => {
     return ACTION_CONFIG[functionName] || defaultAction;
@@ -87,25 +91,58 @@ export default function HistoryPage() {
     return 'error';
   };
 
-  // Filter transactions
-  const filteredTransactions = useMemo(() => {
-    if (filter === 'all') return transactions;
-    
-    return transactions.filter((tx) => {
-      const fn = tx.contract_call?.function_name || '';
-      if (filter === 'stake') return fn === 'stake';
-      if (filter === 'withdraw') return fn.includes('withdrawal');
-      if (filter === 'claim') return fn === 'claim-rewards';
-      return true;
+  // Filter and Sort transactions
+  const processedTransactions = useMemo(() => {
+    let result = [...transactions];
+
+    // Type Filter
+    if (filter !== 'all') {
+      result = result.filter((tx) => {
+        const fn = tx.contract_call?.function_name || '';
+        if (filter === 'stake') return fn === 'stake';
+        if (filter === 'withdraw') return fn.includes('withdrawal');
+        if (filter === 'claim') return fn === 'claim-rewards';
+        return true;
+      });
+    }
+
+    // Status Filter
+    if (statusFilter !== 'all') {
+      result = result.filter(tx => tx.tx_status === statusFilter);
+    }
+
+    // Search Filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(tx =>
+        tx.tx_id.toLowerCase().includes(query) ||
+        tx.contract_call?.function_name?.toLowerCase().includes(query) ||
+        tx.block_height?.toString().includes(query)
+      );
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === 'date-desc') return b.burn_block_time - a.burn_block_time;
+      if (sortBy === 'date-asc') return a.burn_block_time - b.burn_block_time;
+
+      // For amount sorting, we'd need to extract value from args if available
+      // For now, let's keep it simple or sort by block height as proxy
+      if (sortBy === 'amount-desc') return (b.block_height || 0) - (a.block_height || 0);
+      if (sortBy === 'amount-asc') return (a.block_height || 0) - (b.block_height || 0);
+
+      return 0;
     });
-  }, [transactions, filter]);
+
+    return result;
+  }, [transactions, filter, searchQuery, sortBy, statusFilter]);
 
   // Calculate stats
   const stats = useMemo(() => {
     const successful = transactions.filter(tx => tx.tx_status === 'success').length;
     const pending = transactions.filter(tx => tx.tx_status === 'pending').length;
     const failed = transactions.filter(tx => tx.tx_status !== 'success' && tx.tx_status !== 'pending').length;
-    
+
     return { total: transactions.length, successful, pending, failed };
   }, [transactions]);
 
@@ -168,23 +205,34 @@ export default function HistoryPage() {
             </div>
           )}
 
-          {/* Filter Tabs */}
+          {/* Advanced Filters */}
           {!isLoading && transactions.length > 0 && (
-            <div className="flex gap-2 mb-6">
-              {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                    ${filter === f 
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
-                    }`}
-                >
-                  {f.charAt(0).toUpperCase() + f.slice(1)}
-                </button>
-              ))}
-            </div>
+            <>
+              <div className="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-none">
+                {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all
+                      ${filter === f
+                        ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
+                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
+                      }`}
+                  >
+                    {f.charAt(0).toUpperCase() + f.slice(1)}
+                  </button>
+                ))}
+              </div>
+
+              <HistoryFilters
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                statusFilter={statusFilter}
+                setStatusFilter={setStatusFilter}
+              />
+            </>
           )}
 
           <Card>
@@ -210,8 +258,8 @@ export default function HistoryPage() {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">No Transactions Found</h3>
                 <p className="text-gray-400 mb-6">
-                  {filter === 'all' 
-                    ? "You haven't made any transactions yet. Start by staking some STX!" 
+                  {filter === 'all'
+                    ? "You haven't made any transactions yet. Start by staking some STX!"
                     : `No ${filter} transactions found.`
                   }
                 </p>
@@ -220,55 +268,62 @@ export default function HistoryPage() {
                 )}
               </div>
             ) : (
-              <div className="divide-y divide-gray-700/50">
-                {filteredTransactions.map((tx) => {
-                  const action = getActionConfig(tx.contract_call?.function_name || '');
-                  
-                  return (
-                    <a
-                      key={tx.tx_id}
-                      href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4 py-4 hover:bg-gray-800/30 px-3 -mx-3 rounded-xl transition-colors group"
-                    >
-                      {/* Icon */}
-                      <div className={`w-12 h-12 ${action.bgColor} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                        <span className={action.color}>{action.icon}</span>
-                      </div>
-                      
-                      {/* Details */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="text-white font-medium">{action.name}</p>
-                          <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
+              <div className="divide-y divide-gray-700/30">
+                <AnimatePresence mode="popLayout">
+                  {processedTransactions.map((tx, index) => {
+                    const action = getActionConfig(tx.contract_call?.function_name || '');
+
+                    return (
+                      <motion.a
+                        layout
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ delay: index * 0.03 }}
+                        key={tx.tx_id}
+                        href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-4 py-5 hover:bg-white/[0.02] px-4 -mx-4 first:rounded-t-2xl last:rounded-b-2xl transition-colors group"
+                      >
+                        {/* Icon */}
+                        <div className={`w-12 h-12 ${action.bgColor} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                          <span className={action.color}>{action.icon}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <span className="font-mono">{truncateAddress(tx.tx_id)}</span>
-                          <span>•</span>
-                          <span>Block {tx.block_height?.toLocaleString()}</span>
-                        </div>
-                      </div>
-                      
-                      {/* Status & Time */}
-                      <div className="text-right flex-shrink-0">
-                        <Badge variant={getStatusVariant(tx.tx_status)} size="sm">
-                          {tx.tx_status === 'success' && (
-                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+
+                        {/* Details */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p className="text-white font-bold group-hover:text-blue-400 transition-colors">{action.name}</p>
+                            <svg className="w-4 h-4 text-gray-600 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
-                          )}
-                          {tx.tx_status}
-                        </Badge>
-                        <p className="text-gray-500 text-sm mt-1">
-                          {formatRelativeTime(tx.burn_block_time)}
-                        </p>
-                      </div>
-                    </a>
-                  );
-                })}
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                            <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded italic">{truncateAddress(tx.tx_id)}</span>
+                            <span>•</span>
+                            <span>Block #{tx.block_height?.toLocaleString()}</span>
+                          </div>
+                        </div>
+
+                        {/* Status & Time */}
+                        <div className="text-right flex-shrink-0">
+                          <Badge variant={getStatusVariant(tx.tx_status)} size="sm" className="font-bold">
+                            {tx.tx_status === 'success' && (
+                              <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                            {tx.tx_status}
+                          </Badge>
+                          <p className="text-gray-500 text-xs mt-1.5 font-medium">
+                            {formatRelativeTime(tx.burn_block_time)}
+                          </p>
+                        </div>
+                      </motion.a>
+                    );
+                  })}
+                </AnimatePresence>
               </div>
             )}
           </Card>
@@ -277,7 +332,7 @@ export default function HistoryPage() {
           {filteredTransactions.length >= 50 && (
             <p className="text-center text-gray-500 text-sm mt-6">
               Showing latest 50 transactions. View more on{' '}
-              <a 
+              <a
                 href={`https://explorer.stacks.co/address/${address}?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
