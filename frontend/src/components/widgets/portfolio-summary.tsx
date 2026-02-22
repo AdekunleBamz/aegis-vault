@@ -110,7 +110,11 @@ export function PortfolioSummary() {
       <div className="p-6 space-y-6">
         {/* Wallet Balances */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-900/40 border border-white/[0.03] rounded-2xl p-4 hover:border-white/5 transition-colors group">
+          <motion.div
+            whileHover={{ y: -5, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-gray-900/40 border border-white/[0.03] rounded-2xl p-4 hover:border-white/5 group cursor-pointer"
+          >
             <div className="flex items-center gap-2 mb-3">
               <div className="p-1.5 bg-orange-500/10 rounded-lg group-hover:bg-orange-500/20 transition-colors">
                 <Zap className="w-4 h-4 text-orange-400" />
@@ -125,9 +129,13 @@ export function PortfolioSummary() {
                 <p className="text-gray-600 text-[10px] mt-1 uppercase tracking-tight font-bold">Available</p>
               </div>
             )}
-          </div>
+          </motion.div>
 
-          <div className="bg-gray-900/40 border border-white/[0.03] rounded-2xl p-4 hover:border-white/5 transition-colors group">
+          <motion.div
+            whileHover={{ y: -5, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-gray-900/40 border border-white/[0.03] rounded-2xl p-4 hover:border-white/5 group cursor-pointer"
+          >
             <div className="flex items-center gap-2 mb-3">
               <div className="p-1.5 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors">
                 <ShieldCheck className="w-4 h-4 text-purple-400" />
@@ -142,11 +150,14 @@ export function PortfolioSummary() {
                 <p className="text-gray-600 text-[10px] mt-1 uppercase tracking-tight font-bold">Earned</p>
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
 
         {/* Staking Position */}
-        <div className="bg-gradient-to-br from-blue-500/5 to-indigo-500/10 border border-blue-500/20 rounded-2xl p-5 relative overflow-hidden">
+        <motion.div
+          whileHover={{ scale: 1.01 }}
+          className="bg-gradient-to-br from-blue-500/5 to-indigo-500/10 border border-blue-500/20 rounded-2xl p-5 relative overflow-hidden"
+        >
           <div className="flex items-center justify-between mb-5">
             <h4 className="text-white text-sm font-bold flex items-center gap-2">
               <Lock className="w-4 h-4 text-blue-400" />
@@ -178,40 +189,40 @@ export function PortfolioSummary() {
               )}
             </div>
           </div>
-        </div>
+      </div>
 
-        {/* Next Tier Progress */}
-        {metrics.nextTier && !isLoading && (
-          <div className="space-y-3">
-            <div className="flex justify-between items-end">
-              <div>
-                <span className="text-gray-500 text-[10px] uppercase font-bold tracking-wider block mb-0.5">Progress to Next Tier</span>
-                <span className="text-white text-xs font-bold">{metrics.nextTier.name} Level</span>
-              </div>
-              <span className="text-blue-400 text-xs font-bold tabular-nums">
-                {metrics.amountToNext.toLocaleString()} STX to go
-              </span>
+      {/* Next Tier Progress */}
+      {metrics.nextTier && !isLoading && (
+        <div className="space-y-3">
+          <div className="flex justify-between items-end">
+            <div>
+              <span className="text-gray-500 text-[10px] uppercase font-bold tracking-wider block mb-0.5">Progress to Next Tier</span>
+              <span className="text-white text-xs font-bold">{metrics.nextTier.name} Level</span>
             </div>
-            <div className="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${metrics.progressToNext}%` }}
-                className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 shadow-[0_0_10px_rgba(59,130,246,0.5)]"
-              />
-            </div>
+            <span className="text-blue-400 text-xs font-bold tabular-nums">
+              {metrics.amountToNext.toLocaleString()} STX to go
+            </span>
           </div>
-        )}
-
-        {/* Quick Actions */}
-        <div className="flex gap-3 pt-2">
-          <Button as="a" href="/stake" className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3">
-            Stake More
-          </Button>
-          <Button as="a" href="/claim" variant="secondary" className="flex-1 border-white/10 hover:bg-white/5 font-bold py-3 text-gray-300">
-            Claim Rewards
-          </Button>
+          <div className="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${metrics.progressToNext}%` }}
+              className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 shadow-[0_0_10px_rgba(59,130,246,0.5)]"
+            />
+          </div>
         </div>
+      )}
+
+      {/* Quick Actions */}
+      <div className="flex gap-3 pt-2">
+        <Button as="a" href="/stake" className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3">
+          Stake More
+        </Button>
+        <Button as="a" href="/claim" variant="secondary" className="flex-1 border-white/10 hover:bg-white/5 font-bold py-3 text-gray-300">
+          Claim Rewards
+        </Button>
       </div>
     </div>
+    </div >
   );
 }

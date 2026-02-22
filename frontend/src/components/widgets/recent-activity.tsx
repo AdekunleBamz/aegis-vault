@@ -77,17 +77,33 @@ export function RecentActivity() {
             <p className="text-gray-500 text-sm font-medium">No recent activity found</p>
           </div>
         ) : (
-          <div className="space-y-2">
-            {transactions.map((tx, i) => (
+          <motion.div
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.05
+                }
+              }
+            }}
+            initial="hidden"
+            animate="show"
+            className="space-y-2"
+          >
+            {transactions.map((tx) => (
               <motion.a
                 key={tx.tx_id}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * i }}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  show: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.01, x: 5 }}
+                whileTap={{ scale: 0.99 }}
                 href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-between p-3 hover:bg-white/[0.03] rounded-xl transition-all border border-transparent hover:border-white/5"
+                className="group flex items-center justify-between p-3 hover:bg-white/[0.03] rounded-xl border border-transparent hover:border-white/5"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
@@ -102,19 +118,30 @@ export function RecentActivity() {
                     </p>
                   </div>
                 </div>
-                <div className={cn(
-                  "px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border",
-                  tx.tx_status === 'success'
-                    ? "bg-green-500/5 text-green-400 border-green-500/20"
-                    : tx.tx_status === 'pending'
-                      ? "bg-amber-500/5 text-amber-400 border-amber-500/20"
-                      : "bg-red-500/5 text-red-400 border-red-500/20"
-                )}>
+                <motion.div
+                  animate={tx.tx_status === 'pending' ? {
+                    scale: [1, 1.05, 1],
+                    opacity: [0.8, 1, 0.8]
+                  } : {}}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "easeInOut"
+                  }}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border",
+                    tx.tx_status === 'success'
+                      ? "bg-green-500/5 text-green-400 border-green-500/20 shadow-[0_0_10px_rgba(34,197,94,0.1)]"
+                      : tx.tx_status === 'pending'
+                        ? "bg-amber-500/5 text-amber-400 border-amber-500/20"
+                        : "bg-red-500/5 text-red-400 border-red-500/20"
+                  )}
+                >
                   {tx.tx_status}
-                </div>
+                </motion.div>
               </motion.a>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LoadingProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -22,11 +23,11 @@ const colorClasses = {
   purple: 'border-purple-500',
 };
 
-export function Loading({ 
-  size = 'md', 
+export function Loading({
+  size = 'md',
   variant = 'spinner',
   color = 'blue',
-  className = '' 
+  className = ''
 }: LoadingProps) {
   if (variant === 'dots') {
     return (
@@ -63,7 +64,7 @@ export function Loading({
             key={i}
             className={`w-1 bg-${color === 'blue' ? 'blue-500' : color === 'white' ? 'white' : color === 'green' ? 'green-500' : 'purple-500'} 
               rounded-full animate-pulse`}
-            style={{ 
+            style={{
               height: '100%',
               animationDelay: `${i * 0.15}s`,
               animationDuration: '0.8s'
@@ -90,18 +91,32 @@ interface LoadingOverlayProps {
   progress?: number;
 }
 
-export function LoadingOverlay({ 
-  message = 'Processing...', 
+export function LoadingOverlay({
+  message = 'Processing...',
   submessage,
   showProgress = false,
   progress = 0,
 }: LoadingOverlayProps) {
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-gray-800/90 border border-gray-700 rounded-2xl p-8 flex flex-col items-center gap-4 min-w-[280px] shadow-2xl">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="bg-gray-800/90 border border-gray-700 rounded-2xl p-8 flex flex-col items-center gap-4 min-w-[280px] shadow-2xl"
+      >
         <div className="relative">
           <Loading size="lg" />
-          <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping" />
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="absolute inset-0 rounded-full bg-blue-500/20"
+          />
         </div>
         <div className="text-center">
           <p className="text-white font-medium">{message}</p>
@@ -112,16 +127,18 @@ export function LoadingOverlay({
         {showProgress && (
           <div className="w-full">
             <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300"
-                style={{ width: `${progress}%` }}
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
+                transition={{ duration: 0.3 }}
               />
             </div>
             <p className="text-gray-400 text-xs text-center mt-2">{progress}%</p>
           </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -133,8 +150,8 @@ interface SkeletonProps {
   height?: string | number;
 }
 
-export function LoadingSkeleton({ 
-  className = '', 
+export function LoadingSkeleton({
+  className = '',
   variant = 'rectangular',
   animation = 'pulse',
   width,
@@ -158,7 +175,11 @@ export function LoadingSkeleton({
   if (height) style.height = typeof height === 'number' ? `${height}px` : height;
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
       className={`bg-gray-700 ${variantClasses[variant]} ${animationClasses[animation]} ${className}`}
       style={style}
     />
@@ -189,11 +210,11 @@ export function TableRowSkeleton({ columns = 4 }: { columns?: number }) {
   return (
     <div className="flex items-center gap-4 py-4 border-b border-gray-700/50">
       {Array.from({ length: columns }).map((_, i) => (
-        <LoadingSkeleton 
-          key={i} 
-          variant="text" 
-          className="flex-1" 
-          width={i === 0 ? '30%' : '20%'} 
+        <LoadingSkeleton
+          key={i}
+          variant="text"
+          className="flex-1"
+          width={i === 0 ? '30%' : '20%'}
         />
       ))}
     </div>

@@ -8,6 +8,7 @@ import { LoadingSkeleton } from '@/components/ui/loading';
 import { motion } from 'framer-motion';
 import { Lock, Users, TrendingUp, History, ArrowUpRight, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { NumberTicker } from '@/components/ui/number-ticker';
 
 export function ProtocolStats() {
   const [stats, setStats] = useState<PoolStats | null>(null);
@@ -35,21 +36,23 @@ export function ProtocolStats() {
   const statItems = [
     {
       label: 'Total Value Locked',
-      value: formatSTX(stats?.totalStaked || BigInt(0)) + ' STX',
+      value: Number(stats?.totalStaked || BigInt(0)) / 1e6,
+      suffix: ' STX',
       icon: <Lock className="w-5 h-5" />,
       iconColor: 'text-blue-400',
       bgColor: 'bg-blue-500/10',
     },
     {
       label: 'Total Stakers',
-      value: (stats?.totalStakers || 0).toLocaleString(),
+      value: stats?.totalStakers || 0,
       icon: <Users className="w-5 h-5" />,
       iconColor: 'text-purple-400',
       bgColor: 'bg-purple-500/10',
     },
     {
       label: 'Reward Rate',
-      value: formatSTX(stats?.rewardRate || BigInt(0)) + ' AGS/block',
+      value: Number(stats?.rewardRate || BigInt(0)) / 1e6,
+      suffix: ' AGS/block',
       icon: <TrendingUp className="w-5 h-5" />,
       iconColor: 'text-green-400',
       bgColor: 'bg-green-500/10',
@@ -57,7 +60,8 @@ export function ProtocolStats() {
     },
     {
       label: 'Last Distribution',
-      value: 'Block ' + formatBlockHeight(stats?.lastDistributionBlock || 0),
+      value: Number(stats?.lastDistributionBlock || 0),
+      prefix: 'Block ',
       icon: <History className="w-5 h-5" />,
       iconColor: 'text-amber-400',
       bgColor: 'bg-amber-500/10',
@@ -86,8 +90,10 @@ export function ProtocolStats() {
               key={index}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
+              whileHover={{ x: 5, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
               transition={{ delay: 0.05 * index }}
-              className="group bg-gray-950/40 border border-white/[0.03] rounded-xl p-4 hover:border-white/5 transition-all"
+              className="group bg-gray-950/40 border border-white/[0.03] rounded-xl p-4 hover:border-white/5 cursor-pointer"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -101,9 +107,16 @@ export function ProtocolStats() {
                     {isLoading ? (
                       <div className="h-5 w-24 bg-white/5 animate-pulse rounded" />
                     ) : (
-                      <p className={cn("font-bold tabular-nums", item.valueColor || 'text-white')}>
-                        {item.value}
-                      </p>
+                      <div className={cn("font-bold tabular-nums", item.valueColor || 'text-white')}>
+                        {/* @ts-ignore - we know prefix/suffix exist but TS might complain if they aren't on every item */}
+                        {item.prefix}
+                        <NumberTicker
+                          value={item.value as number}
+                          decimalPlaces={(item.label.includes('Rate') || item.label.includes('Value')) ? 2 : 0}
+                        />
+                        {/* @ts-ignore */}
+                        {item.suffix}
+                      </div>
                     )}
                   </div>
                 </div>
