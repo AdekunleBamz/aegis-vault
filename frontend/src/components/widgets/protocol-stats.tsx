@@ -86,8 +86,10 @@ export function ProtocolStats() {
               key={index}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
+              whileHover={{ x: 5, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
               transition={{ delay: 0.05 * index }}
-              className="group bg-gray-950/40 border border-white/[0.03] rounded-xl p-4 hover:border-white/5 transition-all"
+              className="group bg-gray-950/40 border border-white/[0.03] rounded-xl p-4 hover:border-white/5 cursor-pointer"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

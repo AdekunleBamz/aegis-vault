@@ -83,11 +83,13 @@ export function RecentActivity() {
                 key={tx.tx_id}
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.01, x: 5 }}
+                whileTap={{ scale: 0.99 }}
                 transition={{ delay: 0.05 * i }}
                 href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-between p-3 hover:bg-white/[0.03] rounded-xl transition-all border border-transparent hover:border-white/5"
+                className="group flex items-center justify-between p-3 hover:bg-white/[0.03] rounded-xl border border-transparent hover:border-white/5"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
