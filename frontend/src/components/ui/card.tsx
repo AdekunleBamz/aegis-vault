@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface CardProps {
   children: React.ReactNode;
@@ -8,15 +9,15 @@ interface CardProps {
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
-export function Card({ 
-  children, 
-  className = '', 
+export function Card({
+  children,
+  className = '',
   variant = 'default',
   hover = false,
-  padding = 'md' 
+  padding = 'md'
 }: CardProps) {
-  const baseClasses = 'rounded-2xl transition-all duration-200';
-  
+  const baseClasses = 'rounded-2xl transition-colors duration-200';
+
   const variantClasses = {
     default: 'bg-gray-800/50 border border-gray-700/50',
     gradient: 'bg-gradient-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/30',
@@ -31,14 +32,15 @@ export function Card({
     lg: 'p-8',
   };
 
-  const hoverClasses = hover 
-    ? 'hover:border-gray-600 hover:bg-gray-800/70 hover:shadow-lg hover:shadow-black/20 hover:-translate-y-0.5' 
-    : '';
-
   return (
-    <div className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${hoverClasses} ${className}`}>
+    <motion.div
+      whileHover={hover ? { y: -5, scale: 1.01, borderColor: 'rgba(255,255,255,0.1)' } : {}}
+      whileTap={hover ? { scale: 0.99 } : {}}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${className}`}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
