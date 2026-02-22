@@ -77,15 +77,29 @@ export function RecentActivity() {
             <p className="text-gray-500 text-sm font-medium">No recent activity found</p>
           </div>
         ) : (
-          <div className="space-y-2">
-            {transactions.map((tx, i) => (
+          <motion.div
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.05
+                }
+              }
+            }}
+            initial="hidden"
+            animate="show"
+            className="space-y-2"
+          >
+            {transactions.map((tx) => (
               <motion.a
                 key={tx.tx_id}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  show: { opacity: 1, y: 0 }
+                }}
                 whileHover={{ scale: 1.01, x: 5 }}
                 whileTap={{ scale: 0.99 }}
-                transition={{ delay: 0.05 * i }}
                 href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -116,7 +130,7 @@ export function RecentActivity() {
                 </div>
               </motion.a>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </div>
