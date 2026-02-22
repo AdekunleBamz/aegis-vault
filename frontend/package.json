@@ -12,9 +12,14 @@
     "@stacks/connect": "^8.2.4",
     "@stacks/network": "^7.3.1",
     "@stacks/transactions": "^6.17.0",
+    "clsx": "^2.1.0",
+    "framer-motion": "^11.0.8",
+    "lucide-react": "^0.344.0",
     "next": "14.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "recharts": "^2.12.2",
+    "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
