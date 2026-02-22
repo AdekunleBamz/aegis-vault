@@ -40,8 +40,8 @@ export function PortfolioBalance() {
                             key={r}
                             onClick={() => setRange(r)}
                             className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${range === r
-                                    ? 'bg-blue-500 text-white shadow-lg'
-                                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                ? 'bg-blue-500 text-white shadow-lg'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             {r}
@@ -72,7 +72,7 @@ export function PortfolioBalance() {
                             domain={['dataMin - 5000', 'dataMax + 5000']}
                         />
                         <Tooltip
-                            content={({ active, payload }) => {
+                            content={({ active, payload }: any) => {
                                 if (active && payload && payload.length) {
                                     return (
                                         <div className="bg-gray-950/90 backdrop-blur-xl border border-white/10 p-3 rounded-xl shadow-2xl">

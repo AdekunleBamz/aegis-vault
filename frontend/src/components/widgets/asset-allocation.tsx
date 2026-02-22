@@ -63,7 +63,7 @@ export function AssetAllocation() {
                         <Legend
                             verticalAlign="bottom"
                             height={36}
-                            content={({ payload }) => (
+                            content={({ payload }: any) => (
                                 <div className="flex flex-wrap justify-center gap-4 mt-6">
                                     {payload?.map((entry: any, index: number) => (
                                         <div key={index} className="flex items-center gap-2">
