@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { HistoryFilters } from '@/components/widgets';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy } from 'lucide-react';
+import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy, Copy, Check } from 'lucide-react';
 
 // Action configuration
 const ACTION_CONFIG: Record<string, {
@@ -61,6 +61,7 @@ export default function HistoryPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('date-desc');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const hasActiveFilters = filter !== 'all' || searchQuery !== '' || statusFilter !== 'all';
 
@@ -69,6 +70,16 @@ export default function HistoryPage() {
     setSearchQuery('');
     setStatusFilter('all');
     setSortBy('date-desc');
+  };
+
+  const copyToClipboard = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
   };
 
   const getActionConfig = (functionName: string) => {
@@ -302,7 +313,23 @@ export default function HistoryPage() {
                             <ExternalLink className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
                           </div>
                           <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
-                            <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded italic">{truncateAddress(tx.tx_id)}</span>
+                            <div className="flex items-center gap-1 group/copy relative">
+                              <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded italic">{truncateAddress(tx.tx_id)}</span>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  copyToClipboard(tx.tx_id, tx.tx_id);
+                                }}
+                                className="p-1 hover:bg-white/10 rounded-md transition-all opacity-0 group-hover/copy:opacity-100"
+                              >
+                                {copiedId === tx.tx_id ? (
+                                  <Check className="w-3 h-3 text-green-400" />
+                                ) : (
+                                  <Copy className="w-3 h-3 text-gray-500 hover:text-white" />
+                                )}
+                              </button>
+                            </div>
                             <span>•</span>
                             <span>Block #{tx.block_height?.toLocaleString()}</span>
                           </div>
