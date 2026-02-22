@@ -9,6 +9,8 @@ import { TIERS } from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
 import { cn } from '@/lib/utils';
 import { ShieldAlert, ShieldCheck, Lock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 export function StakeForm() {
   const { address, isConnected, connect } = useWallet();
@@ -74,12 +76,13 @@ export function StakeForm() {
               <p className="text-gray-400 mb-6 max-w-[200px] mx-auto">
                 Connect your wallet to safely access the vault.
               </p>
-              <button
+              <Button
                 onClick={connect}
-                className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold hover:opacity-90 transition-all shadow-lg shadow-blue-500/20 active:scale-95"
+                fullWidth
+                size="lg"
               >
                 Connect Wallet
-              </button>
+              </Button>
             </div>
           ) : (
             <form onSubmit={handleStake} className="space-y-6">
@@ -87,7 +90,10 @@ export function StakeForm() {
                 <label className="block text-gray-300 text-xs font-bold uppercase tracking-wider mb-2">
                   Amount to Stake
                 </label>
-                <div className="relative">
+                <motion.div
+                  whileFocus={{ scale: 1.01 }}
+                  className="relative"
+                >
                   <input
                     type="number"
                     value={amount}
@@ -111,13 +117,21 @@ export function StakeForm() {
                   >
                     MAX
                   </button>
-                </div>
-                {hasError && (
-                  <div id="amount-error" className="text-red-400 text-[10px] font-medium mt-2 flex items-center gap-1.5 animate-fade-in">
-                    <ShieldAlert className="w-3.5 h-3.5" />
-                    {hasError}
-                  </div>
-                )}
+                </motion.div>
+                <AnimatePresence>
+                  {hasError && (
+                    <motion.div
+                      id="amount-error"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="text-red-400 text-[10px] font-medium mt-2 flex items-center gap-1.5 overflow-hidden"
+                    >
+                      <ShieldAlert className="w-3.5 h-3.5" />
+                      {hasError}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               <div className="bg-gray-950/50 border border-white/5 rounded-xl p-5 space-y-3">
@@ -140,27 +154,41 @@ export function StakeForm() {
                 </div>
               </div>
 
-              {error && (
-                <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4 text-red-400 text-xs flex items-start gap-3 animate-fade-in">
-                  <ShieldAlert className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                  <div className="leading-relaxed">{error}</div>
-                </div>
-              )}
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="bg-red-500/5 border border-red-500/20 rounded-xl p-4 text-red-400 text-xs flex items-start gap-3"
+                  >
+                    <ShieldAlert className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <div className="leading-relaxed">{error}</div>
+                  </motion.div>
+                )}
 
-              {success && (
-                <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-4 text-green-400 text-xs flex items-start gap-3 animate-fade-in">
-                  <ShieldCheck className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                  <div className="leading-relaxed">{success}</div>
-                </div>
-              )}
+                {success && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="bg-green-500/5 border border-green-500/20 rounded-xl p-4 text-green-400 text-xs flex items-start gap-3"
+                  >
+                    <ShieldCheck className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <div className="leading-relaxed">{success}</div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <button
+              <Button
                 type="submit"
                 disabled={isLoading || !amount || numAmount <= 0}
-                className="w-full py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-bold text-lg hover:opacity-95 transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg shadow-blue-500/10 active:scale-[0.98]"
+                isLoading={isLoading}
+                fullWidth
+                size="lg"
               >
-                {isLoading ? 'Processing...' : 'Securely Stake STX'}
-              </button>
+                Securely Stake STX
+              </Button>
             </form>
           )}
         </div>
