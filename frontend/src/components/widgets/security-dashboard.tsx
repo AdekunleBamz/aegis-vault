@@ -18,8 +18,14 @@ const SecurityMetric = ({ icon: Icon, label, value, subValue, status, index }: S
     <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 * index }}
-        className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 hover:border-blue-500/30 transition-all hover:bg-gray-800/80 group"
+        whileHover={{ y: -5, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20
+        }}
+        className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 hover:border-blue-500/30 group cursor-pointer"
     >
         <div className="flex items-start justify-between mb-3">
             <div className="p-2 bg-gray-800 rounded-lg group-hover:bg-blue-500/10 transition-colors">
@@ -124,12 +130,20 @@ export function SecurityDashboard() {
                 </div>
 
                 <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-blue-500 rounded-lg text-white text-sm font-medium hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/20">
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-4 py-2 bg-blue-500 rounded-lg text-white text-sm font-medium hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/20"
+                    >
                         View Audit Report
-                    </button>
-                    <button className="p-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-white transition-colors">
+                    </motion.button>
+                    <motion.button
+                        whileHover={{ scale: 1.05, backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
+                        whileTap={{ scale: 0.95 }}
+                        className="p-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-white transition-colors"
+                    >
                         <Shield className="w-5 h-5" />
-                    </button>
+                    </motion.button>
                 </div>
             </div>
 
