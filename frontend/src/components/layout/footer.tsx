@@ -1,4 +1,5 @@
 import React from 'react';
+import { Shield } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -139,14 +140,25 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800/50 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-sm">
-            &copy; {currentYear} Aegis Vault. Built on Stacks.
-          </p>
-          <div className="flex items-center gap-6 text-sm">
-            <a href="#" className="text-gray-500 hover:text-gray-300 transition-colors">Terms</a>
-            <a href="#" className="text-gray-500 hover:text-gray-300 transition-colors">Privacy</a>
-            <a href="#" className="text-gray-500 hover:text-gray-300 transition-colors">Security</a>
+        <div className="border-t border-white/5 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4 text-gray-500 text-xs font-bold uppercase tracking-widest">
+            <span>&copy; {currentYear} Aegis Vault</span>
+            <span className="w-1 h-1 bg-gray-800 rounded-full" />
+            <span>Built on Stacks</span>
+          </div>
+
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-6">
+              {['Terms', 'Privacy', 'Security'].map((item) => (
+                <a key={item} href="#" className="text-gray-500 hover:text-blue-400 text-xs font-bold uppercase tracking-widest transition-colors">
+                  {item}
+                </a>
+              ))}
+            </div>
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full">
+              <Shield className="w-3 h-3 text-blue-400" />
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tight">Verified Protocol</span>
+            </div>
           </div>
         </div>
       </div>

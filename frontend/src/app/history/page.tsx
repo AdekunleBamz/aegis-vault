@@ -6,56 +6,42 @@ import { Footer } from '@/components/layout/footer';
 import { useWallet } from '@/context/wallet-context';
 import { useTransactions } from '@/hooks/use-transactions';
 import { formatRelativeTime, truncateAddress, formatSTX, formatAGS } from '@/lib/format';
-import { Card, CardHeader } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { LoadingSkeleton } from '@/components/ui/loading';
-import { Tabs } from '@/components/ui/tabs';
+import { HistoryFilters, TransactionDetail } from '@/components/widgets';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy, Copy, Check, ArrowUp, Download } from 'lucide-react';
 
 // Action configuration
-const ACTION_CONFIG: Record<string, { 
-  name: string; 
-  icon: JSX.Element; 
+const ACTION_CONFIG: Record<string, {
+  name: string;
+  icon: JSX.Element;
   color: string;
   bgColor: string;
 }> = {
-  stake: { 
-    name: 'Stake', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-      </svg>
-    ),
+  stake: {
+    name: 'Stake',
+    icon: <ArrowUpRight className="w-5 h-5" />,
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
   },
-  'request-withdrawal': { 
-    name: 'Withdrawal Request', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+  'request-withdrawal': {
+    name: 'Withdrawal Request',
+    icon: <ArrowDownLeft className="w-5 h-5" />,
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/20',
   },
-  'complete-withdrawal': { 
-    name: 'Withdrawal Complete', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-      </svg>
-    ),
+  'complete-withdrawal': {
+    name: 'Withdrawal Complete',
+    icon: <RefreshCw className="w-5 h-5" />,
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
   },
-  'claim-rewards': { 
-    name: 'Claim Rewards', 
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+  'claim-rewards': {
+    name: 'Claim Rewards',
+    icon: <Trophy className="w-5 h-5" />,
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/20',
   },
@@ -63,11 +49,7 @@ const ACTION_CONFIG: Record<string, {
 
 const defaultAction = {
   name: 'Transaction',
-  icon: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-    </svg>
-  ),
+  icon: <Search className="w-5 h-5" />,
   color: 'text-gray-400',
   bgColor: 'bg-gray-500/20',
 };
@@ -76,6 +58,40 @@ export default function HistoryPage() {
   const { address, isConnected, connect } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 50);
   const [filter, setFilter] = useState<'all' | 'stake' | 'withdraw' | 'claim'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('date-desc');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
+
+  const hasActiveFilters = filter !== 'all' || searchQuery !== '' || statusFilter !== 'all';
+
+  const resetFilters = () => {
+    setFilter('all');
+    setSearchQuery('');
+    setStatusFilter('all');
+    setSortBy('date-desc');
+  };
+
+  const exportData = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(processedTransactions, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", `aegis_vault_audit_${new Date().toISOString()}.json`);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  };
+
+  const copyToClipboard = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
 
   const getActionConfig = (functionName: string) => {
     return ACTION_CONFIG[functionName] || defaultAction;
@@ -87,25 +103,58 @@ export default function HistoryPage() {
     return 'error';
   };
 
-  // Filter transactions
-  const filteredTransactions = useMemo(() => {
-    if (filter === 'all') return transactions;
-    
-    return transactions.filter((tx) => {
-      const fn = tx.contract_call?.function_name || '';
-      if (filter === 'stake') return fn === 'stake';
-      if (filter === 'withdraw') return fn.includes('withdrawal');
-      if (filter === 'claim') return fn === 'claim-rewards';
-      return true;
+  // Filter and Sort transactions
+  const processedTransactions = useMemo(() => {
+    let result = [...transactions];
+
+    // Type Filter
+    if (filter !== 'all') {
+      result = result.filter((tx) => {
+        const fn = tx.contract_call?.function_name || '';
+        if (filter === 'stake') return fn === 'stake';
+        if (filter === 'withdraw') return fn.includes('withdrawal');
+        if (filter === 'claim') return fn === 'claim-rewards';
+        return true;
+      });
+    }
+
+    // Status Filter
+    if (statusFilter !== 'all') {
+      result = result.filter(tx => tx.tx_status === statusFilter);
+    }
+
+    // Search Filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(tx =>
+        tx.tx_id.toLowerCase().includes(query) ||
+        tx.contract_call?.function_name?.toLowerCase().includes(query) ||
+        tx.block_height?.toString().includes(query)
+      );
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === 'date-desc') return b.burn_block_time - a.burn_block_time;
+      if (sortBy === 'date-asc') return a.burn_block_time - b.burn_block_time;
+
+      // For amount sorting, we'd need to extract value from args if available
+      // For now, let's keep it simple or sort by block height as proxy
+      if (sortBy === 'amount-desc') return (b.block_height || 0) - (a.block_height || 0);
+      if (sortBy === 'amount-asc') return (a.block_height || 0) - (b.block_height || 0);
+
+      return 0;
     });
-  }, [transactions, filter]);
+
+    return result;
+  }, [transactions, filter, searchQuery, sortBy, statusFilter]);
 
   // Calculate stats
   const stats = useMemo(() => {
     const successful = transactions.filter(tx => tx.tx_status === 'success').length;
     const pending = transactions.filter(tx => tx.tx_status === 'pending').length;
     const failed = transactions.filter(tx => tx.tx_status !== 'success' && tx.tx_status !== 'pending').length;
-    
+
     return { total: transactions.length, successful, pending, failed };
   }, [transactions]);
 
@@ -141,9 +190,17 @@ export default function HistoryPage() {
       <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-4xl">
           {/* Page Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Transaction History</h1>
-            <p className="text-gray-400">Track all your Aegis Vault activity in one place</p>
+          <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Transaction History</h1>
+              <p className="text-gray-400">Track all your Aegis Vault activity in one place</p>
+            </div>
+            {!isLoading && transactions.length > 0 && (
+              <Button onClick={exportData} variant="outline" size="sm" className="bg-white/5 border-white/10 hover:bg-white/10 shrink-0">
+                <Download className="w-4 h-4 mr-2" />
+                Export Audit Log
+              </Button>
+            )}
           </div>
 
           {/* Stats Summary */}
@@ -168,24 +225,55 @@ export default function HistoryPage() {
             </div>
           )}
 
-          {/* Filter Tabs */}
-          {!isLoading && transactions.length > 0 && (
-            <div className="flex gap-2 mb-6">
-              {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
+          <div className="sticky top-20 z-30 bg-gray-950/80 backdrop-blur-md pt-4 pb-2 -mx-4 px-4 mb-4 border-b border-white/5">
+            <div className="flex items-center justify-between mb-4 gap-4">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all
+                          ${filter === f
+                        ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
+                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
+                      }`}
+                  >
+                    {f.charAt(0).toUpperCase() + f.slice(1)}
+                  </button>
+                ))}
+              </div>
+
+              {hasActiveFilters && (
                 <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                    ${filter === f 
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
-                    }`}
+                  onClick={resetFilters}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-lg transition-all border border-red-500/10 whitespace-nowrap"
                 >
-                  {f.charAt(0).toUpperCase() + f.slice(1)}
+                  <X className="w-3.5 h-3.5" />
+                  Clear Filters
                 </button>
-              ))}
+              )}
             </div>
-          )}
+
+            <HistoryFilters
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+            />
+
+            <div className="flex items-center justify-between mt-2 px-1">
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                Showing {processedTransactions.length} of {transactions.length} transactions
+              </p>
+              {hasActiveFilters && (
+                <span className="text-[10px] font-bold text-blue-400/60 uppercase tracking-widest">
+                  Filters Active
+                </span>
+              )}
+            </div>
+          </div>
 
           <Card>
             {isLoading ? (
@@ -201,91 +289,139 @@ export default function HistoryPage() {
                   </div>
                 ))}
               </div>
-            ) : filteredTransactions.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="w-16 h-16 bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">No Transactions Found</h3>
-                <p className="text-gray-400 mb-6">
-                  {filter === 'all' 
-                    ? "You haven't made any transactions yet. Start by staking some STX!" 
-                    : `No ${filter} transactions found.`
-                  }
+            ) : processedTransactions.length === 0 ? (
+              <div className="text-center py-20 px-4">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="w-20 h-20 bg-gray-950 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-white/5 shadow-inner"
+                >
+                  <Search className="w-10 h-10 text-gray-700" />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-white mb-2 italic">No Matches Found</h3>
+                <p className="text-gray-500 max-w-xs mx-auto mb-8 text-sm leading-relaxed">
+                  We couldn't find any transactions matching your current filters. Try broadening your search or resetting the filters below.
                 </p>
-                {filter === 'all' && (
-                  <Button as="a" href="/stake">Start Staking</Button>
-                )}
+                <div className="flex justify-center gap-4">
+                  <Button onClick={resetFilters} variant="secondary">Reset Filters</Button>
+                  {filter === 'all' && searchQuery === '' && (
+                    <Button as="a" href="/stake">Start Staking</Button>
+                  )}
+                </div>
               </div>
             ) : (
-              <div className="divide-y divide-gray-700/50">
-                {filteredTransactions.map((tx) => {
-                  const action = getActionConfig(tx.contract_call?.function_name || '');
-                  
-                  return (
-                    <a
-                      key={tx.tx_id}
-                      href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4 py-4 hover:bg-gray-800/30 px-3 -mx-3 rounded-xl transition-colors group"
-                    >
-                      {/* Icon */}
-                      <div className={`w-12 h-12 ${action.bgColor} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                        <span className={action.color}>{action.icon}</span>
-                      </div>
-                      
-                      {/* Details */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="text-white font-medium">{action.name}</p>
-                          <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
+              <div className="divide-y divide-gray-700/30">
+                <AnimatePresence mode="popLayout">
+                  {processedTransactions.map((tx, index) => {
+                    const action = getActionConfig(tx.contract_call?.function_name || '');
+
+                    return (
+                      <motion.a
+                        layout
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ delay: index * 0.03 }}
+                        key={tx.tx_id}
+                        href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedTransaction(tx);
+                        }}
+                        className="flex items-center gap-4 py-5 hover:bg-white/[0.02] px-4 -mx-4 first:rounded-t-2xl last:rounded-b-2xl transition-colors group cursor-pointer"
+                      >
+                        {/* Icon */}
+                        <div className={`w-12 h-12 ${action.bgColor} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                          <span className={action.color}>{action.icon}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <span className="font-mono">{truncateAddress(tx.tx_id)}</span>
-                          <span>•</span>
-                          <span>Block {tx.block_height?.toLocaleString()}</span>
+
+                        {/* Details */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p className="text-white font-bold group-hover:text-blue-400 transition-colors uppercase text-sm tracking-tight">{action.name}</p>
+                            <ExternalLink className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                            <div className="flex items-center gap-1 group/copy relative">
+                              <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded italic">{truncateAddress(tx.tx_id)}</span>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  copyToClipboard(tx.tx_id, tx.tx_id);
+                                }}
+                                className="p-1 hover:bg-white/10 rounded-md transition-all opacity-0 group-hover/copy:opacity-100"
+                              >
+                                {copiedId === tx.tx_id ? (
+                                  <Check className="w-3 h-3 text-green-400" />
+                                ) : (
+                                  <Copy className="w-3 h-3 text-gray-500 hover:text-white" />
+                                )}
+                              </button>
+                            </div>
+                            <span>•</span>
+                            <span>Block #{tx.block_height?.toLocaleString()}</span>
+                          </div>
                         </div>
-                      </div>
-                      
-                      {/* Status & Time */}
-                      <div className="text-right flex-shrink-0">
-                        <Badge variant={getStatusVariant(tx.tx_status)} size="sm">
-                          {tx.tx_status === 'success' && (
-                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          )}
-                          {tx.tx_status}
-                        </Badge>
-                        <p className="text-gray-500 text-sm mt-1">
-                          {formatRelativeTime(tx.burn_block_time)}
-                        </p>
-                      </div>
-                    </a>
-                  );
-                })}
+
+                        {/* Status & Time */}
+                        <div className="text-right flex-shrink-0">
+                          <Badge variant={getStatusVariant(tx.tx_status)} size="sm" className="font-bold">
+                            {tx.tx_status === 'success' && (
+                              <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                            {tx.tx_status}
+                          </Badge>
+                          <p className="text-gray-500 text-xs mt-1.5 font-medium">
+                            {formatRelativeTime(tx.burn_block_time)}
+                          </p>
+                        </div>
+                      </motion.a>
+                    );
+                  })}
+                </AnimatePresence>
               </div>
             )}
           </Card>
 
+          {/* Modal */}
+          <AnimatePresence>
+            {selectedTransaction && (
+              <TransactionDetail
+                transaction={selectedTransaction}
+                onClose={() => setSelectedTransaction(null)}
+                actionConfig={getActionConfig(selectedTransaction.contract_call?.function_name || '')}
+              />
+            )}
+          </AnimatePresence>
+
           {/* Pagination hint */}
-          {filteredTransactions.length >= 50 && (
-            <p className="text-center text-gray-500 text-sm mt-6">
-              Showing latest 50 transactions. View more on{' '}
-              <a 
-                href={`https://explorer.stacks.co/address/${address}?chain=mainnet`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300"
+          {processedTransactions.length >= 50 && (
+            <div className="mt-12 text-center space-y-4">
+              <p className="text-center text-gray-500 text-sm">
+                Showing latest 50 transactions. View more on{' '}
+                <a
+                  href={`https://explorer.stacks.co/address/${address}?chain=mainnet`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 font-bold"
+                >
+                  Stacks Explorer
+                </a>
+              </p>
+
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-2xl transition-all border border-white/5 group"
               >
-                Stacks Explorer
-              </a>
-            </p>
+                <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+                Back to Top
+              </button>
+            </div>
           )}
         </div>
       </main>
