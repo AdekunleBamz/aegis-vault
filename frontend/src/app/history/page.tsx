@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { HistoryFilters, TransactionDetail } from '@/components/widgets';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy, Copy, Check, ArrowUp } from 'lucide-react';
+import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy, Copy, Check, ArrowUp, Download } from 'lucide-react';
 
 // Action configuration
 const ACTION_CONFIG: Record<string, {
@@ -71,6 +71,16 @@ export default function HistoryPage() {
     setSearchQuery('');
     setStatusFilter('all');
     setSortBy('date-desc');
+  };
+
+  const exportData = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(processedTransactions, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", `aegis_vault_audit_${new Date().toISOString()}.json`);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
   };
 
   const copyToClipboard = async (text: string, id: string) => {
@@ -180,9 +190,17 @@ export default function HistoryPage() {
       <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-4xl">
           {/* Page Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Transaction History</h1>
-            <p className="text-gray-400">Track all your Aegis Vault activity in one place</p>
+          <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Transaction History</h1>
+              <p className="text-gray-400">Track all your Aegis Vault activity in one place</p>
+            </div>
+            {!isLoading && transactions.length > 0 && (
+              <Button onClick={exportData} variant="outline" size="sm" className="bg-white/5 border-white/10 hover:bg-white/10 shrink-0">
+                <Download className="w-4 h-4 mr-2" />
+                Export Audit Log
+              </Button>
+            )}
           </div>
 
           {/* Stats Summary */}
