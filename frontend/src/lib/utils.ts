@@ -418,3 +418,16 @@ export function omit<T extends object, K extends keyof T>(obj: T, keys: K[]): Om
 export function isEmpty(obj: object): boolean {
   return Object.keys(obj).length === 0;
 }
+// ============================================================================
+// UI UTILITIES
+// ============================================================================
+
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+/**
+ * Merges tailwind classes safely
+ */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

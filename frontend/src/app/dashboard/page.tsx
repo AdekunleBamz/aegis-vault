@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/footer';
 import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
 import { RecentActivity } from '@/components/widgets/recent-activity';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
+import { SecurityDashboard } from '@/components/widgets/security-dashboard';
 
 export default function DashboardPage() {
   const quickActions = [
@@ -62,6 +63,8 @@ export default function DashboardPage() {
               Overview of your staking portfolio and protocol activity
             </p>
           </div>
+
+          <SecurityDashboard />
 
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
