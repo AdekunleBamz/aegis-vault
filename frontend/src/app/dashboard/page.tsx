@@ -1,9 +1,13 @@
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
-import { RecentActivity } from '@/components/widgets/recent-activity';
-import { ProtocolStats } from '@/components/widgets/protocol-stats';
-import { SecurityDashboard } from '@/components/widgets/security-dashboard';
+import {
+  PortfolioSummary,
+  RecentActivity,
+  ProtocolStats,
+  SecurityDashboard,
+  AssetAllocation,
+  PortfolioBalance
+} from '@/components/widgets';
 
 export default function DashboardPage() {
   const quickActions = [
@@ -66,8 +70,18 @@ export default function DashboardPage() {
 
           <SecurityDashboard />
 
+          {/* Visual Analytics Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <div className="lg:col-span-2">
+              <PortfolioBalance />
+            </div>
+            <div>
+              <AssetAllocation />
+            </div>
+          </div>
+
           {/* Main Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.15s' }}>
             <div className="lg:col-span-2 space-y-6">
               <PortfolioSummary />
               <RecentActivity />
