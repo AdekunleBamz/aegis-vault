@@ -22,17 +22,17 @@ export function Hero() {
           Live on Stacks Mainnet
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Stake STX
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 animate-fade-in tracking-tight" style={{ animationDelay: '0.1s' }}>
+          <span className="bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 bg-clip-text text-transparent">
+            Secure Staking
           </span>
           <br />
-          <span className="text-white">Earn AGS Rewards</span>
+          <span className="text-white">With Aegis Vault</span>
         </h1>
 
-        <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          Aegis Vault is a decentralized staking protocol on Stacks. Stake your
-          STX tokens and earn AGS rewards with competitive APY rates.
+        <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto animate-fade-in font-medium leading-relaxed" style={{ animationDelay: '0.2s' }}>
+          The institutional-grade staking protocol on Stacks. Experience the ultimate
+          security layer for your assets while earning competitive AGS rewards.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
@@ -77,7 +77,7 @@ export function Hero() {
             { value: '3-30', label: 'Days Lockup', color: 'from-purple-400 to-purple-600' },
             { value: '4', label: 'Reward Tiers', color: 'from-pink-400 to-pink-600' },
           ].map((stat, i) => (
-            <div 
+            <div
               key={stat.label}
               className="glass rounded-xl p-6 hover-lift animate-fade-in"
               style={{ animationDelay: `${0.4 + i * 0.1}s` }}
