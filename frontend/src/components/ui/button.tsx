@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success';
@@ -25,7 +26,7 @@ export function Button({
   const baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none';
 
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:opacity-90 hover:shadow-lg hover:shadow-blue-500/25 hover:-translate-y-0.5 active:translate-y-0 focus-visible:ring-blue-500',
+    primary: 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:opacity-90 hover:shadow-lg hover:shadow-blue-500/25 focus-visible:ring-blue-500',
     secondary: 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700 hover:border-gray-600 focus-visible:ring-gray-500',
     outline: 'border border-gray-600 text-white hover:bg-gray-800/50 hover:border-gray-500 focus-visible:ring-gray-500',
     ghost: 'text-gray-400 hover:text-white hover:bg-white/5 focus-visible:ring-gray-500',
@@ -43,7 +44,10 @@ export function Button({
   const widthClass = fullWidth ? 'w-full' : '';
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.02, y: -2 }}
+      whileTap={{ scale: 0.98, y: 0 }}
+      transition={{ type: "spring", stiffness: 400, damping: 10 }}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
       disabled={disabled || isLoading}
       {...props}
@@ -75,6 +79,6 @@ export function Button({
           {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
         </>
       )}
-    </button>
+    </motion.button>
   );
 }
