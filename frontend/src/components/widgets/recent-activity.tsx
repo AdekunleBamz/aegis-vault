@@ -118,16 +118,27 @@ export function RecentActivity() {
                     </p>
                   </div>
                 </div>
-                <div className={cn(
-                  "px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border",
-                  tx.tx_status === 'success'
-                    ? "bg-green-500/5 text-green-400 border-green-500/20"
-                    : tx.tx_status === 'pending'
-                      ? "bg-amber-500/5 text-amber-400 border-amber-500/20"
-                      : "bg-red-500/5 text-red-400 border-red-500/20"
-                )}>
+                <motion.div
+                  animate={tx.tx_status === 'pending' ? {
+                    scale: [1, 1.05, 1],
+                    opacity: [0.8, 1, 0.8]
+                  } : {}}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "easeInOut"
+                  }}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border",
+                    tx.tx_status === 'success'
+                      ? "bg-green-500/5 text-green-400 border-green-500/20 shadow-[0_0_10px_rgba(34,197,94,0.1)]"
+                      : tx.tx_status === 'pending'
+                        ? "bg-amber-500/5 text-amber-400 border-amber-500/20"
+                        : "bg-red-500/5 text-red-400 border-red-500/20"
+                  )}
+                >
                   {tx.tx_status}
-                </div>
+                </motion.div>
               </motion.a>
             ))}
           </motion.div>
