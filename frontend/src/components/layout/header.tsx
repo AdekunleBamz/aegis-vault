@@ -34,17 +34,23 @@ export function Header() {
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden xl:flex items-center gap-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+              className="px-4 py-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all text-sm font-medium"
             >
               {link.label}
             </a>
           ))}
         </nav>
+
+        {/* Security Status - Desktop */}
+        <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-xs font-semibold">
+          <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+          Vault Secure
+        </div>
 
         {/* Wallet / Mobile Toggle */}
         <div className="flex items-center gap-3">

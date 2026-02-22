@@ -5,6 +5,10 @@ import { getPoolStats, PoolStats } from '@/lib/staking';
 import { formatSTX, formatBlockHeight } from '@/lib/format';
 import { Card, CardHeader } from '@/components/ui/card';
 import { LoadingSkeleton } from '@/components/ui/loading';
+import { motion } from 'framer-motion';
+import { Lock, Users, TrendingUp, History, ArrowUpRight, Clock } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { NumberTicker } from '@/components/ui/number-ticker';
 
 export function ProtocolStats() {
   const [stats, setStats] = useState<PoolStats | null>(null);
@@ -32,91 +36,108 @@ export function ProtocolStats() {
   const statItems = [
     {
       label: 'Total Value Locked',
-      value: formatSTX(stats?.totalStaked || BigInt(0)) + ' STX',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      ),
+      value: Number(stats?.totalStaked || BigInt(0)) / 1e6,
+      suffix: ' STX',
+      icon: <Lock className="w-5 h-5" />,
       iconColor: 'text-blue-400',
       bgColor: 'bg-blue-500/10',
     },
     {
       label: 'Total Stakers',
-      value: (stats?.totalStakers || 0).toLocaleString(),
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      ),
+      value: stats?.totalStakers || 0,
+      icon: <Users className="w-5 h-5" />,
       iconColor: 'text-purple-400',
       bgColor: 'bg-purple-500/10',
     },
     {
       label: 'Reward Rate',
-      value: formatSTX(stats?.rewardRate || BigInt(0)) + ' AGS/block',
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
-      ),
+      value: Number(stats?.rewardRate || BigInt(0)) / 1e6,
+      suffix: ' AGS/block',
+      icon: <TrendingUp className="w-5 h-5" />,
       iconColor: 'text-green-400',
       bgColor: 'bg-green-500/10',
       valueColor: 'text-green-400',
     },
     {
       label: 'Last Distribution',
-      value: 'Block ' + formatBlockHeight(stats?.lastDistributionBlock || 0),
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
+      value: Number(stats?.lastDistributionBlock || 0),
+      prefix: 'Block ',
+      icon: <History className="w-5 h-5" />,
       iconColor: 'text-amber-400',
       bgColor: 'bg-amber-500/10',
     },
   ];
 
   return (
-    <Card>
-      <CardHeader 
-        title="Protocol Stats" 
-        subtitle="Live on-chain data"
-        action={
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-            <span className="text-xs text-gray-500">Live</span>
+    <div className="glass-dark border border-white/5 rounded-2xl overflow-hidden h-full">
+      <div className="p-6 border-b border-white/5 bg-white/5">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-white font-bold">Protocol Vitality</h3>
+            <p className="text-gray-500 text-xs">Real-time on-chain statistics</p>
           </div>
-        }
-      />
-      
-      <div className="grid grid-cols-2 gap-4">
-        {statItems.map((item, index) => (
-          <div 
-            key={index}
-            className={`${item.bgColor} rounded-xl p-4 transition-all hover:scale-[1.02]`}
-          >
-            <div className={`${item.iconColor} mb-3`}>
-              {item.icon}
-            </div>
-            <p className="text-gray-400 text-sm mb-1">{item.label}</p>
-            {isLoading ? (
-              <LoadingSkeleton className="w-full h-6" />
-            ) : (
-              <p className={`font-semibold ${item.valueColor || 'text-white'}`}>
-                {item.value}
-              </p>
-            )}
+          <div className="flex items-center gap-2 px-2 py-1 bg-green-500/10 rounded-lg">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            <span className="text-[10px] font-bold text-green-400 uppercase tracking-tight">Active</span>
           </div>
-        ))}
+        </div>
       </div>
 
-      {lastUpdated && (
-        <div className="mt-4 pt-4 border-t border-gray-700/50 flex items-center justify-between text-xs text-gray-500">
-          <span>Last updated</span>
-          <span>{lastUpdated.toLocaleTimeString()}</span>
+      <div className="p-6">
+        <div className="grid grid-cols-1 gap-4">
+          {statItems.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              whileHover={{ x: 5, scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ delay: 0.05 * index }}
+              className="group bg-gray-950/40 border border-white/[0.03] rounded-xl p-4 hover:border-white/5 cursor-pointer"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={cn("p-2 rounded-lg transition-colors", item.bgColor)}>
+                    <div className={item.iconColor}>
+                      {item.icon}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-[10px] uppercase font-bold tracking-wider mb-0.5">{item.label}</p>
+                    {isLoading ? (
+                      <div className="h-5 w-24 bg-white/5 animate-pulse rounded" />
+                    ) : (
+                      <div className={cn("font-bold tabular-nums", item.valueColor || 'text-white')}>
+                        {/* @ts-ignore - we know prefix/suffix exist but TS might complain if they aren't on every item */}
+                        {item.prefix}
+                        <NumberTicker
+                          value={item.value as number}
+                          decimalPlaces={(item.label.includes('Rate') || item.label.includes('Value')) ? 2 : 0}
+                        />
+                        {/* @ts-ignore */}
+                        {item.suffix}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowUpRight className="w-4 h-4 text-gray-600" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      )}
-    </Card>
+
+        {lastUpdated && (
+          <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-gray-600">
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-3 h-3" />
+              Sync Status
+            </span>
+            <span className="text-gray-500 tabular-nums">Latest: {lastUpdated.toLocaleTimeString()}</span>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

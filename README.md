@@ -33,6 +33,8 @@ The protocol consists of multiple smart contracts:
 - **Next.js 14** - React framework
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
+- **Framer Motion** - Animations
+- **Recharts** - Data visualization
 - **@stacks/connect** - Wallet connection
 - **@stacks/transactions** - Transaction building
 
