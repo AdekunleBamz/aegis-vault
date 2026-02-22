@@ -10,7 +10,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { LoadingSkeleton } from '@/components/ui/loading';
-import { HistoryFilters } from '@/components/widgets';
+import { HistoryFilters, TransactionDetail } from '@/components/widgets';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy, Copy, Check, ArrowUp } from 'lucide-react';
 
@@ -62,6 +62,7 @@ export default function HistoryPage() {
   const [sortBy, setSortBy] = useState('date-desc');
   const [statusFilter, setStatusFilter] = useState('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
 
   const hasActiveFilters = filter !== 'all' || searchQuery !== '' || statusFilter !== 'all';
 
@@ -307,7 +308,11 @@ export default function HistoryPage() {
                         href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-4 py-5 hover:bg-white/[0.02] px-4 -mx-4 first:rounded-t-2xl last:rounded-b-2xl transition-colors group"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedTransaction(tx);
+                        }}
+                        className="flex items-center gap-4 py-5 hover:bg-white/[0.02] px-4 -mx-4 first:rounded-t-2xl last:rounded-b-2xl transition-colors group cursor-pointer"
                       >
                         {/* Icon */}
                         <div className={`w-12 h-12 ${action.bgColor} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
@@ -364,6 +369,17 @@ export default function HistoryPage() {
               </div>
             )}
           </Card>
+
+          {/* Modal */}
+          <AnimatePresence>
+            {selectedTransaction && (
+              <TransactionDetail
+                transaction={selectedTransaction}
+                onClose={() => setSelectedTransaction(null)}
+                actionConfig={getActionConfig(selectedTransaction.contract_call?.function_name || '')}
+              />
+            )}
+          </AnimatePresence>
 
           {/* Pagination hint */}
           {processedTransactions.length >= 50 && (
