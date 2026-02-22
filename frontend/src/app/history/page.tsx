@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { HistoryFilters } from '@/components/widgets';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy, Copy, Check } from 'lucide-react';
+import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy, Copy, Check, ArrowUp } from 'lucide-react';
 
 // Action configuration
 const ACTION_CONFIG: Record<string, {
@@ -206,47 +206,55 @@ export default function HistoryPage() {
             </div>
           )}
 
-          {/* Advanced Filters */}
-          {!isLoading && transactions.length > 0 && (
-            <>
-              <div className="flex items-center justify-between mb-4 gap-4">
-                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-                  {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
-                    <button
-                      key={f}
-                      onClick={() => setFilter(f)}
-                      className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all
-                        ${filter === f
-                          ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
-                          : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
-                        }`}
-                    >
-                      {f.charAt(0).toUpperCase() + f.slice(1)}
-                    </button>
-                  ))}
-                </div>
-
-                {hasActiveFilters && (
+          <div className="sticky top-20 z-30 bg-gray-950/80 backdrop-blur-md pt-4 pb-2 -mx-4 px-4 mb-4 border-b border-white/5">
+            <div className="flex items-center justify-between mb-4 gap-4">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
                   <button
-                    onClick={resetFilters}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-lg transition-all border border-red-500/10 whitespace-nowrap"
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all
+                          ${filter === f
+                        ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
+                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
+                      }`}
                   >
-                    <X className="w-3.5 h-3.5" />
-                    Clear Filters
+                    {f.charAt(0).toUpperCase() + f.slice(1)}
                   </button>
-                )}
+                ))}
               </div>
 
-              <HistoryFilters
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                sortBy={sortBy}
-                setSortBy={setSortBy}
-                statusFilter={statusFilter}
-                setStatusFilter={setStatusFilter}
-              />
-            </>
-          )}
+              {hasActiveFilters && (
+                <button
+                  onClick={resetFilters}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-lg transition-all border border-red-500/10 whitespace-nowrap"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  Clear Filters
+                </button>
+              )}
+            </div>
+
+            <HistoryFilters
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+            />
+
+            <div className="flex items-center justify-between mt-2 px-1">
+              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                Showing {processedTransactions.length} of {transactions.length} transactions
+              </p>
+              {hasActiveFilters && (
+                <span className="text-[10px] font-bold text-blue-400/60 uppercase tracking-widest">
+                  Filters Active
+                </span>
+              )}
+            </div>
+          </div>
 
           <Card>
             {isLoading ? (
@@ -358,18 +366,28 @@ export default function HistoryPage() {
           </Card>
 
           {/* Pagination hint */}
-          {filteredTransactions.length >= 50 && (
-            <p className="text-center text-gray-500 text-sm mt-6">
-              Showing latest 50 transactions. View more on{' '}
-              <a
-                href={`https://explorer.stacks.co/address/${address}?chain=mainnet`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300"
+          {processedTransactions.length >= 50 && (
+            <div className="mt-12 text-center space-y-4">
+              <p className="text-center text-gray-500 text-sm">
+                Showing latest 50 transactions. View more on{' '}
+                <a
+                  href={`https://explorer.stacks.co/address/${address}?chain=mainnet`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 font-bold"
+                >
+                  Stacks Explorer
+                </a>
+              </p>
+
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white text-sm font-bold rounded-2xl transition-all border border-white/5 group"
               >
-                Stacks Explorer
-              </a>
-            </p>
+                <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+                Back to Top
+              </button>
+            </div>
           )}
         </div>
       </main>
