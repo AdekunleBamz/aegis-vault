@@ -1,5 +1,5 @@
 # Aegis Vault
 
-Vault on Stacks.
+A Clarity smart contract project.
 
 npm install
