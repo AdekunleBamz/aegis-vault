@@ -184,6 +184,11 @@
   )
 )
 
+;; Get circulating supply (total - locked)
+(define-read-only (get-circulating-supply)
+  (ok (ft-get-supply ags-token))
+)
+
 ;; ============================================
 ;; FUNGIBLE TOKEN DEFINITION
 ;; ============================================
