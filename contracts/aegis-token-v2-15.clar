@@ -26,6 +26,11 @@
 (define-constant ERR-INVALID-AMOUNT (err u7004))
 (define-constant ERR-MINTER-ONLY (err u7005))
 (define-constant ERR-MAX-SUPPLY-REACHED (err u7006))
+(define-constant ERR-ZERO-ADDRESS (err u7007))
+(define-constant ERR-PAUSED (err u7008))
+
+;; Pause state
+(define-data-var paused bool false)
 
 ;; ============================================
 ;; DATA VARIABLES
@@ -59,6 +64,7 @@
 
 (define-public (transfer (amount uint) (sender principal) (recipient principal) (memo (optional (buff 34))))
   (begin
+    (asserts! (not (var-get paused)) ERR-PAUSED)
     (asserts! (or (is-eq tx-sender sender) (is-eq contract-caller sender)) ERR-NOT-TOKEN-OWNER)
     (asserts! (> amount u0) ERR-INVALID-AMOUNT)
     (try! (ft-transfer? ags-token amount sender recipient))
@@ -156,6 +162,26 @@
 
 (define-read-only (get-max-supply)
   MAX-SUPPLY
+)
+
+(define-read-only (get-paused)
+  (ok (var-get paused))
+)
+
+(define-public (pause)
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (var-set paused true)
+    (ok true)
+  )
+)
+
+(define-public (unpause)
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (var-set paused false)
+    (ok true)
+  )
 )
 
 ;; ============================================
