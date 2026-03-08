@@ -28,6 +28,7 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "@stacks/connect": "^8.2.4"
+    "@stacks/connect": "^8.2.4",
+    "sharp": "^0.34.5"
   }
 }
