@@ -23,9 +23,19 @@ export function Header() {
         {/* Logo */}
         <a href="/" className="flex items-center gap-3 group">
           <div className="relative">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow">
-              <span className="text-white font-bold text-xl">A</span>
-            </div>
+            <img 
+              src="/images/logo.png" 
+              alt="Aegis Vault Logo" 
+              className="w-10 h-10 object-contain group-hover:scale-105 transition-transform"
+              onError={(e) => {
+                // Fallback to text logo if image fails to load
+                e.currentTarget.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.className = 'w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow';
+                fallback.innerHTML = '<span className="text-white font-bold text-xl">A</span>';
+                e.currentTarget.parentElement?.appendChild(fallback);
+              }}
+            />
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity" />
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
