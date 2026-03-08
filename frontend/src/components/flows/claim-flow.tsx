@@ -6,6 +6,7 @@ import { usePositions } from '@/hooks/use-positions';
 import { useRewards } from '@/hooks/use-rewards';
 import { formatAGS, formatSTX } from '@/lib/format';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { Card, CardHeader } from '@/components/ui/card';
 import { TIERS } from '@/lib/constants';
 import { determineTier } from '@/lib/staking';
@@ -25,7 +26,7 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
 
   const pendingRewards = position?.pendingRewards || BigInt(0);
   const stakedAmount = position?.amountStaked || BigInt(0);
-  const tier = determineTier(Number(stakedAmount));
+  const tier = determineTier(stakedAmount);
 
   // Calculate estimated USD value (mock rate)
   const agsUsdRate = 0.042; // Mock AGS/USD rate
@@ -101,7 +102,7 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
 
         <h3 className="text-2xl font-bold text-white mb-2">Rewards Claimed! 🎉</h3>
         <p className="text-gray-400 mb-6">Your AGS tokens have been sent to your wallet.</p>
-        
+
         {/* Claimed Amount */}
         <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl p-5 max-w-sm mx-auto mb-6">
           <p className="text-gray-400 text-sm mb-1">You Received</p>
@@ -122,10 +123,14 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
             </svg>
           </a>
         )}
-        
-        <div className="flex gap-3 justify-center">
-          <Button onClick={handleReset} variant="secondary">Claim More</Button>
-          <Button as="a" href="/dashboard">View Dashboard</Button>
+
+        <div className="flex flex-col gap-3">
+          <Link href="/dashboard">
+            <Button className="w-full">View Dashboard</Button>
+          </Link>
+          <Button variant="ghost" onClick={handleReset} className="w-full">
+            Close
+          </Button>
         </div>
       </Card>
     );
@@ -150,7 +155,7 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
   return (
     <Card>
       <CardHeader title="Claim Rewards" subtitle="Collect your earned AGS tokens" />
-      
+
       <div className="space-y-5">
         {/* Rewards Display */}
         <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl p-6">

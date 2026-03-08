@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { StacksMainnet } from '@stacks/network';
+import { STACKS_MAINNET } from '@stacks/network';
 import { useWallet } from '@/context/wallet-context';
 import { useTransactions } from '@/hooks/use-transactions';
 import { formatRelativeTime, truncateAddress, formatSTX, formatAGS } from '@/lib/format';

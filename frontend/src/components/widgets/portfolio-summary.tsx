@@ -12,6 +12,7 @@ import { Progress } from '@/components/ui/progress';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { calculateAPY, determineTier } from '@/lib/staking';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export function PortfolioSummary() {
   const { address, isConnected, connect } = useWallet();
@@ -19,8 +20,8 @@ export function PortfolioSummary() {
   const { position, isLoading: positionLoading } = usePositions(address || '');
 
   const isLoading = balancesLoading || positionLoading;
-  const tier = position?.tier || 0;
   const stakedAmount = position?.amountStaked || BigInt(0);
+  const tier = determineTier(stakedAmount);
   const pendingRewards = position?.pendingRewards || BigInt(0);
 
   // Calculate portfolio metrics
@@ -29,23 +30,23 @@ export function PortfolioSummary() {
     const agsNum = Number(agsBalance) / 1e6;
     const stakedNum = Number(stakedAmount) / 1e6;
     const rewardsNum = Number(pendingRewards) / 1e6;
-    
+
     // Mock USD rates
     const stxUsdRate = 0.65;
     const agsUsdRate = 0.042;
-    
+
     const totalValueUsd = (stxNum * stxUsdRate) + (agsNum * agsUsdRate) + (stakedNum * stxUsdRate) + (rewardsNum * agsUsdRate);
-    const apy = calculateAPY(Number(stakedAmount), tier);
-    
+    const apy = calculateAPY(stakedAmount, tier);
+
     // Next tier progress
     const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
     const currentTierMin = TIERS[tier]?.minStake || 0;
     const nextTierMin = nextTier?.minStake || 0;
-    const progressToNext = nextTier 
+    const progressToNext = nextTier
       ? Math.min(100, ((stakedNum - currentTierMin) / (nextTierMin - currentTierMin)) * 100)
       : 100;
     const amountToNext = nextTier ? nextTierMin - stakedNum : 0;
-    
+
     return {
       totalValueUsd,
       apy,
@@ -82,16 +83,16 @@ export function PortfolioSummary() {
 
   return (
     <Card>
-      <CardHeader 
-        title="Your Portfolio" 
+      <CardHeader
+        title="Your Portfolio"
         subtitle={isLoading ? 'Loading...' : `Total Value: $${metrics.totalValueUsd.toFixed(2)}`}
         action={
-          <Badge 
-            variant="info" 
-            style={{ backgroundColor: `${TIERS[tier]?.color}20`, color: TIERS[tier]?.color }}
+          <div
+            className="px-3 py-1 bg-opacity-10 border-opacity-20 rounded-full text-xs font-semibold"
+            style={{ backgroundColor: `${TIERS[tier]?.color}15`, color: TIERS[tier]?.color }}
           >
-            {TIERS[tier]?.name || 'Bronze'}
-          </Badge>
+            {TIERS[tier]?.name}
+          </div>
         }
         icon={
           <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
@@ -101,7 +102,7 @@ export function PortfolioSummary() {
           </div>
         }
       />
-      
+
       <div className="space-y-5">
         {/* Wallet Balances */}
         <div className="grid grid-cols-2 gap-4">
@@ -156,7 +157,7 @@ export function PortfolioSummary() {
               <span className="text-green-400 text-sm font-medium">{metrics.apy}% APY</span>
             )}
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-gray-400 text-sm mb-1">Staked Amount</p>
@@ -186,25 +187,29 @@ export function PortfolioSummary() {
             </div>
             <Progress value={metrics.progressToNext} color="purple" size="sm" />
             <p className="text-xs text-gray-500 mt-2">
-              Upgrade for higher APY: {metrics.nextTier.name} = {calculateAPY(metrics.nextTier.minStake * 1e6, tier + 1)}% APY
+              Upgrade for higher APY: {metrics.nextTier.name} = {calculateAPY(BigInt(metrics.nextTier.minStake) * BigInt(1000000), tier + 1)}% APY
             </p>
           </div>
         )}
 
         {/* Quick Actions */}
         <div className="flex gap-3">
-          <Button as="a" href="/stake" variant="primary" size="sm" className="flex-1">
-            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-            Stake
-          </Button>
-          <Button as="a" href="/claim" variant="secondary" size="sm" className="flex-1">
-            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Claim
-          </Button>
+          <Link href="/stake" className="flex-1">
+            <Button variant="primary" size="sm" className="w-full">
+              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              Stake
+            </Button>
+          </Link>
+          <Link href="/claim" className="flex-1">
+            <Button variant="secondary" size="sm" className="w-full">
+              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Claim
+            </Button>
+          </Link>
         </div>
       </div>
     </Card>

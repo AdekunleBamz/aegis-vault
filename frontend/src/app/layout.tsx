@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'Stake STX tokens and earn AGS rewards on the Stacks blockchain',
 };
 
+import { AppProviders } from '@/components/providers';
+
 export default function RootLayout({
   children,
 }: {
@@ -16,7 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AppProviders>
+          {children}
+        </AppProviders>
+      </body>
     </html>
   );
 }

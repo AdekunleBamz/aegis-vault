@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface BadgeProps {
+interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'premium' | 'new';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
@@ -38,22 +38,24 @@ const sizes = {
   lg: 'px-3 py-1 text-sm',
 };
 
-export function Badge({ 
-  variant = 'default', 
+export function Badge({
+  variant = 'default',
   size = 'md',
-  children, 
+  children,
   className = '',
   dot = false,
   animated = false,
   icon,
   removable = false,
   onRemove,
+  ...props
 }: BadgeProps) {
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full font-medium border
         ${variants[variant]} ${sizes[size]} ${className}
         ${animated ? 'animate-pulse' : ''}`}
+      {...props}
     >
       {dot && (
         <span className={`w-1.5 h-1.5 rounded-full ${dotColors[variant]} ${animated ? 'animate-ping' : ''}`} />
@@ -108,16 +110,16 @@ interface CounterBadgeProps {
 
 export function CounterBadge({ count, max = 99, variant = 'error', size = 'sm' }: CounterBadgeProps) {
   const displayCount = count > max ? `${max}+` : count.toString();
-  
+
   if (count === 0) return null;
 
   return (
     <span
       className={`inline-flex items-center justify-center min-w-[1.25rem] rounded-full font-bold
         ${size === 'sm' ? 'h-5 px-1.5 text-xs' : 'h-6 px-2 text-sm'}
-        ${variant === 'error' ? 'bg-red-500 text-white' : 
-          variant === 'info' ? 'bg-blue-500 text-white' : 
-          'bg-gray-600 text-gray-200'}`}
+        ${variant === 'error' ? 'bg-red-500 text-white' :
+          variant === 'info' ? 'bg-blue-500 text-white' :
+            'bg-gray-600 text-gray-200'}`}
     >
       {displayCount}
     </span>

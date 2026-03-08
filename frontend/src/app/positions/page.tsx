@@ -12,6 +12,7 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function PositionsPage() {
   const { address, isConnected, connect } = useWallet();
@@ -49,12 +50,12 @@ export default function PositionsPage() {
   const stakeDuration = blockHeight - (position?.stakeStartBlock || blockHeight);
   const stakedAmount = Number(position?.amountStaked || 0) / 1e6;
   const pendingRewards = Number(position?.pendingRewards || 0) / 1e6;
-  
+
   // Calculate progress to next tier
   const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
   const currentTierMin = TIERS[tier]?.minStake || 0;
   const nextTierMin = nextTier?.minStake || 0;
-  const progressToNext = nextTier 
+  const progressToNext = nextTier
     ? Math.min(100, ((stakedAmount - currentTierMin) / (nextTierMin - currentTierMin)) * 100)
     : 100;
   const amountToNext = nextTier ? nextTierMin - stakedAmount : 0;
@@ -103,15 +104,19 @@ export default function PositionsPage() {
                 You haven't staked any STX yet. Start staking to earn AGS rewards and unlock tier benefits.
               </p>
               <div className="flex gap-4 justify-center">
-                <Button as="a" href="/stake" size="lg">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  Start Staking
-                </Button>
-                <Button as="a" href="/tiers" variant="secondary" size="lg">
-                  View Tiers
-                </Button>
+                <Link href="/stake">
+                  <Button size="lg">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Start Staking
+                  </Button>
+                </Link>
+                <Link href="/tiers">
+                  <Button variant="secondary" size="lg">
+                    View Tiers
+                  </Button>
+                </Link>
               </div>
             </Card>
           ) : (
@@ -120,7 +125,7 @@ export default function PositionsPage() {
               <Card>
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div className="flex items-center gap-4">
-                    <div 
+                    <div
                       className="w-14 h-14 rounded-xl flex items-center justify-center"
                       style={{ backgroundColor: `${TIERS[tier]?.color}15` }}
                     >
@@ -133,13 +138,13 @@ export default function PositionsPage() {
                       <p className="text-gray-400 text-sm">Started {blocksToTime(stakeDuration)} ago · Block {formatBlockHeight(position.stakeStartBlock)}</p>
                     </div>
                   </div>
-                  <Badge 
-                    size="lg"
-                    style={{ backgroundColor: `${TIERS[tier]?.color}20`, color: TIERS[tier]?.color }}
+                  <div
+                    className="px-4 py-2 bg-opacity-10 border border-opacity-20 rounded-xl text-sm font-semibold flex items-center"
+                    style={{ backgroundColor: `${TIERS[tier]?.color}20`, color: TIERS[tier]?.color, borderColor: `${TIERS[tier]?.color}30` }}
                   >
                     <span className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: TIERS[tier]?.color }} />
                     {TIERS[tier]?.name} Tier
-                  </Badge>
+                  </div>
                 </div>
 
                 {/* Stats Grid */}
@@ -196,48 +201,54 @@ export default function PositionsPage() {
                       <span className="text-gray-400 text-sm">{amountToNext.toLocaleString()} STX more</span>
                     )}
                   </div>
-                  <Progress 
-                    value={progressToNext} 
+                  <Progress
+                    value={progressToNext}
                     color={nextTier ? 'purple' : 'green'}
                     size="md"
                   />
                   {nextTier && (
                     <p className="text-xs text-gray-500 mt-2">
-                      Upgrade to {nextTier.name} tier for {calculateAPY(nextTier.minStake * 1e6, tier + 1)}% APY
+                      Upgrade to {nextTier.name} tier for {calculateAPY(BigInt(Math.floor(nextTier.minStake * 1e6)), tier + 1)}% APY
                     </p>
                   )}
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button as="a" href="/stake" className="flex-1" size="lg">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Stake More
-                  </Button>
-                  <Button as="a" href="/claim" variant="success" className="flex-1" size="lg">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Claim Rewards
-                  </Button>
-                  <Button as="a" href="/withdraw" variant="secondary" className="flex-1" size="lg">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                    </svg>
-                    Withdraw
-                  </Button>
+                  <Link href="/stake" className="flex-1">
+                    <Button className="w-full" size="lg">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      Stake More
+                    </Button>
+                  </Link>
+                  <Link href="/claim" className="flex-1">
+                    <Button variant="success" className="w-full" size="lg">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Claim Rewards
+                    </Button>
+                  </Link>
+                  <Link href="/withdraw" className="flex-1">
+                    <Button variant="secondary" className="w-full" size="lg">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                      </svg>
+                      Withdraw
+                    </Button>
+                  </Link>
                 </div>
               </Card>
 
               {/* Tier Benefits Info */}
               <Card>
-                <CardHeader 
+                <CardHeader
                   title="Your Tier Benefits"
                   subtitle={`As a ${TIERS[tier]?.name} member, you enjoy these perks`}
                   icon={
-                    <div 
+                    <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center"
                       style={{ backgroundColor: `${TIERS[tier]?.color}15` }}
                     >

@@ -16,6 +16,9 @@ depends_on = ["sip-010-trait"]
 path = "contracts/aegis-vault-v3.clar"
 depends_on = ["aegis-token-v3", "sip-010-trait"]
 
+[contracts.aegis-treasury]
+path = "contracts/aegis-treasury-v2-15.clar"
+
 [repl.analysis]
 passes = ["check_checker"]
 

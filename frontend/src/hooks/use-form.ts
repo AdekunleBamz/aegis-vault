@@ -184,9 +184,10 @@ export function useFormFields<T extends string>(
     }, {} as Record<T, string>);
   }, [fields]);
 
-  const hasErrors = Object.values(fields).some(field => field.error);
-  const isDirty = Object.values(fields).some(field => field.dirty);
-  const isTouched = Object.values(fields).some(field => field.touched);
+  const fieldValues = Object.values(fields) as FieldState[];
+  const hasErrors = fieldValues.some(field => field.error);
+  const isDirty = fieldValues.some(field => field.dirty);
+  const isTouched = fieldValues.some(field => field.touched);
 
   return {
     fields,

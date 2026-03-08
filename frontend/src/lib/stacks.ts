@@ -1,4 +1,4 @@
-import { StacksMainnet } from '@stacks/network';
+import { STACKS_MAINNET } from '@stacks/network';
 // Note: If Vercel still fails, we may need to use new StacksMainnet() from a different subpath
 import {
   openContractCall,
@@ -14,7 +14,7 @@ import {
 } from '@stacks/transactions';
 import { CONTRACTS } from './constants';
 
-const network = new StacksMainnet();
+const network = STACKS_MAINNET;
 
 export interface TransactionResult {
   txId: string;

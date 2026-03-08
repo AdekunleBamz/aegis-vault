@@ -8,6 +8,7 @@ import { formatSTX, toMicroSTX } from '@/lib/format';
 import { TIERS } from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -112,7 +113,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
         </div>
         <h3 className="text-2xl font-bold text-white mb-2">Stake Submitted!</h3>
         <p className="text-gray-400 mb-6">Your transaction has been submitted to the network.</p>
-        
+
         <div className="bg-gray-900/50 rounded-xl p-4 mb-6 max-w-sm mx-auto">
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-400">Amount Staked</span>
@@ -137,10 +138,12 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
             </svg>
           </a>
         )}
-        
+
         <div className="flex gap-3 justify-center">
           <Button onClick={handleReset} variant="secondary">Stake More</Button>
-          <Button as="a" href="/dashboard">View Dashboard</Button>
+          <Link href="/dashboard">
+            <Button>View Dashboard</Button>
+          </Link>
         </div>
       </Card>
     );
@@ -185,7 +188,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
               </div>
             </div>
           </div>
-          
+
           <div className="flex gap-3">
             <Button variant="secondary" onClick={() => setStep('input')} className="flex-1">
               Back
@@ -202,7 +205,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
   return (
     <Card>
       <CardHeader title="Stake STX" subtitle="Earn AGS rewards by staking your STX" />
-      
+
       <div className="space-y-5">
         <div>
           <Input
@@ -214,7 +217,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
             inputSize="lg"
             suffix={<span className="text-gray-400 font-medium">STX</span>}
           />
-          
+
           {/* Quick amount buttons */}
           <div className="flex gap-2 mt-3">
             {quickAmounts.map((qa) => (
@@ -228,7 +231,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
               </button>
             ))}
           </div>
-          
+
           <p className="text-gray-500 text-sm mt-3">
             Available: {formatSTX(stxBalance)} STX
           </p>
@@ -240,7 +243,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
             <div className="bg-gray-900/50 rounded-xl p-4">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div 
+                  <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: TIERS[tier]?.color }}
                   />
@@ -250,7 +253,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
                 </div>
                 <span className="text-green-400 font-bold">{apy}% APY</span>
               </div>
-              
+
               {/* Next tier progress */}
               {nextTierInfo && (
                 <div className="mt-3 pt-3 border-t border-gray-700/50">

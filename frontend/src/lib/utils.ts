@@ -228,7 +228,7 @@ export function groupBy<T>(array: T[], key: keyof T): Record<string, T[]> {
  * Removes duplicates from an array
  */
 export function unique<T>(array: T[]): T[] {
-  return [...new Set(array)];
+  return Array.from(new Set(array));
 }
 
 /**

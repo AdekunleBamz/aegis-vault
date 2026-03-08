@@ -1,6 +1,6 @@
 export { Loading, LoadingOverlay, LoadingSkeleton } from './loading';
 export { Modal, ConfirmModal } from './modal';
-export { ToastProvider, useToast, toast } from './toast';
+export { ToastProvider, useToast } from './toast';
 export { Tabs, VerticalTabs } from './tabs';
 export { Input, TextArea } from './input';
 export { Badge, StatusBadge, CounterBadge, BadgeGroup } from './badge';
@@ -50,4 +50,5 @@ export { Breadcrumbs as NavBreadcrumbs, Pagination as NavPagination, SimplePagin
 export * from './skeletons';
 
 // Rich Table Components
-export { RichTable, TableColumn, TablePagination } from './rich-table';
+export { RichTable } from './rich-table';
+export type { TableColumn, TablePagination } from './rich-table';

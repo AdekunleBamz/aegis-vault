@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -25,19 +25,19 @@ const variantClasses = {
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ 
-    label, 
-    error, 
+  ({
+    label,
+    error,
     helperText,
-    suffix, 
+    suffix,
     prefix,
     variant = 'default',
     inputSize = 'md',
     showCharCount = false,
     maxLength,
-    className = '', 
+    className = '',
     onChange,
-    ...props 
+    ...props
   }, ref) => {
     const [charCount, setCharCount] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
@@ -50,9 +50,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className={`block text-sm mb-2 transition-colors ${
-            isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
-          }`}>
+          <label className={`block text-sm mb-2 transition-colors ${isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
+            }`}>
             {label}
           </label>
         )}
@@ -129,9 +128,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className={`block text-sm mb-2 transition-colors ${
-            isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
-          }`}>
+          <label className={`block text-sm mb-2 transition-colors ${isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
+            }`}>
             {label}
           </label>
         )}

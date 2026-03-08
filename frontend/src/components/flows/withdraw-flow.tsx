@@ -6,6 +6,7 @@ import { usePositions } from '@/hooks/use-positions';
 import { useWithdraw } from '@/hooks/use-withdraw';
 import { formatSTX, toMicroSTX } from '@/lib/format';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -16,17 +17,17 @@ interface WithdrawFlowProps {
 }
 
 // Timeline step component
-function TimelineStep({ 
-  step, 
-  title, 
-  description, 
-  isActive, 
-  isCompleted 
-}: { 
-  step: number; 
-  title: string; 
-  description: string; 
-  isActive: boolean; 
+function TimelineStep({
+  step,
+  title,
+  description,
+  isActive,
+  isCompleted
+}: {
+  step: number;
+  title: string;
+  description: string;
+  isActive: boolean;
   isCompleted: boolean;
 }) {
   return (
@@ -128,7 +129,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
         </div>
         <h3 className="text-2xl font-bold text-white mb-2">Withdrawal Requested!</h3>
         <p className="text-gray-400 mb-6">Your funds will be available after the cooldown period.</p>
-        
+
         {/* Next Steps */}
         <div className="bg-gray-900/50 rounded-xl p-5 max-w-sm mx-auto mb-6 text-left">
           <h4 className="text-white font-medium mb-4">What happens next?</h4>
@@ -167,10 +168,12 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
             </svg>
           </a>
         )}
-        
+
         <div className="flex gap-3 justify-center">
           <Button onClick={handleReset} variant="secondary">Withdraw More</Button>
-          <Button as="a" href="/positions">View Positions</Button>
+          <Link href="/positions">
+            <Button>View Positions</Button>
+          </Link>
         </div>
       </Card>
     );
@@ -213,7 +216,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
               </div>
             </div>
           </div>
-          
+
           {/* Warning Notice */}
           <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 flex items-start gap-3">
             <svg className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,12 +225,12 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
             <div>
               <p className="text-yellow-400 font-medium text-sm">Cooldown Period Required</p>
               <p className="text-gray-400 text-sm mt-1">
-                After requesting, you must wait for the cooldown period before completing the withdrawal. 
+                After requesting, you must wait for the cooldown period before completing the withdrawal.
                 Your rewards will continue during this time.
               </p>
             </div>
           </div>
-          
+
           <div className="flex gap-3">
             <Button variant="secondary" onClick={() => setStep('input')} className="flex-1">
               Back
@@ -244,7 +247,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
   return (
     <Card>
       <CardHeader title="Withdraw STX" subtitle="Unstake your tokens and reclaim your STX" />
-      
+
       <div className="space-y-5">
         {/* Current Stake Summary */}
         <div className="bg-gray-900/50 rounded-xl p-4">
@@ -271,7 +274,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
             inputSize="lg"
             suffix={<span className="text-gray-400 font-medium">STX</span>}
           />
-          
+
           {/* Quick amount buttons */}
           <div className="flex gap-2 mt-3">
             {quickAmounts.map((qa) => (
