@@ -1,4 +1,5 @@
 import { StacksMainnet } from '@stacks/network';
+// Note: If Vercel still fails, we may need to use new StacksMainnet() from a different subpath
 import {
   openContractCall,
   ContractCallOptions,
@@ -37,7 +38,7 @@ export async function executeStake(
     ];
 
     const [contractAddr, contractName] = CONTRACTS.STAKING.split('.');
-    
+
     const options: ContractCallOptions = {
       network,
       contractAddress: contractAddr,
@@ -66,7 +67,7 @@ export async function executeWithdrawRequest(
 ): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
     const [contractAddr, contractName] = CONTRACTS.WITHDRAWALS.split('.');
-    
+
     const options: ContractCallOptions = {
       network,
       contractAddress: contractAddr,
@@ -92,7 +93,7 @@ export async function executeWithdrawRequest(
 export async function executeWithdrawComplete(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
     const [contractAddr, contractName] = CONTRACTS.WITHDRAWALS.split('.');
-    
+
     const options: ContractCallOptions = {
       network,
       contractAddress: contractAddr,
@@ -118,7 +119,7 @@ export async function executeWithdrawComplete(): Promise<TransactionResult> {
 export async function executeClaimRewards(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
     const [contractAddr, contractName] = CONTRACTS.REWARDS.split('.');
-    
+
     const options: ContractCallOptions = {
       network,
       contractAddress: contractAddr,

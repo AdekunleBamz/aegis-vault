@@ -3,24 +3,26 @@
 import { useMemo, useState } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import { StacksMainnet } from '@stacks/network';
 import { useWallet } from '@/context/wallet-context';
 import { useTransactions } from '@/hooks/use-transactions';
 import { formatRelativeTime, truncateAddress, formatSTX, formatAGS } from '@/lib/format';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { Tabs } from '@/components/ui/tabs';
 
 // Action configuration
-const ACTION_CONFIG: Record<string, { 
-  name: string; 
-  icon: JSX.Element; 
+const ACTION_CONFIG: Record<string, {
+  name: string;
+  icon: JSX.Element;
   color: string;
   bgColor: string;
 }> = {
-  stake: { 
-    name: 'Stake', 
+  stake: {
+    name: 'Stake',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -29,8 +31,8 @@ const ACTION_CONFIG: Record<string, {
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
   },
-  'request-withdrawal': { 
-    name: 'Withdrawal Request', 
+  'request-withdrawal': {
+    name: 'Withdrawal Request',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -39,8 +41,8 @@ const ACTION_CONFIG: Record<string, {
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/20',
   },
-  'complete-withdrawal': { 
-    name: 'Withdrawal Complete', 
+  'complete-withdrawal': {
+    name: 'Withdrawal Complete',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -49,8 +51,8 @@ const ACTION_CONFIG: Record<string, {
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
   },
-  'claim-rewards': { 
-    name: 'Claim Rewards', 
+  'claim-rewards': {
+    name: 'Claim Rewards',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -90,7 +92,7 @@ export default function HistoryPage() {
   // Filter transactions
   const filteredTransactions = useMemo(() => {
     if (filter === 'all') return transactions;
-    
+
     return transactions.filter((tx) => {
       const fn = tx.contract_call?.function_name || '';
       if (filter === 'stake') return fn === 'stake';
@@ -105,7 +107,7 @@ export default function HistoryPage() {
     const successful = transactions.filter(tx => tx.tx_status === 'success').length;
     const pending = transactions.filter(tx => tx.tx_status === 'pending').length;
     const failed = transactions.filter(tx => tx.tx_status !== 'success' && tx.tx_status !== 'pending').length;
-    
+
     return { total: transactions.length, successful, pending, failed };
   }, [transactions]);
 
@@ -176,8 +178,8 @@ export default function HistoryPage() {
                   key={f}
                   onClick={() => setFilter(f)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                    ${filter === f 
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
+                    ${filter === f
+                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                       : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
                     }`}
                 >
@@ -210,20 +212,22 @@ export default function HistoryPage() {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">No Transactions Found</h3>
                 <p className="text-gray-400 mb-6">
-                  {filter === 'all' 
-                    ? "You haven't made any transactions yet. Start by staking some STX!" 
+                  {filter === 'all'
+                    ? "You haven't made any transactions yet. Start by staking some STX!"
                     : `No ${filter} transactions found.`
                   }
                 </p>
                 {filter === 'all' && (
-                  <Button as="a" href="/stake">Start Staking</Button>
+                  <Link href="/stake">
+                    <Button>Start Staking</Button>
+                  </Link>
                 )}
               </div>
             ) : (
               <div className="divide-y divide-gray-700/50">
                 {filteredTransactions.map((tx) => {
                   const action = getActionConfig(tx.contract_call?.function_name || '');
-                  
+
                   return (
                     <a
                       key={tx.tx_id}
@@ -236,7 +240,7 @@ export default function HistoryPage() {
                       <div className={`w-12 h-12 ${action.bgColor} rounded-xl flex items-center justify-center flex-shrink-0`}>
                         <span className={action.color}>{action.icon}</span>
                       </div>
-                      
+
                       {/* Details */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
@@ -251,7 +255,7 @@ export default function HistoryPage() {
                           <span>Block {tx.block_height?.toLocaleString()}</span>
                         </div>
                       </div>
-                      
+
                       {/* Status & Time */}
                       <div className="text-right flex-shrink-0">
                         <Badge variant={getStatusVariant(tx.tx_status)} size="sm">
@@ -277,7 +281,7 @@ export default function HistoryPage() {
           {filteredTransactions.length >= 50 && (
             <p className="text-center text-gray-500 text-sm mt-6">
               Showing latest 50 transactions. View more on{' '}
-              <a 
+              <a
                 href={`https://explorer.stacks.co/address/${address}?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
