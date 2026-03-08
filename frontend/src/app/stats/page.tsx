@@ -80,9 +80,9 @@ export default function StatsPage() {
           <div>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Contract Addresses</h2>
-              <a 
-                href="https://explorer.stacks.co" 
-                target="_blank" 
+              <a
+                href="https://explorer.stacks.co"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1"
               >
@@ -111,7 +111,7 @@ export default function StatsPage() {
                     <tr key={i} className="hover:bg-gray-800/30 transition-colors">
                       <td className="p-4 text-white font-medium">{contract.name}</td>
                       <td className="p-4">
-                        <a 
+                        <a
                           href={`https://explorer.stacks.co/txid/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.${contract.address}?chain=mainnet`}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -147,55 +147,10 @@ export default function StatsPage() {
               <div>
                 <h3 className="text-amber-400 font-semibold mb-1">Security First</h3>
                 <p className="text-gray-400 text-sm">
-                  All smart contracts are open source and deployed on Stacks blockchain, 
+                  All smart contracts are open source and deployed on Stacks blockchain,
                   secured by Bitcoin&apos;s proof-of-work. Verify contract code on the explorer.
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
-}a 
-                        href="https://explorer.stacks.co/txid/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15?chain=mainnet"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline font-mono text-sm"
-                      >
-                        SP3FKNEZ...aegis-rewards-v2-15
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="p-4 text-white">Token (AGS)</td>
-                    <td className="p-4">
-                      <a 
-                        href="https://explorer.stacks.co/txid/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v2-15?chain=mainnet"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline font-mono text-sm"
-                      >
-                        SP3FKNEZ...aegis-token-v2-15
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="p-4 text-white">Treasury</td>
-                    <td className="p-4">
-                      <a 
-                        href="https://explorer.stacks.co/txid/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15?chain=mainnet"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline font-mono text-sm"
-                      >
-                        SP3FKNEZ...aegis-treasury-v2-15
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>

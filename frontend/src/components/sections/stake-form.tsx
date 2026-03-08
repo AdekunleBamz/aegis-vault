@@ -41,11 +41,6 @@ export function StakeForm() {
       return;
     }
 
-  const handleStake = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSuccess(null);
-    setValidationError(null);
-
     if (hasError) {
       setValidationError(hasError);
       return;
@@ -96,11 +91,10 @@ export function StakeForm() {
                     placeholder="0.00"
                     min="0"
                     step="0.000001"
-                    className={`w-full bg-gray-900 border rounded-lg px-4 py-3 text-white text-lg focus:outline-none transition-colors ${
-                      hasError 
-                        ? 'border-red-500/50 focus:border-red-500' 
+                    className={`w-full bg-gray-900 border rounded-lg px-4 py-3 text-white text-lg focus:outline-none transition-colors ${hasError
+                        ? 'border-red-500/50 focus:border-red-500'
                         : 'border-gray-700 focus:border-blue-500'
-                    }`}
+                      }`}
                     aria-invalid={!!hasError}
                     aria-describedby={hasError ? 'amount-error' : undefined}
                   />

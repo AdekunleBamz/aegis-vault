@@ -1,6 +1,6 @@
 [project]
 name = "aegis-vault"
-description = "Aegis Vault - Secure STX Staking Platform with AGS Token Rewards"
+description = "Aegis Vault v3 - Secure STX Staking Platform"
 authors = []
 telemetry = false
 cache_dir = "./.cache"
@@ -8,40 +8,13 @@ cache_dir = "./.cache"
 [contracts.sip-010-trait]
 path = "contracts/traits/sip-010-trait.clar"
 
-[contracts.aegis-sip010-trait]
-path = "contracts/traits/aegis-sip010-trait.clar"
-
-# V2 Contracts (legacy)
-[contracts.aegis-token-v2]
-path = "contracts/aegis-token-v2.clar"
-depends_on = ["aegis-sip010-trait"]
-
-[contracts.aegis-treasury-v2]
-path = "contracts/aegis-treasury-v2.clar"
-
-[contracts.aegis-vault-v2]
-path = "contracts/aegis-vault-v2.clar"
-depends_on = ["aegis-token-v2", "aegis-treasury-v2"]
-
-# V2-1.5 Contracts (split architecture)
-[contracts.aegis-token-v2-15]
-path = "contracts/aegis-token-v2-15.clar"
+[contracts.aegis-token-v3]
+path = "contracts/aegis-token-v3.clar"
 depends_on = ["sip-010-trait"]
 
-[contracts.aegis-treasury-v2-15]
-path = "contracts/aegis-treasury-v2-15.clar"
-depends_on = ["sip-010-trait"]
-
-[contracts.aegis-staking-v2-15]
-path = "contracts/aegis-staking-v2-15.clar"
-
-[contracts.aegis-withdrawals-v2-15]
-path = "contracts/aegis-withdrawals-v2-15.clar"
-depends_on = ["aegis-staking-v2-15", "aegis-treasury-v2-15"]
-
-[contracts.aegis-rewards-v2-15]
-path = "contracts/aegis-rewards-v2-15.clar"
-depends_on = ["aegis-staking-v2-15", "aegis-token-v2-15"]
+[contracts.aegis-vault-v3]
+path = "contracts/aegis-vault-v3.clar"
+depends_on = ["aegis-token-v3", "sip-010-trait"]
 
 [repl.analysis]
 passes = ["check_checker"]

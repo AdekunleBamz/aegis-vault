@@ -21,7 +21,7 @@ export default function TiersPage() {
               Staking Tiers
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Unlock exclusive benefits and higher rewards by reaching higher tiers. 
+              Unlock exclusive benefits and higher rewards by reaching higher tiers.
               The more you stake, the more you earn.
             </p>
           </div>
@@ -43,7 +43,7 @@ export default function TiersPage() {
                   <tr key={tier.name} className="border-b border-gray-800/50 hover:bg-gray-800/30 transition-colors">
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-3">
-                        <div 
+                        <div
                           className="w-10 h-10 rounded-lg flex items-center justify-center font-bold"
                           style={{ backgroundColor: `${tier.color}20`, color: tier.color }}
                         >
@@ -71,26 +71,26 @@ export default function TiersPage() {
           {/* Tier Cards (Mobile + Desktop) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {TIERS.map((tier, index) => (
-              <Card 
+              <Card
                 key={tier.name}
                 className="relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300"
                 style={{ borderColor: `${tier.color}40` }}
               >
                 {/* Background Decoration */}
-                <div 
+                <div
                   className="absolute top-0 right-0 w-40 h-40 opacity-5 rounded-full -mr-16 -mt-16 group-hover:opacity-10 transition-opacity"
                   style={{ backgroundColor: tier.color }}
                 />
-                <div 
+                <div
                   className="absolute bottom-0 left-0 w-24 h-24 opacity-5 rounded-full -ml-8 -mb-8"
                   style={{ backgroundColor: tier.color }}
                 />
-                
+
                 <div className="relative">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                      <div 
+                      <div
                         className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold shadow-lg"
                         style={{ backgroundColor: `${tier.color}20`, color: tier.color }}
                       >
@@ -177,13 +177,6 @@ export default function TiersPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
-}
           </div>
         </div>
       </main>
