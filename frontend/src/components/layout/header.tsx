@@ -1,134 +1,172 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useWallet } from '@/context/wallet-context';
 import { truncateAddress } from '@/lib/format';
+import { cn } from '@/lib/utils';
+import {
+  Menu,
+  X,
+  Wallet,
+  LogOut,
+  LayoutDashboard,
+  Layers,
+  History,
+  BarChart3,
+  ShieldCheck,
+  ChevronRight
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function Header() {
   const { address, isConnected, isConnecting, connect, disconnect } = useWallet();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/stake', label: 'Stake' },
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/positions', label: 'Positions' },
-    { href: '/stats', label: 'Stats' },
-    { href: '/tiers', label: 'Tiers' },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/stake', label: 'Stake', icon: Layers },
+    { href: '/positions', label: 'Positions', icon: History },
+    { href: '/stats', label: 'Stats', icon: BarChart3 },
+    { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
   ];
 
   return (
-    <header className="border-b border-gray-800/50 bg-gray-900/80 backdrop-blur-xl sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl border-border py-3"
+          : "bg-transparent border-transparent py-5"
+      )}
+    >
+      <div className="container flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-2.5 group">
           <div className="relative">
-            <img 
-              src="/images/logo.png" 
-              alt="Aegis Vault Logo" 
-              className="w-10 h-10 object-contain group-hover:scale-105 transition-transform"
-              onError={(e) => {
-                // Fallback to text logo if image fails to load
-                e.currentTarget.style.display = 'none';
-                const fallback = document.createElement('div');
-                fallback.className = 'w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow';
-                fallback.innerHTML = '<span className="text-white font-bold text-xl">A</span>';
-                e.currentTarget.parentElement?.appendChild(fallback);
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity" />
+            <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20 group-hover:shadow-aegis-blue/40 transition-all duration-500 group-hover:rotate-6">
+              <ShieldCheck className="w-6 h-6 text-white" />
+            </div>
+            <div className="absolute inset-0 bg-aegis-blue/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <span className="text-xl font-bold tracking-tight text-gradient">
             Aegis Vault
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-            >
-              {link.label}
-            </a>
-          ))}
+        <nav className="hidden md:flex items-center gap-1 bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "px-4 py-2 text-sm font-medium rounded-full transition-all flex items-center gap-2",
+                  isActive
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground hover:bg-background/50"
+                )}
+              >
+                <link.icon className="w-4 h-4" />
+                {link.label}
+              </Link>
+            )
+          })}
         </nav>
 
         {/* Wallet / Mobile Toggle */}
         <div className="flex items-center gap-3">
           {isConnected ? (
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center gap-2 px-3 py-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-sm text-gray-300 font-mono">
+            <div className="flex items-center gap-2">
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-full border border-border/50 backdrop-blur-sm">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-xs font-medium tabular-nums">
                   {truncateAddress(address || '')}
                 </span>
               </div>
               <button
                 onClick={disconnect}
-                className="px-4 py-2 text-sm bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg hover:bg-red-500/20 hover:border-red-500/30 transition-all"
+                className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full transition-all border border-transparent hover:border-destructive/20"
+                title="Disconnect"
               >
-                Disconnect
+                <LogOut className="w-4 h-4" />
               </button>
             </div>
           ) : (
             <button
               onClick={connect}
               disabled={isConnecting}
-              className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative px-5 py-2 bg-foreground text-background rounded-full font-semibold text-sm hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
             >
-              {isConnecting ? (
-                <span className="flex items-center gap-2">
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Connecting...
-                </span>
-              ) : (
-                'Connect Wallet'
-              )}
+              <span className="relative z-10 flex items-center gap-2">
+                {isConnecting ? (
+                  <div className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin" />
+                ) : (
+                  <Wallet className="w-4 h-4" />
+                )}
+                {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </button>
           )}
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
-            aria-label="Toggle menu"
+            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 rounded-full border border-border/50"
           >
-            {mobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-800/50 bg-gray-900/95 backdrop-blur-xl animate-fade-in">
-          <nav className="container mx-auto px-4 py-4 flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl overflow-hidden"
+          >
+            <nav className="container py-6 flex flex-col gap-2">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      "px-4 py-3 text-base font-medium rounded-2xl transition-all flex items-center justify-between",
+                      isActive
+                        ? "bg-muted text-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    )}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <link.icon className="w-5 h-5" />
+                      {link.label}
+                    </div>
+                    <ChevronRight className="w-4 h-4 opacity-50" />
+                  </Link>
+                )
+              })}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
