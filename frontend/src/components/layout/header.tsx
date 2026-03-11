@@ -4,8 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useWallet } from '@/context/wallet-context';
-import { truncateAddress } from '@/lib/format';
+import { truncateAddress, formatSTX } from '@/lib/format';
 import { cn } from '@/lib/utils';
+import { useBalances } from '@/hooks/use-balances';
+import { useNetwork } from '@/hooks/use-network';
 import {
   Menu,
   X,
@@ -24,6 +26,8 @@ import { NetworkBadge } from '@/components/ui/network-badge';
 
 export function Header() {
   const { address, isConnected, isConnecting, connect, disconnect } = useWallet();
+  const { stxBalance } = useBalances();
+  const { blockHeight } = useNetwork();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
@@ -124,11 +128,37 @@ export function Header() {
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
                     className="absolute right-0 mt-3 w-56 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
                   >
-                    <div className="px-4 py-3 border-b border-border/50 mb-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Network</p>
-                      <div className="flex items-center gap-2">
-                        <Globe className="w-3 h-3 text-aegis-blue" />
-                        <span className="text-xs font-bold">Stacks Mainnet</span>
+                    <div className="px-4 py-3 border-b border-border/50 mb-1 space-y-3">
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1.5">Balances</p>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-muted-foreground">STX</span>
+                            <span className="text-xs font-black tabular-nums">{formatSTX(stxBalance)}</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-muted-foreground">AGS</span>
+                            <span className="text-xs font-black tabular-nums">0.00</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1.5">Network</p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            <Globe className="w-3 h-3 text-aegis-blue" />
+                            <span className="text-xs font-bold">Mainnet</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                            <span className="text-[10px] font-black text-muted-foreground">24ms</span>
+                          </div>
+                        </div>
+                        <div className="mt-1 flex items-center justify-between">
+                          <span className="text-[10px] font-bold text-muted-foreground italic">Block Height</span>
+                          <span className="text-[10px] font-black tabular-nums text-aegis-blue">{blockHeight}</span>
+                        </div>
                       </div>
                     </div>
 
