@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
 import { AppProviders } from '@/components/providers';
+import { NetworkWarning } from '@/components/ui/network-warning';
 
 const outfit = Outfit({ subsets: ['latin'] });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={outfit.className}>
         <AppProviders>
+          <NetworkWarning />
           {children}
         </AppProviders>
       </body>
