@@ -1,115 +1,157 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useWallet } from '@/context/wallet-context';
+import {
+  ArrowRight,
+  Zap,
+  ShieldCheck,
+  Globe,
+  ChevronRight,
+  TrendingUp,
+  Clock,
+  LayoutGrid
+} from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function Hero() {
   const { isConnected, connect } = useWallet();
 
+  const stats = [
+    { value: '12%', label: 'Base APY', icon: TrendingUp, color: 'text-aegis-blue' },
+    { value: '24%', label: 'Max APY', icon: Zap, color: 'text-aegis-purple' },
+    { value: '3-30', label: 'Days Lockup', icon: Clock, color: 'text-aegis-indigo' },
+    { value: '4', label: 'Reward Tiers', icon: LayoutGrid, color: 'text-aegis-cyan' },
+  ];
+
   return (
-    <section className="py-20 px-4 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
+    <section className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[90vh] flex items-center">
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-aegis-blue/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute top-[20%] -right-[10%] w-[35%] h-[35%] bg-aegis-purple/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute -bottom-[10%] left-[20%] w-[45%] h-[45%] bg-aegis-indigo/5 rounded-full blur-[140px]" />
       </div>
 
-      <div className="container mx-auto text-center relative z-10">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm mb-8 animate-fade-in">
-          <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-          Live on Stacks Mainnet
-        </div>
-
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Stake STX
-          </span>
-          <br />
-          <span className="text-white">Earn AGS Rewards</span>
-        </h1>
-
-        <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          Aegis Vault is a decentralized staking protocol on Stacks. Stake your
-          STX tokens and earn AGS rewards with competitive APY rates.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          {isConnected ? (
-            <a
-              href="/stake"
-              className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium text-lg hover:opacity-90 transition-all hover-lift glow-blue"
-            >
-              <span className="flex items-center justify-center gap-2">
-                Start Staking
-                <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </span>
-            </a>
-          ) : (
-            <button
-              onClick={connect}
-              className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium text-lg hover:opacity-90 transition-all hover-lift glow-blue"
-            >
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                Connect Wallet
-              </span>
-            </button>
-          )}
-          <a
-            href="/stats"
-            className="px-8 py-4 border border-gray-700 text-white rounded-xl font-medium text-lg hover:bg-gray-800/50 hover:border-gray-600 transition-all glass"
+      <div className="container relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-border bg-muted/50 backdrop-blur-md mb-8 group cursor-default"
           >
-            View Protocol Stats
-          </a>
-        </div>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+              Mainnet Protocol Live
+              <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            </span>
+          </motion.div>
 
-        {/* Stats Grid */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
-          {[
-            { value: '12%', label: 'Base APY', color: 'from-blue-400 to-blue-600' },
-            { value: '24%', label: 'Max APY', color: 'from-green-400 to-emerald-600' },
-            { value: '3-30', label: 'Days Lockup', color: 'from-purple-400 to-purple-600' },
-            { value: '4', label: 'Reward Tiers', color: 'from-pink-400 to-pink-600' },
-          ].map((stat, i) => (
-            <div 
-              key={stat.label}
-              className="glass rounded-xl p-6 hover-lift animate-fade-in"
-              style={{ animationDelay: `${0.4 + i * 0.1}s` }}
+          {/* Main Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1]"
+          >
+            Secure Your STX. <br />
+            <span className="text-gradient">Maximize Rewards.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
+          >
+            Aegis Vault is a non-custodial staking primitive for the Stacks ecosystem.
+            Earn institutional-grade yield with flexible lockup periods.
+          </motion.p>
+
+          {/* Action Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            {isConnected ? (
+              <Link
+                href="/stake"
+                className="group relative px-8 py-4 bg-foreground text-background rounded-full font-bold text-lg hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-blue)/0.5)] transition-all overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Start Staking Now
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </Link>
+            ) : (
+              <button
+                onClick={connect}
+                className="group relative px-8 py-4 bg-foreground text-background rounded-full font-bold text-lg hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-blue)/0.5)] transition-all overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Wallet className="w-5 h-5" />
+                  Connect to Stake
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </button>
+            )}
+            <Link
+              href="/stats"
+              className="px-8 py-4 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground font-bold text-lg hover:bg-muted/50 transition-all flex items-center justify-center gap-2"
             >
-              <div className={`text-3xl md:text-4xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent tabular-nums`}>
-                {stat.value}
-              </div>
-              <div className="text-gray-400 text-sm mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </div>
+              Analyze Stats
+            </Link>
+          </motion.div>
 
-        {/* Trust indicators */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-gray-500 text-sm animate-fade-in" style={{ animationDelay: '0.8s' }}>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            Non-Custodial
+          {/* Stats Grid */}
+          <div className="mt-24 grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 + i * 0.1 }}
+                className="p-6 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default"
+              >
+                <stat.icon className={cn("w-5 h-5 mb-4 opacity-70 group-hover:opacity-100 transition-opacity", stat.color)} />
+                <div className="text-3xl font-black tabular-nums tracking-tighter mb-1">
+                  {stat.value}
+                </div>
+                <div className="text-xs uppercase tracking-widest font-bold text-muted-foreground">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
           </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            Audited Contracts
-          </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            Open Source
-          </div>
+
+          {/* Trust indicators */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-16 flex flex-wrap items-center justify-center gap-8 text-xs font-bold uppercase tracking-widest text-muted-foreground/50"
+          >
+            <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
+              <ShieldCheck className="w-4 h-4 text-green-500/50 group-hover:text-green-500 transition-colors" />
+              Smart Contract Audited
+            </div>
+            <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
+              <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" />
+              Fully Decentralized
+            </div>
+            <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
+              <Zap className="w-4 h-4 text-purple-500/50 group-hover:text-purple-500 transition-colors" />
+              Real-time Rewards
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
