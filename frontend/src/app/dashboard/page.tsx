@@ -1,108 +1,186 @@
+'use client';
+
+import React from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
 import { RecentActivity } from '@/components/widgets/recent-activity';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
+import { KPICard } from '@/components/dashboard/kpi-card';
+import { RewardChart } from '@/components/dashboard/reward-chart';
+import {
+  Zap,
+  Target,
+  TrendingUp,
+  Wallet,
+  ArrowUpRight,
+  ShieldCheck,
+  Coins,
+  History,
+  LayoutDashboard
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { useWallet } from '@/context/wallet-context';
 
 export default function DashboardPage() {
+  const { isConnected } = useWallet();
+
+  const mockRewardData = [10, 15, 12, 18, 25, 30, 28, 35, 45, 52];
+  const mockRewardLabels = ['1D', '2D', '3D', '4D', '5D', '6D', '7D', '8D', '9D', '10D'];
+
   const quickActions = [
     {
       href: '/stake',
       title: 'Stake More',
       description: 'Increase your staked position',
-      gradient: 'from-blue-500/10 to-purple-500/10',
-      border: 'border-blue-500/20 hover:border-blue-500/40',
-      icon: (
-        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-        </svg>
-      ),
+      variant: 'blue',
+      icon: Layers,
     },
     {
       href: '/withdraw',
       title: 'Withdraw',
       description: 'Unstake your STX tokens',
-      gradient: 'from-orange-500/10 to-red-500/10',
-      border: 'border-orange-500/20 hover:border-orange-500/40',
-      icon: (
-        <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      ),
+      variant: 'purple',
+      icon: ArrowUpRight,
     },
     {
       href: '/claim',
       title: 'Claim Rewards',
       description: 'Collect your AGS earnings',
-      gradient: 'from-green-500/10 to-emerald-500/10',
-      border: 'border-green-500/20 hover:border-green-500/40',
-      icon: (
-        <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
+      variant: 'cyan',
+      icon: Coins,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       <Header />
-      <main className="flex-1 py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
+
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-aegis-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+      <main className="flex-1 py-32 px-4 relative z-10">
+        <div className="container max-w-7xl mx-auto">
           {/* Page Header */}
-          <div className="mb-8 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs mb-4">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-              Connected
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="px-3 py-1 bg-muted/50 border border-border/50 rounded-full text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                <LayoutDashboard className="w-3 h-3" />
+                Control Center
+              </div>
+              {isConnected && (
+                <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                  Live Sync
+                </div>
+              )}
             </div>
-            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-              Dashboard
+            <h1 className="text-5xl font-black tracking-tighter mb-4">
+              Project <span className="text-gradient">Dashboard</span>
             </h1>
-            <p className="text-gray-400">
-              Overview of your staking portfolio and protocol activity
+            <p className="text-lg text-muted-foreground max-w-2xl font-medium">
+              Monitor your staking yields, protocol health, and active positions in real-time.
             </p>
+          </motion.div>
+
+          {/* KPI Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <KPICard
+              label="Total Staked"
+              value="12,450.00"
+              secondaryValue="STX"
+              icon={Layers}
+              variant="blue"
+              trend={{ value: 12.5, isPositive: true, label: "vs last cycle" }}
+            />
+            <KPICard
+              label="Accrued Rewards"
+              value="452.80"
+              secondaryValue="AGS"
+              icon={Coins}
+              variant="purple"
+              trend={{ value: 8.2, isPositive: true, label: "velocity" }}
+            />
+            <KPICard
+              label="Estimated APY"
+              value="14.2"
+              secondaryValue="%"
+              icon={TrendingUp}
+              variant="cyan"
+              trend={{ value: 0.5, isPositive: true, label: "tier bonus" }}
+            />
+            <KPICard
+              label="Protocol TVL"
+              value="2.4M"
+              secondaryValue="STX"
+              icon={ShieldCheck}
+              variant="indigo"
+              trend={{ value: 2.1, isPositive: true, label: "growth" }}
+            />
           </div>
 
-          {/* Main Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            <div className="lg:col-span-2 space-y-6">
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div className="lg:col-span-2 space-y-8">
+              <RewardChart
+                data={mockRewardData}
+                labels={mockRewardLabels}
+                variant="purple"
+              />
               <PortfolioSummary />
               <RecentActivity />
             </div>
-            <div>
+            <div className="space-y-8">
               <ProtocolStats />
-            </div>
-          </div>
 
-          {/* Quick Actions */}
-          <div className="mt-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <h2 className="text-lg font-semibold text-white mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {quickActions.map((action, index) => (
-                <a
-                  key={action.href}
-                  href={action.href}
-                  className={`group bg-gradient-to-r ${action.gradient} border ${action.border} rounded-xl p-6 transition-all hover:-translate-y-1 hover:shadow-lg`}
-                  style={{ animationDelay: `${0.3 + index * 0.1}s` }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      {action.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-white font-medium mb-1 group-hover:text-blue-400 transition-colors">
-                        {action.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm">{action.description}</p>
-                    </div>
-                  </div>
-                </a>
-              ))}
+              {/* Quick Actions Panel */}
+              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8">
+                <h3 className="text-xl font-black mb-6 flex items-center gap-3">
+                  <Zap className="w-5 h-5 text-aegis-blue" />
+                  Quick Actions
+                </h3>
+                <div className="space-y-4">
+                  {quickActions.map((action) => (
+                    <Link
+                      key={action.href}
+                      href={action.href}
+                      className="group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={cn(
+                          "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
+                          action.variant === 'blue' && "bg-aegis-blue/10 text-aegis-blue",
+                          action.variant === 'purple' && "bg-aegis-purple/10 text-aegis-purple",
+                          action.variant === 'cyan' && "bg-aegis-cyan/10 text-aegis-cyan"
+                        )}>
+                          <action.icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-black tracking-tight">{action.title}</h4>
+                          <p className="text-[10px] font-bold text-muted-foreground/60 uppercase">{action.description}</p>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-1 transition-all" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </main>
+
       <Footer />
     </div>
   );
 }
+
+// Helper icons for the map
+import { Layers, ChevronRight } from 'lucide-react';
