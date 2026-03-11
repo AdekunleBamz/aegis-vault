@@ -1,93 +1,135 @@
+'use client';
+
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { StakingFlow } from '@/components/flows/staking-flow';
-import { RewardsCalculator } from '@/components/widgets/rewards-calculator';
+import { RewardProjection } from '@/components/dashboard/reward-projection';
+import { TIERS } from '@/lib/constants';
+import { motion } from 'framer-motion';
+import {
+  Zap,
+  ShieldCheck,
+  Star,
+  TrendingUp,
+  ArrowRight,
+  Calculator,
+  Info,
+  Layers,
+  LayoutGrid
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export default function StakePage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       <Header />
-      <main className="flex-1 py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
-          {/* Page Header with gradient */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 mb-4">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-blue-400 text-sm font-medium">Live Staking</span>
+
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-aegis-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+      <main className="flex-1 py-32 px-4 relative z-10">
+        <div className="container max-w-7xl mx-auto">
+          {/* Page Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-3 bg-aegis-blue/10 border border-aegis-blue/20 rounded-full px-4 py-1.5 mb-6 text-aegis-blue">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest">Incentivized Staking Phase</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-              Stake STX
+            <h1 className="text-5xl md:text-6xl font-black tracking-tighter mb-6">
+              Protocol <span className="text-gradient">Staking</span>
             </h1>
-            <p className="text-gray-400 text-lg max-w-xl mx-auto">
-              Stake your STX tokens and earn AGS rewards. Higher tiers unlock better APY rates.
+            <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
+              Secure the Aegis Vault protocol while earning premium staking yields and governance weight.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Stats Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {[
-              { label: 'Total Value Locked', value: '$2.4M', change: '+12.5%' },
-              { label: 'Current APY', value: '8.5%', change: '+0.5%' },
-              { label: 'Total Stakers', value: '1,247', change: '+24' },
-              { label: 'Rewards Distributed', value: '45M AGS', change: '+1.2M' },
-            ].map((stat, i) => (
-              <div key={i} className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 text-center">
-                <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
-                <p className="text-xl font-bold text-white">{stat.value}</p>
-                <p className="text-green-400 text-xs mt-1">{stat.change}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
+          {/* Main Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Left Column: Interaction */}
+            <div className="lg:col-span-7 space-y-12">
               <StakingFlow />
-              
-              {/* Quick Tips */}
-              <div className="mt-6 bg-gradient-to-br from-blue-500/5 to-purple-500/5 border border-gray-800 rounded-xl p-5">
-                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Staking Tips
+
+              {/* Protocol Commitments */}
+              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 md:p-10">
+                <h3 className="text-xl font-black mb-8 flex items-center gap-3">
+                  <ShieldCheck className="w-6 h-6 text-aegis-blue" />
+                  Protocol Commitments
                 </h3>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-0.5">•</span>
-                    Stake for longer periods to earn bonus rewards
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-0.5">•</span>
-                    Higher tiers provide better APY multipliers
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-0.5">•</span>
-                    Claim rewards regularly to compound your earnings
-                  </li>
-                </ul>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {[
+                    {
+                      icon: Lock,
+                      title: "Secure Lockdown",
+                      desc: "24-hour cooling period for stability."
+                    },
+                    {
+                      icon: Zap,
+                      title: "Instant Accrual",
+                      desc: "Earnings start precisely every block."
+                    },
+                    {
+                      icon: Star,
+                      title: "Tier Multiplier",
+                      desc: "Hold more STX to scale your rewards."
+                    },
+                    {
+                      icon: Calculator,
+                      title: "Full Transparency",
+                      desc: "Audit every yield projection on-chain."
+                    }
+                  ].map((tip, i) => (
+                    <div key={i} className="group p-4 rounded-3xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-all">
+                      <div className="flex items-center gap-3 mb-2">
+                        <tip.icon className="w-4 h-4 text-aegis-blue group-hover:scale-110 transition-transform" />
+                        <h4 className="text-sm font-black tracking-tight">{tip.title}</h4>
+                      </div>
+                      <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">{tip.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-            
-            <div className="space-y-6">
-              <RewardsCalculator />
-              
-              {/* Tier Benefits */}
-              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-5">
-                <h3 className="text-white font-semibold mb-4">Tier Benefits</h3>
-                <div className="space-y-3">
-                  {[
-                    { name: 'Bronze', requirement: '0+ STX', apy: '5%', color: 'text-amber-600' },
-                    { name: 'Silver', requirement: '1,000+ STX', apy: '6.5%', color: 'text-gray-400' },
-                    { name: 'Gold', requirement: '10,000+ STX', apy: '8%', color: 'text-yellow-500' },
-                    { name: 'Platinum', requirement: '50,000+ STX', apy: '10%', color: 'text-blue-400' },
-                  ].map((tier, i) => (
-                    <div key={i} className="flex items-center justify-between py-2 border-b border-gray-800 last:border-0">
-                      <div className="flex items-center gap-3">
-                        <span className={`font-medium ${tier.color}`}>{tier.name}</span>
-                        <span className="text-gray-500 text-sm">{tier.requirement}</span>
+
+            {/* Right Column: Analytics & Info */}
+            <div className="lg:col-span-5 space-y-12">
+              <RewardProjection />
+
+              {/* Tier Benefits & Comparison */}
+              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 md:p-10">
+                <h3 className="text-xl font-black mb-8 flex items-center gap-3">
+                  <LayoutGrid className="w-6 h-6 text-aegis-purple" />
+                  Yield Tier Structure
+                </h3>
+                <div className="space-y-4">
+                  {TIERS.map((tier, i) => (
+                    <div
+                      key={tier.name}
+                      className="group flex items-center justify-between p-5 rounded-3xl bg-muted/30 border border-border/50 hover:bg-muted/50 transition-all"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div
+                          className="w-10 h-10 rounded-2xl flex items-center justify-center transition-transform group-hover:rotate-12"
+                          style={{ backgroundColor: `${tier.color}15`, color: tier.color }}
+                        >
+                          <Star className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-black tracking-tight">{tier.name}</h4>
+                          <p className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+                            {tier.minStake > 0 ? `${tier.minStake.toLocaleString()} STX+` : "Core Entry"}
+                          </p>
+                        </div>
                       </div>
-                      <span className="text-green-400 font-semibold">{tier.apy} APY</span>
+                      <div className="text-right">
+                        <div className="text-emerald-500 text-lg font-black tabular-nums">
+                          {tier.baseApy}% <span className="text-[10px] text-muted-foreground/40">APY</span>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -96,7 +138,11 @@ export default function StakePage() {
           </div>
         </div>
       </main>
+
       <Footer />
     </div>
   );
 }
+
+// Helper icons
+import { Lock } from 'lucide-react';
