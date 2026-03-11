@@ -4,6 +4,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { useWallet } from '@/context/wallet-context';
 import { usePositions } from '@/hooks/use-positions';
+import { useTransactions } from '@/hooks/use-transactions';
 import { useNetwork } from '@/hooks/use-network';
 import { formatSTX, formatAGS, formatBlockHeight, blocksToTime } from '@/lib/format';
 import { TIERS } from '@/lib/constants';
@@ -32,8 +33,11 @@ import { cn } from '@/lib/utils';
 
 export default function PositionsPage() {
   const { address, isConnected, connect } = useWallet();
-  const { position, isLoading } = usePositions(address || '');
+  const { position, isLoading: isPositionLoading } = usePositions(address || '');
+  const { transactions, isLoading: isTxsLoading } = useTransactions(address || '', 10);
   const { blockHeight } = useNetwork();
+
+  const isLoading = isPositionLoading || isTxsLoading;
 
   if (!isConnected) {
     return (
@@ -429,35 +433,52 @@ export default function PositionsPage() {
                       </div>
 
                       <div className="space-y-6">
-                        {[
-                          { type: 'Stake', amount: formatSTX(position.amountStaked), block: formatBlockHeight(position.stakeStartBlock), date: blocksToTime(stakeDuration) + ' ago' },
-                          { type: 'Reward', amount: 'Aggregating...', block: 'Current', date: 'In Progress', active: true }
-                        ].map((event, i) => (
-                          <div key={i} className="flex gap-4 relative group/event">
-                            {i < 1 && <div className="absolute left-[19px] top-10 bottom-[-24px] w-[2px] bg-border/30" />}
-                            <div className={cn(
-                              "w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 border border-border",
-                              event.active ? "bg-aegis-blue/20 text-aegis-blue border-aegis-blue/30" : "bg-muted text-muted-foreground"
-                            )}>
-                              {event.type === 'Stake' ? <Layers className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
-                            </div>
-                            <div className="flex-1 pt-1">
-                              <div className="flex items-center justify-between mb-1">
-                                <h4 className="text-sm font-black tracking-tight">{event.type} Operation</h4>
-                                <span className="text-[10px] font-bold text-muted-foreground/40 uppercase">{event.date}</span>
-                              </div>
-                              <p className="text-xs text-muted-foreground font-medium mb-1">
-                                {event.amount} deployed at block <span className="text-foreground">{event.block}</span>
-                              </p>
-                              {event.active && (
-                                <div className="flex items-center gap-2 mt-2">
-                                  <div className="w-1.5 h-1.5 bg-aegis-blue rounded-full animate-pulse" />
-                                  <span className="text-[10px] font-black text-aegis-blue uppercase tracking-widest">Compounding Now</span>
+                        {transactions.length > 0 ? (
+                          transactions.map((tx, i) => {
+                            const isStake = tx.contract_call?.function_name === 'stake';
+                            const isClaim = tx.contract_call?.function_name === 'claim-rewards';
+                            const isWithdraw = tx.contract_call?.function_name === 'withdraw-principal' || tx.contract_call?.function_name === 'unstake';
+
+                            let typeLabel = 'Operation';
+                            if (isStake) typeLabel = 'Stake';
+                            if (isClaim) typeLabel = 'Reward';
+                            if (isWithdraw) typeLabel = 'Withdraw';
+
+                            return (
+                              <div key={tx.tx_id} className="flex gap-4 relative group/event">
+                                {i < transactions.length - 1 && <div className="absolute left-[19px] top-10 bottom-[-24px] w-[2px] bg-border/30" />}
+                                <div className={cn(
+                                  "w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 border border-border",
+                                  tx.tx_status === 'pending' ? "bg-aegis-blue/20 text-aegis-blue border-aegis-blue/30 animate-pulse" : "bg-muted text-muted-foreground"
+                                )}>
+                                  {isStake ? <Layers className="w-4 h-4" /> : isClaim ? <Zap className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
                                 </div>
-                              )}
-                            </div>
+                                <div className="flex-1 pt-1">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <h4 className="text-sm font-black tracking-tight">{typeLabel} Operation</h4>
+                                    <span className="text-[10px] font-bold text-muted-foreground/40 uppercase">
+                                      {tx.tx_status === 'pending' ? 'Pending' : `Block ${tx.block_height}`}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs text-muted-foreground font-medium mb-1 truncate max-w-[200px]">
+                                    {tx.tx_id.substring(0, 10)}... {tx.tx_status === 'success' ? 'confirmed' : 'processing'}
+                                  </p>
+                                  {tx.tx_status === 'pending' && (
+                                    <div className="flex items-center gap-2 mt-2">
+                                      <div className="w-1.5 h-1.5 bg-aegis-blue rounded-full animate-pulse" />
+                                      <span className="text-[10px] font-black text-aegis-blue uppercase tracking-widest">Processing</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div className="py-12 text-center">
+                            <History className="w-12 h-12 text-muted-foreground/20 mx-auto mb-4" />
+                            <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">No recent operations</p>
                           </div>
-                        ))}
+                        )}
                       </div>
 
                       <button className="w-full mt-10 py-4 bg-muted/30 hover:bg-muted/50 border border-border/50 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
