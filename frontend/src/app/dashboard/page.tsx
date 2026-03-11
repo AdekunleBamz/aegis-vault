@@ -8,6 +8,7 @@ import { RecentActivity } from '@/components/widgets/recent-activity';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
 import { KPICard } from '@/components/dashboard/kpi-card';
 import { RewardChart } from '@/components/dashboard/reward-chart';
+import { ProtocolHealth } from '@/components/dashboard/protocol-health';
 import {
   Zap,
   Target,
@@ -112,55 +113,56 @@ export default function DashboardPage() {
             ))}
           </section>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <div className="lg:col-span-2 space-y-8">
-              <RewardChart
-                data={mockRewardData}
-                labels={mockRewardLabels}
-                variant="purple"
-              />
-              <PortfolioSummary />
-              <RecentActivity />
-            </div>
-            <div className="space-y-8">
-              <ProtocolStats />
+          <div className="space-y-12">
+            <ProtocolHealth />
 
-              {/* Quick Actions Panel */}
-              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8" aria-label="Quick actions">
-                <h3 className="text-xl font-black mb-6 flex items-center gap-3">
-                  <Zap className="w-5 h-5 text-aegis-blue" />
-                  Quick Actions
-                </h3>
-                <div className="space-y-4">
-                  {quickActions.map((action) => (
-                    <Link
-                      key={action.href}
-                      href={action.href}
-                      className="group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className={cn(
-                          "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
-                          action.variant === 'blue' && "bg-aegis-blue/10 text-aegis-blue",
-                          action.variant === 'purple' && "bg-aegis-purple/10 text-aegis-purple",
-                          action.variant === 'cyan' && "bg-aegis-cyan/10 text-aegis-cyan"
-                        )}>
-                          <action.icon className="w-5 h-5" />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-8">
+                <div className="p-8 rounded-[40px] bg-background border border-border">
+                  <h3 className="text-xl font-black mb-6">Reward <span className="text-gradient">Projection</span></h3>
+                  <RewardChart data={mockRewardData} height={250} />
+                </div>
+                <PortfolioSummary />
+                <RecentActivity />
+              </div>
+
+              <div className="space-y-8">
+
+                {/* Quick Actions Panel */}
+                <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8" aria-label="Quick actions">
+                  <h3 className="text-xl font-black mb-6 flex items-center gap-3">
+                    <Zap className="w-5 h-5 text-aegis-blue" />
+                    Quick Actions
+                  </h3>
+                  <div className="space-y-4">
+                    {quickActions.map((action) => (
+                      <Link
+                        key={action.href}
+                        href={action.href}
+                        className="group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className={cn(
+                            "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
+                            action.variant === 'blue' && "bg-aegis-blue/10 text-aegis-blue",
+                            action.variant === 'purple' && "bg-aegis-purple/10 text-aegis-purple",
+                            action.variant === 'cyan' && "bg-aegis-cyan/10 text-aegis-cyan"
+                          )}>
+                            <action.icon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-black tracking-tight">{action.title}</h4>
+                            <p className="text-[10px] font-bold text-muted-foreground/60 uppercase">{action.description}</p>
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="text-sm font-black tracking-tight">{action.title}</h4>
-                          <p className="text-[10px] font-bold text-muted-foreground/60 uppercase">{action.description}</p>
-                        </div>
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-1 transition-all" />
-                    </Link>
-                  ))}
+                        <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-1 transition-all" />
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </main>
 
       <Footer />
