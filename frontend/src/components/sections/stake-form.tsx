@@ -7,6 +7,18 @@ import { useStaking } from '@/hooks/use-staking';
 import { formatSTX, toMicroSTX } from '@/lib/format';
 import { TIERS } from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
+import {
+  Wallet,
+  ArrowUpRight,
+  Info,
+  AlertCircle,
+  CheckCircle2,
+  Lock,
+  Coins,
+  ChevronRight
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export function StakeForm() {
   const { address, isConnected, connect } = useWallet();
@@ -16,7 +28,6 @@ export function StakeForm() {
   const [success, setSuccess] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  // PR #1: Real-time form validation feedback
   const numAmount = parseFloat(amount) || 0;
   const hasError = useMemo(() => {
     if (!amount) return null;
@@ -27,7 +38,7 @@ export function StakeForm() {
   }, [amount, numAmount, stxBalance]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(e.target.value);
+    setAmount(e.target.value.replace(/[^0-9.]/g, ''));
     setValidationError(null);
   };
 
@@ -35,11 +46,6 @@ export function StakeForm() {
     e.preventDefault();
     setSuccess(null);
     setValidationError(null);
-
-    if (hasError) {
-      setValidationError(hasError);
-      return;
-    }
 
     if (hasError) {
       setValidationError(hasError);
@@ -60,118 +66,187 @@ export function StakeForm() {
   const apy = calculateAPY(microAmount, tier);
 
   return (
-    <section className="py-16 px-4">
-      <div className="container mx-auto max-w-md">
-        <div className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6">
-          <h2 className="text-2xl font-bold text-white mb-6">Stake STX</h2>
+    <section className="py-24 px-4 relative">
+      <div className="container max-w-xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative rounded-[40px] border border-border bg-background/60 backdrop-blur-2xl p-8 md:p-10 shadow-2xl overflow-hidden"
+        >
+          {/* Decorative gradients */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-aegis-blue/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-aegis-purple/5 rounded-full blur-3xl translate-y-1/2 -translateX-1/2" />
 
-          {!isConnected ? (
-            <div className="text-center py-8">
-              <p className="text-gray-400 mb-4">
-                Connect your wallet to start staking
-              </p>
-              <button
-                onClick={connect}
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
-              >
-                Connect Wallet
-              </button>
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-3xl font-black tracking-tight mb-1">Stake <span className="text-gradient">STX</span></h2>
+                <p className="text-sm font-medium text-muted-foreground">Secure the network and earn rewards</p>
+              </div>
+              <div className="p-3 bg-muted rounded-2xl">
+                <Coins className="w-6 h-6 text-aegis-blue" />
+              </div>
             </div>
-          ) : (
-            <form onSubmit={handleStake}>
-              <div className="mb-4">
-                <label className="block text-gray-400 text-sm mb-2">
-                  Amount to Stake
-                </label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    value={amount}
-                    onChange={handleAmountChange}
-                    placeholder="0.00"
-                    min="0"
-                    step="0.000001"
-                    className={`w-full bg-gray-900 border rounded-lg px-4 py-3 text-white text-lg focus:outline-none transition-colors ${hasError
-                        ? 'border-red-500/50 focus:border-red-500'
-                        : 'border-gray-700 focus:border-blue-500'
-                      }`}
-                    aria-invalid={!!hasError}
-                    aria-describedby={hasError ? 'amount-error' : undefined}
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setAmount((Number(stxBalance) / 1e6).toString())
-                    }
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 text-sm hover:text-blue-300 transition-colors"
-                  >
-                    MAX
-                  </button>
+
+            {!isConnected ? (
+              <div className="text-center py-12 px-6 rounded-3xl bg-muted/40 border border-border/50">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Wallet className="w-8 h-8 text-muted-foreground" />
                 </div>
-                {hasError && (
-                  <div id="amount-error" className="text-red-400 text-sm mt-2 flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {hasError}
+                <h3 className="text-xl font-bold mb-2">Connect Your Wallet</h3>
+                <p className="text-sm text-muted-foreground mb-8">
+                  Sign in with your Stacks wallet to begin staking and earning rewards.
+                </p>
+                <button
+                  onClick={connect}
+                  className="w-full py-4 bg-foreground text-background rounded-2xl font-bold hover:shadow-[0_0_20px_-5px_hsl(var(--foreground)/0.3)] transition-all flex items-center justify-center gap-2"
+                >
+                  <Wallet className="w-5 h-5" />
+                  Connect Wallet
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleStake} className="space-y-6">
+                <div>
+                  <div className="flex justify-between items-end mb-3 px-1">
+                    <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                      Staking Amount
+                    </label>
+                    <span className="text-xs font-bold text-muted-foreground/60">
+                      Balance: <span className="text-foreground">{formatSTX(stxBalance)} STX</span>
+                    </span>
                   </div>
-                )}
-              </div>
 
-              <div className="bg-gray-900 rounded-lg p-4 mb-6">
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-400">Tier</span>
-                  <span
-                    className="font-medium"
-                    style={{ color: TIERS[tier]?.color }}
-                  >
-                    {TIERS[tier]?.name || 'Bronze'}
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      value={amount}
+                      onChange={handleAmountChange}
+                      placeholder="0.00"
+                      className={cn(
+                        "w-full bg-muted/50 border-2 rounded-[24px] px-6 py-5 text-2xl font-black focus:outline-none transition-all duration-300 placeholder:text-muted-foreground/30",
+                        hasError
+                          ? "border-destructive/30 focus:border-destructive text-destructive"
+                          : "border-border/50 focus:border-aegis-blue focus:bg-muted/80"
+                      )}
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                      <span className="text-sm font-black text-muted-foreground px-3">STX</span>
+                      <button
+                        type="button"
+                        onClick={() => setAmount((Number(stxBalance) / 1e6).toString())}
+                        className="px-4 py-2 bg-foreground text-background rounded-xl text-xs font-bold hover:opacity-90 transition-opacity"
+                      >
+                        MAX
+                      </button>
+                    </div>
+                  </div>
+
+                  <AnimatePresence>
+                    {hasError && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="text-destructive text-xs font-bold mt-3 px-2 flex items-center gap-1.5"
+                      >
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        {hasError}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Staking Summary Card */}
+                <div className="p-6 rounded-[28px] bg-muted/30 border border-border/40 space-y-4">
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <TrendingUp className="w-4 h-4" />
+                      Current APY
+                    </div>
+                    <span className="text-emerald-500 font-black text-lg">{apy}%</span>
+                  </div>
+
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <LayoutGrid className="w-4 h-4" />
+                      Reward Tier
+                    </div>
+                    <div className="flex items-center gap-1.5 font-bold" style={{ color: TIERS[tier]?.color || 'currentColor' }}>
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: TIERS[tier]?.color || 'currentColor' }} />
+                      {TIERS[tier]?.name || 'Bronze'}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center text-sm font-medium">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      Cooldown
+                    </div>
+                    <span className="text-foreground font-bold">24 Hours</span>
+                  </div>
+                </div>
+
+                <AnimatePresence>
+                  {(error || validationError) && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 rounded-2xl bg-destructive/10 border border-destructive/20 text-destructive text-sm font-bold flex gap-3"
+                    >
+                      <AlertCircle className="w-5 h-5 shrink-0" />
+                      {error || validationError}
+                    </motion.div>
+                  )}
+
+                  {success && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm font-bold flex gap-3"
+                    >
+                      <CheckCircle2 className="w-5 h-5 shrink-0" />
+                      {success}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <button
+                  type="submit"
+                  disabled={isLoading || !amount || numAmount <= 0}
+                  className="group relative w-full py-5 bg-foreground text-background rounded-[24px] font-black text-xl overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-blue)/0.4)]"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {isLoading ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                        >
+                          <Activity className="w-6 h-6" />
+                        </motion.div>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        STAKE STX
+                        <ArrowUpRight className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </>
+                    )}
                   </span>
-                </div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-400">APY</span>
-                  <span className="text-green-400 font-medium">{apy}%</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Cooldown</span>
-                  <span className="text-white">~24 hours</span>
-                </div>
-              </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </button>
 
-              {error && (
-                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4 text-red-400 text-sm flex items-start gap-2">
-                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                  <div>{error}</div>
-                </div>
-              )}
-
-              {validationError && (
-                <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 mb-4 text-orange-400 text-sm flex items-start gap-2">
-                  <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.487 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  <div>{validationError}</div>
-                </div>
-              )}
-
-              {success && (
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 mb-4 text-green-400 text-sm">
-                  {success}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={isLoading || !amount || numAmount <= 0}
-                className="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium text-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? 'Staking...' : 'Stake STX'}
-              </button>
-            </form>
-          )}
-        </div>
+                <p className="text-[10px] text-center uppercase tracking-widest font-bold text-muted-foreground/40 flex items-center justify-center gap-1.5">
+                  <Lock className="w-3 h-3" />
+                  Secured by Stacks Smart Contracts
+                </p>
+              </form>
+            )}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
