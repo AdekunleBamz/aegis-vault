@@ -1,140 +1,128 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { TrendingUp, Coins } from 'lucide-react';
+
+interface DataPoint {
+    day: number;
+    amount: number;
+}
 
 interface RewardChartProps {
-    data: number[];
-    labels: string[];
+    data?: DataPoint[];
     height?: number;
-    className?: string;
-    variant?: 'blue' | 'purple' | 'cyan';
+    color?: string;
 }
 
 export function RewardChart({
-    data,
-    labels,
+    data = [],
     height = 200,
-    className,
-    variant = 'purple',
+    color = 'hsl(var(--aegis-blue))'
 }: RewardChartProps) {
-    const max = Math.max(...data) || 1;
-    const min = Math.min(...data);
-    const range = max - min || 1;
+    const points = useMemo(() => {
+        if (data.length === 0) return '';
 
-    const points = data.map((val, i) => {
-        const x = (i / (data.length - 1)) * 100;
-        const y = 100 - ((val - min) / range) * 100;
-        return { x, y };
-    });
+        const maxAmount = Math.max(...data.map(d => d.amount), 1);
+        const maxDay = Math.max(...data.map(d => d.day), 1);
 
-    const pathData = points.map((p, i) => (i === 0 ? `M 0 ${p.y}` : `L ${p.x} ${p.y}`)).join(' ');
-    const areaData = `${pathData} L 100 100 L 0 100 Z`;
+        return data.map((d, i) => {
+            const x = (d.day / maxDay) * 100;
+            const y = 100 - (d.amount / maxAmount) * 100;
+            return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+        }).join(' ');
+    }, [data]);
 
-    const colors = {
-        blue: 'stroke-aegis-blue fill-aegis-blue/10 stop-aegis-blue',
-        purple: 'stroke-aegis-purple fill-aegis-purple/10 stop-aegis-purple',
-        cyan: 'stroke-aegis-cyan fill-aegis-cyan/10 stop-aegis-cyan',
-    };
+    const areaPoints = useMemo(() => {
+        if (data.length === 0) return '';
+        const lastPoint = data[data.length - 1];
+        const firstPoint = data[0];
+        const maxDay = Math.max(...data.map(d => d.day), 1);
+
+        const path = points;
+        return `${path} L ${(lastPoint.day / maxDay) * 100} 100 L ${(firstPoint.day / maxDay) * 100} 100 Z`;
+    }, [data, points]);
+
+    if (data.length === 0) return null;
 
     return (
-        <div className={cn(
-            "relative rounded-[32px] border border-border bg-background/40 backdrop-blur-xl p-8 overflow-hidden group",
-            className
-        )}>
-            <div className="flex items-center justify-between mb-8">
-                <div>
-                    <h3 className="text-xl font-black tracking-tight mb-1">Reward Velocity</h3>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 flex items-center gap-1.5">
-                        <Coins className="w-3 h-3" />
-                        Projected AGS Accrual
-                    </p>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-black uppercase tracking-widest">
-                    <TrendingUp className="w-3 h-3" />
-                    Optimal Yield
-                </div>
-            </div>
+        <div className="relative w-full overflow-hidden rounded-xl bg-muted/5 p-4" style={{ height }}>
+            <svg
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                className="h-full w-full overflow-visible"
+            >
+                <defs>
+                    <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+                        <stop offset="100%" stopColor={color} stopOpacity="0" />
+                    </linearGradient>
+                </defs>
 
-            <div style={{ height }} className="relative w-full mt-4">
-                <svg
-                    viewBox="0 0 100 100"
-                    className="w-full h-full overflow-visible"
-                    preserveAspectRatio="none"
-                >
-                    <defs>
-                        <linearGradient id={`grad-${variant}`} x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" className={cn(colors[variant], "stop-opacity-20")} />
-                            <stop offset="100%" className={cn(colors[variant], "stop-opacity-0")} />
-                        </linearGradient>
-                    </defs>
-
-                    {/* Grid lines */}
-                    {[0, 25, 50, 75, 100].map((line) => (
-                        <line
-                            key={line}
-                            x1="0"
-                            y1={line}
-                            x2="100"
-                            y2={line}
-                            className="stroke-border/20"
-                            strokeWidth="0.5"
-                        />
-                    ))}
-
-                    {/* Area */}
-                    <motion.path
-                        initial={{ d: `M 0 100 L 100 100 L 0 100 Z`, opacity: 0 }}
-                        animate={{ d: areaData, opacity: 1 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        fill={`url(#grad-${variant})`}
+                {/* Grid Lines */}
+                {[0, 25, 50, 75, 100].map((tick) => (
+                    <line
+                        key={tick}
+                        x1="0"
+                        y1={tick}
+                        x2="100"
+                        y2={tick}
+                        stroke="currentColor"
+                        strokeOpacity="0.05"
+                        strokeWidth="0.5"
                     />
+                ))}
 
-                    {/* Line */}
-                    <motion.path
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        animate={{ pathLength: 1, opacity: 1 }}
-                        transition={{ duration: 1.5, ease: "easeInOut" }}
-                        d={pathData}
-                        fill="none"
-                        className={cn("stroke-[2]", colors[variant])}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
+                {/* Fill Area */}
+                <motion.path
+                    initial={{ opacity: 0, d: areaPoints.replace(/L [^ ]+ [^ ]+/g, 'L 0 100') }}
+                    animate={{ opacity: 1, d: areaPoints }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    fill="url(#chartGradient)"
+                />
 
-                    {/* Target points */}
-                    {points.map((p, i) => (
+                {/* Line */}
+                <motion.path
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    d={points}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+
+                {/* Data Points */}
+                {data.map((d, i) => {
+                    const maxAmount = Math.max(...data.map(d => d.amount), 1);
+                    const maxDay = Math.max(...data.map(d => d.day), 1);
+                    const x = (d.day / maxDay) * 100;
+                    const y = 100 - (d.amount / maxAmount) * 100;
+
+                    return (
                         <motion.circle
                             key={i}
-                            initial={{ r: 0 }}
-                            animate={{ r: 2 }}
-                            transition={{ delay: 1 + i * 0.1 }}
-                            cx={p.x}
-                            cy={p.y}
-                            className={cn("fill-background stroke-[1.5]", colors[variant])}
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 1 + i * 0.05 }}
+                            cx={x}
+                            cy={y}
+                            r="1.5"
+                            fill="white"
+                            stroke={color}
+                            strokeWidth="0.5"
+                            className="cursor-pointer hover:r-2 transition-all"
                         />
-                    ))}
-                </svg>
+                    );
+                })}
+            </svg>
 
-                {/* Labels */}
-                <div className="absolute bottom-[-24px] left-0 right-0 flex justify-between">
-                    {labels.map((label, i) => (
-                        <span key={i} className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/40">
-                            {label}
-                        </span>
-                    ))}
-                </div>
+            {/* Axis Labels */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-between px-2 pb-1">
+                <span className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground/50">Day 0</span>
+                <span className="text-[8px] font-bold uppercase tracking-widest text-muted-foreground/50">Day 30</span>
             </div>
-
-            {/* Glow */}
-            <div className={cn(
-                "absolute -bottom-12 -right-12 w-48 h-48 blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none",
-                variant === 'blue' && "bg-aegis-blue",
-                variant === 'purple' && "bg-aegis-purple",
-                variant === 'cyan' && "bg-aegis-cyan"
-            )} />
         </div>
     );
 }
