@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
+import { AppProviders } from '@/components/providers';
 
-const inter = Inter({ subsets: ['latin'] });
+const outfit = Outfit({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Aegis Vault - STX Staking Protocol',
@@ -35,16 +36,14 @@ export const metadata: Metadata = {
   },
 };
 
-import { AppProviders } from '@/components/providers';
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={outfit.className}>
         <AppProviders>
           {children}
         </AppProviders>
