@@ -30,12 +30,20 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { PositionFilters, PositionStatus } from '@/components/dashboard/position-filters';
+import { TierDrawer } from '@/components/widgets/tier-drawer';
 
 export default function PositionsPage() {
   const { address, isConnected, connect } = useWallet();
   const { position, isLoading: isPositionLoading } = usePositions(address || '');
   const { transactions, isLoading: isTxsLoading } = useTransactions(address || '', 10);
   const { blockHeight } = useNetwork();
+
+  const [search, setSearch] = useState('');
+  const [status, setStatus] = useState<PositionStatus>('all');
+  const [tierDrawerOpen, setTierDrawerOpen] = useState(false);
+
+  const isLoading = isPositionLoading || isTxsLoading;
 
   const isLoading = isPositionLoading || isTxsLoading;
 
@@ -180,7 +188,10 @@ export default function PositionsPage() {
                       </button>
                     </Link>
                     <Link href="/tiers">
-                      <button className="px-8 py-4 bg-muted/50 hover:bg-muted rounded-full font-black text-xs uppercase tracking-widest transition-all active:scale-95">
+                      <button
+                        onClick={() => setTierDrawerOpen(true)}
+                        className="px-8 py-4 bg-muted/50 hover:bg-muted rounded-full font-black text-xs uppercase tracking-widest transition-all active:scale-95"
+                      >
                         View Tiers
                       </button>
                     </Link>
@@ -194,6 +205,13 @@ export default function PositionsPage() {
                 animate={{ opacity: 1 }}
                 className="space-y-8"
               >
+                <PositionFilters
+                  search={search}
+                  onSearchChange={setSearch}
+                  status={status}
+                  onStatusChange={setStatus}
+                />
+
                 {/* Main Position Card */}
                 <div className="rounded-[48px] border border-border bg-background/40 backdrop-blur-2xl p-10 lg:p-12 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-aegis-blue/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -527,6 +545,10 @@ export default function PositionsPage() {
           </AnimatePresence>
         </div>
       </main>
+      <TierDrawer
+        isOpen={tierDrawerOpen}
+        onClose={() => setTierDrawerOpen(false)}
+      />
       <Footer />
     </div>
   );
