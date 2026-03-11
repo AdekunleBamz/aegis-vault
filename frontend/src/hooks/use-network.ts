@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { getCurrentBlockHeight } from '@/lib/api';
+import { network } from '@/lib/stacks';
 
 export interface UseNetworkReturn {
   blockHeight: number;
   isLoading: boolean;
   error: string | null;
+  networkType: 'mainnet' | 'testnet' | 'devnet';
   refetch: () => Promise<void>;
 }
 
@@ -14,6 +16,9 @@ export function useNetwork(): UseNetworkReturn {
   const [blockHeight, setBlockHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Determine network type from the imported network object
+  const networkType = network.isTestnet ? 'testnet' : 'mainnet';
 
   const fetchNetworkInfo = useCallback(async () => {
     setIsLoading(true);
@@ -38,5 +43,5 @@ export function useNetwork(): UseNetworkReturn {
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 
-  return { blockHeight, isLoading, error, refetch: fetchNetworkInfo };
+  return { blockHeight, isLoading, error, networkType, refetch: fetchNetworkInfo };
 }
