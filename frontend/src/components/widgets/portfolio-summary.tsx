@@ -6,12 +6,20 @@ import { useBalances } from '@/hooks/use-balances';
 import { usePositions } from '@/hooks/use-positions';
 import { formatSTX, formatAGS } from '@/lib/format';
 import { TIERS } from '@/lib/constants';
-import { Card, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { LoadingSkeleton } from '@/components/ui/loading';
 import { calculateAPY, determineTier } from '@/lib/staking';
-import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Wallet,
+  ChevronRight,
+  TrendingUp,
+  Coins,
+  ShieldCheck,
+  Zap,
+  ArrowUpRight,
+  Plus,
+  History
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
 export function PortfolioSummary() {
@@ -58,160 +66,181 @@ export function PortfolioSummary() {
 
   if (!isConnected) {
     return (
-      <Card className="overflow-hidden">
-        <div className="relative p-6 text-center">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5" />
-          <div className="relative">
-            <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">View Your Portfolio</h3>
-            <p className="text-gray-400 text-sm mb-4">Connect your wallet to see your holdings, stakes, and rewards</p>
-            <Button onClick={connect} size="sm">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-              Connect Wallet
-            </Button>
+      <div className="relative rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-12 overflow-hidden text-center group">
+        <div className="absolute inset-0 bg-gradient-to-br from-aegis-blue/5 to-aegis-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="relative z-10">
+          <div className="w-20 h-20 bg-muted rounded-[32px] flex items-center justify-center mx-auto mb-6 transition-transform group-hover:scale-110 duration-500">
+            <Wallet className="w-10 h-10 text-muted-foreground/60" />
           </div>
+          <h3 className="text-3xl font-black mb-3">Portfolio Insight</h3>
+          <p className="text-muted-foreground font-medium mb-8 max-w-sm mx-auto">
+            Connect your wallet to unlock real-time portfolio tracking and yield analytics.
+          </p>
+          <button
+            onClick={connect}
+            className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_30px_-5px_hsl(var(--foreground)/0.4)] transition-all active:scale-95"
+          >
+            Authenticate Wallet
+          </button>
         </div>
-      </Card>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <CardHeader
-        title="Your Portfolio"
-        subtitle={isLoading ? 'Loading...' : `Total Value: $${metrics.totalValueUsd.toFixed(2)}`}
-        action={
-          <div
-            className="px-3 py-1 bg-opacity-10 border-opacity-20 rounded-full text-xs font-semibold"
-            style={{ backgroundColor: `${TIERS[tier]?.color}15`, color: TIERS[tier]?.color }}
-          >
-            {TIERS[tier]?.name}
-          </div>
-        }
-        icon={
-          <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
-            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
-          </div>
-        }
-      />
+    <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 lg:p-10 relative overflow-hidden group">
+      {/* Background patterns */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-aegis-blue/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
 
-      <div className="space-y-5">
-        {/* Wallet Balances */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-900/50 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-orange-500/10 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+      <div className="relative z-10">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <h2 className="text-3xl font-black tracking-tighter">Your Portfolio</h2>
+              <div
+                className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg"
+                style={{ backgroundColor: `${TIERS[tier]?.color}20`, color: TIERS[tier]?.color, border: `1px solid ${TIERS[tier]?.color}30` }}
+              >
+                {TIERS[tier]?.name} Status
               </div>
-              <span className="text-gray-400 text-sm">STX Balance</span>
             </div>
-            {isLoading ? (
-              <LoadingSkeleton className="w-24 h-7" />
-            ) : (
-              <>
-                <p className="text-xl font-bold text-white">{formatSTX(stxBalance)}</p>
-                <p className="text-gray-500 text-xs mt-1">Available</p>
-              </>
-            )}
-          </div>
-          <div className="bg-gray-900/50 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-              </div>
-              <span className="text-gray-400 text-sm">AGS Balance</span>
-            </div>
-            {isLoading ? (
-              <LoadingSkeleton className="w-24 h-7" />
-            ) : (
-              <>
-                <p className="text-xl font-bold text-purple-400">{formatAGS(agsBalance)}</p>
-                <p className="text-gray-500 text-xs mt-1">Earned Tokens</p>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Staking Position */}
-        <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="text-white font-medium flex items-center gap-2">
-              <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-              Staking Position
-            </h4>
-            {!isLoading && (
-              <span className="text-green-400 text-sm font-medium">{metrics.apy}% APY</span>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-gray-400 text-sm mb-1">Staked Amount</p>
+            <p className="text-muted-foreground font-bold flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-emerald-500" />
+              Total Combined Value:
               {isLoading ? (
-                <LoadingSkeleton className="w-24 h-6" />
+                <span className="w-24 h-6 bg-muted animate-pulse rounded-lg" />
               ) : (
-                <p className="text-white font-bold text-lg">{formatSTX(stakedAmount)} STX</p>
+                <span className="text-foreground tracking-tight">${metrics.totalValueUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               )}
-            </div>
-            <div>
-              <p className="text-gray-400 text-sm mb-1">Pending Rewards</p>
-              {isLoading ? (
-                <LoadingSkeleton className="w-20 h-6" />
-              ) : (
-                <p className="text-green-400 font-bold text-lg">{formatAGS(pendingRewards)} AGS</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Next Tier Progress */}
-        {metrics.nextTier && !isLoading && (
-          <div className="bg-gray-900/30 rounded-xl p-4">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-400 text-sm">Progress to {metrics.nextTier.name}</span>
-              <span className="text-gray-400 text-sm">{metrics.amountToNext.toLocaleString()} STX more</span>
-            </div>
-            <Progress value={metrics.progressToNext} color="purple" size="sm" />
-            <p className="text-xs text-gray-500 mt-2">
-              Upgrade for higher APY: {metrics.nextTier.name} = {calculateAPY(BigInt(metrics.nextTier.minStake) * BigInt(1000000), tier + 1)}% APY
             </p>
           </div>
-        )}
 
-        {/* Quick Actions */}
-        <div className="flex gap-3">
+          <Link href="/stats" className="group/btn relative inline-flex items-center gap-2 px-6 py-3 bg-muted/50 hover:bg-muted rounded-full font-black text-[10px] uppercase tracking-widest transition-all">
+            Detailed Analytics
+            <ChevronRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-all" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+          {/* Wallet Balances */}
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 px-2">Liquid Assets</h4>
+            <div className="grid grid-cols-1 gap-4">
+              <div className="bg-muted/30 border border-border/50 rounded-[32px] p-6 hover:bg-muted/50 transition-all group/stat">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 group-hover/stat:rotate-12 transition-transform">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">STX</span>
+                </div>
+                {isLoading ? (
+                  <div className="w-32 h-8 bg-muted animate-pulse rounded-lg" />
+                ) : (
+                  <div>
+                    <div className="text-2xl font-black">{formatSTX(stxBalance)}</div>
+                    <div className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest mt-1">Available to stake</div>
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-muted/30 border border-border/50 rounded-[32px] p-6 hover:bg-muted/50 transition-all group/stat">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-10 h-10 bg-aegis-purple/10 rounded-2xl flex items-center justify-center text-aegis-purple group-hover/stat:rotate-12 transition-transform">
+                    <Coins className="w-5 h-5" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">AGS</span>
+                </div>
+                {isLoading ? (
+                  <div className="w-32 h-8 bg-muted animate-pulse rounded-lg" />
+                ) : (
+                  <div>
+                    <div className="text-2xl font-black text-aegis-purple">{formatAGS(agsBalance)}</div>
+                    <div className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest mt-1">Protocol Tokens</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Staking Summary */}
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 px-2">Active Staking</h4>
+            <div className="h-full bg-gradient-to-br from-aegis-blue/5 to-aegis-purple/5 border border-aegis-blue/20 rounded-[40px] p-8 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-aegis-blue/10 rounded-2xl flex items-center justify-center text-aegis-blue">
+                      <Zap className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-black tracking-tight">Vault Position</h5>
+                      <span className="text-emerald-500 text-[10px] font-black uppercase tracking-widest">{metrics.apy}% APY</span>
+                    </div>
+                  </div>
+                  <Link href="/positions" className="p-2 bg-background/50 rounded-full hover:bg-background transition-colors">
+                    <History className="w-4 h-4" />
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1">Staked</p>
+                    <div className="text-xl font-black tracking-tight">
+                      {isLoading ? "..." : `${formatSTX(stakedAmount)} STX`}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-1">Pending</p>
+                    <div className="text-xl font-black tracking-tight text-emerald-500">
+                      {isLoading ? "..." : `${formatAGS(pendingRewards)} AGS`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress to next tier */}
+              {metrics.nextTier && !isLoading && (
+                <div className="mt-8">
+                  <div className="flex justify-between items-end mb-3">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                      Progress to <span className="text-foreground">{metrics.nextTier.name}</span>
+                    </div>
+                    <div className="text-[10px] font-black text-aegis-blue">
+                      {metrics.amountToNext.toLocaleString()} STX to go
+                    </div>
+                  </div>
+                  <div className="h-2 w-full bg-muted rounded-full overflow-hidden p-[2px]">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${metrics.progressToNext}%` }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="h-full bg-gradient-to-r from-aegis-blue to-aegis-purple rounded-full relative"
+                    >
+                      <div className="absolute top-0 right-0 w-8 h-full bg-white/20 blur-sm animate-pulse" />
+                    </motion.div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Actions Footer */}
+        <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-border/50">
           <Link href="/stake" className="flex-1">
-            <Button variant="primary" size="sm" className="w-full">
-              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              Stake
-            </Button>
+            <button className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-foreground text-background rounded-3xl font-black text-xs uppercase tracking-widest transition-all hover:shadow-[0_0_30px_-5px_hsl(var(--foreground)/0.3)] active:scale-95">
+              <Plus className="w-4 h-4" />
+              Increase Stake
+            </button>
           </Link>
           <Link href="/claim" className="flex-1">
-            <Button variant="secondary" size="sm" className="w-full">
-              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Claim
-            </Button>
+            <button className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-muted/50 hover:bg-muted border border-border/50 rounded-3xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
+              <Zap className="w-4 h-4" />
+              Claim AGS Rewards
+            </button>
           </Link>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
