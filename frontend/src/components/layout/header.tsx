@@ -55,7 +55,7 @@ export function Header() {
       <div className="container flex items-center justify-between">
         {/* Left: Logo & Network */}
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group" aria-label="Aegis Vault Home">
             <div className="relative">
               <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20 group-hover:shadow-aegis-blue/40 transition-all duration-500 group-hover:rotate-6">
                 <ShieldCheck className="w-6 h-6 text-white" />
@@ -80,6 +80,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={isActive ? 'page' : undefined}
                 className={cn(
                   "px-4 py-2 text-sm font-medium rounded-full transition-all flex items-center gap-2",
                   isActive
@@ -100,6 +101,9 @@ export function Header() {
             <div className="relative">
               <button
                 onClick={() => setShowWalletMenu(!showWalletMenu)}
+                aria-label="Wallet menu"
+                aria-expanded={showWalletMenu}
+                aria-haspopup="true"
                 className="flex items-center gap-3 px-4 py-2 bg-muted/50 hover:bg-muted/80 rounded-full border border-border/50 backdrop-blur-sm transition-all group"
               >
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
@@ -143,6 +147,7 @@ export function Header() {
             <button
               onClick={connect}
               disabled={isConnecting}
+              aria-label={isConnecting ? "Authenticating wallet" : "Connect Stacks Wallet"}
               className="group relative px-6 py-2.5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_20px_-5px_hsl(var(--foreground)/0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
@@ -165,6 +170,8 @@ export function Header() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
             className="md:hidden p-2.5 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 rounded-full border border-border/50"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

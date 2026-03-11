@@ -35,7 +35,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
           <div className="md:col-span-4 lg:col-span-5">
-            <Link href="/" className="flex items-center gap-2.5 group mb-6">
+            <Link href="/" className="flex items-center gap-2.5 group mb-6" aria-label="Aegis Vault Home">
               <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20">
                 <ShieldCheck className="w-6 h-6 text-white" />
               </div>
@@ -48,9 +48,9 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               {[
-                { icon: Github, href: 'https://github.com/AdekunleBamz/aegis-vault', label: 'GitHub' },
-                { icon: Twitter, href: '#', label: 'Twitter' },
-                { icon: Discord, href: '#', label: 'Discord' },
+                { icon: Github, href: 'https://github.com/AdekunleBamz/aegis-vault', label: 'View source code on GitHub' },
+                { icon: Twitter, href: '#', label: 'Follow us on Twitter' },
+                { icon: Discord, href: '#', label: 'Join our Discord community' },
               ].map((social) => (
                 <a
                   key={social.label}
@@ -69,7 +69,7 @@ export function Footer() {
           {/* Links Grid */}
           <div className="sm:col-span-4 md:col-span-2 lg:col-span-2">
             <h4 className="text-foreground font-semibold mb-6 text-sm uppercase tracking-wider">Protocol</h4>
-            <ul className="space-y-4">
+            <ul className="space-y-4" aria-label="Protocol links">
               {footerLinks.protocol.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -85,7 +85,7 @@ export function Footer() {
 
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
             <h4 className="text-foreground font-semibold mb-6 text-sm uppercase tracking-wider">Resources</h4>
-            <ul className="space-y-4">
+            <ul className="space-y-4" aria-label="Resource links">
               {footerLinks.resources.map((link) => (
                 <li key={link.href}>
                   <a
@@ -114,6 +114,7 @@ export function Footer() {
               <p className="text-muted-foreground text-xs mb-4 relative z-10">Join 5,000+ stakers securing the network.</p>
               <Link
                 href="/stake"
+                aria-label="Start staking now"
                 className="inline-flex items-center gap-2 text-xs font-bold text-aegis-blue hover:text-aegis-purple transition-colors relative z-10"
               >
                 Get Started

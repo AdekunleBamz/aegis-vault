@@ -3,6 +3,7 @@
 import React from 'react';
 import { ThemeProvider } from './theme-provider';
 import { WalletProvider } from '@/context/wallet-context';
+import { ToastProvider } from './toast-provider';
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
     return (
@@ -13,7 +14,9 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
             disableTransitionOnChange
         >
             <WalletProvider>
-                {children}
+                <ToastProvider>
+                    {children}
+                </ToastProvider>
             </WalletProvider>
         </ThemeProvider>
     );

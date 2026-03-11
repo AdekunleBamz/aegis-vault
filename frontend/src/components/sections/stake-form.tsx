@@ -21,7 +21,9 @@ import {
   Zap,
   LayoutGrid,
   Clock,
-  Plus
+  Plus,
+  RefreshCw,
+  ShieldCheck
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -159,7 +161,7 @@ export function StakeForm() {
               {/* Input Area */}
               <div>
                 <div className="flex justify-between items-end mb-4 px-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
+                  <label htmlFor="stake-amount" className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
                     Deposit Amount
                   </label>
                   <button
@@ -173,11 +175,14 @@ export function StakeForm() {
 
                 <div className="relative group">
                   <input
+                    id="stake-amount"
                     type="text"
                     inputMode="decimal"
                     value={amount}
                     onChange={handleAmountChange}
                     placeholder="0.00"
+                    aria-invalid={!!hasError}
+                    aria-describedby={hasError ? "stake-error" : undefined}
                     className={cn(
                       "w-full bg-muted/20 border-2 rounded-[32px] px-8 py-7 text-4xl font-black focus:outline-none transition-all duration-500 placeholder:text-muted-foreground/20",
                       hasError
@@ -193,6 +198,7 @@ export function StakeForm() {
                 <AnimatePresence>
                   {hasError && (
                     <motion.p
+                      id="stake-error"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
@@ -286,6 +292,7 @@ export function StakeForm() {
               <button
                 type="submit"
                 disabled={isLoading || !amount || !!hasError}
+                aria-label={isLoading ? "Processing transaction" : "Confirm staking deposit"}
                 className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98]"
               >
                 <span className="relative z-10 flex items-center justify-center gap-3">
@@ -330,6 +337,3 @@ export function StakeForm() {
     </section>
   );
 }
-
-// Additional icons for the UI
-import { RefreshCw, ShieldCheck as ShieldCheckIcon, LayoutGrid, Layers } from 'lucide-react';

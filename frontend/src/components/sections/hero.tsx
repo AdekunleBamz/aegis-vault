@@ -11,7 +11,8 @@ import {
   ChevronRight,
   TrendingUp,
   Clock,
-  LayoutGrid
+  LayoutGrid,
+  Wallet
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -26,7 +27,10 @@ export function Hero() {
   ];
 
   return (
-    <section className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[90vh] flex items-center">
+    <section
+      className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[90vh] flex items-center"
+      aria-labelledby="hero-headline"
+    >
       {/* Dynamic Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-aegis-blue/10 rounded-full blur-[120px] animate-pulse" />
@@ -54,6 +58,7 @@ export function Hero() {
 
           {/* Main Headline */}
           <motion.h1
+            id="hero-headline"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -105,6 +110,7 @@ export function Hero() {
             )}
             <Link
               href="/stats"
+              aria-label="Analyze protocol statistics"
               className="px-8 py-4 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground font-bold text-lg hover:bg-muted/50 transition-all flex items-center justify-center gap-2"
             >
               Analyze Stats

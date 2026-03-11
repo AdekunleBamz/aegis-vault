@@ -54,11 +54,14 @@ export function Stats() {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden bg-muted/20">
+    <section
+      className="py-24 relative overflow-hidden bg-muted/20"
+      aria-labelledby="stats-headline"
+    >
       <div className="container relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-xl">
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-4">
+            <h2 id="stats-headline" className="text-3xl md:text-4xl font-black tracking-tight mb-4">
               Protocol <span className="text-gradient">Performance</span>
             </h2>
             <p className="text-muted-foreground font-medium">
@@ -71,10 +74,12 @@ export function Stats() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
+              role="listitem"
+              aria-label={`${stat.label}: ${stat.value} ${stat.unit}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

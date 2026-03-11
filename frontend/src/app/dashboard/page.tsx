@@ -17,7 +17,9 @@ import {
   ShieldCheck,
   Coins,
   History,
-  LayoutDashboard
+  LayoutDashboard,
+  Layers,
+  ChevronRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -91,40 +93,24 @@ export default function DashboardPage() {
           </motion.div>
 
           {/* KPI Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <KPICard
-              label="Total Staked"
-              value="12,450.00"
-              secondaryValue="STX"
-              icon={Layers}
-              variant="blue"
-              trend={{ value: 12.5, isPositive: true, label: "vs last cycle" }}
-            />
-            <KPICard
-              label="Accrued Rewards"
-              value="452.80"
-              secondaryValue="AGS"
-              icon={Coins}
-              variant="purple"
-              trend={{ value: 8.2, isPositive: true, label: "velocity" }}
-            />
-            <KPICard
-              label="Estimated APY"
-              value="14.2"
-              secondaryValue="%"
-              icon={TrendingUp}
-              variant="cyan"
-              trend={{ value: 0.5, isPositive: true, label: "tier bonus" }}
-            />
-            <KPICard
-              label="Protocol TVL"
-              value="2.4M"
-              secondaryValue="STX"
-              icon={ShieldCheck}
-              variant="indigo"
-              trend={{ value: 2.1, isPositive: true, label: "growth" }}
-            />
-          </div>
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" aria-label="Dashboard Statistics">
+            {[
+              { label: "Total Staked", value: "12,450.00", secondaryValue: "STX", icon: Layers, variant: "blue", trend: { value: 12.5, isPositive: true, label: "vs last cycle" } },
+              { label: "Accrued Rewards", value: "452.80", secondaryValue: "AGS", icon: Coins, variant: "purple", trend: { value: 8.2, isPositive: true, label: "velocity" } },
+              { label: "Estimated APY", value: "14.2", secondaryValue: "%", icon: TrendingUp, variant: "cyan", trend: { value: 0.5, isPositive: true, label: "tier bonus" } },
+              { label: "Protocol TVL", value: "2.4M", secondaryValue: "STX", icon: ShieldCheck, variant: "indigo", trend: { value: 2.1, isPositive: true, label: "growth" } }
+            ].map((kpi, i) => (
+              <motion.div
+                key={kpi.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -5 }}
+              >
+                <KPICard {...kpi as any} />
+              </motion.div>
+            ))}
+          </section>
 
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
@@ -141,7 +127,7 @@ export default function DashboardPage() {
               <ProtocolStats />
 
               {/* Quick Actions Panel */}
-              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8">
+              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8" aria-label="Quick actions">
                 <h3 className="text-xl font-black mb-6 flex items-center gap-3">
                   <Zap className="w-5 h-5 text-aegis-blue" />
                   Quick Actions
@@ -182,5 +168,3 @@ export default function DashboardPage() {
   );
 }
 
-// Helper icons for the map
-import { Layers, ChevronRight } from 'lucide-react';
