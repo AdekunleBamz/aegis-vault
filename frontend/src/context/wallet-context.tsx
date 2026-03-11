@@ -9,11 +9,14 @@ import React, {
   ReactNode,
 } from 'react';
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+import { StacksMainnet, StacksTestnet, StacksNetwork } from '@stacks/network';
 
 interface WalletState {
   address: string | null;
   isConnected: boolean;
   isConnecting: boolean;
+  network: StacksNetwork;
+  error: string | null;
 }
 
 interface WalletContextValue extends WalletState {
@@ -26,6 +29,9 @@ const WalletContext = createContext<WalletContextValue | undefined>(undefined);
 const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 
+// Default to mainnet, but can be configured
+const defaultNetwork = new StacksMainnet();
+
 interface WalletProviderProps {
   children: ReactNode;
 }
@@ -35,35 +41,39 @@ export function WalletProvider({ children }: WalletProviderProps) {
     address: null,
     isConnected: false,
     isConnecting: false,
+    network: defaultNetwork,
+    error: null,
   });
 
   useEffect(() => {
     if (userSession.isUserSignedIn()) {
       const userData = userSession.loadUserData();
-      setState({
-        address: userData.profile.stxAddress.mainnet,
+      setState((prev) => ({
+        ...prev,
+        address: userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet,
         isConnected: true,
         isConnecting: false,
-      });
+      }));
     }
   }, []);
 
   const connect = useCallback(() => {
-    setState((prev) => ({ ...prev, isConnecting: true }));
+    setState((prev) => ({ ...prev, isConnecting: true, error: null }));
 
     showConnect({
       appDetails: {
         name: 'Aegis Vault',
-        icon: '/logo.svg',
+        icon: window.location.origin + '/images/logo.png',
       },
       redirectTo: '/',
       onFinish: () => {
         const userData = userSession.loadUserData();
-        setState({
-          address: userData.profile.stxAddress.mainnet,
+        setState((prev) => ({
+          ...prev,
+          address: userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet,
           isConnected: true,
           isConnecting: false,
-        });
+        }));
       },
       onCancel: () => {
         setState((prev) => ({ ...prev, isConnecting: false }));
@@ -78,6 +88,8 @@ export function WalletProvider({ children }: WalletProviderProps) {
       address: null,
       isConnected: false,
       isConnecting: false,
+      network: defaultNetwork,
+      error: null,
     });
   }, []);
 
