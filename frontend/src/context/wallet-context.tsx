@@ -46,15 +46,40 @@ export function WalletProvider({ children }: WalletProviderProps) {
   });
 
   useEffect(() => {
-    if (userSession.isUserSignedIn()) {
-      const userData = userSession.loadUserData();
-      setState((prev) => ({
-        ...prev,
-        address: userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet,
-        isConnected: true,
-        isConnecting: false,
-      }));
-    }
+    const checkUserSession = () => {
+      if (userSession.isUserSignedIn()) {
+        const userData = userSession.loadUserData();
+        const currentAddress = userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet;
+
+        setState((prev) => {
+          if (prev.address !== currentAddress) {
+            return {
+              ...prev,
+              address: currentAddress,
+              isConnected: true,
+              isConnecting: false,
+            };
+          }
+          return prev;
+        });
+      } else {
+        setState((prev) => {
+          if (prev.isConnected) {
+            return {
+              ...prev,
+              address: null,
+              isConnected: false,
+              isConnecting: false,
+            };
+          }
+          return prev;
+        });
+      }
+    };
+
+    checkUserSession();
+    const interval = setInterval(checkUserSession, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const connect = useCallback(() => {
