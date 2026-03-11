@@ -30,8 +30,12 @@ import { useWallet } from '@/context/wallet-context';
 export default function DashboardPage() {
   const { isConnected } = useWallet();
 
-  const mockRewardData = [10, 15, 12, 18, 25, 30, 28, 35, 45, 52];
-  const mockRewardLabels = ['1D', '2D', '3D', '4D', '5D', '6D', '7D', '8D', '9D', '10D'];
+  const { isConnected } = useWallet();
+  const mockRewardData = [
+    { day: 1, amount: 10 }, { day: 5, amount: 25 }, { day: 10, amount: 15 },
+    { day: 15, amount: 35 }, { day: 20, amount: 45 }, { day: 25, amount: 65 },
+    { day: 30, amount: 85 }
+  ];
 
   const quickActions = [
     {
