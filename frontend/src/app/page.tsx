@@ -6,7 +6,7 @@ import { StakeForm } from '@/components/sections/stake-form';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       <Header />
       <main className="flex-1">
         <Hero />
