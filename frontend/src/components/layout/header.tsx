@@ -16,14 +16,17 @@ import {
   History,
   BarChart3,
   ShieldCheck,
-  ChevronRight
+  ChevronRight,
+  Globe
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { NetworkBadge } from '@/components/ui/network-badge';
 
 export function Header() {
   const { address, isConnected, isConnecting, connect, disconnect } = useWallet();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showWalletMenu, setShowWalletMenu] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -50,20 +53,26 @@ export function Header() {
       )}
     >
       <div className="container flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="relative">
-            <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20 group-hover:shadow-aegis-blue/40 transition-all duration-500 group-hover:rotate-6">
-              <ShieldCheck className="w-6 h-6 text-white" />
+        {/* Left: Logo & Network */}
+        <div className="flex items-center gap-6">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20 group-hover:shadow-aegis-blue/40 transition-all duration-500 group-hover:rotate-6">
+                <ShieldCheck className="w-6 h-6 text-white" />
+              </div>
+              <div className="absolute inset-0 bg-aegis-blue/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
-            <div className="absolute inset-0 bg-aegis-blue/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </div>
-          <span className="text-xl font-bold tracking-tight text-gradient">
-            Aegis Vault
-          </span>
-        </Link>
+            <span className="text-xl font-bold tracking-tight text-gradient hidden sm:block">
+              Aegis Vault
+            </span>
+          </Link>
 
-        {/* Desktop Nav */}
+          <div className="hidden lg:block">
+            <NetworkBadge />
+          </div>
+        </div>
+
+        {/* Center: Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1 bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -85,37 +94,69 @@ export function Header() {
           })}
         </nav>
 
-        {/* Wallet / Mobile Toggle */}
+        {/* Right: Wallet / Mobile Toggle */}
         <div className="flex items-center gap-3">
           {isConnected ? (
-            <div className="flex items-center gap-2">
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-full border border-border/50 backdrop-blur-sm">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-xs font-medium tabular-nums">
+            <div className="relative">
+              <button
+                onClick={() => setShowWalletMenu(!showWalletMenu)}
+                className="flex items-center gap-3 px-4 py-2 bg-muted/50 hover:bg-muted/80 rounded-full border border-border/50 backdrop-blur-sm transition-all group"
+              >
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                <span className="text-xs font-black tabular-nums tracking-wider text-muted-foreground group-hover:text-foreground transition-colors">
                   {truncateAddress(address || '')}
                 </span>
-              </div>
-              <button
-                onClick={disconnect}
-                className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full transition-all border border-transparent hover:border-destructive/20"
-                title="Disconnect"
-              >
-                <LogOut className="w-4 h-4" />
+                <ChevronRight className={cn(
+                  "w-4 h-4 text-muted-foreground transition-transform duration-300",
+                  showWalletMenu ? "rotate-90" : ""
+                )} />
               </button>
+
+              <AnimatePresence>
+                {showWalletMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                    className="absolute right-0 mt-3 w-56 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
+                  >
+                    <div className="px-4 py-3 border-b border-border/50 mb-1">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Network</p>
+                      <div className="flex items-center gap-2">
+                        <Globe className="w-3 h-3 text-aegis-blue" />
+                        <span className="text-xs font-bold">Stacks Mainnet</span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={disconnect}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-destructive hover:bg-destructive/10 rounded-2xl transition-all group"
+                    >
+                      <LogOut className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+                      Disconnect
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
             <button
               onClick={connect}
               disabled={isConnecting}
-              className="group relative px-5 py-2 bg-foreground text-background rounded-full font-semibold text-sm hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+              className="group relative px-6 py-2.5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_20px_-5px_hsl(var(--foreground)/0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
                 {isConnecting ? (
-                  <div className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin" />
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                  >
+                    <Wallet className="w-4 h-4" />
+                  </motion.div>
                 ) : (
                   <Wallet className="w-4 h-4" />
                 )}
-                {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+                {isConnecting ? 'Authenticating...' : 'Connect Wallet'}
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </button>
@@ -124,7 +165,7 @@ export function Header() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 rounded-full border border-border/50"
+            className="md:hidden p-2.5 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 rounded-full border border-border/50"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
