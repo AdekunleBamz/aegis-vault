@@ -23,7 +23,9 @@ import {
   ArrowLeft,
   Search,
   Filter,
-  Layers
+  Layers,
+  Info,
+  CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -307,30 +309,196 @@ export default function PositionsPage() {
                   </div>
                 </div>
 
-                {/* Benefits / Info Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 group hover:bg-muted/5 transition-all">
-                    <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 mb-6 group-hover:scale-110 transition-transform">
-                      <Zap className="w-6 h-6" />
+                {/* Interactive Breakdown Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Yield Breakdown */}
+                  <div className="lg:col-span-2 space-y-8">
+                    <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 lg:p-10 relative overflow-hidden group">
+                      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-50" />
+
+                      <div className="flex items-center justify-between mb-8">
+                        <div>
+                          <h3 className="text-2xl font-black tracking-tighter">Yield Breakdown</h3>
+                          <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest mt-1">Detailed reward calculation metrics</p>
+                        </div>
+                        <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center">
+                          <TrendingUp className="w-6 h-6 text-emerald-500" />
+                        </div>
+                      </div>
+
+                      <div className="space-y-6">
+                        <div className="flex items-center justify-between p-6 rounded-3xl bg-muted/20 border border-border/30 group/row hover:bg-muted/30 transition-all">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                              <Layers className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-black">Base Reward Rate</div>
+                              <div className="text-[10px] font-bold text-muted-foreground/60 uppercase">Protocol Standard APY</div>
+                            </div>
+                          </div>
+                          <div className="text-lg font-black tracking-tight">8.5%</div>
+                        </div>
+
+                        <div className="flex items-center justify-between p-6 rounded-3xl bg-muted/20 border border-border/30 group/row hover:bg-muted/30 transition-all">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-aegis-purple/10 flex items-center justify-center text-aegis-purple">
+                              <Zap className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-black">Tier Multiplier</div>
+                              <div className="text-[10px] font-bold text-muted-foreground/60 uppercase">{TIERS[tier].name} Boost Active</div>
+                            </div>
+                          </div>
+                          <div className="text-lg font-black tracking-tight text-aegis-purple">x{TIERS[tier].multiplier.toFixed(2)}</div>
+                        </div>
+
+                        <div className="flex items-center justify-between p-6 rounded-3xl bg-muted/20 border border-border/30 group/row hover:bg-muted/30 transition-all border-l-4 border-l-emerald-500/50">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                              <ShieldCheck className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-black">Effective Yield</div>
+                              <div className="text-[10px] font-bold text-muted-foreground/60 uppercase">Realized Annual Rate</div>
+                            </div>
+                          </div>
+                          <div className="text-xl font-black tracking-tight text-emerald-500">{apy}% APY</div>
+                        </div>
+                      </div>
+
+                      <div className="mt-8 pt-8 border-t border-border/30">
+                        <div className="flex items-center gap-3 text-muted-foreground font-medium">
+                          <Info className="w-4 h-4" />
+                          <p className="text-[10px] uppercase tracking-widest leading-relaxed">
+                            Rewards are calculated per block and disbursed upon claiming. Multiplying your principal or upgrading tiers increases your velocity.
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-lg font-black tracking-tight mb-2">Maximum Yield</h3>
-                    <p className="text-sm text-muted-foreground font-medium">Your current {apy}% APY is active. Rewards accrue every block and can be claimed anytime.</p>
+
+                    {/* Projected Growth */}
+                    <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 lg:p-10 relative overflow-hidden group">
+                      <div className="flex items-center justify-between mb-8">
+                        <div>
+                          <h3 className="text-2xl font-black tracking-tighter">Growth Projection</h3>
+                          <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest mt-1">Estimated balance over time</p>
+                        </div>
+                        <div className="w-12 h-12 bg-muted rounded-2xl flex items-center justify-center">
+                          <TrendingUp className="w-6 h-6 text-aegis-blue" />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30">
+                          <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-2">30 Days</div>
+                          <div className="text-xl font-black text-foreground">
+                            +{((stakedAmount * (apy / 100 / 12)) * 1e6).toLocaleString(undefined, { maximumFractionDigits: 0 })} AGS
+                          </div>
+                          <div className="text-[10px] font-bold text-muted-foreground/40 uppercase mt-1">≈ ${((stakedAmount * (apy / 100 / 12)) * agsUsdRate).toFixed(2)}</div>
+                        </div>
+                        <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30">
+                          <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-2">90 Days</div>
+                          <div className="text-xl font-black text-foreground">
+                            +{((stakedAmount * (apy / 100 / 4)) * 1e6).toLocaleString(undefined, { maximumFractionDigits: 0 })} AGS
+                          </div>
+                          <div className="text-[10px] font-bold text-muted-foreground/40 uppercase mt-1">≈ ${((stakedAmount * (apy / 100 / 4)) * agsUsdRate).toFixed(2)}</div>
+                        </div>
+                        <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30">
+                          <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-2">1 Year</div>
+                          <div className="text-xl font-black text-gradient">
+                            +{((stakedAmount * (apy / 100)) * 1e6).toLocaleString(undefined, { maximumFractionDigits: 0 })} AGS
+                          </div>
+                          <div className="text-[10px] font-bold text-muted-foreground/40 uppercase mt-1">≈ ${((stakedAmount * (apy / 100)) * agsUsdRate).toFixed(2)}</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 group hover:bg-muted/5 transition-all">
-                    <div className="w-12 h-12 bg-aegis-blue/10 rounded-2xl flex items-center justify-center text-aegis-blue mb-6 group-hover:scale-110 transition-transform">
-                      <ShieldCheck className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-lg font-black tracking-tight mb-2">Auto-Compounding</h3>
-                    <p className="text-sm text-muted-foreground font-medium">Your governance tokens (AGS) represent your voting power in the upcoming Aegis DAO.</p>
-                  </div>
+                  {/* Activity List */}
+                  <div className="space-y-8">
+                    <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 overflow-hidden relative">
+                      <div className="flex items-center justify-between mb-8">
+                        <h3 className="text-xl font-black flex items-center gap-3">
+                          <History className="w-5 h-5 text-aegis-blue" />
+                          Activity log
+                        </h3>
+                        <div className="px-3 py-1 bg-muted/50 rounded-full text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                          Live
+                        </div>
+                      </div>
 
-                  <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 group hover:bg-muted/5 transition-all">
-                    <div className="w-12 h-12 bg-aegis-purple/10 rounded-2xl flex items-center justify-center text-aegis-purple mb-6 group-hover:scale-110 transition-transform">
-                      <History className="w-6 h-6" />
+                      <div className="space-y-6">
+                        {[
+                          { type: 'Stake', amount: formatSTX(position.amountStaked), block: formatBlockHeight(position.stakeStartBlock), date: blocksToTime(stakeDuration) + ' ago' },
+                          { type: 'Reward', amount: 'Aggregating...', block: 'Current', date: 'In Progress', active: true }
+                        ].map((event, i) => (
+                          <div key={i} className="flex gap-4 relative group/event">
+                            {i < 1 && <div className="absolute left-[19px] top-10 bottom-[-24px] w-[2px] bg-border/30" />}
+                            <div className={cn(
+                              "w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 border border-border",
+                              event.active ? "bg-aegis-blue/20 text-aegis-blue border-aegis-blue/30" : "bg-muted text-muted-foreground"
+                            )}>
+                              {event.type === 'Stake' ? <Layers className="w-4 h-4" /> : <Zap className="w-4 h-4" />}
+                            </div>
+                            <div className="flex-1 pt-1">
+                              <div className="flex items-center justify-between mb-1">
+                                <h4 className="text-sm font-black tracking-tight">{event.type} Operation</h4>
+                                <span className="text-[10px] font-bold text-muted-foreground/40 uppercase">{event.date}</span>
+                              </div>
+                              <p className="text-xs text-muted-foreground font-medium mb-1">
+                                {event.amount} deployed at block <span className="text-foreground">{event.block}</span>
+                              </p>
+                              {event.active && (
+                                <div className="flex items-center gap-2 mt-2">
+                                  <div className="w-1.5 h-1.5 bg-aegis-blue rounded-full animate-pulse" />
+                                  <span className="text-[10px] font-black text-aegis-blue uppercase tracking-widest">Compounding Now</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <button className="w-full mt-10 py-4 bg-muted/30 hover:bg-muted/50 border border-border/50 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
+                        View Full History
+                      </button>
                     </div>
-                    <h3 className="text-lg font-black tracking-tight mb-2">Protocol Access</h3>
-                    <p className="text-sm text-muted-foreground font-medium">Being a {TIERS[tier]?.name} tier member grants you early access to new vault strategies.</p>
+
+                    {/* Tier Benefits Quick Box */}
+                    <div className="rounded-[40px] bg-gradient-to-br from-aegis-blue to-aegis-purple p-[1px] group">
+                      <div className="rounded-[39px] bg-background/90 backdrop-blur-xl p-8 h-full">
+                        <div className="flex items-center gap-4 mb-6">
+                          <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white">
+                            <ShieldCheck className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-black tracking-tight">Tier Perks</h4>
+                            <p className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">Active Benefits</p>
+                          </div>
+                        </div>
+                        <ul className="space-y-3">
+                          {[
+                            { label: 'Priority Governance Voting', active: true },
+                            { label: 'Yield Multiplier Boost', active: true },
+                            { label: 'Early Access Strategies', active: tier >= 2 },
+                          ].map((perk, i) => (
+                            <li key={i} className="flex items-center gap-3">
+                              <div className={cn(
+                                "w-4 h-4 rounded-full flex items-center justify-center shrink-0",
+                                perk.active ? "bg-emerald-500/20 text-emerald-500" : "bg-muted text-muted-foreground/30"
+                              )}>
+                                <CheckCircle2 className="w-3 h-3" />
+                              </div>
+                              <span className={cn(
+                                "text-xs font-bold",
+                                perk.active ? "text-foreground" : "text-muted-foreground/40"
+                              )}>{perk.label}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
