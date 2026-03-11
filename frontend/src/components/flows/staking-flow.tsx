@@ -7,11 +7,22 @@ import { useStaking } from '@/hooks/use-staking';
 import { formatSTX, toMicroSTX } from '@/lib/format';
 import { TIERS } from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
-import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  ShieldCheck,
+  ArrowUpRight,
+  CheckCircle2,
+  Clock,
+  AlertCircle,
+  Zap,
+  Coins,
+  ArrowLeft,
+  LayoutDashboard
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Input } from '@/components/ui/input';
-import { Card, CardHeader } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import { TransactionStepper, Step } from '@/components/ui/transaction-stepper';
+import { StakeForm } from '@/components/sections/stake-form';
 
 interface StakingFlowProps {
   onSuccess?: (txId: string) => void;
@@ -21,287 +32,143 @@ interface StakingFlowProps {
 export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
   const { address, isConnected, connect } = useWallet();
   const { stxBalance, refetch: refetchBalances } = useBalances(address || '');
-  const { stake, isLoading, error } = useStaking(address || '');
-  const [amount, setAmount] = useState('');
-  const [step, setStep] = useState<'input' | 'confirm' | 'pending' | 'success'>('input');
+  const { stake, isLoading, error: stakingError } = useStaking(address || '');
+
+  const [step, setStep] = useState<'input' | 'processing' | 'success'>('input');
   const [txId, setTxId] = useState<string | null>(null);
 
-  const numAmount = parseFloat(amount) || 0;
-  const microAmount = toMicroSTX(numAmount);
-  const tier = determineTier(microAmount);
-  const apy = calculateAPY(microAmount, tier);
-
-  // Calculate next tier progress
-  const nextTierInfo = useMemo(() => {
-    if (tier >= TIERS.length - 1) return null;
-    const nextTier = TIERS[tier + 1];
-    const currentMin = TIERS[tier].minStake;
-    const nextMin = nextTier.minStake;
-    const progress = ((numAmount - currentMin) / (nextMin - currentMin)) * 100;
-    return {
-      name: nextTier.name,
-      minStake: nextMin,
-      progress: Math.min(Math.max(progress, 0), 100),
-      remaining: nextMin - numAmount,
-    };
-  }, [numAmount, tier]);
-
-  const handleSubmit = async () => {
-    if (numAmount <= 0) return;
-    setStep('confirm');
-  };
-
-  const handleConfirm = async () => {
-    setStep('pending');
-
-    try {
-      const result = await stake(numAmount);
-      setTxId(result.txId);
-      setStep('success');
-      onSuccess?.(result.txId);
-      refetchBalances();
-    } catch (err) {
-      setStep('input');
-      onError?.(error || 'Transaction failed');
+  const steps: Step[] = [
+    {
+      id: 'input',
+      title: 'Configure Stake',
+      description: 'Enter the amount of STX you wish to deposit into the vault.',
+      status: step === 'input' ? 'processing' : 'success'
+    },
+    {
+      id: 'signing',
+      title: 'Sign Transaction',
+      description: 'Authorize the staking operation in your connected wallet.',
+      status: step === 'input' ? 'idle' : step === 'processing' ? 'processing' : 'success'
+    },
+    {
+      id: 'broadcast',
+      title: 'Protocol Execution',
+      description: 'Wait for the Stacks network to confirm your staking position.',
+      status: step === 'success' ? 'success' : 'idle'
     }
-  };
-
-  const handleReset = () => {
-    setAmount('');
-    setStep('input');
-    setTxId(null);
-  };
-
-  // Quick amount buttons
-  const quickAmounts = [
-    { label: '25%', value: Number(stxBalance) / 4 / 1e6 },
-    { label: '50%', value: Number(stxBalance) / 2 / 1e6 },
-    { label: '75%', value: (Number(stxBalance) * 3) / 4 / 1e6 },
-    { label: 'MAX', value: Number(stxBalance) / 1e6 },
   ];
+
+  const currentStepIndex = step === 'input' ? 0 : step === 'processing' ? 1 : 2;
 
   if (!isConnected) {
     return (
-      <Card className="text-center py-12">
-        <div className="w-20 h-20 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <svg className="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
+      <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-12 text-center group">
+        <div className="w-20 h-20 bg-muted rounded-[32px] flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-500">
+          <ShieldCheck className="w-10 h-10 text-muted-foreground/40" />
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">Connect to Start Staking</h3>
-        <p className="text-gray-400 mb-6 max-w-sm mx-auto">
-          Connect your Stacks wallet to stake STX and earn AGS rewards
+        <h3 className="text-2xl font-black mb-4">Staking Entry Locked</h3>
+        <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto">
+          Please connect your wallet to access the decentralized staking vault and start earning AGS.
         </p>
-        <Button onClick={connect} size="lg">
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-          </svg>
-          Connect Wallet
-        </Button>
-      </Card>
-    );
-  }
-
-  if (step === 'success') {
-    return (
-      <Card className="text-center py-12">
-        <div className="w-20 h-20 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 relative">
-          <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          <div className="absolute inset-0 rounded-2xl bg-green-500/20 animate-ping" />
-        </div>
-        <h3 className="text-2xl font-bold text-white mb-2">Stake Submitted!</h3>
-        <p className="text-gray-400 mb-6">Your transaction has been submitted to the network.</p>
-
-        <div className="bg-gray-900/50 rounded-xl p-4 mb-6 max-w-sm mx-auto">
-          <div className="flex justify-between text-sm mb-2">
-            <span className="text-gray-400">Amount Staked</span>
-            <span className="text-white font-medium">{numAmount.toFixed(6)} STX</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-400">New Tier</span>
-            <span style={{ color: TIERS[tier]?.color }} className="font-medium">{TIERS[tier]?.name}</span>
-          </div>
-        </div>
-
-        {txId && (
-          <a
-            href={`https://explorer.stacks.co/txid/${txId}?chain=mainnet`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm mb-6"
-          >
-            View on Explorer
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-        )}
-
-        <div className="flex gap-3 justify-center">
-          <Button onClick={handleReset} variant="secondary">Stake More</Button>
-          <Link href="/dashboard">
-            <Button>View Dashboard</Button>
-          </Link>
-        </div>
-      </Card>
-    );
-  }
-
-  if (step === 'pending') {
-    return (
-      <Card className="text-center py-12">
-        <div className="w-20 h-20 mx-auto mb-6 relative">
-          <div className="absolute inset-0 border-4 border-blue-500/30 rounded-full" />
-          <div className="absolute inset-0 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        </div>
-        <h3 className="text-2xl font-bold text-white mb-2">Confirm in Wallet</h3>
-        <p className="text-gray-400 mb-4">Please confirm the transaction in your wallet.</p>
-        <p className="text-gray-500 text-sm">This may take a few moments...</p>
-      </Card>
-    );
-  }
-
-  if (step === 'confirm') {
-    return (
-      <Card>
-        <CardHeader title="Confirm Stake" subtitle="Review your transaction" />
-        <div className="space-y-4">
-          <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-5">
-            <div className="text-center mb-4">
-              <p className="text-gray-400 text-sm mb-1">You are staking</p>
-              <p className="text-3xl font-bold text-white">{numAmount.toFixed(6)} STX</p>
-            </div>
-            <div className="space-y-3 pt-4 border-t border-gray-700/50">
-              <div className="flex justify-between">
-                <span className="text-gray-400">Tier</span>
-                <span style={{ color: TIERS[tier]?.color }} className="font-semibold">{TIERS[tier]?.name}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">APY</span>
-                <span className="text-green-400 font-semibold">{apy}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">Est. Daily Rewards</span>
-                <span className="text-white">{((numAmount * apy / 100) / 365).toFixed(4)} AGS</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <Button variant="secondary" onClick={() => setStep('input')} className="flex-1">
-              Back
-            </Button>
-            <Button onClick={handleConfirm} className="flex-1" size="lg">
-              Confirm Stake
-            </Button>
-          </div>
-        </div>
-      </Card>
+        <button
+          onClick={connect}
+          className="px-12 py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] transition-all active:scale-95"
+        >
+          Authenticate Wallet
+        </button>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <CardHeader title="Stake STX" subtitle="Earn AGS rewards by staking your STX" />
-
-      <div className="space-y-5">
-        <div>
-          <Input
-            label="Amount"
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="0.00"
-            inputSize="lg"
-            suffix={<span className="text-gray-400 font-medium">STX</span>}
-          />
-
-          {/* Quick amount buttons */}
-          <div className="flex gap-2 mt-3">
-            {quickAmounts.map((qa) => (
-              <button
-                key={qa.label}
-                onClick={() => setAmount(qa.value.toFixed(6))}
-                className="flex-1 py-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white 
-                  rounded-lg text-sm font-medium transition-colors"
-              >
-                {qa.label}
-              </button>
-            ))}
-          </div>
-
-          <p className="text-gray-500 text-sm mt-3">
-            Available: {formatSTX(stxBalance)} STX
-          </p>
-        </div>
-
-        {numAmount > 0 && (
-          <>
-            {/* Tier Preview */}
-            <div className="bg-gray-900/50 rounded-xl p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: TIERS[tier]?.color }}
-                  />
-                  <span style={{ color: TIERS[tier]?.color }} className="font-semibold">
-                    {TIERS[tier]?.name} Tier
-                  </span>
-                </div>
-                <span className="text-green-400 font-bold">{apy}% APY</span>
-              </div>
-
-              {/* Next tier progress */}
-              {nextTierInfo && (
-                <div className="mt-3 pt-3 border-t border-gray-700/50">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-400">Progress to {nextTierInfo.name}</span>
-                    <span className="text-gray-400">{nextTierInfo.remaining.toLocaleString()} STX more</span>
-                  </div>
-                  <Progress value={nextTierInfo.progress} color="purple" size="sm" />
-                </div>
-              )}
-            </div>
-
-            {/* Rewards Preview */}
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { label: 'Daily', value: ((numAmount * apy / 100) / 365).toFixed(4) },
-                { label: 'Weekly', value: ((numAmount * apy / 100) / 52).toFixed(4) },
-                { label: 'Monthly', value: ((numAmount * apy / 100) / 12).toFixed(4) },
-              ].map((item) => (
-                <div key={item.label} className="bg-gray-800/50 rounded-lg p-3 text-center">
-                  <p className="text-gray-400 text-xs mb-1">{item.label}</p>
-                  <p className="text-white font-medium">{item.value}</p>
-                  <p className="text-gray-500 text-xs">AGS</p>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 flex items-start gap-3">
-            <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-red-400 text-sm">{error}</p>
-          </div>
-        )}
-
-        <Button
-          onClick={handleSubmit}
-          disabled={numAmount <= 0 || isLoading}
-          isLoading={isLoading}
-          fullWidth
-          size="lg"
-        >
-          {numAmount > 0 ? `Stake ${numAmount.toFixed(2)} STX` : 'Enter Amount'}
-        </Button>
+    <div className="space-y-8">
+      {/* Stepper Visualization */}
+      <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 md:p-10">
+        <TransactionStepper steps={steps} currentStepIndex={currentStepIndex} />
       </div>
-    </Card>
+
+      <AnimatePresence mode="wait">
+        {step === 'input' && (
+          <motion.div
+            key="input-form"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <StakeForm />
+          </motion.div>
+        )}
+
+        {step === 'processing' && (
+          <motion.div
+            key="processing-state"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-12 text-center"
+          >
+            <div className="w-24 h-24 bg-aegis-blue/10 rounded-[40px] flex items-center justify-center mx-auto mb-8 relative">
+              <Clock className="w-10 h-10 text-aegis-blue animate-pulse" />
+              <div className="absolute inset-0 rounded-[40px] border-4 border-aegis-blue border-t-transparent animate-spin" />
+            </div>
+            <h3 className="text-2xl font-black mb-4">Awaiting Authorization</h3>
+            <p className="text-muted-foreground font-medium mb-8 max-w-xs mx-auto">
+              Please check your wallet extension to sign the staking transaction.
+            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-muted/50 rounded-full text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+              <Zap className="w-3.5 h-3.5" />
+              Gas fees: ~0.001 STX
+            </div>
+          </motion.div>
+        )}
+
+        {step === 'success' && (
+          <motion.div
+            key="success-state"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="rounded-[40px] border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-2xl p-12 text-center relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+            <div className="w-24 h-24 bg-emerald-500 text-background rounded-[40px] flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(16,185,129,0.4)]">
+              <CheckCircle2 className="w-12 h-12" />
+            </div>
+
+            <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter">Stake Broadcasted</h3>
+            <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto">
+              Your STX have been committed to the vault. Rewards will begin accruing after the next block confirmation.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto mb-10">
+              <a
+                href={`https://explorer.stacks.co/txid/${txId}?chain=mainnet`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 p-4 bg-muted/50 hover:bg-muted border border-border/50 rounded-3xl font-black text-[10px] uppercase tracking-widest transition-all"
+              >
+                Explorer
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+              <Link
+                href="/dashboard"
+                className="flex items-center justify-center gap-2 p-4 bg-foreground text-background rounded-3xl font-black text-[10px] uppercase tracking-widest transition-all shadow-lg"
+              >
+                Dashboard
+                <LayoutDashboard className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <button
+              onClick={() => setStep('input')}
+              className="flex items-center gap-2 mx-auto text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Stake More STX
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
