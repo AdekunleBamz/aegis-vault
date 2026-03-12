@@ -144,6 +144,7 @@ export default function DashboardPage() {
                         key={action.href}
                         href={action.href}
                         className="group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50"
+                        aria-label={`${action.title}: ${action.description}`}
                       >
                         <div className="flex items-center gap-4">
                           <div className={cn(
