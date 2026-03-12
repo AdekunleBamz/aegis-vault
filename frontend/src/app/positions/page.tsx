@@ -143,7 +143,7 @@ export default function PositionsPage() {
                 </div>
               </div>
             )}
-          </motion.div>
+          </div>
 
           <AnimatePresence mode="wait">
             {isLoading ? (
