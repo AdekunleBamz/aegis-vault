@@ -58,8 +58,8 @@ export default function StakePage() {
               <StakingFlow />
 
               {/* Protocol Commitments */}
-              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 md:p-10">
-                <h3 className="text-xl font-black mb-8 flex items-center gap-3">
+              <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 md:p-10" aria-labelledby="commitments-title">
+                <h3 id="commitments-title" className="text-xl font-black mb-8 flex items-center gap-3">
                   <ShieldCheck className="w-6 h-6 text-aegis-blue" />
                   Protocol Commitments
                 </h3>
