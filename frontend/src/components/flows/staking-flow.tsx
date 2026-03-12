@@ -106,10 +106,12 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-12 text-center"
+            role="status"
+            aria-live="polite"
           >
             <div className="w-24 h-24 bg-aegis-blue/10 rounded-[40px] flex items-center justify-center mx-auto mb-8 relative">
               <Clock className="w-10 h-10 text-aegis-blue animate-pulse" />
-              <div className="absolute inset-0 rounded-[40px] border-4 border-aegis-blue border-t-transparent animate-spin" />
+              <div className="absolute inset-0 rounded-[40px] border-4 border-aegis-blue border-t-transparent animate-spin" aria-hidden="true" />
             </div>
             <h3 className="text-2xl font-black mb-4">Awaiting Authorization</h3>
             <p className="text-muted-foreground font-medium mb-8 max-w-xs mx-auto">
@@ -128,8 +130,10 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="rounded-[40px] border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-2xl p-12 text-center relative overflow-hidden"
+            role="status"
+            aria-live="polite"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" aria-hidden="true" />
 
             <div className="w-24 h-24 bg-emerald-500 text-background rounded-[40px] flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(16,185,129,0.4)]">
               <CheckCircle2 className="w-12 h-12" />
