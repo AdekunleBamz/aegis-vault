@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { useWallet } from '@/context/wallet-context';
@@ -42,8 +43,6 @@ export default function PositionsPage() {
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<PositionStatus>('all');
   const [tierDrawerOpen, setTierDrawerOpen] = useState(false);
-
-  const isLoading = isPositionLoading || isTxsLoading;
 
   const isLoading = isPositionLoading || isTxsLoading;
 

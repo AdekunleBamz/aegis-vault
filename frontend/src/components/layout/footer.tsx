@@ -19,6 +19,7 @@ export function Footer() {
       { label: 'Dashboard', href: '/dashboard' },
       { label: 'Stake STX', href: '/stake' },
       { label: 'Account History', href: '/history' },
+      { label: 'Transparency', href: '/security' },
       { label: 'Vault Stats', href: '/stats' },
     ],
     resources: [
