@@ -213,28 +213,28 @@ export function StakeForm() {
 
               {/* Reward Projection */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all">
+                <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all" aria-labelledby="yield-label">
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Yield Projection</span>
+                    <span id="yield-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Yield Projection</span>
                     <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" />
                   </div>
                   <div>
-                    <div className="text-2xl font-black text-emerald-500">
+                    <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}>
                       {numAmount > 0 ? `+${monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : "0.00"}
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Est. AGS / Month</div>
                   </div>
                 </div>
 
-                <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all">
+                <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all" aria-labelledby="tier-label">
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Reward Tier</span>
+                    <span id="tier-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Reward Tier</span>
                     <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" />
                   </div>
                   <div>
-                    <div className="text-2xl font-black flex items-center gap-2" style={{ color: TIERS[tier]?.color }}>
+                    <div className="text-2xl font-black flex items-center gap-2" style={{ color: TIERS[tier]?.color }} aria-label={`Current Tier: ${TIERS[tier]?.name}, ${apy} percent APY`}>
                       {TIERS[tier]?.name}
-                      <span className="text-xs text-muted-foreground/40 font-bold uppercase">{apy}% APY</span>
+                      <span className="text-xs text-muted-foreground/40 font-bold uppercase" aria-hidden="true">{apy}% APY</span>
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Multiplier Active</div>
                   </div>
