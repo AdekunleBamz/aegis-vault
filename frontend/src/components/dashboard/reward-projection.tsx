@@ -69,8 +69,9 @@ export function RewardProjection() {
                                 value={projectedAmount}
                                 onChange={(e) => setProjectedAmount(parseInt(e.target.value))}
                                 className="w-full h-2 bg-muted rounded-full appearance-none cursor-pointer accent-aegis-blue"
+                                aria-label="Estimated stake amount in STX"
                             />
-                            <div className="flex justify-between mt-4 px-1">
+                            <div className="flex justify-between mt-4 px-1" aria-hidden="true">
                                 <span className="text-[10px] font-black text-muted-foreground/20">100 STX</span>
                                 <span className="text-[10px] font-black text-muted-foreground/20">50K STX</span>
                             </div>
@@ -78,10 +79,10 @@ export function RewardProjection() {
                     </div>
 
                     {/* Key Metrics Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6" aria-live="polite">
                         <div className="p-6 rounded-[32px] bg-muted/30 border border-border/50 hover:bg-muted/50 transition-all group/stat">
                             <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 mb-3">Annual Yield</div>
-                            <div className="text-3xl font-black text-emerald-500 tabular-nums">{yearlyAGS.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
+                            <div className="text-3xl font-black text-emerald-500 tabular-nums" aria-label={`${yearlyAGS.toLocaleString(undefined, { maximumFractionDigits: 1 })} AGS tokens per year`}>{yearlyAGS.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
                             <div className="text-[10px] font-bold text-muted-foreground/40 uppercase mt-1">Total AGS Tokens</div>
                         </div>
 
@@ -93,7 +94,7 @@ export function RewardProjection() {
 
                         <div className="p-6 rounded-[32px] bg-muted/30 border border-border/50 hover:bg-muted/50 transition-all group/stat">
                             <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 mb-3">Rate (APY)</div>
-                            <div className="text-3xl font-black text-aegis-blue tabular-nums">{apy.toFixed(1)}%</div>
+                            <div className="text-3xl font-black text-aegis-blue tabular-nums" aria-label={`${apy.toFixed(1)} percent APY`}>{apy.toFixed(1)}%</div>
                             <div className="text-[10px] font-bold text-muted-foreground/40 uppercase mt-1">Active Tier: {tier.name}</div>
                         </div>
                     </div>
