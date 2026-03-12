@@ -33,9 +33,15 @@ export function Hero() {
     'Mainnet-ready analytics and transparency'
   ];
 
+  const operatingSignals = [
+    { label: 'Security posture', value: 'Audited controls' },
+    { label: 'Withdrawal model', value: 'Flexible lock windows' },
+    { label: 'Rewards cadence', value: 'Live accrual tracking' }
+  ];
+
   return (
     <section
-      className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[90vh] flex items-center"
+      className="relative pt-28 pb-20 px-4 overflow-hidden min-h-[90vh] flex items-center"
       aria-labelledby="hero-headline"
     >
       {/* Dynamic Background */}
@@ -46,7 +52,8 @@ export function Hero() {
       </div>
 
       <div className="container relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
+          <div className="max-w-4xl text-center lg:text-left">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -79,7 +86,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl leading-relaxed lg:mx-0"
           >
             Aegis Vault is a non-custodial staking primitive for the Stacks ecosystem.
             Earn institutional-grade yield with flexible lockup periods.
@@ -90,7 +97,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             {isConnected ? (
               <Link
@@ -128,7 +135,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+            className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
           >
             {proofPoints.map((point) => (
               <div
@@ -142,14 +149,14 @@ export function Hero() {
           </motion.div>
 
           {/* Stats Grid */}
-          <div className="mt-24 grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="p-6 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default"
+                className="p-5 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default text-left"
               >
                 <stat.icon className={cn("w-5 h-5 mb-4 opacity-70 group-hover:opacity-100 transition-opacity", stat.color)} />
                 <div className="text-3xl font-black tabular-nums tracking-tighter mb-1">
@@ -167,7 +174,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-8 text-xs font-bold uppercase tracking-widest text-muted-foreground/50"
+            className="mt-16 flex flex-wrap items-center justify-center gap-8 text-xs font-bold uppercase tracking-widest text-muted-foreground/50 lg:justify-start"
           >
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
               <ShieldCheck className="w-4 h-4 text-green-500/50 group-hover:text-green-500 transition-colors" />
@@ -182,6 +189,59 @@ export function Hero() {
               Real-time Rewards
             </div>
           </motion.div>
+          </div>
+
+          <motion.aside
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.25 }}
+            className="relative"
+          >
+            <div className="absolute inset-x-12 top-10 h-40 rounded-full bg-aegis-blue/20 blur-[90px]" />
+            <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-background/65 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] backdrop-blur-2xl">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-aegis-blue">
+                    Operator Snapshot
+                  </p>
+                  <h2 className="mt-3 text-2xl font-black tracking-tight">
+                    Designed for quick risk review before deposit
+                  </h2>
+                </div>
+                <div className="rounded-2xl border border-aegis-blue/20 bg-aegis-blue/10 p-3">
+                  <ShieldCheck className="h-5 w-5 text-aegis-blue" />
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                {operatingSignals.map((signal) => (
+                  <div
+                    key={signal.label}
+                    className="flex items-center justify-between rounded-[24px] border border-border/60 bg-muted/30 px-4 py-4"
+                  >
+                    <span className="text-sm text-muted-foreground">{signal.label}</span>
+                    <span className="text-sm font-bold text-foreground">{signal.value}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-[28px] border border-aegis-purple/20 bg-gradient-to-br from-aegis-purple/10 via-background/40 to-aegis-cyan/10 p-5">
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/70">
+                  Deposit Workflow
+                </p>
+                <div className="mt-4 grid gap-3">
+                  {['Connect wallet', 'Preview rewards', 'Confirm stake'].map((step, index) => (
+                    <div key={step} className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-xs font-black text-background">
+                        0{index + 1}
+                      </div>
+                      <span className="text-sm font-medium text-foreground">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.aside>
         </div>
       </div>
     </section>
