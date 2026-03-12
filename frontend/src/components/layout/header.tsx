@@ -20,7 +20,8 @@ import {
   ShieldCheck,
   ChevronRight,
   Globe,
-  Vote
+  Vote,
+  Cpu
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NetworkBadge } from '@/components/ui/network-badge';
