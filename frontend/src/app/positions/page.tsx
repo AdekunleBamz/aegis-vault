@@ -153,6 +153,8 @@ export default function PositionsPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 className="flex flex-col items-center justify-center py-32"
+                role="status"
+                aria-live="polite"
               >
                 <div className="w-16 h-16 relative mb-6">
                   <div className="absolute inset-0 border-4 border-aegis-blue/10 rounded-full" />
