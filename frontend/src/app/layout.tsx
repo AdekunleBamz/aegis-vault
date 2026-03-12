@@ -7,8 +7,10 @@ import { NetworkWarning } from '@/components/ui/network-warning';
 const outfit = Outfit({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Aegis Vault - STX Staking Protocol',
-  description: 'Stake STX tokens and earn AGS rewards on the Stacks blockchain',
+  title: 'Aegis Vault | Premium Bitcoin DeFi Staking & Yield Optimization',
+  description: 'The premier yield optimization protocol on Stacks. Secure, non-custodial Bitcoin DeFi with automated strategies, advanced governance, and institutional-grade analytics.',
+  keywords: ['Stacks', 'Bitcoin', 'DeFi', 'Staking', 'Yield Farming', 'Crypto', 'Aegis Vault', 'Smart Contracts'],
+  authors: [{ name: 'Aegis Protocol Team' }],
   icons: {
     icon: '/images/logo.png',
     shortcut: '/images/favicon-32x32.png',
