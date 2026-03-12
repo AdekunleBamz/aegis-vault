@@ -33,7 +33,7 @@ export const ErrorRecovery: React.FC<ErrorRecoveryProps> = ({ errorCode, onRetry
   return (
     <div className="space-y-4">
       <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-        <h4 className="text-blue-300 font-medium mb-3">Here's what you can try:</h4>
+        <h4 className="text-blue-300 font-medium mb-3">Here&apos;s what you can try:</h4>
         <ul className="space-y-2">
           {getSuggestions().map((tip, idx) => (
             <li key={idx} className="flex items-start gap-2 text-blue-200 text-sm">
@@ -102,10 +102,9 @@ export const RetryButton = React.forwardRef<HTMLButtonElement, RetryButtonProps>
       disabled={disabled || loading || retryCount >= maxRetries}
       className={`
         px-4 py-2 rounded-lg font-medium transition-colors
-        ${
-          retryCount >= maxRetries
-            ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-            : 'bg-orange-500 hover:bg-orange-600 text-white'
+        ${retryCount >= maxRetries
+          ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+          : 'bg-orange-500 hover:bg-orange-600 text-white'
         }
       `}
       {...props}

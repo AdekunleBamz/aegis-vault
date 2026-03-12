@@ -88,8 +88,8 @@ export default function PositionsPage() {
   const tier = position?.tier || 0;
   const apy = calculateAPY(position?.amountStaked || BigInt(0), tier);
   const stakeDuration = blockHeight - (position?.stakeStartBlock || blockHeight);
-  const stakedAmount = Number(position?.amountStaked || 0) / 1e6;
-  const pendingRewards = Number(position?.pendingRewards || 0) / 1e6;
+  const stakedAmount = Number(position?.amountStaked || BigInt(0)) / 1e6;
+  const pendingRewards = Number(position?.pendingRewards || BigInt(0)) / 1e6;
 
   // Calculate progress to next tier
   const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
@@ -180,7 +180,7 @@ export default function PositionsPage() {
                   </div>
                   <h2 className="text-3xl font-black mb-4">No Active Positions</h2>
                   <p className="text-muted-foreground font-medium mb-10">
-                    You haven't deployed any capital to the Aegis Vault yet. Start staking to earn protocol rewards and unlock exclusive tier benefits.
+                    You haven&apos;t deployed any capital to the Aegis Vault yet. Start staking to earn protocol rewards and unlock exclusive tier benefits.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link href="/stake">
@@ -240,7 +240,7 @@ export default function PositionsPage() {
                           </div>
                           <p className="text-muted-foreground font-bold flex items-center gap-2">
                             <Clock className="w-4 h-4" />
-                            Active for {blocksToTime(stakeDuration)} · Started Block {formatBlockHeight(position.stakeStartBlock)}
+                            Active for {blocksToTime(stakeDuration)} · Started Block {formatBlockHeight(position?.stakeStartBlock || 0)}
                           </p>
                         </div>
                       </div>
@@ -267,7 +267,7 @@ export default function PositionsPage() {
                           <Layers className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" />
                         </div>
                         <div>
-                          <div className="text-2xl font-black">{formatSTX(position.amountStaked)} STX</div>
+                          <div className="text-2xl font-black">{formatSTX(position?.amountStaked || BigInt(0))} STX</div>
                           <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">≈ ${(stakedAmount * stxUsdRate).toLocaleString()} USD</div>
                         </div>
                       </div>
@@ -278,7 +278,7 @@ export default function PositionsPage() {
                           <Coins className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" />
                         </div>
                         <div>
-                          <div className="text-2xl font-black text-emerald-500">{formatAGS(position.pendingRewards)} AGS</div>
+                          <div className="text-2xl font-black text-emerald-500">{formatAGS(position?.pendingRewards || BigInt(0))} AGS</div>
                           <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">≈ ${(pendingRewards * agsUsdRate).toLocaleString()} USD</div>
                         </div>
                       </div>
