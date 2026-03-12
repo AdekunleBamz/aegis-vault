@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { Tabs } from '@/components/ui/tabs';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 // Action configuration
 const ACTION_CONFIG: Record<string, {
@@ -116,6 +117,9 @@ export default function HistoryPage() {
       <div className="min-h-screen bg-gray-950 text-white flex flex-col">
         <Header />
         <main className="flex-1 py-12 px-4">
+          <div className="container mx-auto max-w-4xl px-4">
+            <Breadcrumbs />
+          </div>
           <div className="container mx-auto max-w-md text-center">
             <div className="w-20 h-20 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <svg className="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,6 +146,7 @@ export default function HistoryPage() {
       <Header />
       <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-4xl">
+          <Breadcrumbs />
           {/* Page Header */}
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Transaction History</h1>
