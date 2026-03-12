@@ -1,8 +1,11 @@
+```typescript
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
 import { AppProviders } from '@/components/providers';
 import { NetworkWarning } from '@/components/ui/network-warning';
+import { Footer } from '@/components/layout/footer';
+import { PerformanceMonitor } from '@/components/ui/performance-monitor';
 
 const outfit = Outfit({ subsets: ['latin'] });
 
@@ -49,9 +52,14 @@ export default function RootLayout({
       <body className={outfit.className}>
         <AppProviders>
           <NetworkWarning />
-          {children}
+          <main className="flex-1 pt-20">
+            {children}
+          </main>
+          <Footer />
         </AppProviders>
+        <PerformanceMonitor />
       </body>
     </html>
   );
 }
+```
