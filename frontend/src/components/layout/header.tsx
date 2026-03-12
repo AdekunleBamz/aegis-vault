@@ -9,6 +9,14 @@ import { cn } from '@/lib/utils';
 import { useBalances } from '@/hooks/use-balances';
 import { useNetwork } from '@/hooks/use-network';
 import {
+  Menu,
+  X,
+  Wallet,
+  LogOut,
+  LayoutDashboard,
+  Layers,
+  History,
+  BarChart3,
   ShieldCheck,
   ChevronRight,
   Globe,
