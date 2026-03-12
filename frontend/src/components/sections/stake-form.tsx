@@ -47,6 +47,19 @@ export function StakeForm() {
     return null;
   }, [amount, numAmount, balanceSTX]);
 
+  const formatAmount = (value: number) => {
+    if (!Number.isFinite(value) || value <= 0) {
+      return '';
+    }
+
+    return value.toFixed(2).replace(/\.00$/, '');
+  };
+
+  const setSuggestedAmount = (value: number) => {
+    setAmount(formatAmount(Math.min(value, balanceSTX)));
+    setValidationError(null);
+  };
+
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/[^0-9.]/g, '');
     setAmount(val);
@@ -85,6 +98,12 @@ export function StakeForm() {
   const progressToNext = nextTier
     ? Math.min(100, (numAmount / nextTierMin) * 100)
     : 100;
+  const quickAmounts = [
+    { label: '25%', value: balanceSTX * 0.25 },
+    { label: '50%', value: balanceSTX * 0.5 },
+    { label: '75%', value: balanceSTX * 0.75 },
+    { label: 'Max', value: balanceSTX }
+  ].filter((preset) => preset.value > 0);
 
   return (
     <section id="stake-panel" className="py-24 px-4 relative overflow-hidden">
@@ -158,6 +177,29 @@ export function StakeForm() {
             </motion.div>
           ) : (
             <form onSubmit={handleStake} className="space-y-8">
+              <div className="grid gap-4 rounded-[32px] border border-border/30 bg-muted/15 p-5 md:grid-cols-2">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                    Available Balance
+                  </p>
+                  <p className="mt-2 text-2xl font-black tabular-nums">
+                    {balanceSTX.toLocaleString(undefined, { maximumFractionDigits: 2 })} STX
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Use quick-fill controls below to prefill a sensible deposit size.
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                    Suggested Reserve
+                  </p>
+                  <p className="mt-2 text-2xl font-black tabular-nums">1 STX</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Keep a small balance free for transaction fees and future position changes.
+                  </p>
+                </div>
+              </div>
+
               {/* Input Area */}
               <div>
                 <div className="flex justify-between items-end mb-4 px-2">
@@ -166,7 +208,7 @@ export function StakeForm() {
                   </label>
                   <button
                     type="button"
-                    onClick={() => setAmount(balanceSTX.toString())}
+                    onClick={() => setSuggestedAmount(balanceSTX)}
                     className="text-[10px] font-black text-aegis-blue hover:text-aegis-cyan transition-colors"
                   >
                     MAX: {balanceSTX.toLocaleString()} STX
@@ -209,6 +251,30 @@ export function StakeForm() {
                     </motion.p>
                   )}
                 </AnimatePresence>
+
+                {quickAmounts.length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2 px-1">
+                    {quickAmounts.map((preset) => (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        onClick={() => setSuggestedAmount(preset.value)}
+                        className="rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                    {nextTier && nextTierMin > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setSuggestedAmount(nextTierMin)}
+                        className="rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan"
+                      >
+                        Reach {nextTier.name}
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Reward Projection */}
@@ -223,6 +289,11 @@ export function StakeForm() {
                       {numAmount > 0 ? `+${monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : "0.00"}
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Est. AGS / Month</div>
+                    <p className="mt-3 text-sm text-muted-foreground">
+                      {numAmount > 0
+                        ? `${yearlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })} AGS projected over a year at the current tier.`
+                        : 'Enter an amount to preview monthly and annual AGS rewards.'}
+                    </p>
                   </div>
                 </div>
 
@@ -237,6 +308,11 @@ export function StakeForm() {
                       <span className="text-xs text-muted-foreground/40 font-bold uppercase" aria-hidden="true">{apy}% APY</span>
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Multiplier Active</div>
+                    <p className="mt-3 text-sm text-muted-foreground">
+                      {nextTier
+                        ? `${Math.max(0, nextTierMin - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX away from ${nextTier.name}.`
+                        : 'You are already in the highest available reward tier.'}
+                    </p>
                   </div>
                 </div>
               </div>
