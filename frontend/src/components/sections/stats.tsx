@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useNetwork } from '@/hooks/use-network';
 import { formatSTX, formatBlockHeight } from '@/lib/format';
 import {
@@ -23,6 +24,7 @@ export function Stats() {
       label: 'Total Value Locked',
       value: formatSTX(BigInt(1500000000000)),
       unit: 'STX',
+      note: 'Capital actively securing vault strategies',
       icon: BarChart3,
       color: 'text-aegis-blue',
       glow: 'shadow-aegis-blue/10'
@@ -31,6 +33,7 @@ export function Stats() {
       label: 'Active Stakers',
       value: '42',
       unit: 'Users',
+      note: 'Wallets with live positions in the protocol',
       icon: Users,
       color: 'text-aegis-purple',
       glow: 'shadow-aegis-purple/10'
@@ -39,6 +42,7 @@ export function Stats() {
       label: 'Rewards Distributed',
       value: formatSTX(BigInt(50000000000)),
       unit: 'AGS',
+      note: 'Governance incentives paid to participants',
       icon: Gift,
       color: 'text-aegis-cyan',
       glow: 'shadow-aegis-cyan/10'
@@ -47,6 +51,7 @@ export function Stats() {
       label: 'Current Block',
       value: formatBlockHeight(blockHeight),
       unit: 'Stacks',
+      note: 'Latest synced network height from the connected app',
       icon: Box,
       color: 'text-aegis-indigo',
       glow: 'shadow-aegis-indigo/10'
@@ -72,6 +77,19 @@ export function Stats() {
             <Activity className="w-3.5 h-3.5 text-green-500" />
             Live Network Data
           </div>
+        </div>
+
+        <div className="mb-8 flex flex-col gap-3 rounded-[28px] border border-border/60 bg-background/50 p-5 backdrop-blur-sm md:flex-row md:items-center md:justify-between">
+          <p className="max-w-2xl text-sm text-muted-foreground">
+            Use these numbers to sanity-check vault health before staking. The cards below separate capital, participation, rewards, and chain sync so the protocol state is easier to scan.
+          </p>
+          <Link
+            href="/stats"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-aegis-blue transition-colors hover:text-aegis-cyan"
+          >
+            Open full analytics
+            <TrendingUp className="h-4 w-4" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
@@ -108,6 +126,9 @@ export function Stats() {
                     {stat.unit}
                   </span>
                 </div>
+                <p className="pt-3 text-sm leading-relaxed text-muted-foreground">
+                  {stat.note}
+                </p>
               </div>
 
               {/* Hover Decorative Element */}

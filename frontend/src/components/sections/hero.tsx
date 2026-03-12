@@ -27,6 +27,12 @@ export function Hero() {
     { value: '4', label: 'Reward Tiers', icon: LayoutGrid, color: 'text-aegis-cyan' },
   ];
 
+  const proofPoints = [
+    'Non-custodial vault access',
+    'Tiered rewards with clear lock windows',
+    'Mainnet-ready analytics and transparency'
+  ];
+
   return (
     <section
       className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[90vh] flex items-center"
@@ -110,12 +116,29 @@ export function Hero() {
               </button>
             )}
             <Link
-              href="/stats"
-              aria-label="Analyze protocol statistics"
+              href="#stake-panel"
+              aria-label="Jump to the staking calculator"
               className="px-8 py-4 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground font-bold text-lg hover:bg-muted/50 transition-all flex items-center justify-center gap-2"
             >
-              Analyze Stats
+              Estimate My Rewards
             </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          >
+            {proofPoints.map((point) => (
+              <div
+                key={point}
+                className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-2 text-sm text-muted-foreground backdrop-blur-sm"
+              >
+                <ShieldCheck className="h-4 w-4 text-aegis-blue" />
+                <span>{point}</span>
+              </div>
+            ))}
           </motion.div>
 
           {/* Stats Grid */}

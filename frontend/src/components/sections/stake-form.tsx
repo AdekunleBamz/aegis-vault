@@ -87,7 +87,7 @@ export function StakeForm() {
     : 100;
 
   return (
-    <section className="py-24 px-4 relative overflow-hidden">
+    <section id="stake-panel" className="py-24 px-4 relative overflow-hidden">
       {/* Dynamic background elements */}
       <motion.div
         animate={{
