@@ -29,7 +29,7 @@ import { NetworkBadge } from '@/components/ui/network-badge';
 
 export function Header() {
   const { address, isConnected, isConnecting, connect, disconnect } = useWallet();
-  const { stxBalance } = useBalances();
+  const { stxBalance } = useBalances(address || '');
   const { blockHeight } = useNetwork();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
