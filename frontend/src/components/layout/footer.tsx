@@ -25,7 +25,7 @@ export function Footer() {
     resources: [
       { label: 'Documentation', href: '/docs' },
       { label: 'Tiers & Multipliers', href: '/tiers' },
-      { label: 'Governance', href: '/gov' },
+      { label: 'Governance', href: '/governance' },
       { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
     ],
   };

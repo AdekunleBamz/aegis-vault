@@ -43,6 +43,7 @@ export function Header() {
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/stake', label: 'Stake', icon: Layers },
     { href: '/positions', label: 'Positions', icon: History },
+    { href: '/governance', label: 'Governance', icon: Vote },
     { href: '/security', label: 'Transparency', icon: ShieldCheck },
     { href: '/stats', label: 'Stats', icon: BarChart3 },
     { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
