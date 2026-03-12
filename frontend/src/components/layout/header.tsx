@@ -21,7 +21,8 @@ import {
   ChevronRight,
   Globe,
   Vote,
-  Cpu
+  Cpu,
+  PieChart
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NetworkBadge } from '@/components/ui/network-badge';
@@ -45,6 +46,8 @@ export function Header() {
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/stake', label: 'Stake', icon: Layers },
     { href: '/strategies', label: 'Strategies', icon: Cpu },
+    { href: '/analytics', label: 'Analytics', icon: PieChart },
+    { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
     { href: '/positions', label: 'Positions', icon: History },
     { href: '/governance', label: 'Governance', icon: Vote },
     { href: '/security', label: 'Transparency', icon: ShieldCheck },
