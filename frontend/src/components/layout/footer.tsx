@@ -20,6 +20,7 @@ export function Footer() {
       { label: 'Stake STX', href: '/stake' },
       { label: 'Account History', href: '/history' },
       { label: 'Transparency', href: '/security' },
+      { label: 'Yield Strategies', href: '/strategies' },
       { label: 'Vault Stats', href: '/stats' },
     ],
     resources: [

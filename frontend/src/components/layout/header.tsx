@@ -43,6 +43,7 @@ export function Header() {
   const navLinks = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/stake', label: 'Stake', icon: Layers },
+    { href: '/strategies', label: 'Strategies', icon: Cpu },
     { href: '/positions', label: 'Positions', icon: History },
     { href: '/governance', label: 'Governance', icon: Vote },
     { href: '/security', label: 'Transparency', icon: ShieldCheck },

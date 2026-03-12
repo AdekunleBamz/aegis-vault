@@ -6,6 +6,8 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { StrategyCard, RiskLevel } from '@/components/strategies/strategy-card';
 import { AutoCompoundWidget } from '@/components/strategies/autocompound-widget';
+import { YieldCalculator } from '@/components/strategies/yield-calculator';
+import { AutomationDashboard } from '@/components/strategies/automation-dashboard';
 import { Cpu, Search, Filter, Rocket, Sparkles, ArrowRight, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -108,6 +110,11 @@ export default function StrategiesPage() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+                        <YieldCalculator />
+                        <AutomationDashboard />
                     </div>
 
                     {/* Selection Controls */}
