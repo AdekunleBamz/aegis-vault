@@ -2,6 +2,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
 import { RewardsCalculator } from '@/components/widgets/rewards-calculator';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function StatsPage() {
   return (
@@ -9,6 +10,7 @@ export default function StatsPage() {
       <Header />
       <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-6xl">
+          <Breadcrumbs />
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 mb-4">
