@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useWallet } from '@/context/wallet-context';
 import { useBalances } from '@/hooks/use-balances';
 import { useStaking } from '@/hooks/use-staking';
@@ -10,20 +10,16 @@ import { determineTier, calculateAPY } from '@/lib/staking';
 import {
   Wallet,
   ArrowUpRight,
-  Info,
   AlertCircle,
   CheckCircle2,
   Lock,
-  Coins,
-  ChevronRight,
   TrendingUp,
   Activity,
-  Zap,
   LayoutGrid,
-  Clock,
   Plus,
   RefreshCw,
-  ShieldCheck
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -104,6 +100,7 @@ export function StakeForm() {
     { label: '75%', value: balanceSTX * 0.75 },
     { label: 'Max', value: balanceSTX }
   ].filter((preset) => preset.value > 0);
+  const canSubmit = Boolean(amount) && !hasError && !isLoading;
 
   return (
     <section id="stake-panel" className="py-24 px-4 relative overflow-hidden">
@@ -201,17 +198,22 @@ export function StakeForm() {
               </div>
 
               {/* Input Area */}
-              <div>
-                <div className="flex justify-between items-end mb-4 px-2">
-                  <label htmlFor="stake-amount" className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
-                    Deposit Amount
-                  </label>
+              <div className="rounded-[36px] border border-border/40 bg-background/40 p-4 sm:p-5">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="px-2">
+                    <label htmlFor="stake-amount" className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
+                      Deposit Amount
+                    </label>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Enter how much STX you want to lock into the vault. Rewards update instantly as you type.
+                    </p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setSuggestedAmount(balanceSTX)}
-                    className="text-[10px] font-black text-aegis-blue hover:text-aegis-cyan transition-colors"
+                    className="self-start rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan"
                   >
-                    MAX: {balanceSTX.toLocaleString()} STX
+                    Use Max Balance
                   </button>
                 </div>
 
@@ -226,7 +228,7 @@ export function StakeForm() {
                     aria-invalid={!!hasError}
                     aria-describedby={hasError ? "stake-error" : undefined}
                     className={cn(
-                      "w-full bg-muted/20 border-2 rounded-[32px] px-8 py-7 text-4xl font-black focus:outline-none transition-all duration-500 placeholder:text-muted-foreground/20",
+                      "mt-4 w-full bg-muted/20 border-2 rounded-[32px] px-8 py-7 text-4xl font-black focus:outline-none transition-all duration-500 placeholder:text-muted-foreground/20",
                       hasError
                         ? "border-destructive/30 focus:border-destructive text-destructive"
                         : "border-border/30 focus:border-aegis-blue focus:bg-muted/40"
@@ -275,6 +277,33 @@ export function StakeForm() {
                     )}
                   </div>
                 )}
+
+                <div className="mt-5 grid gap-3 rounded-[28px] border border-border/30 bg-muted/10 p-4 sm:grid-cols-3">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                      Vault entry
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-foreground">
+                      {numAmount > 0 ? `${numAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })} STX queued` : 'Waiting for amount'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                      Submission state
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-foreground">
+                      {canSubmit ? 'Ready to confirm' : hasError ? 'Needs adjustment' : 'Enter amount first'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                      Best next action
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-foreground">
+                      {nextTier && numAmount > 0 ? `Add ${Math.max(0, nextTierMin - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX for ${nextTier.name}` : 'Preview your reward tier'}
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Reward Projection */}
@@ -369,32 +398,48 @@ export function StakeForm() {
               </AnimatePresence>
 
               {/* Submit Action */}
-              <button
-                type="submit"
-                disabled={isLoading || !amount || !!hasError}
-                aria-label={isLoading ? "Processing transaction" : "Confirm staking deposit"}
-                className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98]"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-3">
-                  {isLoading ? (
-                    <>
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                      >
-                        <RefreshCw className="w-6 h-6" />
-                      </motion.div>
-                      SIGNING TRANSACTION...
-                    </>
-                  ) : (
-                    <>
-                      CONFIRM STAKING
-                      <ArrowUpRight className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </>
-                  )}
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              </button>
+              <div className="rounded-[32px] border border-border/40 bg-background/30 p-4">
+                <div className="mb-4 flex items-start gap-3 rounded-[24px] bg-muted/20 p-4">
+                  <div className="rounded-2xl bg-aegis-blue/10 p-2.5 text-aegis-blue">
+                    <Sparkles className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">
+                      Review before signing
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Confirm your amount, wallet reserve, and reward tier before opening the Stacks wallet prompt.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={!canSubmit}
+                  aria-label={isLoading ? "Processing transaction" : "Confirm staking deposit"}
+                  className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98]"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-3">
+                    {isLoading ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                        >
+                          <RefreshCw className="w-6 h-6" />
+                        </motion.div>
+                        SIGNING TRANSACTION...
+                      </>
+                    ) : (
+                      <>
+                        CONFIRM STAKING
+                        <ArrowUpRight className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </>
+                    )}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                </button>
+              </div>
 
               <div className="flex items-center justify-center gap-8 pt-4">
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
