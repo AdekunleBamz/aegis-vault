@@ -8,8 +8,9 @@ import { StrategyCard, RiskLevel } from '@/components/strategies/strategy-card';
 import { AutoCompoundWidget } from '@/components/strategies/autocompound-widget';
 import { YieldCalculator } from '@/components/strategies/yield-calculator';
 import { AutomationDashboard } from '@/components/strategies/automation-dashboard';
-import { Cpu, Search, Filter, Rocket, Sparkles, ArrowRight, Activity } from 'lucide-react';
+import { Cpu, Search, Filter, Rocket, Sparkles, ArrowRight, Activity, Shield } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function StrategiesPage() {
     const [search, setSearch] = useState('');
@@ -58,6 +59,7 @@ export default function StrategiesPage() {
 
             <main className="flex-1 py-32 px-4 relative z-10">
                 <div className="container max-w-7xl mx-auto">
+                    <Breadcrumbs />
                     {/* Header Section */}
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
                         <motion.div
