@@ -271,6 +271,8 @@ export function StakeForm() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="p-4 rounded-2xl bg-destructive/10 border border-destructive/20 text-destructive text-xs font-black uppercase tracking-widest flex gap-3 items-center"
+                    role="alert"
+                    aria-live="assertive"
                   >
                     <AlertCircle className="w-5 h-5" />
                     {error || validationError}
@@ -281,6 +283,8 @@ export function StakeForm() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-xs font-black uppercase tracking-widest flex gap-3 items-center"
+                    role="status"
+                    aria-live="polite"
                   >
                     <CheckCircle2 className="w-5 h-5" />
                     {success}
