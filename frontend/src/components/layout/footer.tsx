@@ -140,6 +140,7 @@ export function Footer() {
                 key={item}
                 href="#"
                 className="text-muted-foreground hover:text-foreground text-xs transition-colors"
+                aria-label={`View protocol ${item.toLowerCase()}`}
               >
                 {item}
               </a>
