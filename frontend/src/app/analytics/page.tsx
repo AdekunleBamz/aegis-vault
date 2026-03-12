@@ -9,6 +9,7 @@ import { RevenueChart } from '@/components/dashboard/revenue-chart';
 import { PortfolioExport } from '@/components/dashboard/portfolio-export';
 import { BarChart3, TrendingUp, Sparkles, ShieldCheck, Download, Zap, MousePointer2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function AnalyticsPage() {
     return (
@@ -21,6 +22,7 @@ export default function AnalyticsPage() {
 
             <main className="flex-1 py-32 px-4 relative z-10">
                 <div className="container max-w-7xl mx-auto">
+                    <Breadcrumbs />
                     {/* Header Section */}
                     <div className="mb-20">
                         <motion.div
