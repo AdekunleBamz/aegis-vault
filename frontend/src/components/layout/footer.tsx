@@ -79,6 +79,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    aria-label={`Navigate to ${link.label}`}
                     className="text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center group"
                   >
                     {link.label}
