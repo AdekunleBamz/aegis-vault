@@ -3,6 +3,7 @@ import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
 import { AppProviders } from '@/components/providers';
 import { NetworkWarning } from '@/components/ui/network-warning';
+import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { PerformanceMonitor } from '@/components/ui/performance-monitor';
 
@@ -50,6 +51,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={outfit.className}>
         <AppProviders>
+          <Header />
           <NetworkWarning />
           <main className="flex-1 pt-20">
             {children}
