@@ -10,6 +10,7 @@ import { ProposalCard, ProposalStatus } from '@/components/governance/proposal-c
 import { VotingModal } from '@/components/governance/voting-modal';
 import { Vote, FilePlus2, Search, Filter, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function GovernancePage() {
     const [search, setSearch] = useState('');
@@ -64,6 +65,7 @@ export default function GovernancePage() {
 
             <main className="flex-1 py-32 px-4 relative z-10">
                 <div className="container max-w-7xl mx-auto">
+                    <Breadcrumbs />
                     {/* Page Header */}
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
                         <motion.div
