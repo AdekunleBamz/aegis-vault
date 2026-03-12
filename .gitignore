@@ -4,6 +4,9 @@ node_modules/
 # Build outputs
 .cache/
 dist/
+.next/
+out/
+build/
 
 # Settings with sensitive data
 settings/Mainnet.toml
