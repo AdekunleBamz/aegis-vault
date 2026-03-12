@@ -196,7 +196,7 @@ export default function HistoryPage() {
 
           <Card>
             {isLoading ? (
-              <div className="space-y-4">
+              <div className="space-y-4" role="status" aria-busy="true" aria-label="Loading transaction history">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <div key={i} className="flex items-center gap-4 py-4 border-b border-gray-700 last:border-0">
                     <LoadingSkeleton className="w-12 h-12 rounded-xl" />
