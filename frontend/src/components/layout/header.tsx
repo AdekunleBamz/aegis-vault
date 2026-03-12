@@ -9,17 +9,10 @@ import { cn } from '@/lib/utils';
 import { useBalances } from '@/hooks/use-balances';
 import { useNetwork } from '@/hooks/use-network';
 import {
-  Menu,
-  X,
-  Wallet,
-  LogOut,
-  LayoutDashboard,
-  Layers,
-  History,
-  BarChart3,
   ShieldCheck,
   ChevronRight,
-  Globe
+  Globe,
+  Vote
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NetworkBadge } from '@/components/ui/network-badge';
