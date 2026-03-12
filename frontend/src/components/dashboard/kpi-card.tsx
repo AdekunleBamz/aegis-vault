@@ -85,13 +85,15 @@ export function KPICard({
                 v.border,
                 className
             )}
+            role="region"
+            aria-label={`${label} statistic card`}
         >
             <div className="flex items-center justify-between mb-6">
                 <div className={cn(
                     "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110",
                     v.iconBg,
                     v.iconColor
-                )}>
+                )} aria-hidden="true">
                     <Icon className="w-6 h-6" />
                 </div>
 
@@ -99,7 +101,10 @@ export function KPICard({
                     <div className={cn(
                         "flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest",
                         trend.isPositive ? "bg-emerald-500/10 text-emerald-500" : "bg-destructive/10 text-destructive"
-                    )}>
+                    )}
+                        role="img"
+                        aria-label={`Trend: ${trend.isPositive ? "Up" : "Down"} by ${trend.value}%`}
+                    >
                         {trend.isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                         {trend.value}%
                     </div>
