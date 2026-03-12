@@ -25,11 +25,10 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import { useWallet } from '@/context/wallet-context';
 
 export default function DashboardPage() {
-  const { isConnected } = useWallet();
-
   const { isConnected } = useWallet();
   const mockRewardData = [
     { day: 1, amount: 10 }, { day: 5, amount: 25 }, { day: 10, amount: 15 },
@@ -71,6 +70,7 @@ export default function DashboardPage() {
 
       <main className="flex-1 py-32 px-4 relative z-10">
         <div className="container max-w-7xl mx-auto">
+          <Breadcrumbs />
           {/* Page Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
