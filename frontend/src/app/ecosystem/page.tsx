@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/footer';
 import { ProtocolCard } from '@/components/ecosystem/protocol-card';
 import { Globe, Search, Filter, Rocket, Sparkles, ArrowRight, Activity, Share2, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function EcosystemPage() {
     const [search, setSearch] = useState('');
@@ -77,6 +78,7 @@ export default function EcosystemPage() {
 
             <main className="flex-1 py-32 px-4 relative z-10">
                 <div className="container max-w-7xl mx-auto">
+                    <Breadcrumbs />
                     {/* Header Section */}
                     <div className="max-w-4xl mb-24">
                         <motion.div
