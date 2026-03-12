@@ -35,13 +35,13 @@ export function AnimatedCounter({
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       // Easing function (ease-out)
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = startValue + diff * eased;
-      
+
       setDisplayValue(current);
-      
+
       if (progress < 1) {
         requestAnimationFrame(animate);
       }
@@ -50,7 +50,7 @@ export function AnimatedCounter({
     requestAnimationFrame(animate);
   }, [value, duration]);
 
-  const formattedValue = formatter 
+  const formattedValue = formatter
     ? formatter(displayValue)
     : displayValue.toFixed(decimals);
 
@@ -103,16 +103,14 @@ function FlipDigit({ digit, className = '' }: { digit: string; className?: strin
   return (
     <div className={`relative overflow-hidden w-8 h-12 bg-zinc-800 rounded ${className}`}>
       <div
-        className={`absolute inset-0 flex items-center justify-center text-xl font-bold transition-transform duration-300 ${
-          isFlipping ? '-translate-y-full' : ''
-        }`}
+        className={`absolute inset-0 flex items-center justify-center text-xl font-bold transition-transform duration-300 ${isFlipping ? '-translate-y-full' : ''
+          }`}
       >
         {prevDigit}
       </div>
       <div
-        className={`absolute inset-0 flex items-center justify-center text-xl font-bold transition-transform duration-300 ${
-          isFlipping ? 'translate-y-0' : 'translate-y-full'
-        }`}
+        className={`absolute inset-0 flex items-center justify-center text-xl font-bold transition-transform duration-300 ${isFlipping ? 'translate-y-0' : 'translate-y-full'
+          }`}
       >
         {digit}
       </div>
@@ -340,7 +338,7 @@ export function Shimmer({
           animation: 'shimmer 2s infinite',
         }}
       />
-      <style jsx>{`
+      <style>{`
         @keyframes shimmer {
           100% {
             transform: translateX(100%);

@@ -27,27 +27,27 @@ export function RewardsCalculator() {
     const amount = parseFloat(stakeAmount) || 0;
     const days = parseFloat(duration) || 0;
     const microAmount = toMicroSTX(amount);
-    
+
     const tier = determineTier(microAmount);
     const apy = calculateAPY(microAmount, tier);
-    
+
     const blocks = Math.floor(days * 144);
     const yearlyRewards = (amount * apy) / 100;
     const periodRewards = (yearlyRewards * blocks) / BLOCKS_PER_YEAR;
-    
+
     // Calculate next tier info
     const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
     const currentTierMin = TIERS[tier]?.minStake || 0;
     const nextTierMin = nextTier?.minStake || 0;
-    const progressToNext = nextTier 
+    const progressToNext = nextTier
       ? Math.min(100, ((amount - currentTierMin) / (nextTierMin - currentTierMin)) * 100)
       : 100;
     const amountToNext = nextTier ? nextTierMin - amount : 0;
-    
+
     // USD estimates (mock rate)
     const agsUsdRate = 0.042;
     const totalUsd = periodRewards * agsUsdRate;
-    
+
     return {
       tier,
       tierName: TIERS[tier]?.name || 'Bronze',
@@ -68,8 +68,8 @@ export function RewardsCalculator() {
 
   return (
     <Card>
-      <CardHeader 
-        title="Rewards Calculator" 
+      <CardHeader
+        title="Rewards Calculator"
         subtitle="Estimate your AGS earnings based on stake amount and duration"
         icon={
           <div className="w-10 h-10 bg-purple-500/10 rounded-xl flex items-center justify-center">
@@ -79,7 +79,7 @@ export function RewardsCalculator() {
           </div>
         }
       />
-      
+
       <div className="space-y-5">
         {/* Stake Amount Input */}
         <div>
@@ -87,7 +87,7 @@ export function RewardsCalculator() {
             label="Stake Amount"
             type="number"
             value={stakeAmount}
-            onChange={(e) => setStakeAmount(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStakeAmount(e.target.value)}
             placeholder="Enter STX amount"
             inputSize="lg"
             suffix={<span className="text-gray-400 font-medium">STX</span>}
@@ -98,8 +98,8 @@ export function RewardsCalculator() {
                 key={amount}
                 onClick={() => setStakeAmount(amount.toString())}
                 className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors
-                  ${parseFloat(stakeAmount) === amount 
-                    ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' 
+                  ${parseFloat(stakeAmount) === amount
+                    ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
                     : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
                   }`}
               >
@@ -125,8 +125,8 @@ export function RewardsCalculator() {
                 key={preset.days}
                 onClick={() => setDuration(preset.days.toString())}
                 className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors
-                  ${parseFloat(duration) === preset.days 
-                    ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
+                  ${parseFloat(duration) === preset.days
+                    ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                     : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
                   }`}
               >
@@ -140,7 +140,7 @@ export function RewardsCalculator() {
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-gray-900/50 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-2">
-              <div 
+              <div
                 className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: calculations.tierColor }}
               />
@@ -170,10 +170,10 @@ export function RewardsCalculator() {
                 {calculations.amountToNext.toLocaleString()} STX more
               </span>
             </div>
-            <Progress 
-              value={calculations.progressToNext} 
-              color="purple" 
-              size="sm" 
+            <Progress
+              value={calculations.progressToNext}
+              color="purple"
+              size="sm"
             />
             <p className="text-xs text-gray-500 mt-2">
               Upgrade to {calculations.nextTierName} for higher APY rewards
@@ -189,7 +189,7 @@ export function RewardsCalculator() {
             </svg>
             Estimated Rewards
           </h4>
-          
+
           <div className="grid grid-cols-3 gap-3 mb-4">
             {[
               { label: 'Daily', value: calculations.dailyRewards },

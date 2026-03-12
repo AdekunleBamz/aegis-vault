@@ -95,7 +95,7 @@ export function RecentActivity() {
         ) : (
           <div className="space-y-2">
             <AnimatePresence initial={false}>
-              {transactions.map((tx, index) => {
+              {transactions.map((tx: any, index: number) => {
                 const info = getActionInfo(tx.contract_call?.function_name || '');
                 const Icon = info.icon;
 
