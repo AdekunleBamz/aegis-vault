@@ -9,6 +9,7 @@ import { AuditLogs } from '@/components/widgets/audit-logs';
 import { InsuranceFund } from '@/components/widgets/insurance-fund';
 import { ShieldCheck, Lock, Eye, Activity, FileCheck, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function SecurityPage() {
     return (
@@ -21,6 +22,7 @@ export default function SecurityPage() {
 
             <main className="flex-1 py-32 px-4 relative z-10">
                 <div className="container max-w-7xl mx-auto">
+                    <Breadcrumbs />
                     {/* Page Header */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
