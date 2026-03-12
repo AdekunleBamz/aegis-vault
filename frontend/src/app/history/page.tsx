@@ -218,7 +218,7 @@ export default function HistoryPage() {
                 <h3 className="text-xl font-bold text-white mb-2">No Transactions Found</h3>
                 <p className="text-gray-400 mb-6">
                   {filter === 'all'
-                    ? "You haven't made any transactions yet. Start by staking some STX!"
+                    ? "You haven&apos;t made any transactions yet. Start by staking some STX!"
                     : `No ${filter} transactions found.`
                   }
                 </p>

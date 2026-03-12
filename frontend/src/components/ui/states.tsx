@@ -68,11 +68,10 @@ export function EmptyState({
           {action && (
             <button
               onClick={action.onClick}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                action.variant === 'secondary'
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${action.variant === 'secondary'
                   ? 'bg-zinc-700 hover:bg-zinc-600 text-zinc-200'
                   : 'bg-amber-500 hover:bg-amber-400 text-black'
-              }`}
+                }`}
             >
               {action.label}
             </button>
@@ -140,7 +139,7 @@ export function NoData({ type, action, className = '' }: NoDataProps) {
         </svg>
       ),
       title: 'No Notifications',
-      description: "You're all caught up! New notifications will appear here.",
+      description: "You&apos;re all caught up! New notifications will appear here.",
     },
     search: {
       icon: (
