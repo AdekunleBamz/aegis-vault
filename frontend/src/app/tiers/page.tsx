@@ -2,6 +2,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { TIERS } from '@/lib/constants';
 import { Card } from '@/components/ui/card';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function TiersPage() {
   return (
@@ -9,6 +10,7 @@ export default function TiersPage() {
       <Header />
       <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-5xl">
+          <Breadcrumbs />
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 to-purple-500/10 border border-amber-500/20 rounded-full px-4 py-1.5 mb-4">
