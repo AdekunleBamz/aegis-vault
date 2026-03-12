@@ -33,6 +33,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { PositionFilters, PositionStatus } from '@/components/dashboard/position-filters';
 import { TierDrawer } from '@/components/widgets/tier-drawer';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function PositionsPage() {
   const { address, isConnected, connect } = useWallet();
@@ -56,6 +57,9 @@ export default function PositionsPage() {
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
         <main className="flex-1 py-32 px-4 relative z-10">
+          <div className="container max-w-4xl mx-auto px-4 mb-8">
+            <Breadcrumbs />
+          </div>
           <div className="container max-w-xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -109,14 +113,11 @@ export default function PositionsPage() {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-aegis-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-      <main className="flex-1 py-32 px-4 relative z-10">
+      <main className="flex-1 py-20 px-4 relative">
         <div className="container max-w-7xl mx-auto">
-          {/* Page Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16"
-          >
+          <Breadcrumbs />
+          {/* Dashboard Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="px-3 py-1 bg-muted/50 border border-border/50 rounded-full text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
