@@ -9,9 +9,8 @@ import { useWallet } from '@/context/wallet-context';
 export function NetworkBadge() {
     const { network, isConnected } = useWallet();
 
-    // In a real app, we'd check network.version or similar
-    // For now, let's assume we can determine it from the network object
-    const isMainnet = !network.isTestnet;
+    // Use chainId for network detection
+    const isMainnet = network.chainId !== 2147483648;
 
     return (
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/50 backdrop-blur-md">

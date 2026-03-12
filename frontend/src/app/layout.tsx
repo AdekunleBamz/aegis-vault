@@ -1,4 +1,3 @@
-```typescript
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
@@ -62,4 +61,3 @@ export default function RootLayout({
     </html>
   );
 }
-```

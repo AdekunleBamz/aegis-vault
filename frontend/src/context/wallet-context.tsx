@@ -9,7 +9,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
-import { StacksMainnet, StacksTestnet, StacksNetwork } from '@stacks/network';
+import { STACKS_MAINNET, STACKS_TESTNET, StacksNetwork } from '@stacks/network';
 
 interface WalletState {
   address: string | null;
@@ -30,7 +30,7 @@ const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 
 // Default to mainnet, but can be configured
-const defaultNetwork = new StacksMainnet();
+const defaultNetwork = STACKS_MAINNET;
 
 interface WalletProviderProps {
   children: ReactNode;

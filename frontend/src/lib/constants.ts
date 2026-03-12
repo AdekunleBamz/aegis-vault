@@ -15,10 +15,10 @@ export const API = {
 
 // Staking tiers
 export const TIERS = [
-  { name: 'Bronze', minStake: 100, multiplier: 1.0, color: '#CD7F32' },
-  { name: 'Silver', minStake: 1000, multiplier: 1.25, color: '#C0C0C0' },
-  { name: 'Gold', minStake: 10000, multiplier: 1.5, color: '#FFD700' },
-  { name: 'Platinum', minStake: 100000, multiplier: 2.0, color: '#E5E4E2' },
+  { name: 'Bronze', minStake: 100, multiplier: 1.0, color: '#CD7F32', baseApy: 12 },
+  { name: 'Silver', minStake: 1000, multiplier: 1.25, color: '#C0C0C0', baseApy: 15 },
+  { name: 'Gold', minStake: 10000, multiplier: 1.5, color: '#FFD700', baseApy: 18 },
+  { name: 'Platinum', minStake: 100000, multiplier: 2.0, color: '#E5E4E2', baseApy: 22 },
 ] as const;
 
 // Time constants

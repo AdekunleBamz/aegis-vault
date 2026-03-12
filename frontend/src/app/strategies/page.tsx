@@ -8,7 +8,7 @@ import { StrategyCard, RiskLevel } from '@/components/strategies/strategy-card';
 import { AutoCompoundWidget } from '@/components/strategies/autocompound-widget';
 import { YieldCalculator } from '@/components/strategies/yield-calculator';
 import { AutomationDashboard } from '@/components/strategies/automation-dashboard';
-import { Cpu, Search, Filter, Rocket, Sparkles, ArrowRight, Activity, Shield } from 'lucide-react';
+import { Cpu, Search, Filter, Rocket, Sparkles, ArrowRight, Activity, Shield, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 

@@ -12,7 +12,7 @@ export function NetworkWarning() {
 
     if (!isConnected) return null;
 
-    const walletIsTestnet = walletNetwork.isTestnet;
+    const walletIsTestnet = walletNetwork.chainId === 2147483648;
     const appIsTestnet = appNetworkType === 'testnet';
 
     const isMismatch = walletIsTestnet !== appIsTestnet;

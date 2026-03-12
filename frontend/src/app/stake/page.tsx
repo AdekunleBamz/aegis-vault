@@ -147,5 +147,4 @@ export default function StakePage() {
   );
 }
 
-// Helper icons
-import { Lock } from 'lucide-react';
+// Helper icons removed (already in main import)
