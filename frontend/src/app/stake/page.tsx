@@ -15,9 +15,11 @@ import {
   Calculator,
   Info,
   Layers,
-  LayoutGrid
+  LayoutGrid,
+  Lock
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function StakePage() {
   return (
@@ -30,6 +32,7 @@ export default function StakePage() {
 
       <main className="flex-1 py-32 px-4 relative z-10">
         <div className="container max-w-7xl mx-auto">
+          <Breadcrumbs />
           {/* Page Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
