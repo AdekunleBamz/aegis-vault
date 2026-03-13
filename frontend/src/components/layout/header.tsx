@@ -156,7 +156,7 @@ export function Header() {
         </div>
 
         {/* Center: Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1 max-w-[58vw] overflow-x-auto bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
+        <nav className="hidden md:flex items-center gap-1 max-w-[58vw] overflow-x-auto no-scrollbar bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
