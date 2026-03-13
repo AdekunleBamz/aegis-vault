@@ -53,6 +53,8 @@ export function SidebarNav({
       {onCollapse && (
         <button
           onClick={() => onCollapse(!collapsed)}
+          aria-label={collapsed ? 'Expand sidebar navigation' : 'Collapse sidebar navigation'}
+          aria-expanded={!collapsed}
           className="absolute -right-3 top-6 p-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         >
           <svg 
@@ -69,9 +71,9 @@ export function SidebarNav({
       {/* Navigation Items */}
       <div className="flex-1 overflow-y-auto py-4">
         <ul className="space-y-1 px-2">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <SidebarNavItemComponent 
-              key={index} 
+              key={`${item.href || item.label}-${item.label}`} 
               item={item} 
               collapsed={collapsed}
             />
@@ -157,7 +159,7 @@ function SidebarNavItemComponent({
           <ul className="mt-1 space-y-1">
             {item.children!.map((child, index) => (
               <SidebarNavItemComponent 
-                key={index} 
+                key={`${child.href || child.label}-${index}`} 
                 item={child} 
                 collapsed={collapsed}
                 depth={depth + 1}
@@ -169,12 +171,21 @@ function SidebarNavItemComponent({
     )
   }
 
+  if (item.disabled) {
+    return (
+      <li>
+        <span className={baseClasses} aria-disabled="true">
+          {content}
+        </span>
+      </li>
+    )
+  }
+
   return (
     <li>
       <Link
         href={item.href}
         className={baseClasses}
-        aria-disabled={item.disabled}
         aria-current={item.active ? 'page' : undefined}
       >
         {content}
