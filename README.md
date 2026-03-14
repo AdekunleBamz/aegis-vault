@@ -94,10 +94,7 @@ cd aegis-vault
 npm ci
 
 # Install frontend dependencies
-npm --prefix frontend ci
-
-# Verify installation
-npm run check:fast
+npm --prefix frontend install
 ```
 
 ## Development
@@ -137,14 +134,11 @@ npm run console
 # Development server
 npm run frontend:dev
 
-# Lint frontend
-npm run frontend:lint
-
 # Build for production
 npm run frontend:build
 
 # Start production server
-npm run frontend:start
+npm --prefix frontend start
 ```
 
 ## Deployment
