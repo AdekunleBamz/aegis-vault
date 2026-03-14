@@ -39,3 +39,9 @@ docs/
 *.mjs
 *.sh
 history.txt
+
+# Generated frontend artifacts
+frontend/tsconfig.tsbuildinfo
+frontend/*lint*.txt
+frontend/*tsc*.txt
+frontend/eslint_full.json
