@@ -75,15 +75,14 @@ aegis-vault/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/aegis-vault.git
+git clone https://github.com/AdekunleBamz/aegis-vault.git
 cd aegis-vault
 
 # Install root dependencies
 npm install
 
 # Install frontend dependencies
-cd frontend
-npm install
+npm --prefix frontend install
 ```
 
 ## Development
@@ -107,16 +106,14 @@ clarinet console
 ### Frontend
 
 ```bash
-cd frontend
-
 # Development server
-npm run dev
+npm run frontend:dev
 
 # Build for production
-npm run build
+npm run frontend:build
 
 # Start production server
-npm start
+npm --prefix frontend start
 ```
 
 ## Deployment
