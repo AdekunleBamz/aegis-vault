@@ -278,7 +278,7 @@ export const withdrawFormSchema = z.object({
 
 export type WithdrawFormData = z.infer<typeof withdrawFormSchema>
 
-export default {
+const validation = {
   validate,
   safeValidate,
   isValidStacksAddress,
@@ -287,3 +287,5 @@ export default {
   microStxToStx,
   stxToMicroStx,
 }
+
+export default validation
