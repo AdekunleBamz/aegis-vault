@@ -327,7 +327,7 @@ export function createTestContext() {
   }
 }
 
-export default {
+const testUtils = {
   createMockStakePosition,
   createMockRewardInfo,
   createMockProtocolStats,
@@ -345,3 +345,5 @@ export default {
   TEST_ADDRESSES,
   TEST_TX_IDS,
 }
+
+export default testUtils
