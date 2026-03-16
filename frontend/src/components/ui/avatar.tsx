@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 export interface AvatarProps {
   src?: string;
@@ -82,9 +83,10 @@ export function Avatar({
         {showFallback ? (
           <span className="text-white">{initials}</span>
         ) : (
-          <img
+          <Image
             src={src}
             alt={alt || name}
+            fill
             onError={() => setImgError(true)}
             className="w-full h-full object-cover"
           />
