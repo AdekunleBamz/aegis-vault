@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Globe, Layout, Shield, Zap, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface ProtocolCardProps {
@@ -33,7 +34,7 @@ export function ProtocolCard({
         >
             <div className="flex items-start justify-between mb-8">
                 <div className="w-16 h-16 bg-muted/30 rounded-[24px] border border-border/50 flex items-center justify-center p-3 group-hover:bg-background transition-colors overflow-hidden">
-                    <img src={logo} alt={name} className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500" />
+                    <Image src={logo} alt={name} width={64} height={64} className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500" />
                 </div>
                 <div className="flex flex-col items-end gap-2">
                     <div className={cn(
