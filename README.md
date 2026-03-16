@@ -4,12 +4,14 @@ A decentralized staking protocol built on the Stacks blockchain.
 
 ## Overview
 
-Aegis Vault allows users to stake STX tokens and earn rewards through a tiered multiplier system. The protocol features:
+Aegis Vault is a high-performance, decentralized staking protocol engineered for the Stacks ecosystem. It empowers users to maximize their STX capital efficiency through a sophisticated tiered multiplier system and algorithmic reward distribution.
 
-- **Flexible staking** with 3-day, 7-day, and 30-day lock periods
-- **Tiered rewards** based on lock duration (1x, 1.2x, 1.5x multipliers)
-- **Emergency withdrawals** with 2% penalty for early unstaking
-- **AGS token rewards** for stakers
+### Key Features
+
+- **Dynamic Staking Engine**: Institutional-grade staking logic supporting 3-day, 7-day, and 30-day commitment windows.
+- **Yield Multipliers**: Optimized reward tiers (1.0x to 1.5x) designed to incentivize long-term protocol alignment.
+- **Liquidity on Demand**: Integrated emergency withdrawal mechanism with a calibrated 2% penalty for immediate liquidity access.
+- **AGS Governance Token**: Native SIP-010 rewards distributed proportionally to staking weight and duration.
 
 ## Architecture
 
@@ -75,15 +77,14 @@ aegis-vault/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/aegis-vault.git
+git clone https://github.com/AdekunleBamz/aegis-vault.git
 cd aegis-vault
 
 # Install root dependencies
 npm install
 
 # Install frontend dependencies
-cd frontend
-npm install
+npm --prefix frontend install
 ```
 
 ## Development
@@ -107,16 +108,14 @@ clarinet console
 ### Frontend
 
 ```bash
-cd frontend
-
 # Development server
-npm run dev
+npm run frontend:dev
 
 # Build for production
-npm run build
+npm run frontend:build
 
 # Start production server
-npm start
+npm --prefix frontend start
 ```
 
 ## Deployment
@@ -187,10 +186,12 @@ Users can stake STX with different lock periods:
 
 ## Security
 
-- All contracts have owner-only admin functions
-- Post-conditions enforced on all token transfers
-- Emergency pause functionality available
-- Withdrawal contract separation for added security
+Aegis Vault prioritizes security at every layer of the stack:
+
+- **Access Control**: Administrative functions are guarded by strict owner-only permissions.
+- **Transactional Integrity**: Post-conditions are strictly enforced on all SIP-010 and STX transfers to prevent unauthorized state changes.
+- **Protocol Safeguards**: Integrated emergency pause functionality for rapid response to unforeseen edge cases.
+- **Architectural Isolation**: Withdrawal and treasury logic are decoupled from the core staking engine to minimize attack surfaces.
 
 ## License
 
