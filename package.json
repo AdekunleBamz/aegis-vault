@@ -4,6 +4,10 @@
   "description": "Decentralized STX staking protocol with AGS token rewards on Stacks blockchain",
   "type": "module",
   "scripts": {
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:build": "npm --prefix frontend run build",
+    "frontend:lint": "npm --prefix frontend run lint",
+    "lint:frontend": "npm run frontend:lint",
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "clarinet check",
