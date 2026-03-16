@@ -26,7 +26,7 @@ export function YieldCalculator() {
             profit: profit.toFixed(2),
             percent: ((profit / principal) * 100).toFixed(1)
         };
-    }, [principal, duration, selectedStrategy]);
+    }, [principal, duration, selectedStrategy, strategies]);
 
     return (
         <div className="p-10 lg:p-12 rounded-[48px] bg-background border border-border shadow-2xl relative overflow-hidden group">
