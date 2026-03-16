@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 // QR Code Display (placeholder - actual rendering would use a library)
 export interface QRCodeDisplayProps {
@@ -49,6 +50,13 @@ const logoSizes = {
   xl: 'w-12 h-12 text-lg',
 };
 
+const logoSizePixels = {
+  sm: 24,
+  md: 32,
+  lg: 40,
+  xl: 48,
+};
+
 export function TokenLogo({
   symbol,
   imageUrl,
@@ -59,10 +67,12 @@ export function TokenLogo({
 
   if (imageUrl && !hasError) {
     return (
-      <img
+      <Image
         src={imageUrl}
         alt={symbol}
-        className={`${logoSizes[size].split(' ').slice(0, 2).join(' ')} rounded-full ${className}`}
+        width={logoSizePixels[size]}
+        height={logoSizePixels[size]}
+        className={`rounded-full ${className}`}
         onError={() => setHasError(true)}
       />
     );
