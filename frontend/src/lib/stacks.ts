@@ -26,7 +26,8 @@ export interface TransactionResult {
  */
 export async function executeStake(
   amount: bigint,
-  senderAddress: string
+  senderAddress: string,
+  lockPeriodDays: number = 7
 ): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
     const postConditions = [
@@ -44,7 +45,7 @@ export async function executeStake(
       contractAddress: contractAddr,
       contractName,
       functionName: 'stake',
-      functionArgs: [uintCV(amount)],
+      functionArgs: [uintCV(amount), uintCV(BigInt(lockPeriodDays))],
       postConditions,
       postConditionMode: PostConditionMode.Deny,
       onFinish: (data: FinishedTxData) => {
