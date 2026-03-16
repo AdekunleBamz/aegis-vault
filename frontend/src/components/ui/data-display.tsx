@@ -45,6 +45,7 @@ export function NumberTicker({
     };
 
     requestAnimationFrame(animate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, duration]);
 
   const formatted = displayValue.toLocaleString(undefined, {
