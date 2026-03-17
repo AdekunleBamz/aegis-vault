@@ -24,6 +24,15 @@ interface ThemeProviderProps {
   defaultTheme?: Theme;
 }
 
+/**
+ * ThemeProvider Component
+ * 
+ * Provides theme state (light/dark) to the entire application.
+ * Persists theme preference in localStorage and updates document classes.
+ * 
+ * @param {ThemeProviderProps} props - The provider props.
+ * @returns {JSX.Element} The provider component.
+ */
 export function ThemeProvider({
   children,
   defaultTheme = 'dark',
@@ -58,6 +67,14 @@ export function ThemeProvider({
   );
 }
 
+/**
+ * Custom hook to access theme state and toggle functionality.
+ * 
+ * Must be used within a ThemeProvider.
+ * 
+ * @returns {ThemeContextValue} The current theme context value.
+ * @throws {Error} If used outside of ThemeProvider.
+ */
 export function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
   if (context === undefined) {
