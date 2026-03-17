@@ -45,6 +45,15 @@ interface NotificationProviderProps {
   persistKey?: string;
 }
 
+/**
+ * NotificationProvider Component
+ * 
+ * Manages the global notification state for the application.
+ * Handles adding, removing, and persisting notifications in localStorage.
+ * 
+ * @param {NotificationProviderProps} props - The provider props.
+ * @returns {JSX.Element} The provider component.
+ */
 export function NotificationProvider({
   children,
   maxNotifications = 50,
@@ -157,6 +166,14 @@ export function NotificationProvider({
 // HOOK
 // =============================================================================
 
+/**
+ * Custom hook to access notification state and actions.
+ * 
+ * Must be used within a NotificationProvider.
+ * 
+ * @returns {NotificationContextType} The current notification context value.
+ * @throws {Error} If used outside of NotificationProvider.
+ */
 export function useNotifications() {
   const context = useContext(NotificationContext);
   if (!context) {
