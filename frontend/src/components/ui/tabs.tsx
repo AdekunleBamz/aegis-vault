@@ -59,6 +59,22 @@ export function Tabs({
     }
   }, [activeTab, variant]);
 
+  // ------------------------------
+  // Keyboard navigation enhancement
+  // ------------------------------
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const enabledTabs = tabs.filter(tab => !tab.disabled);
+    const currentIndex = enabledTabs.findIndex(tab => tab.id === activeTab);
+
+    if (e.key === 'ArrowRight') {
+      const nextIndex = (currentIndex + 1) % enabledTabs.length;
+      handleTabChange(enabledTabs[nextIndex].id);
+    } else if (e.key === 'ArrowLeft') {
+      const prevIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length;
+      handleTabChange(enabledTabs[prevIndex].id);
+    }
+  };
+
   const getTabStyles = (isActive: boolean, isDisabled: boolean) => {
     const base = `font-medium transition-all duration-200 ${sizeClasses[size]}`;
     
@@ -101,6 +117,8 @@ export function Tabs({
           'gap-1'
         }`}
         role="tablist"
+        tabIndex={0}            // Make div focusable for keyboard navigation
+        onKeyDown={handleKeyDown} // <-- added
       >
         {tabs.map((tab) => (
           <button
@@ -172,9 +190,29 @@ export function VerticalTabs({ tabs, defaultTab, onChange }: VerticalTabsProps) 
     onChange?.(tabId);
   };
 
+  // ------------------------------
+  // Keyboard navigation for vertical tabs
+  // ------------------------------
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const enabledTabs = tabs.filter(tab => !tab.disabled);
+    const currentIndex = enabledTabs.findIndex(tab => tab.id === activeTab);
+
+    if (e.key === 'ArrowDown') {
+      const nextIndex = (currentIndex + 1) % enabledTabs.length;
+      handleTabChange(enabledTabs[nextIndex].id);
+    } else if (e.key === 'ArrowUp') {
+      const prevIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length;
+      handleTabChange(enabledTabs[prevIndex].id);
+    }
+  };
+
   return (
     <div className="flex gap-6">
-      <div className="flex flex-col w-48 border-r border-gray-700 pr-4">
+      <div 
+        className="flex flex-col w-48 border-r border-gray-700 pr-4"
+        tabIndex={0}
+        onKeyDown={handleKeyDown} // <-- added
+      >
         {tabs.map((tab) => (
           <button
             key={tab.id}
