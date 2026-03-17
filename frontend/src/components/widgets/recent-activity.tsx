@@ -108,6 +108,7 @@ export function RecentActivity() {
                     href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`View transaction ${info.label} ${tx.tx_status} from ${formatRelativeTime(tx.burn_block_time)} on Stacks Explorer`}
                     className="group flex items-center gap-4 p-3 rounded-3xl hover:bg-muted/50 border border-transparent hover:border-border/50 transition-all"
                   >
                     <div className={cn(
@@ -115,7 +116,7 @@ export function RecentActivity() {
                       "bg-background/80 border border-border/50",
                       info.color
                     )}>
-                      <Icon className="w-5 h-5" />
+                      <Icon className="w-5 h-5" aria-hidden="true" />
                     </div>
 
                     <div className="flex-1 min-w-0">
