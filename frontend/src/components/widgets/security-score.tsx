@@ -21,8 +21,8 @@ export function SecurityScore() {
 
             <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
                 {/* Radial Score */}
-                <div className="relative w-48 h-48 flex items-center justify-center">
-                    <svg className="w-full h-full transform -rotate-90">
+                <div className="relative w-48 h-48 flex items-center justify-center" aria-label={`Protocol safety score: ${score} out of 100`}>
+                    <svg className="w-full h-full transform -rotate-90" aria-hidden="true">
                         <circle
                             cx="96"
                             cy="96"
@@ -68,6 +68,7 @@ export function SecurityScore() {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.2 + i * 0.1 }}
+                            aria-label={`Risk factor ${factor.label}: ${factor.value}`}
                             className="p-4 rounded-3xl bg-muted/20 border border-border/30 flex items-center justify-between group/factor hover:bg-muted/40 transition-all"
                         >
                             <div>
@@ -78,7 +79,7 @@ export function SecurityScore() {
                                 "p-2 rounded-xl",
                                 factor.status === 'secure' ? "bg-emerald-500/10 text-emerald-500" : "bg-yellow-500/10 text-yellow-500"
                             )}>
-                                {factor.status === 'secure' ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
+                                {factor.status === 'secure' ? <CheckCircle2 className="w-4 h-4" aria-hidden="true" /> : <AlertTriangle className="w-4 h-4" aria-hidden="true" />}
                             </div>
                         </motion.div>
                     ))}
@@ -90,8 +91,11 @@ export function SecurityScore() {
                     <ShieldCheck className="w-5 h-5 text-aegis-blue" />
                     <span className="text-sm font-bold">Audited by <span className="text-aegis-blue">Halborn</span> & <span className="text-aegis-blue">Kudelski</span></span>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 bg-muted/50 hover:bg-muted rounded-full text-xs font-black uppercase tracking-widest transition-all">
-                    <Info className="w-3.5 h-3.5" />
+                <button 
+                    aria-label="View detailed security audit report"
+                    className="flex items-center gap-2 px-4 py-2 bg-muted/50 hover:bg-muted rounded-full text-xs font-black uppercase tracking-widest transition-all"
+                >
+                    <Info className="w-3.5 h-3.5" aria-hidden="true" />
                     Detail Report
                 </button>
             </div>
