@@ -37,17 +37,17 @@ export function StatCard({
 
   const changeIcons = {
     increase: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
       </svg>
     ),
     decrease: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
     ),
     neutral: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14" />
       </svg>
     ),
@@ -88,7 +88,7 @@ export function StatCard({
         </div>
         
         {icon && (
-          <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-purple-600 dark:text-purple-400">
+          <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-purple-600 dark:text-purple-400" aria-hidden="true">
             {icon}
           </div>
         )}
@@ -323,7 +323,7 @@ export function LargeStat({
         </div>
         
         {icon && (
-          <div className={`p-4 rounded-xl ${gradient ? 'bg-white/20' : 'bg-purple-100 dark:bg-purple-900/30'}`}>
+          <div className={`p-4 rounded-xl ${gradient ? 'bg-white/20' : 'bg-purple-100 dark:bg-purple-900/30'}`} aria-hidden="true">
             <span className={gradient ? 'text-white' : 'text-purple-600 dark:text-purple-400'}>
               {icon}
             </span>
