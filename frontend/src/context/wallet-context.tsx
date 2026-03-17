@@ -36,6 +36,15 @@ interface WalletProviderProps {
   children: ReactNode;
 }
 
+/**
+ * WalletProvider Component
+ * 
+ * Manages the Stacks wallet connection state for the entire application.
+ * Handles user sessions, connection requests, and network configuration.
+ * 
+ * @param {WalletProviderProps} props - The provider props.
+ * @returns {JSX.Element} The provider component.
+ */
 export function WalletProvider({ children }: WalletProviderProps) {
   const [state, setState] = useState<WalletState>({
     address: null,
@@ -125,6 +134,14 @@ export function WalletProvider({ children }: WalletProviderProps) {
   );
 }
 
+/**
+ * Custom hook to access wallet state and actions.
+ * 
+ * Must be used within a WalletProvider.
+ * 
+ * @returns {WalletContextValue} The current wallet context value.
+ * @throws {Error} If used outside of WalletProvider.
+ */
 export function useWallet(): WalletContextValue {
   const context = useContext(WalletContext);
   if (context === undefined) {
