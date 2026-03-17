@@ -317,6 +317,7 @@ export function Header() {
                         ? "bg-muted text-foreground"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                     )}
+                    aria-label={`Go to ${link.label} section`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <div className="flex items-center gap-3">
