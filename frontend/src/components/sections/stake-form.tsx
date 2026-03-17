@@ -261,6 +261,7 @@ export function StakeForm() {
                         key={preset.label}
                         type="button"
                         onClick={() => setSuggestedAmount(preset.value)}
+                        aria-label={`Set stake amount to ${preset.label} of balance`}
                         className="rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
                       >
                         {preset.label}
@@ -270,6 +271,7 @@ export function StakeForm() {
                       <button
                         type="button"
                         onClick={() => setSuggestedAmount(nextTierMin)}
+                        aria-label={`Set stake amount to reach ${nextTier.name} tier`}
                         className="rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan"
                       >
                         Reach {nextTier.name}
