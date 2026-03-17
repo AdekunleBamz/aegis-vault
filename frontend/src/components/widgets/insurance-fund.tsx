@@ -25,17 +25,17 @@ export function InsuranceFund() {
                     <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1">Community Protection Pool</p>
                 </div>
                 <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500">
-                    <ShieldCheck className="w-6 h-6" />
+                    <ShieldCheck className="w-6 h-6" aria-hidden="true" />
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="p-5 rounded-3xl bg-muted/20 border border-border/30">
+                <div className="p-5 rounded-3xl bg-muted/20 border border-border/30" aria-label="Insurance fund balance: 550,000 STX, approximately 357.5 thousand US dollars">
                     <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-2">Fund Balance</div>
                     <div className="text-xl font-black tabular-nums">550,000 STX</div>
                     <div className="text-[10px] font-bold text-emerald-500 mt-0.5">≈ $357.5k USD</div>
                 </div>
-                <div className="p-5 rounded-3xl bg-muted/20 border border-border/30">
+                <div className="p-5 rounded-3xl bg-muted/20 border border-border/30" aria-label="Coverage ratio: 22.4 percent of total liability covered">
                     <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-2">Coverage Ratio</div>
                     <div className="text-xl font-black tabular-nums">22.4%</div>
                     <div className="text-[10px] font-bold text-aegis-blue mt-0.5">Total Liability Covered</div>
@@ -51,7 +51,7 @@ export function InsuranceFund() {
             </div>
 
             <div className="p-6 rounded-[32px] bg-aegis-blue/5 border border-aegis-blue/20 flex items-start gap-4">
-                <Info className="w-5 h-5 text-aegis-blue shrink-0 mt-0.5" />
+                <Info className="w-5 h-5 text-aegis-blue shrink-0 mt-0.5" aria-hidden="true" />
                 <p className="text-[10px] font-bold text-muted-foreground leading-relaxed">
                     The Aegis Insurance Fund is a backstop for protocol insolvency or unexpected losses. It is funded by 10% of all protocol revenue and yield capture.
                 </p>
