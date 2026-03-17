@@ -19,10 +19,20 @@ const DURATION_PRESETS = [
 // Amount presets
 const AMOUNT_PRESETS = [1000, 5000, 10000, 50000];
 
+/**
+ * RewardsCalculator Component
+ * 
+ * Provides an interactive interface for users to estimate their potential AGS earnings.
+ * Calculates rewards based on STX stake amount, duration, and protocol reward tiers.
+ */
 export function RewardsCalculator() {
   const [stakeAmount, setStakeAmount] = useState('1000');
   const [duration, setDuration] = useState('365');
 
+  /**
+   * Memoized calculations for reward projections.
+   * Updates when stakeAmount or duration changes.
+   */
   const calculations = useMemo(() => {
     const amount = parseFloat(stakeAmount) || 0;
     const days = parseFloat(duration) || 0;
@@ -91,12 +101,14 @@ export function RewardsCalculator() {
             placeholder="Enter STX amount"
             inputSize="lg"
             suffix={<span className="text-gray-400 font-medium">STX</span>}
+            aria-label="STX amount to stake for reward calculation"
           />
           <div className="flex gap-2 mt-2">
             {AMOUNT_PRESETS.map((amount) => (
               <button
                 key={amount}
                 onClick={() => setStakeAmount(amount.toString())}
+                aria-label={`Set stake amount to ${amount.toLocaleString()} STX`}
                 className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors
                   ${parseFloat(stakeAmount) === amount
                     ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
@@ -118,12 +130,14 @@ export function RewardsCalculator() {
             onChange={(e) => setDuration(e.target.value)}
             placeholder="Enter days"
             suffix={<span className="text-gray-400 font-medium">days</span>}
+            aria-label="Staking duration in days for reward calculation"
           />
           <div className="flex gap-2 mt-2">
             {DURATION_PRESETS.map((preset) => (
               <button
                 key={preset.days}
                 onClick={() => setDuration(preset.days.toString())}
+                aria-label={`Set duration to ${preset.label}`}
                 className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors
                   ${parseFloat(duration) === preset.days
                     ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
