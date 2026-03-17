@@ -65,7 +65,7 @@ export function Footer() {
                   className="w-10 h-10 rounded-full bg-muted border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all hover:-translate-y-1"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-5 h-5" aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -98,11 +98,12 @@ export function Footer() {
                     href={link.href}
                     target={link.external ? '_blank' : undefined}
                     rel={link.external ? 'noopener noreferrer' : undefined}
+                    aria-label={link.external ? `Open ${link.label} in a new tab` : `Navigate to ${link.label}`}
                     className="text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center gap-1 group"
                   >
                     {link.label}
                     {link.external ? (
-                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                     ) : null}
                   </a>
                 </li>
@@ -137,11 +138,11 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-8">
             {['Terms', 'Privacy', 'Security'].map((item) => (
-              <a
+               <a
                 key={item}
                 href="#"
                 className="text-muted-foreground hover:text-foreground text-xs transition-colors"
-                aria-label={`View protocol ${item.toLowerCase()}`}
+                aria-label={`View protocol ${item.toLowerCase()} agreement`}
               >
                 {item}
               </a>
