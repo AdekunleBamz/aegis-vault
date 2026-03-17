@@ -104,8 +104,8 @@ export function PortfolioSummary() {
                 {TIERS[tier]?.name} Status
               </div>
             </div>
-            <p className="text-muted-foreground font-bold flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-emerald-500" />
+            <p className="text-muted-foreground font-bold flex items-center gap-2" aria-label={`Total combined value: ${metrics.totalValueUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} dollars`}>
+              <TrendingUp className="w-4 h-4 text-emerald-500" aria-hidden="true" />
               Total Combined Value:
               {isLoading ? (
                 <span className="w-24 h-6 bg-muted animate-pulse rounded-lg" />
@@ -228,14 +228,20 @@ export function PortfolioSummary() {
         {/* Actions Footer */}
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-border/50">
           <Link href="/stake" className="flex-1">
-            <button className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-foreground text-background rounded-3xl font-black text-xs uppercase tracking-widest transition-all hover:shadow-[0_0_30px_-5px_hsl(var(--foreground)/0.3)] active:scale-95">
-              <Plus className="w-4 h-4" />
+            <button 
+              aria-label="Increase your STX stake"
+              className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-foreground text-background rounded-3xl font-black text-xs uppercase tracking-widest transition-all hover:shadow-[0_0_30px_-5px_hsl(var(--foreground)/0.3)] active:scale-95"
+            >
+              <Plus className="w-4 h-4" aria-hidden="true" />
               Increase Stake
             </button>
           </Link>
           <Link href="/claim" className="flex-1">
-            <button className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-muted/50 hover:bg-muted border border-border/50 rounded-3xl font-black text-xs uppercase tracking-widest transition-all active:scale-95">
-              <Zap className="w-4 h-4" />
+            <button 
+              aria-label="Claim your accumulated AGS rewards"
+              className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-muted/50 hover:bg-muted border border-border/50 rounded-3xl font-black text-xs uppercase tracking-widest transition-all active:scale-95"
+            >
+              <Zap className="w-4 h-4" aria-hidden="true" />
               Claim AGS Rewards
             </button>
           </Link>
