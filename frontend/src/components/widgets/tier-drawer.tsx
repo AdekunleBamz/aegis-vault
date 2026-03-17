@@ -69,19 +69,24 @@ export function TierDrawer({ isOpen, onClose }: TierDrawerProps) {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="tier-drawer-title"
+                        aria-describedby="tier-drawer-description"
                         className="fixed right-0 top-0 bottom-0 w-full max-w-xl bg-background border-l border-border shadow-2xl z-[120] overflow-y-auto"
                     >
                         <div className="p-8">
                             <div className="flex items-center justify-between mb-8">
                                 <div>
-                                    <h2 className="text-3xl font-black tracking-tight">Tier <span className="text-gradient">Benefits</span></h2>
-                                    <p className="text-muted-foreground font-medium mt-1">Unlock superior yield by increasing your stake.</p>
+                                    <h2 id="tier-drawer-title" className="text-3xl font-black tracking-tight">Tier <span className="text-gradient">Benefits</span></h2>
+                                    <p id="tier-drawer-description" className="text-muted-foreground font-medium mt-1">Unlock superior yield by increasing your stake.</p>
                                 </div>
                                 <button
                                     onClick={onClose}
+                                    aria-label="Close tier benefits drawer"
                                     className="p-2 hover:bg-muted rounded-full transition-colors"
                                 >
-                                    <X className="w-6 h-6" />
+                                    <X className="w-6 h-6" aria-hidden="true" />
                                 </button>
                             </div>
 
@@ -96,7 +101,7 @@ export function TierDrawer({ isOpen, onClose }: TierDrawerProps) {
                                     >
                                         <div className="flex items-start justify-between mb-4">
                                             <div className="flex items-center gap-3">
-                                                <div className={cn("p-3 rounded-2xl", tier.bg, tier.color)}>
+                                                <div className={cn("p-3 rounded-2xl", tier.bg, tier.color)} aria-hidden="true">
                                                     <tier.icon className="w-6 h-6" />
                                                 </div>
                                                 <div>
@@ -114,7 +119,7 @@ export function TierDrawer({ isOpen, onClose }: TierDrawerProps) {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             {tier.features.map((feature) => (
                                                 <div key={feature} className="flex items-center gap-2 text-sm font-medium">
-                                                    <Check className="w-4 h-4 text-green-500" />
+                                                    <Check className="w-4 h-4 text-green-500" aria-hidden="true" />
                                                     {feature}
                                                 </div>
                                             ))}
