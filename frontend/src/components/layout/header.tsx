@@ -199,7 +199,8 @@ export function Header() {
                 onClick={() => setShowWalletMenu(!showWalletMenu)}
                 aria-label="Wallet menu"
                 aria-expanded={showWalletMenu}
-                aria-haspopup="true"
+                aria-haspopup="menu"
+                aria-controls="wallet-account-menu"
                 className="flex items-center gap-3 px-4 py-2 bg-muted/50 hover:bg-muted/80 rounded-full border border-border/50 backdrop-blur-sm transition-all group"
               >
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
@@ -219,6 +220,9 @@ export function Header() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
                     className="absolute right-0 mt-3 w-56 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
+                    id="wallet-account-menu"
+                    role="menu"
+                    aria-label="Wallet account menu"
                   >
                     <div className="px-4 py-3 border-b border-border/50 mb-1 space-y-3">
                       <div>
@@ -256,6 +260,7 @@ export function Header() {
 
                     <button
                       onClick={disconnect}
+                      role="menuitem"
                       className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-destructive hover:bg-destructive/10 rounded-2xl transition-all group"
                     >
                       <LogOut className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
