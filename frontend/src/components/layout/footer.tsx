@@ -13,6 +13,11 @@ import {
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const socialLinks = [
+    { icon: Github, href: 'https://github.com/AdekunleBamz/aegis-vault', label: 'View source code on GitHub' },
+    { icon: Twitter, href: '', label: 'Follow us on Twitter' },
+    { icon: Discord, href: '', label: 'Join our Discord community' },
+  ];
 
   const footerLinks = {
     protocol: [
@@ -58,21 +63,28 @@ export function Footer() {
               The next-generation staking protocol for the Stacks ecosystem. Secure your assets and earn maximized rewards with institutional-grade technology.
             </p>
             <div className="flex items-center gap-3">
-              {[
-                { icon: Github, href: 'https://github.com/AdekunleBamz/aegis-vault', label: 'View source code on GitHub' },
-                { icon: Twitter, href: '#', label: 'Follow us on Twitter' },
-                { icon: Discord, href: '#', label: 'Join our Discord community' },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-muted border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all hover:-translate-y-1"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" aria-hidden="true" />
-                </a>
+              {socialLinks.map((social) => (
+                social.href ? (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-muted border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all hover:-translate-y-1"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-5 h-5" aria-hidden="true" />
+                  </a>
+                ) : (
+                  <span
+                    key={social.label}
+                    aria-disabled="true"
+                    title={`${social.label} coming soon`}
+                    className="w-10 h-10 rounded-full bg-muted/50 border border-border/30 flex items-center justify-center text-muted-foreground/40 cursor-not-allowed"
+                  >
+                    <social.icon className="w-5 h-5" aria-hidden="true" />
+                  </span>
+                )
               ))}
             </div>
           </div>
