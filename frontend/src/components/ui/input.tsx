@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useId, useState } from 'react';
 
 interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   label?: string;
@@ -39,6 +39,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     onChange,
     ...props
   }, ref) => {
+    const generatedInputId = useId();
+    const inputId = props.id || `input-${generatedInputId}`;
+    const helpTextId = helperText ? `${inputId}-help` : undefined;
+    const errorTextId = error ? `${inputId}-error` : undefined;
+    const describedBy = [errorTextId, helpTextId].filter(Boolean).join(' ') || undefined;
     const [charCount, setCharCount] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
 
@@ -50,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className={`block text-sm mb-2 transition-colors ${isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
+          <label htmlFor={inputId} className={`block text-sm mb-2 transition-colors ${isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
             }`}>
             {label}
           </label>
@@ -63,10 +68,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
+            id={inputId}
             maxLength={maxLength}
             onChange={handleChange}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            aria-invalid={!!error || undefined}
+            aria-describedby={describedBy}
             className={`w-full border rounded-lg text-white placeholder-gray-500
               focus:outline-none transition-all duration-200
               ${variantClasses[variant]}
@@ -85,14 +93,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         </div>
         <div className="flex justify-between mt-1">
           {error ? (
-            <p className="text-red-400 text-sm flex items-center gap-1">
+            <p id={errorTextId} className="text-red-400 text-sm flex items-center gap-1">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg>
               {error}
             </p>
           ) : helperText ? (
-            <p className="text-gray-500 text-sm">{helperText}</p>
+            <p id={helpTextId} className="text-gray-500 text-sm">{helperText}</p>
           ) : <span />}
           {showCharCount && maxLength && (
             <span className={`text-xs ${charCount >= maxLength ? 'text-red-400' : 'text-gray-500'}`}>
@@ -117,6 +125,11 @@ interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ label, error, helperText, showCharCount, maxLength, className = '', onChange, ...props }, ref) => {
+    const generatedTextAreaId = useId();
+    const textAreaId = props.id || `textarea-${generatedTextAreaId}`;
+    const helpTextId = helperText ? `${textAreaId}-help` : undefined;
+    const errorTextId = error ? `${textAreaId}-error` : undefined;
+    const describedBy = [errorTextId, helpTextId].filter(Boolean).join(' ') || undefined;
     const [charCount, setCharCount] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
 
@@ -128,17 +141,20 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className={`block text-sm mb-2 transition-colors ${isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
+          <label htmlFor={textAreaId} className={`block text-sm mb-2 transition-colors ${isFocused ? 'text-blue-400' : error ? 'text-red-400' : 'text-gray-400'
             }`}>
             {label}
           </label>
         )}
         <textarea
           ref={ref}
+          id={textAreaId}
           maxLength={maxLength}
           onChange={handleChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          aria-invalid={!!error || undefined}
+          aria-describedby={describedBy}
           className={`w-full bg-gray-900 border rounded-lg px-4 py-3 text-white placeholder-gray-500
             focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20
             transition-all duration-200 resize-none min-h-[100px]
@@ -148,9 +164,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         />
         <div className="flex justify-between mt-1">
           {error ? (
-            <p className="text-red-400 text-sm">{error}</p>
+            <p id={errorTextId} className="text-red-400 text-sm">{error}</p>
           ) : helperText ? (
-            <p className="text-gray-500 text-sm">{helperText}</p>
+            <p id={helpTextId} className="text-gray-500 text-sm">{helperText}</p>
           ) : <span />}
           {showCharCount && maxLength && (
             <span className={`text-xs ${charCount >= maxLength ? 'text-red-400' : 'text-gray-500'}`}>
