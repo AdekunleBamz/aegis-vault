@@ -57,8 +57,13 @@ export function StakeForm() {
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/[^0-9.]/g, '');
-    setAmount(val);
+    const normalized = e.target.value.replace(/[^0-9.]/g, '');
+    const [whole, ...fractionParts] = normalized.split('.');
+    const nextValue = fractionParts.length > 0
+      ? `${whole}.${fractionParts.join('').slice(0, 6)}`
+      : whole;
+
+    setAmount(nextValue);
     setValidationError(null);
   };
 
