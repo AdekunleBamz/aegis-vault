@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback, ReactNode } from 'react';
+import React, { useState, useRef, useEffect, useCallback, ReactNode, useId } from 'react';
 
 export interface TooltipProps {
   content: ReactNode;
@@ -17,6 +17,7 @@ export function Tooltip({
   delay = 200,
   className = ''
 }: TooltipProps) {
+  const tooltipId = useId();
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -87,6 +88,19 @@ export function Tooltip({
   }, [isVisible, updatePosition]);
 
   useEffect(() => {
+    if (!isVisible) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        hideTooltip();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isVisible]);
+
+  useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -109,6 +123,7 @@ export function Tooltip({
         onMouseLeave={hideTooltip}
         onFocus={showTooltip}
         onBlur={hideTooltip}
+        aria-describedby={isVisible ? tooltipId : undefined}
         className="inline-block"
       >
         {children}
@@ -117,7 +132,9 @@ export function Tooltip({
       {isVisible && (
         <div
           ref={tooltipRef}
+          id={tooltipId}
           role="tooltip"
+          aria-hidden={!isVisible}
           className={`
             fixed z-50 px-3 py-2 text-sm text-white bg-gray-800 rounded-lg shadow-lg
             border border-gray-700/50 max-w-xs
