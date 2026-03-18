@@ -1,14 +1,10 @@
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { TIERS } from '@/lib/constants';
 import { Card } from '@/components/ui/card';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function TiersPage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
-      <Header />
-      <main className="flex-1 py-12 px-4">
+    <div className="py-12 px-4 bg-gray-950 text-white">
         <div className="container mx-auto max-w-5xl">
           <Breadcrumbs />
           {/* Header */}
@@ -181,8 +177,7 @@ export default function TiersPage() {
             </a>
           </div>
         </div>
-      </main>
-      <Footer />
+      </div>
     </div>
   );
 }
