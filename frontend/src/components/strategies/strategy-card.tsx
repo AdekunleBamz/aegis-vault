@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, Shield, Zap, ArrowRight, BarChart3, AlertCircle } from 'lucide-react';
+import { TrendingUp, Shield, Zap, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type RiskLevel = 'Low' | 'Medium' | 'High';
@@ -62,7 +62,7 @@ export function StrategyCard({
                     </div>
                 </div>
                 <h3 className="text-2xl font-black tracking-tighter mb-2 group-hover:text-gradient transition-all">{title}</h3>
-                <p className="text-sm text-muted-foreground font-medium leading-relaxed mb-6">
+                <p className="text-sm text-muted-foreground font-medium leading-relaxed mb-6 line-clamp-3">
                     {description}
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -86,10 +86,16 @@ export function StrategyCard({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button className="flex-1 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all active:scale-95">
+                    <button
+                      className="flex-1 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all active:scale-95"
+                      aria-label={`Deploy ${title} strategy`}
+                    >
                         Deploy Vault
                     </button>
-                    <button className="p-4 bg-muted/50 hover:bg-muted rounded-full transition-all group/info">
+                    <button
+                      className="p-4 bg-muted/50 hover:bg-muted rounded-full transition-all group/info"
+                      aria-label={`View ${title} metrics`}
+                    >
                         <BarChart3 className="w-4 h-4 text-muted-foreground group-hover/info:text-foreground transition-colors" />
                     </button>
                 </div>
