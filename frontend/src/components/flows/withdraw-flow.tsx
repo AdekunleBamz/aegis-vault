@@ -64,8 +64,10 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
   const [txId, setTxId] = useState<string | null>(null);
 
   const stakedAmount = position?.amountStaked || BigInt(0);
+  const maxWithdrawable = Number(stakedAmount) / 1e6;
   const numAmount = parseFloat(amount) || 0;
-  const percentageOfStake = stakedAmount > 0 ? (numAmount / (Number(stakedAmount) / 1e6)) * 100 : 0;
+  const exceedsStake = numAmount > maxWithdrawable;
+  const percentageOfStake = stakedAmount > 0 ? (numAmount / maxWithdrawable) * 100 : 0;
 
   // Quick amount buttons
   const quickAmounts = useMemo(() => [
@@ -76,7 +78,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
   ], [stakedAmount]);
 
   const handleSubmit = async () => {
-    if (numAmount <= 0) return;
+    if (numAmount <= 0 || exceedsStake) return;
     setStep('confirm');
   };
 
@@ -212,7 +214,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Remaining Stake</span>
-                <span className="text-white">{((Number(stakedAmount) / 1e6) - numAmount).toFixed(6)} STX</span>
+                <span className="text-white">{Math.max(0, maxWithdrawable - numAmount).toFixed(6)} STX</span>
               </div>
             </div>
           </div>
@@ -302,7 +304,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-400">Remaining Stake</span>
-              <span className="text-white">{((Number(stakedAmount) / 1e6) - numAmount).toFixed(6)} STX</span>
+              <span className="text-white">{Math.max(0, maxWithdrawable - numAmount).toFixed(6)} STX</span>
             </div>
             <div className="pt-3 border-t border-gray-700/50">
               <div className="flex justify-between text-sm mb-2">
@@ -311,6 +313,15 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
               </div>
               <Progress value={percentageOfStake} color="orange" size="sm" />
             </div>
+          </div>
+        )}
+
+        {exceedsStake && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 flex items-start gap-3">
+            <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p className="text-red-400 text-sm">Amount exceeds your current staked balance.</p>
           </div>
         )}
 
@@ -349,7 +360,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
 
         <Button
           onClick={handleSubmit}
-          disabled={numAmount <= 0 || isLoading}
+          disabled={numAmount <= 0 || exceedsStake || isLoading}
           isLoading={isLoading}
           fullWidth
           size="lg"
