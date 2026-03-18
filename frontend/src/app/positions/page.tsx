@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { useWallet } from '@/context/wallet-context';
 import { usePositions } from '@/hooks/use-positions';
 import { useTransactions } from '@/hooks/use-transactions';
@@ -49,14 +47,13 @@ export default function PositionsPage() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen flex flex-col relative overflow-hidden">
-        <Header />
+      <div className="relative overflow-hidden">
 
         {/* Background Decor */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-aegis-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-        <main className="flex-1 py-32 px-4 relative z-10">
+        <div className="px-4 py-12 relative z-10">
           <div className="container max-w-4xl mx-auto px-4 mb-8">
             <Breadcrumbs />
           </div>
@@ -79,8 +76,7 @@ export default function PositionsPage() {
               </button>
             </motion.div>
           </div>
-        </main>
-        <Footer />
+        </div>
       </div>
     );
   }
@@ -106,14 +102,13 @@ export default function PositionsPage() {
   const totalValue = (stakedAmount * stxUsdRate) + (pendingRewards * agsUsdRate);
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden">
-      <Header />
+    <div className="relative overflow-hidden">
 
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-aegis-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-      <main className="flex-1 py-20 px-4 relative">
+      <div className="py-12 px-4 relative">
         <div className="container max-w-7xl mx-auto">
           <Breadcrumbs />
           {/* Dashboard Header */}
@@ -546,12 +541,11 @@ export default function PositionsPage() {
             )}
           </AnimatePresence>
         </div>
-      </main>
+      </div>
       <TierDrawer
         isOpen={tierDrawerOpen}
         onClose={() => setTierDrawerOpen(false)}
       />
-      <Footer />
     </div>
   );
 }
