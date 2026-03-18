@@ -1,13 +1,9 @@
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { ClaimFlow } from '@/components/flows/claim-flow';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function ClaimPage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
-      <Header />
-      <main className="flex-1 py-12 px-4">
+    <div className="py-12 px-4 bg-gray-950 text-white">
         <div className="container mx-auto max-w-xl">
           <Breadcrumbs />
           {/* Page Header */}
@@ -81,8 +77,7 @@ export default function ClaimPage() {
             </a>
           </div>
         </div>
-      </main>
-      <Footer />
+      </div>
     </div>
   );
 }
