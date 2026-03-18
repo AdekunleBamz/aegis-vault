@@ -48,7 +48,10 @@ export function GovernanceStats() {
                     <h3 className="text-2xl font-black tracking-tighter">Governance <span className="text-gradient">Pulse</span></h3>
                     <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest mt-1">Real-time protocol metrics</p>
                 </div>
-                <button className="p-3 bg-muted/50 hover:bg-muted rounded-2xl transition-all">
+                <button
+                  className="p-3 bg-muted/50 hover:bg-muted rounded-2xl transition-all"
+                  aria-label="Open governance trend details"
+                >
                     <TrendingUp className="w-5 h-5 text-aegis-blue" />
                 </button>
             </div>
@@ -61,6 +64,7 @@ export function GovernanceStats() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: i * 0.1 }}
                         className="p-6 rounded-3xl bg-background border border-border group/stat hover:border-aegis-blue/30 transition-all relative overflow-hidden"
+                        aria-label={`${stat.label}: ${stat.value}, ${stat.change}`}
                     >
                         <div className="flex items-start justify-between mb-4 relative z-10">
                             <div className={cn("p-3 rounded-2xl bg-muted/50 group-hover/stat:scale-110 transition-transform", stat.color)}>
@@ -88,7 +92,7 @@ export function GovernanceStats() {
 
             <div className="mt-8 p-6 rounded-[32px] bg-muted/20 border border-border/30 flex items-start gap-4">
                 <Info className="w-5 h-5 text-aegis-blue shrink-0 mt-0.5" />
-                <p className="text-[10px] font-bold text-muted-foreground leading-relaxed">
+                <p className="text-xs font-semibold text-muted-foreground leading-relaxed">
                     Governance parameters are subject to change via Phase 1 governance votes. Current quorum for protocol upgrades is set to 25% of total vAGS supply.
                 </p>
             </div>
