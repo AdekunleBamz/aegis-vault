@@ -1,14 +1,10 @@
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
 import { RewardsCalculator } from '@/components/widgets/rewards-calculator';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function StatsPage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
-      <Header />
-      <main className="flex-1 py-12 px-4">
+    <div className="px-4 py-12 bg-gray-950 text-white">
         <div className="container mx-auto max-w-6xl">
           <Breadcrumbs />
           {/* Header */}
@@ -156,8 +152,7 @@ export default function StatsPage() {
             </div>
           </div>
         </div>
-      </main>
-      <Footer />
+      </div>
     </div>
   );
 }
