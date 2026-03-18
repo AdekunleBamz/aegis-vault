@@ -126,6 +126,9 @@ export function Header() {
     { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
   ];
 
+  const isActiveRoute = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
+
   return (
     <header
       className={cn(
@@ -156,9 +159,9 @@ export function Header() {
         </div>
 
         {/* Center: Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1 max-w-[58vw] overflow-x-auto no-scrollbar bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
+          <nav className="hidden md:flex items-center gap-1 max-w-[58vw] overflow-x-auto no-scrollbar bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = isActiveRoute(link.href);
             return (
               <Link
                 key={link.href}
@@ -306,7 +309,7 @@ export function Header() {
           >
             <nav className="container py-6 flex flex-col gap-2">
               {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const isActive = isActiveRoute(link.href);
                 return (
                   <Link
                     key={link.href}
