@@ -39,11 +39,61 @@ export function Tabs({
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
   const tabsRef = useRef<HTMLDivElement>(null);
+  const tabButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const handleTabChange = (tabId: string) => {
     if (tabs.find(t => t.id === tabId)?.disabled) return;
     setActiveTab(tabId);
     onChange?.(tabId);
+  };
+
+  const focusEnabledTabByIndex = (startIndex: number, direction: 1 | -1) => {
+    const totalTabs = tabs.length;
+    let nextIndex = startIndex;
+
+    for (let attempts = 0; attempts < totalTabs; attempts += 1) {
+      nextIndex = (nextIndex + direction + totalTabs) % totalTabs;
+      if (!tabs[nextIndex]?.disabled) {
+        const nextTab = tabs[nextIndex];
+        handleTabChange(nextTab.id);
+        tabButtonRefs.current[nextIndex]?.focus();
+        break;
+      }
+    }
+  };
+
+  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      focusEnabledTabByIndex(index, 1);
+      return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      focusEnabledTabByIndex(index, -1);
+      return;
+    }
+
+    if (event.key === 'Home') {
+      event.preventDefault();
+      const firstEnabledIndex = tabs.findIndex((tab) => !tab.disabled);
+      if (firstEnabledIndex >= 0) {
+        handleTabChange(tabs[firstEnabledIndex].id);
+        tabButtonRefs.current[firstEnabledIndex]?.focus();
+      }
+      return;
+    }
+
+    if (event.key === 'End') {
+      event.preventDefault();
+      const lastEnabledIndex = [...tabs].reverse().findIndex((tab) => !tab.disabled);
+      if (lastEnabledIndex >= 0) {
+        const targetIndex = tabs.length - 1 - lastEnabledIndex;
+        handleTabChange(tabs[targetIndex].id);
+        tabButtonRefs.current[targetIndex]?.focus();
+      }
+    }
   };
 
   // Update indicator position for line variant
@@ -102,15 +152,21 @@ export function Tabs({
         }`}
         role="tablist"
       >
-        {tabs.map((tab) => (
+        {tabs.map((tab, index) => (
           <button
             key={tab.id}
+            ref={(el) => {
+              tabButtonRefs.current[index] = el;
+            }}
             data-tab-id={tab.id}
             onClick={() => handleTabChange(tab.id)}
+            onKeyDown={(event) => handleTabKeyDown(event, index)}
             disabled={tab.disabled}
             className={`${getTabStyles(activeTab === tab.id, !!tab.disabled)} 
               ${fullWidth ? 'flex-1' : ''} flex items-center justify-center gap-2`}
             role="tab"
+            id={`tab-${tab.id}`}
+            tabIndex={activeTab === tab.id ? 0 : -1}
             aria-selected={activeTab === tab.id}
             aria-controls={`tabpanel-${tab.id}`}
           >
@@ -144,7 +200,7 @@ export function Tabs({
             key={tab.id}
             id={`tabpanel-${tab.id}`}
             role="tabpanel"
-            aria-labelledby={tab.id}
+            aria-labelledby={`tab-${tab.id}`}
             hidden={activeTab !== tab.id}
             className={activeTab === tab.id ? 'animate-fade-in' : ''}
           >
