@@ -37,6 +37,7 @@ export function Header() {
   const pathname = usePathname();
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const walletMenuRef = useRef<HTMLDivElement | null>(null);
+  const previousFocusedElementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -59,6 +60,8 @@ export function Header() {
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
+
+    previousFocusedElementRef.current = document.activeElement as HTMLElement | null;
     const focusable = mobileMenuRef.current?.querySelectorAll<HTMLElement>(
       'a, button, [tabindex]:not([tabindex="-1"])'
     );
@@ -82,6 +85,12 @@ export function Header() {
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      previousFocusedElementRef.current?.focus();
+    }
   }, [mobileMenuOpen]);
 
   useEffect(() => {
