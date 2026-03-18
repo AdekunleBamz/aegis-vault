@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useWallet } from '@/context/wallet-context';
 import { usePositions } from '@/hooks/use-positions';
 import { useRewards } from '@/hooks/use-rewards';
@@ -74,7 +74,7 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
 
   if (step === 'success') {
     return (
-      <Card className="text-center py-12">
+      <Card className="text-center py-12" role="status" aria-live="polite">
         {/* Celebration Animation */}
         <div className="relative mb-8">
           <div className="w-24 h-24 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-2xl flex items-center justify-center mx-auto relative">
@@ -100,7 +100,7 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
           </div>
         </div>
 
-        <h3 className="text-2xl font-bold text-white mb-2">Rewards Claimed! 🎉</h3>
+        <h3 className="text-2xl font-bold text-white mb-2">Rewards Claimed</h3>
         <p className="text-gray-400 mb-6">Your AGS tokens have been sent to your wallet.</p>
 
         {/* Claimed Amount */}
@@ -116,6 +116,7 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm mb-6"
+            aria-label="View claim transaction on Stacks Explorer"
           >
             View on Explorer
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
