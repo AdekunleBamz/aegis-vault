@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { VotingPower } from '@/components/governance/voting-power';
 import { GovernanceStats } from '@/components/governance/governance-stats';
 import { ProposalCard, ProposalStatus } from '@/components/governance/proposal-card';
@@ -56,14 +54,13 @@ export default function GovernancePage() {
     );
 
     return (
-        <div className="min-h-screen flex flex-col relative overflow-hidden">
-            <Header />
+        <div className="relative overflow-hidden">
 
             {/* Background Decor */}
             <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-aegis-purple/5 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
             <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-aegis-blue/5 rounded-full blur-[140px] translate-x-1/2 pointer-events-none" />
 
-            <main className="flex-1 py-32 px-4 relative z-10">
+            <div className="px-4 py-12 relative z-10">
                 <div className="container max-w-7xl mx-auto">
                     <Breadcrumbs />
                     {/* Page Header */}
@@ -152,9 +149,7 @@ export default function GovernancePage() {
                         </div>
                     </section>
                 </div>
-            </main>
-
-            <Footer />
+            </div>
 
             <VotingModal
                 isOpen={!!selectedProposal}
