@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { ProtocolCard } from '@/components/ecosystem/protocol-card';
 import { Globe, Search, Filter, Rocket, Sparkles, ArrowRight, Activity, Share2, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -69,14 +67,13 @@ export default function EcosystemPage() {
     );
 
     return (
-        <div className="min-h-screen flex flex-col relative overflow-hidden">
-            <Header />
+        <div className="relative overflow-hidden">
 
             {/* Hero Background Elements */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-aegis-blue/5 to-transparent pointer-events-none" />
             <div className="absolute top-[20%] -right-[10%] w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[120px] pointer-events-none" />
 
-            <main className="flex-1 py-32 px-4 relative z-10">
+            <div className="px-4 py-12 relative z-10">
                 <div className="container max-w-7xl mx-auto">
                     <Breadcrumbs />
                     {/* Header Section */}
@@ -210,9 +207,7 @@ export default function EcosystemPage() {
                         </div>
                     </div>
                 </div>
-            </main>
-
-            <Footer />
+            </div>
         </div>
     );
 }
