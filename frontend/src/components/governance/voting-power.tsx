@@ -3,12 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Vote, Zap, Users, Info, ArrowUpRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useWallet } from '@/context/wallet-context';
 
 export function VotingPower() {
-    const { isConnected } = useWallet();
-
     // Mock data - would be derived from AGS balance and lock duration
     const stats = {
         totalPower: '24,500',
@@ -68,7 +64,10 @@ export function VotingPower() {
                         <Users className="w-4 h-4 text-aegis-purple" />
                         <span className="text-xs font-bold text-muted-foreground">Delegation Status</span>
                     </div>
-                    <button className="text-[10px] font-black uppercase tracking-widest text-aegis-purple hover:underline flex items-center gap-1">
+                    <button
+                        className="text-[10px] font-black uppercase tracking-widest text-aegis-purple hover:underline flex items-center gap-1"
+                        aria-label="Setup voting power delegation"
+                    >
                         Setup
                         <ArrowUpRight className="w-3 h-3" />
                     </button>
@@ -89,6 +88,11 @@ export function VotingPower() {
                         animate={{ width: '65%' }}
                         transition={{ duration: 1, ease: "easeOut" }}
                         className="h-full bg-aegis-purple"
+                        role="progressbar"
+                        aria-label="Time remaining before next governance snapshot"
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={65}
                     />
                 </div>
             </div>
