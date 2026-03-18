@@ -63,6 +63,10 @@
     scroll-behavior: smooth;
   }
 
+  :where(section[id], [id].anchor-target) {
+    scroll-margin-top: 7rem;
+  }
+
   a,
   button,
   input,
