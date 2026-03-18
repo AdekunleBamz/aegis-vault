@@ -1,7 +1,5 @@
 'use client';
 
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { StakingFlow } from '@/components/flows/staking-flow';
 import { RewardProjection } from '@/components/dashboard/reward-projection';
 import { TIERS } from '@/lib/constants';
@@ -23,14 +21,13 @@ import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export default function StakePage() {
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden">
-      <Header />
+    <div className="relative overflow-hidden">
 
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-aegis-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-      <main className="flex-1 py-32 px-4 relative z-10">
+      <div className="px-4 py-12 relative z-10">
         <div className="container max-w-7xl mx-auto">
           <Breadcrumbs />
           {/* Page Header */}
@@ -140,9 +137,7 @@ export default function StakePage() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   );
 }
