@@ -4,17 +4,21 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, Home } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 export function Breadcrumbs() {
     const pathname = usePathname();
     const paths = pathname.split('/').filter(Boolean);
+    const formatLabel = (segment: string) =>
+      decodeURIComponent(segment)
+        .split('-')
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
 
     if (paths.length === 0) return null;
 
     return (
-        <nav aria-label="Breadcrumb" className="flex mb-8">
-            <ol className="flex items-center gap-2 list-none p-0 m-0">
+        <nav aria-label="Breadcrumb" className="mb-8 flex overflow-x-auto no-scrollbar">
+            <ol className="flex items-center gap-2 list-none p-0 m-0 whitespace-nowrap">
                 <li>
                     <Link
                         href="/"
@@ -28,7 +32,7 @@ export function Breadcrumbs() {
                 {paths.map((path, index) => {
                     const href = `/${paths.slice(0, index + 1).join('/')}`;
                     const isLast = index === paths.length - 1;
-                    const label = path.charAt(0).toUpperCase() + path.slice(1);
+                    const label = formatLabel(path);
 
                     return (
                         <React.Fragment key={path}>
