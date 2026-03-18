@@ -1,8 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { STACKS_MAINNET } from '@stacks/network';
 import { useWallet } from '@/context/wallet-context';
 import { useTransactions } from '@/hooks/use-transactions';
@@ -114,9 +112,7 @@ export default function HistoryPage() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-gray-950 text-white flex flex-col">
-        <Header />
-        <main className="flex-1 py-12 px-4">
+      <div className="px-4 py-12">
           <div className="container mx-auto max-w-4xl px-4">
             <Breadcrumbs />
           </div>
@@ -135,16 +131,12 @@ export default function HistoryPage() {
               Connect Wallet
             </Button>
           </div>
-        </main>
-        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
-      <Header />
-      <main className="flex-1 py-12 px-4">
+    <div className="px-4 py-12">
         <div className="container mx-auto max-w-4xl">
           <Breadcrumbs />
           {/* Page Header */}
@@ -297,8 +289,7 @@ export default function HistoryPage() {
             </p>
           )}
         </div>
-      </main>
-      <Footer />
+      </div>
     </div>
   );
 }
