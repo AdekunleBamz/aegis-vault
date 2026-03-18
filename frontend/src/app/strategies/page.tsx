@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { StrategyCard, RiskLevel } from '@/components/strategies/strategy-card';
 import { AutoCompoundWidget } from '@/components/strategies/autocompound-widget';
 import { YieldCalculator } from '@/components/strategies/yield-calculator';
@@ -50,14 +48,13 @@ export default function StrategiesPage() {
     );
 
     return (
-        <div className="min-h-screen flex flex-col relative overflow-hidden">
-            <Header />
+        <div className="relative overflow-hidden">
 
             {/* Dynamic Background Elements */}
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-aegis-blue/5 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-            <main className="flex-1 py-32 px-4 relative z-10">
+            <div className="px-4 py-12 relative z-10">
                 <div className="container max-w-7xl mx-auto">
                     <Breadcrumbs />
                     {/* Header Section */}
@@ -181,9 +178,7 @@ export default function StrategiesPage() {
                         </button>
                     </motion.div>
                 </div>
-            </main>
-
-            <Footer />
+            </div>
         </div>
     );
 }
