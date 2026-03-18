@@ -26,13 +26,19 @@ export function Footer() {
       { label: 'Vault Stats', href: '/stats' },
     ],
     resources: [
-      { label: 'Documentation', href: '#' },
+      { label: 'Documentation', href: 'https://github.com/AdekunleBamz/aegis-vault#readme', external: true },
       { label: 'Analytics Hub', href: '/analytics' },
       { label: 'Security Portal', href: '/security' },
       { label: 'Governance', href: '/governance' },
       { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
     ],
   };
+
+  const legalLinks = [
+    { label: 'Terms', href: '' },
+    { label: 'Privacy', href: '' },
+    { label: 'Security', href: '/security' },
+  ];
 
   return (
     <footer className="border-t border-border bg-muted/30 backdrop-blur-sm mt-auto">
@@ -137,15 +143,26 @@ export function Footer() {
             &copy; {currentYear} Aegis Vault Protocol. All rights reserved.
           </p>
           <div className="flex items-center gap-8">
-            {['Terms', 'Privacy', 'Security'].map((item) => (
-               <a
-                key={item}
-                href="#"
-                className="text-muted-foreground hover:text-foreground text-xs transition-colors"
-                aria-label={`View protocol ${item.toLowerCase()} agreement`}
-              >
-                {item}
-              </a>
+            {legalLinks.map((item) => (
+              item.href ? (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="text-muted-foreground hover:text-foreground text-xs transition-colors"
+                  aria-label={`Open ${item.label} page`}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <span
+                  key={item.label}
+                  aria-disabled="true"
+                  className="text-xs text-muted-foreground/50 cursor-not-allowed"
+                  title={`${item.label} policy coming soon`}
+                >
+                  {item.label}
+                </span>
+              )
             ))}
           </div>
         </div>
