@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileText, Clock, User, ChevronRight, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
+import { FileText, Clock, User, ChevronRight, CheckCircle2, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type ProposalStatus = 'Active' | 'Passed' | 'Rejected' | 'Pending';
@@ -87,6 +87,11 @@ export function ProposalCard({
                         <div
                             style={{ width: `${forPercentage}%` }}
                             className="h-full bg-emerald-500 transition-all duration-1000"
+                            role="progressbar"
+                            aria-label={`${id} votes in favor`}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-valuenow={Number(forPercentage.toFixed(1))}
                         />
                     </div>
                 </div>
@@ -103,6 +108,11 @@ export function ProposalCard({
                         <div
                             style={{ width: `${againstPercentage}%` }}
                             className="h-full bg-red-500 transition-all duration-1000"
+                            role="progressbar"
+                            aria-label={`${id} votes against`}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-valuenow={Number(againstPercentage.toFixed(1))}
                         />
                     </div>
                 </div>
@@ -112,6 +122,7 @@ export function ProposalCard({
                 <button
                     onClick={onVote}
                     disabled={status !== 'Active'}
+                    aria-label={status === 'Active' ? `Cast vote for proposal ${id}` : `Voting closed for proposal ${id}`}
                     className={cn(
                         "px-8 py-4 rounded-full font-black text-xs uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100",
                         status === 'Active' ? "bg-foreground text-background hover:shadow-lg" : "bg-muted text-muted-foreground cursor-not-allowed"
