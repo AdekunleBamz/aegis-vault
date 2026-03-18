@@ -1,8 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
 import { RecentActivity } from '@/components/widgets/recent-activity';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
@@ -61,14 +59,13 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden">
-      <Header />
+    <div className="relative overflow-hidden">
 
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-aegis-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-aegis-purple/5 rounded-full blur-[140px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-      <main className="flex-1 py-32 px-4 relative z-10">
+      <div className="px-4 py-12 relative z-10">
         <div className="container max-w-7xl mx-auto">
           <Breadcrumbs />
           {/* Page Header */}
@@ -169,10 +166,7 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   );
 }
-
