@@ -31,6 +31,12 @@ export interface ContractReadResult {
   okay: boolean;
   result?: string;
 }
+/**
+ * Fetches the current balance for a Stacks account.
+ * 
+ * @param address - The Stacks address to query.
+ * @returns Promise containing STX and fungible token balances.
+ */
 
 export async function getAccountBalance(address: string): Promise<AccountBalance> {
   const response = await fetch(`${API.STACKS_API}/v2/accounts/${address}`, {
