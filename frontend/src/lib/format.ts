@@ -17,7 +17,11 @@ export function formatSTX(microStx: string | number | bigint): string {
 }
 
 /**
- * Format AGS tokens with proper decimals
+ * Formats micro-AGS (uAGS) value to a human-readable AGS string.
+ * Uses the AGS_DECIMALS constant for precision and formats with en-US locale.
+ * 
+ * @param microAgs - The amount in micro-AGS (string, number, or bigint)
+ * @returns A formatted string representation in AGS
  */
 export function formatAGS(microAgs: string | number | bigint): string {
   const value = BigInt(microAgs);
