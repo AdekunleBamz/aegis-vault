@@ -12,16 +12,29 @@ import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 import { STACKS_MAINNET, STACKS_TESTNET, StacksNetwork } from '@stacks/network';
 import { USER_SESSION_INTERVAL } from '@/lib/constants';
 
+/**
+ * Represents the internal state of the wallet connection.
+ */
 interface WalletState {
+  /** The currently connected Stacks address, or null if disconnected */
   address: string | null;
+  /** Whether a wallet is currently connected and authenticated */
   isConnected: boolean;
+  /** Whether a connection request is currently in progress */
   isConnecting: boolean;
+  /** The Stacks network configuration currently in use */
   network: StacksNetwork;
+  /** Any error message related to wallet operations, or null */
   error: string | null;
 }
 
+/**
+ * The value provided by the WalletContext, including state and actions.
+ */
 interface WalletContextValue extends WalletState {
+  /** Opens the Stacks wallet connection modal */
   connect: () => void;
+  /** Logs the user out and clears the session */
   disconnect: () => void;
 }
 
