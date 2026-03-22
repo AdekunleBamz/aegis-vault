@@ -99,7 +99,11 @@ export function blocksToTime(blocks: number): string {
 }
 
 /**
- * Format relative time from timestamp
+ * Formats a Unix timestamp (in seconds) into a relative time string.
+ * Shows minutes, hours, or days ago, or a formatted date for older timestamps.
+ * 
+ * @param timestamp - The Unix timestamp in seconds
+ * @returns A human-readable relative time string (e.g., "5m ago", "2h ago", or date string)
  */
 export function formatRelativeTime(timestamp: number): string {
   const now = Date.now() / 1000;
