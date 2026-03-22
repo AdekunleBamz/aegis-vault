@@ -58,21 +58,18 @@ describe('validation', () => {
   });
 
   describe('stakeFormSchema', () => {
-    it('should validate correct form data', () => {
-      const data = {
+    it('should validate valid stake form data', () => {
+      const result = stakeFormSchema.safeParse({
         amount: '100',
         lockPeriod: 30,
-        termsAccepted: true
-      };
-      expect(stakeFormSchema.safeParse(data).success).toBe(true);
+        autoCompound: true,
+      });
+      expect(result.success).toBe(true);
     });
 
-    it('should fail on invalid form data', () => {
-      const data = {
+    it('should fail on invalid amount', () => {
+      const result = stakeFormSchema.safeParse({
         amount: '0',
-        lockPeriod: 5,
-        termsAccepted: false
-      };
       const result = stakeFormSchema.safeParse(data);
       expect(result.success).toBe(false);
     });
