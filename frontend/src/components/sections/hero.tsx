@@ -76,7 +76,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1]"
+            className="text-[clamp(2.5rem,8vw,5rem)] md:text-[clamp(3.5rem,10vw,7rem)] lg:text-[clamp(4.5rem,12vw,8rem)] font-black tracking-tight mb-8 leading-[1.05]"
           >
             Secure Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-aegis-blue to-aegis-purple">STX</span>. <br />
             <span className="text-gradient">Maximize Rewards.</span>
