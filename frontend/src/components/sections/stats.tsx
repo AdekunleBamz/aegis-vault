@@ -134,9 +134,9 @@ export function Stats() {
             >
               <div className="flex items-center justify-between mb-6">
                 <div className={cn("p-3 rounded-2xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors duration-500", stat.color)}>
-                  <stat.icon className="w-6 h-6" />
+                  <stat.icon className="w-6 h-6" aria-hidden="true" />
                 </div>
-                <TrendingUp className="w-4 h-4 text-muted-foreground/30 group-hover:text-green-500 transition-colors" />
+                <TrendingUp className="w-4 h-4 text-muted-foreground/30 group-hover:text-green-500 transition-colors" aria-hidden="true" />
               </div>
 
               <div className="flex flex-1 flex-col space-y-1">
