@@ -22,6 +22,13 @@ export interface TransactionResult {
 }
 
 /**
+ * Executes a staking transaction on the Stacks blockchain.
+ * 
+ * @param amount - Amount in microSTX.
+ * @param senderAddress - The address of the staker.
+ * @returns Promise resolving to the transaction ID and success status.
+ */
+/**
  * Execute stake transaction
  */
 export async function executeStake(
