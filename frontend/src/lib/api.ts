@@ -42,7 +42,7 @@ export async function getAccountBalance(address: string): Promise<AccountBalance
   });
   
   if (!response.ok) {
-    throw new Error('Failed to fetch account balance');
+    throw new Error(`Failed to fetch account balance for ${address}`);
   }
   
   return response.json();
