@@ -126,7 +126,7 @@ export async function executeClaimRewards(): Promise<TransactionResult> {
       contractName,
       functionName: 'claim-rewards',
       functionArgs: [],
-      postConditionMode: PostConditionMode.Allow,
+      postConditionMode: PostConditionMode.Deny,
       onFinish: (data: FinishedTxData) => {
         resolve({ txId: data.txId, success: true });
       },
