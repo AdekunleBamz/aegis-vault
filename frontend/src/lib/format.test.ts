@@ -37,7 +37,7 @@ describe('format', () => {
     it('should truncate address correctly', () => {
       const addr = 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9';
       expect(truncateAddress(addr)).toBe('SP2PAB...2JG9');
-      expect(truncateAddress(addr, 2)).toBe('SP2PAB...G9');
+      expect(truncateAddress(addr, 2)).toBe('SP2P...G9');
     });
   });
 
