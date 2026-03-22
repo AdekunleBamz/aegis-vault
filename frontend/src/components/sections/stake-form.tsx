@@ -159,7 +159,7 @@ export function StakeForm() {
               className="py-16 text-center"
             >
               <div className="w-24 h-24 bg-muted/50 rounded-[40px] flex items-center justify-center mx-auto mb-8 border border-border/50">
-                <Wallet className="w-10 h-10 text-muted-foreground/40" />
+                <Wallet className="w-10 h-10 text-muted-foreground/40" aria-hidden="true" />
               </div>
               <h3 className="text-2xl font-black mb-4">Wallet Connection Required</h3>
               <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto">
