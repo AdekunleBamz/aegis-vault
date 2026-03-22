@@ -309,7 +309,16 @@ export function useFormSubmit<T>(
   return { ...state, handleSubmit, reset };
 }
 
-// Autosave hook
+/**
+ * A custom hook to automatically save form data after a specified delay.
+ * Detects changes in data and triggers the save function debounced.
+ * 
+ * @template T - The type of the data being saved
+ * @param data - The data to monitor for changes
+ * @param saveFn - The async function to perform the save
+ * @param delay - The debounce delay in milliseconds (default: 2000)
+ * @returns An object containing the saving state, last saved timestamp, and error
+ */
 export function useAutosave<T>(
   data: T,
   saveFn: (data: T) => Promise<void>,
@@ -319,10 +328,17 @@ export function useAutosave<T>(
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout>();
-  const previousData = useRef<T>(data);
+  const previousData = useRef<string>(JSON.stringify(data));
+  const saveFnRef = useRef(saveFn);
+
+  // Update saveFnRef whenever saveFn changes
+  useEffect(() => {
+    saveFnRef.current = saveFn;
+  }, [saveFn]);
 
   useEffect(() => {
-    if (JSON.stringify(data) === JSON.stringify(previousData.current)) {
+    const dataString = JSON.stringify(data);
+    if (dataString === previousData.current) {
       return;
     }
 
@@ -335,9 +351,9 @@ export function useAutosave<T>(
       setError(null);
 
       try {
-        await saveFn(data);
+        await saveFnRef.current(data);
         setLastSaved(new Date());
-        previousData.current = data;
+        previousData.current = dataString;
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Save failed');
       } finally {
@@ -350,7 +366,7 @@ export function useAutosave<T>(
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [data, saveFn, delay]);
+  }, [data, delay]);
 
   return { isSaving, lastSaved, error };
 }
