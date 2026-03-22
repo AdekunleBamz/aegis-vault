@@ -1,6 +1,13 @@
 {
   "name": "aegis-vault-frontend",
   "version": "1.0.0",
+  "description": "Interactive frontend for the Aegis Vault staking protocol.",
+  "author": "AdekunleBamz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdekunleBamz/aegis-vault.git"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
