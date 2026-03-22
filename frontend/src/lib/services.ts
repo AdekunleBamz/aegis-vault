@@ -5,11 +5,18 @@
 const STORAGE_PREFIX = 'aegis_vault_';
 
 /**
- * Storage service with type safety and prefixing
+ * Storage service providing a type-safe wrapper around localStorage.
+ * Includes automatic JSON serialization/deserialization and key prefixing
+ * to prevent collisions with other applications on the same domain.
  */
 export const storage = {
   /**
-   * Gets a value from localStorage
+   * Retrieves and parses a value from localStorage.
+   * 
+   * @template T - Expected type of the stored data
+   * @param key - The unique key for the item (will be prefixed)
+   * @param defaultValue - Value to return if key doesn't exist or parsing fails
+   * @returns The parsed data of type T, or the default value
    */
   get<T>(key: string, defaultValue?: T): T | null {
     if (typeof window === 'undefined') return defaultValue ?? null;
@@ -23,7 +30,11 @@ export const storage = {
   },
 
   /**
-   * Sets a value in localStorage
+   * Serializes and saves a value to localStorage.
+   * 
+   * @template T - Type of the data to store
+   * @param key - The unique key for the item
+   * @param value - The data to serialize and store
    */
   set<T>(key: string, value: T): void {
     if (typeof window === 'undefined') return;
@@ -35,7 +46,8 @@ export const storage = {
   },
 
   /**
-   * Removes a value from localStorage
+   * Removes a specific item from localStorage by its key.
+   * @param key - The key of the item to remove
    */
   remove(key: string): void {
     if (typeof window === 'undefined') return;
@@ -43,7 +55,8 @@ export const storage = {
   },
 
   /**
-   * Clears all storage with prefix
+   * Clears all items from localStorage that start with the protocol's prefix.
+   * Does not affect other data in localStorage.
    */
   clear(): void {
     if (typeof window === 'undefined') return;
@@ -52,7 +65,7 @@ export const storage = {
   },
 
   /**
-   * Gets all keys with prefix
+   * Returns a list of all keys currently stored by this service (without prefix).
    */
   keys(): string[] {
     if (typeof window === 'undefined') return [];
@@ -66,7 +79,14 @@ export const storage = {
 // SESSION STORAGE SERVICE
 // ============================================================================
 
+/**
+ * Session storage service for temporary data that should be cleared when
+ * the browser tab is closed. Uses the same prefixing as the main storage service.
+ */
 export const sessionStore = {
+  /**
+   * Gets a value from sessionStorage.
+   */
   get<T>(key: string, defaultValue?: T): T | null {
     if (typeof window === 'undefined') return defaultValue ?? null;
     try {
@@ -78,6 +98,9 @@ export const sessionStore = {
     }
   },
 
+  /**
+   * Sets a value in sessionStorage.
+   */
   set<T>(key: string, value: T): void {
     if (typeof window === 'undefined') return;
     try {
@@ -87,11 +110,17 @@ export const sessionStore = {
     }
   },
 
+  /**
+   * Removes a specific item from sessionStorage.
+   */
   remove(key: string): void {
     if (typeof window === 'undefined') return;
     sessionStorage.removeItem(`${STORAGE_PREFIX}${key}`);
   },
 
+  /**
+   * Clears all session data belonging to this protocol.
+   */
   clear(): void {
     if (typeof window === 'undefined') return;
     const keys = Object.keys(sessionStorage).filter(key => key.startsWith(STORAGE_PREFIX));
@@ -111,9 +140,16 @@ interface CacheEntry<T> {
 
 const memoryCache = new Map<string, CacheEntry<unknown>>();
 
+/**
+ * In-memory caching service to prevent redundant API calls within the same session.
+ * Supports TTL (Time To Live) and generic data types.
+ */
 export const cache = {
   /**
-   * Gets a cached value
+   * Retrieves a value from the memory cache if it exists and hasn't expired.
+   * 
+   * @param key - The cache key
+   * @returns The cached data, or null if missing or expired
    */
   get<T>(key: string): T | null {
     const entry = memoryCache.get(key) as CacheEntry<T> | undefined;
@@ -126,7 +162,11 @@ export const cache = {
   },
 
   /**
-   * Sets a cached value
+   * Stores a value in the memory cache with a specific TTL.
+   * 
+   * @param key - The cache key
+   * @param data - The data to cache
+   * @param ttlMs - Time to live in milliseconds (default: 60s)
    */
   set<T>(key: string, data: T, ttlMs: number = 60000): void {
     memoryCache.set(key, {
@@ -137,21 +177,26 @@ export const cache = {
   },
 
   /**
-   * Removes a cached value
+   * Explicitly removes a value from the cache.
    */
   delete(key: string): void {
     memoryCache.delete(key);
   },
 
   /**
-   * Clears all cache
+   * Clears all items from the memory cache.
    */
   clear(): void {
     memoryCache.clear();
   },
 
   /**
-   * Gets or fetches with caching
+   * High-level helper to either return a cached value or fetch it using the
+   * provided fetcher function, then cache the result.
+   * 
+   * @param key - The cache key
+   * @param fetcher - Async function to fetch data if not in cache
+   * @param ttlMs - Cache expiration in milliseconds
    */
   async getOrFetch<T>(
     key: string,
