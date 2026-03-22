@@ -134,8 +134,12 @@ export default function DashboardPage() {
                   <h3 className="text-xl font-black mb-6">Reward <span className="text-gradient">Projection</span></h3>
                   <RewardChart data={mockRewardData} height={250} />
                 </div>
-                <PortfolioSummary />
-                <RecentActivity />
+                <div style={{ contentVisibility: 'auto' }}>
+                  <PortfolioSummary />
+                </div>
+                <div style={{ contentVisibility: 'auto' }}>
+                  <RecentActivity />
+                </div>
               </div>
 
               <div className="space-y-8">
