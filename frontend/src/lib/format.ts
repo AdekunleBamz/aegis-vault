@@ -33,6 +33,15 @@ export function toMicroSTX(stx: number): bigint {
 }
 
 /**
+ * Basic validation for Stacks addresses
+ */
+export function isValidAddress(address: string): boolean {
+  if (!address) return false;
+  // Principal addresses usually start with S and are 39-41 chars
+  return /^[SP][0-9A-Z]{38,41}$/i.test(address);
+}
+
+/**
  * Truncate address for display
  * @example truncateAddress("SP3FKNEZ...") -> "SP3FKN...GG6N"
  */
