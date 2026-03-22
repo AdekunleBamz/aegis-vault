@@ -133,7 +133,16 @@ export function useFetch<T>(
   return { ...state, mutate };
 }
 
-// Optimistic update hook
+/**
+ * A custom hook to handle optimistic UI updates.
+ * Allows for immediate UI updates while a background operation is in progress,
+ * with the ability to confirm or revert the update once the operation finishes.
+ * 
+ * @template T - The type of the value being updated
+ * @param initialValue - The initial value
+ * @param updateFn - A function to calculate the new state from the old state and a new value
+ * @returns An object containing the current value, addOptimistic, confirm, and revert functions
+ */
 export function useOptimistic<T>(
   initialValue: T,
   updateFn: (current: T, optimistic: T) => T
@@ -170,7 +179,15 @@ export function useOptimistic<T>(
   };
 }
 
-// Infinite scroll hook
+/**
+ * A custom hook to implement infinite scrolling for list data.
+ * Automatically fetches more data as the user scrolls towards the bottom of the page.
+ * 
+ * @template T - The type of the items in the list
+ * @param fetchFn - An async function that fetches a page of data
+ * @param options - Optional configuration for threshold and initial page
+ * @returns An object containing the items, loading state, hasMore flag, and helper functions
+ */
 export function useInfiniteScroll<T>(
   fetchFn: (page: number) => Promise<T[]>,
   options?: {
@@ -230,7 +247,15 @@ export function useInfiniteScroll<T>(
   return { items, isLoading, hasMore, error, loadMore, reset };
 }
 
-// Mutation hook for POST/PUT/DELETE
+/**
+ * A custom hook to handle data mutations (POST, PUT, DELETE).
+ * Manages the loading and error states for a mutation operation.
+ * 
+ * @template TData - The type of the data returned by the mutation
+ * @template TVariables - The type of the variables passed to the mutation
+ * @param mutationFn - An async function that performs the mutation
+ * @returns An object containing the mutate function, the current state, and reset
+ */
 export function useMutation<TData, TVariables>(
   mutationFn: (variables: TVariables) => Promise<TData>
 ) {
