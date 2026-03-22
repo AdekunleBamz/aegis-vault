@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { storage, cache } from './services';
+import { storage, cache, events, logger, retry, debounce, throttle } from './services';
 
 describe('services', () => {
   describe('storage', () => {
@@ -54,7 +54,6 @@ describe('services', () => {
   describe('events', () => {
     it('should emit and listen to events', () => {
       const callback = vi.fn();
-      const { events } = require('./services');
       events.on('test-event', callback);
       events.emit('test-event', { data: 1 });
       expect(callback).toHaveBeenCalledWith({ data: 1 });
@@ -62,11 +61,20 @@ describe('services', () => {
 
     it('should unsubscribe correctly', () => {
       const callback = vi.fn();
-      const { events } = require('./services');
       const unsub = events.on('unsub-event', callback);
       unsub();
       events.emit('unsub-event');
       expect(callback).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('logger', () => {
+    it('should log messages if enabled', () => {
+      const spy = vi.spyOn(console, 'info').mockImplementation(() => {});
+      logger.configure({ enabled: true, level: 'info' });
+      logger.info('test message');
+      expect(spy).toHaveBeenCalled();
+      spy.mockRestore();
     });
   });
 
