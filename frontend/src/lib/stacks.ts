@@ -97,7 +97,10 @@ export async function executeWithdrawRequest(
 }
 
 /**
- * Execute withdraw completion
+ * Completes a previously requested withdrawal after the cooling period has passed.
+ * Transfers the STX from the Aegis Withdrawals contract back to the user.
+ * 
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeWithdrawComplete(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
