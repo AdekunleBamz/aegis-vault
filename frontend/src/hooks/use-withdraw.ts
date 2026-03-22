@@ -40,7 +40,10 @@ export function useWithdraw(): UseWithdrawReturn {
       setError(null);
 
       try {
+        // Convert STX amount to micro-STX for contract compatibility
         const microAmount = toMicroSTX(amount);
+        
+        // Step 1: Request withdrawal from the staking contract
         const result = await executeWithdrawRequest(microAmount);
         return result;
       } catch (err) {
@@ -59,6 +62,7 @@ export function useWithdraw(): UseWithdrawReturn {
     setError(null);
 
     try {
+      // Step 2: Finalize the withdrawal after the lock period has passed
       const result = await executeWithdrawComplete();
       return result;
     } catch (err) {
