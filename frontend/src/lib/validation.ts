@@ -187,7 +187,14 @@ export class ValidationError extends Error {
   }
 }
 
-// Validate with detailed error reporting
+/**
+ * Validates data against a Zod schema and throws a ValidationError if invalid.
+ * 
+ * @param schema - The Zod schema to validate against
+ * @param data - The data to validate
+ * @returns The validated data with inferred type T
+ * @throws ValidationError with detailed issues if validation fails
+ */
 export function validate<T>(
   schema: z.ZodSchema<T>,
   data: unknown
