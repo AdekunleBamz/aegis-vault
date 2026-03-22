@@ -94,7 +94,12 @@ export function calculateAPY(stakeAmount: bigint, tier: number): number {
 }
 
 /**
- * Calculate estimated rewards for a period
+ * Calculates estimated rewards for a given duration in blocks.
+ * 
+ * @param stakeAmount - The principal amount staked
+ * @param apy - The annual percentage yield to apply
+ * @param blocks - The duration in Stacks blocks
+ * @returns BigInt - The estimated reward amount in micro-units
  */
 export function calculateEstimatedRewards(
   stakeAmount: bigint,
