@@ -36,8 +36,8 @@ const variants = {
     cyan: {
         iconBg: 'bg-aegis-cyan/10',
         iconColor: 'text-aegis-cyan',
-        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-cyan)/0.3)]',
-        border: 'group-hover:border-aegis-cyan/40',
+        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-cyan)/0.4)]',
+        border: 'group-hover:border-aegis-cyan/50',
     },
     indigo: {
         iconBg: 'bg-aegis-indigo/10',
