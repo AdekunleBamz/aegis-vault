@@ -77,6 +77,9 @@
 ;; PRIVATE HELPERS
 ;; ============================================
 
+;; @desc Internal helper to convert days into Stacks block count.
+;; @param lock-period - Number of days.
+;; @returns uint - Number of blocks based on 144 blocks/day.
 (define-private (get-lock-blocks (lock-period uint))
   (* lock-period BLOCKS-PER-DAY)
 )
