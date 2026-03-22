@@ -166,11 +166,31 @@ export function getErrorMessage(error: unknown): string {
 }
 
 /**
- * Parses transaction error from Stacks
+ * Maps common Clarity smart contract error codes to standardized ErrorCodes.
+ * Error codes can vary by contract, but these are common patterns.
+ */
+export function mapClarityError(errorCode: number): ErrorCode {
+  switch (errorCode) {
+    case 1: return 'NOT_FOUND';
+    case 401: return 'UNAUTHORIZED';
+    case 403: return 'UNAUTHORIZED';
+    case 100: return 'VALIDATION_ERROR';
+    case 1000: return 'INSUFFICIENT_BALANCE';
+    default: return 'CONTRACT_ERROR';
+  }
+}
+
+/**
+ * Parses transaction error from Stacks blockchain or wallet.
+ * Extracts specific error conditions from error messages or objects.
+ * 
+ * @param error - The raw error from Stacks/Connect
+ * @returns An AegisError instance with appropriate code and message
  */
 export function parseTransactionError(error: unknown): AegisError {
   const message = error instanceof Error ? error.message : String(error);
 
+  // Common wallet and network messages
   if (message.includes('rejected') || message.includes('cancelled')) {
     return createError('TRANSACTION_REJECTED');
   }
@@ -182,6 +202,14 @@ export function parseTransactionError(error: unknown): AegisError {
   }
   if (message.includes('network') || message.includes('fetch')) {
     return createError('NETWORK_ERROR');
+  }
+
+  // Handle Clarity error codes in parentheses like "(err u100)"
+  const clarityMatch = message.match(/\(err u(\d+)\)/);
+  if (clarityMatch) {
+    const code = parseInt(clarityMatch[1], 10);
+    const mappedCode = mapClarityError(code);
+    return new AegisError(mappedCode, `Contract error: ${ERROR_MESSAGES[mappedCode]} (code ${code})`, { clarityCode: code });
   }
 
   return new AegisError('TRANSACTION_FAILED', message, { originalError: error });
