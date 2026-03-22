@@ -12,6 +12,10 @@ export interface UseNetworkReturn {
   refetch: () => Promise<void>;
 }
 
+/**
+ * Hook to manage network information and block height tracking
+ * @returns Current block height, network type, and status
+ */
 export function useNetwork(): UseNetworkReturn {
   const [blockHeight, setBlockHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
