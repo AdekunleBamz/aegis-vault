@@ -11,7 +11,7 @@ import {
 } from '@/lib/constants';
 import { useWallet } from '@/context/wallet-context';
 
-export function NetworkBadge() {
+export const NetworkBadge = React.memo(() => {
     const { network, isConnected } = useWallet();
 
     // Use chainId for network detection
@@ -53,11 +53,13 @@ export function NetworkBadge() {
                         }}
                         className="overflow-hidden flex items-center gap-1.5 ml-1 border-l border-border/50 pl-2"
                     >
-                        <AlertTriangle className="w-3 h-3 text-amber-500" />
+                        <AlertTriangle className="w-3 h-3 text-amber-500" aria-hidden="true" />
                         <span className="text-[9px] font-bold text-amber-500/80 whitespace-nowrap">Trial Mode</span>
                     </motion.div>
                 )}
             </AnimatePresence>
         </div>
     );
-}
+});
+
+NetworkBadge.displayName = 'NetworkBadge';
