@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { getAccountBalance, AccountBalance } from '@/lib/api';
 import { CONTRACTS } from '@/lib/constants';
 
@@ -48,5 +48,11 @@ export function useBalances(address: string): UseBalancesReturn {
     fetchBalances();
   }, [fetchBalances]);
 
-  return { stxBalance, agsBalance, isLoading, error, refetch: fetchBalances };
+  return useMemo(() => ({
+    stxBalance,
+    agsBalance,
+    isLoading,
+    error,
+    refetch: fetchBalances
+  }), [stxBalance, agsBalance, isLoading, error, fetchBalances]);
 }
