@@ -154,7 +154,7 @@ export function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-border py-3"
+          ? "bg-background/60 backdrop-blur-3xl border-border py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)]"
           : "bg-transparent border-transparent py-5"
       )}
     >
@@ -162,7 +162,7 @@ export function Header() {
         {/* Left: Logo & Network */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="Aegis Vault Home">
-            <div className="relative">
+            <div className="relative group-hover:scale-105 transition-transform duration-500">
               <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20 group-hover:shadow-aegis-blue/40 transition-all duration-500 group-hover:rotate-6">
                 <ShieldCheck className="w-6 h-6 text-white" />
               </div>
