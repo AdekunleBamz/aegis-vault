@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useWallet } from '@/context/wallet-context';
 import { truncateAddress, formatSTX } from '@/lib/format';
 import { cn } from '@/lib/utils';
+import { TRANSITION_DURATION, TRANSITION_EASE } from '@/lib/constants';
 import { useBalances } from '@/hooks/use-balances';
 import { useNetwork } from '@/hooks/use-network';
 import {
@@ -206,6 +207,7 @@ export function Header() {
                     initial={{ opacity: 0, scale: 0.95, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                    transition={{ duration: TRANSITION_DURATION, ease: TRANSITION_EASE }}
                     className="absolute right-0 mt-3 w-56 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
                   >
                     <div className="px-4 py-3 border-b border-border/50 mb-1 space-y-3">
