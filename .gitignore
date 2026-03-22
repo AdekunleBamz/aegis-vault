@@ -39,3 +39,16 @@ docs/
 *.mjs
 *.sh
 history.txt
+
+# IDE - VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/styleguide.json
+
+# Next.js
+.vercel
+*.tsbuildinfo
+next-env.d.ts
