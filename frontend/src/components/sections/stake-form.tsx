@@ -14,8 +14,22 @@ import {
 } from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
 import { validateStakeAmount } from '@/lib/validation-helpers';
-
-export function StakeForm() {
+import {
+  Wallet,
+  ArrowUpRight,
+  AlertCircle,
+  CheckCircle2,
+  Lock,
+  TrendingUp,
+  Activity,
+  LayoutGrid,
+  Plus,
+  RefreshCw,
+  ShieldCheck,
+  Sparkles
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
   const { address, isConnected, connect } = useWallet();
   const { stxBalance } = useBalances(address || '');
   const { stake, isLoading, error } = useStaking(address || '');
