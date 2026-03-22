@@ -140,7 +140,10 @@ export function Hero() {
             {proofPoints.map((point) => (
               <div
                 key={point}
-                className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-2 text-sm text-muted-foreground backdrop-blur-sm"
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-2 text-sm text-muted-foreground backdrop-blur-sm",
+                  "hover:border-border transition-colors duration-300"
+                )}
               >
                 <ShieldCheck className="h-4 w-4 text-aegis-blue" />
                 <span>{point}</span>
