@@ -48,6 +48,11 @@ export async function getAccountBalance(address: string): Promise<AccountBalance
   return response.json();
 }
 
+/**
+ * Fetch transaction history for a given address
+ * @param address Stacks address to query
+ * @param limit Maximum number of transactions to return
+ */
 export async function getAccountTransactions(
   address: string,
   limit = 20
@@ -58,13 +63,20 @@ export async function getAccountTransactions(
   );
   
   if (!response.ok) {
-    throw new Error('Failed to fetch transactions');
+    throw new Error(`Failed to fetch transactions for ${address}`);
   }
   
   const data = await response.json();
   return data.results;
 }
 
+/**
+ * Call a read-only function on a smart contract
+ * @param contractAddress Contract deployer address
+ * @param contractName Name of the contract
+ * @param functionName Name of the function to call
+ * @param args Hex-encoded arguments
+ */
 export async function callReadOnlyFunction(
   contractAddress: string,
   contractName: string,
@@ -84,19 +96,22 @@ export async function callReadOnlyFunction(
   );
   
   if (!response.ok) {
-    throw new Error('Failed to call contract function');
+    throw new Error(`Failed to call ${contractName}.${functionName}`);
   }
   
   return response.json();
 }
 
+/**
+ * Get the current stacks block height
+ */
 export async function getCurrentBlockHeight(): Promise<number> {
   const response = await fetch(`${API.STACKS_API}/v2/info`, {
     next: { revalidate: 10 },
   });
   
   if (!response.ok) {
-    throw new Error('Failed to fetch block height');
+    throw new Error('Failed to fetch chain info/block height');
   }
   
   const data = await response.json();
