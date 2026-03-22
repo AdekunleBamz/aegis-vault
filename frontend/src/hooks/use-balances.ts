@@ -34,13 +34,14 @@ export function useBalances(address: string): UseBalancesReturn {
 
       setStxBalance(BigInt(balance.stx?.balance || '0'));
 
-      // Find AGS token balance using a more robust check
-      const agsTokenKey = Object.keys(balance.fungible_tokens || {}).find((key) =>
+      // Stabilized AGS token balance detection
+      const fungibleTokens = balance.fungible_tokens || {};
+      const agsTokenKey = Object.keys(fungibleTokens).find((key) =>
         key.toLowerCase().includes('aegis-token')
       );
 
-      if (agsTokenKey && balance.fungible_tokens[agsTokenKey]) {
-        setAgsBalance(BigInt(balance.fungible_tokens[agsTokenKey].balance));
+      if (agsTokenKey && fungibleTokens[agsTokenKey]) {
+        setAgsBalance(BigInt(fungibleTokens[agsTokenKey].balance));
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to fetch balances';
