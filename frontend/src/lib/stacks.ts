@@ -16,8 +16,13 @@ import { CONTRACTS } from './constants';
 
 const network = STACKS_MAINNET;
 
+/**
+ * Standard Result object for Aegis Vault blockchain transactions.
+ */
 export interface TransactionResult {
+  /** The unique Stacks transaction ID (hash) */
   txId: string;
+  /** Whether the transaction was successfully broadcast to the mempool */
   success: boolean;
 }
 
