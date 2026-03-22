@@ -97,6 +97,10 @@
   )
 )
 
+;; @desc Internal helper to calculate the accrued rewards for a given stake data tuple.
+;; @desc Uses a daily reward rate (BASE-REWARD-PER-DAY) and applies the position's bonus multiplier.
+;; @param stake-data - The full metadata tuple for the stake.
+;; @returns uint - The net pending rewards (gross minus already claimed).
 (define-private (calculate-pending-rewards (stake-data {
   amount: uint,
   start-block: uint,
@@ -107,11 +111,16 @@
 }))
   (let
     (
+      ;; Calculate block duration since start
       (blocks-staked (- block-height (get start-block stake-data)))
+      ;; Convert blocks to days (integral division)
       (days-staked (/ blocks-staked BLOCKS-PER-DAY))
+      ;; Base calculation: (days * rate * amount) / scaling-factor
       (base-rewards (* (/ (* days-staked BASE-REWARD-PER-DAY) u1000000) (get amount stake-data)))
+      ;; Apply tier bonus multiplier (basis points)
       (with-bonus (/ (* base-rewards (get bonus-multiplier stake-data)) u10000))
     )
+    ;; Return only the portion not yet claimed
     (if (> with-bonus (get total-claimed stake-data))
       (- with-bonus (get total-claimed stake-data))
       u0
