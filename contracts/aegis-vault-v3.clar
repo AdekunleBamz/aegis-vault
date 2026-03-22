@@ -187,6 +187,9 @@
   )
 )
 
+;; @desc Finalizes a pending withdrawal after the cooling period.
+;; @desc Automatically claims any pending rewards before transferring the principal.
+;; @returns (ok bool) - True if the withdrawal is successfully finalized.
 (define-public (complete-withdrawal)
   (let
     (
@@ -195,9 +198,10 @@
       (stake-id (get stake-id request))
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
     )
+    ;; Ensure the cooling period has elapsed (1 day / 144 blocks)
     (asserts! (>= block-height (get unlock-block request)) ERR-NOT-UNLOCKED)
     
-    ;; Claim remaining rewards
+    ;; Calculate and mint any remaining yield before closing the position
     (let ((pending (calculate-pending-rewards stake-data)))
       (if (> pending u0)
         (try! (as-contract (contract-call? .aegis-token-v3 mint staker pending)))
@@ -205,11 +209,12 @@
       )
     )
 
-    ;; Transfer STX - Fee of 0.01 STX deducted for protocol
+    ;; Execute STX transfer from contract back to user
+    ;; A fixed fee (FEE-AMOUNT) is deducted for protocol maintenance
     (try! (as-contract (stx-transfer? (- (get amount request) FEE-AMOUNT) tx-sender staker)))
     (try! (as-contract (stx-transfer? FEE-AMOUNT tx-sender CONTRACT-OWNER)))
 
-    ;; Cleanup
+    ;; Permanent storage cleanup and state updates
     (map-set stakes { staker: staker, stake-id: stake-id } (merge stake-data { is-active: false }))
     (map-delete withdrawal-requests staker)
     (map-set user-total-staked staker (- (default-to u0 (map-get? user-total-staked staker)) (get amount request)))
