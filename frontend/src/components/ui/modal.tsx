@@ -101,7 +101,7 @@ export function Modal({
       aria-labelledby={title ? 'modal-title' : undefined}
     >
       <div
-        className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-200
+        className={`absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-200
           ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
         onClick={closeOnOverlayClick ? onClose : undefined}
         aria-hidden="true"
