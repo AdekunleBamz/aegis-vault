@@ -47,6 +47,27 @@ const LEGAL_LINKS = [
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const footerLinks = {
+    protocol: [
+      { label: 'Dashboard', href: '/dashboard' },
+      { label: 'Stake STX', href: '/stake' },
+      { label: 'Account History', href: '/history' },
+      { label: 'Transparency', href: '/security' },
+      { label: 'Yield Strategies', href: '/strategies' },
+      { label: 'Ecosystem', href: '/ecosystem' },
+      { label: 'Analytics', href: '/analytics' },
+      { label: 'Vault Stats', href: '/stats' },
+    ],
+    resources: [
+      { label: 'Media Kit', href: '#' },
+      { label: 'Documentation', href: '#' },
+      { label: 'Analytics Hub', href: '/analytics' },
+      { label: 'Security Portal', href: '/security' },
+      { label: 'Governance', href: '/governance' },
+      { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
+    ],
+  };
+
   return (
     <footer className="border-t border-border bg-muted/30 backdrop-blur-sm mt-auto" style={{ contentVisibility: 'auto' }}>
       <div className="container py-16">
