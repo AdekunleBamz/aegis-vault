@@ -49,7 +49,7 @@ export function NetworkBadge() {
                         exit={{ width: 0, opacity: 0 }}
                         transition={{ 
                             duration: TRANSITION_DURATION,
-                            ease: TRANSITION_EASE 
+                            ease: TRANSITION_EASE as any
                         }}
                         className="overflow-hidden flex items-center gap-1.5 ml-1 border-l border-border/50 pl-2"
                     >
