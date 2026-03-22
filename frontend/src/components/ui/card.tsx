@@ -35,7 +35,11 @@ export function Card({
     : '';
 
   return (
-    <div className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${hoverClasses} ${className}`} {...props}>
+    <div
+      role={props["aria-labelledby"] ? "region" : undefined}
+      className={`${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${hoverClasses} ${className}`}
+      {...props}
+    >
       {children}
     </div>
   );
