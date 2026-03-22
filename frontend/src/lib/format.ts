@@ -1,4 +1,4 @@
-import { STX_DECIMALS, AGS_DECIMALS, MICRO_STX_DENOMINATOR } from './constants';
+import { STX_DECIMALS, AGS_DECIMALS, MICRO_STX_DENOMINATOR, BLOCK_TIME_MINUTES } from './constants';
 
 /**
  * Formats micro-STX (uSTX) value to a human-readable STX string.
@@ -83,7 +83,7 @@ export function formatBlockHeight(height: number): string {
  * @returns A human-readable time string (e.g., "30 min", "2 hrs", "1 day")
  */
 export function blocksToTime(blocks: number): string {
-  const minutes = blocks * 10; // ~10 min per block
+  const minutes = blocks * BLOCK_TIME_MINUTES; // ~10 min per block
   
   if (minutes < 60) {
     return `${minutes} min`;
