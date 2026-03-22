@@ -353,7 +353,12 @@ import { cn } from '@/lib/utils';
                       {TIERS[tier]?.name}
                       <span className="text-xs text-muted-foreground/40 font-bold uppercase" aria-hidden="true">{apy}% APY</span>
                     </div>
-                    <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Multiplier Active</div>
+                    <div 
+                      className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1"
+                      aria-label="Reward multiplier is currently active for this tier"
+                    >
+                      Multiplier Active
+                    </div>
                     <p className="mt-3 text-sm text-muted-foreground">
                       {nextTier
                         ? `${Math.max(0, nextTierMin - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX away from ${nextTier.name}.`
