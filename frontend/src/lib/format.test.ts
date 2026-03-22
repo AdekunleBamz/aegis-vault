@@ -21,8 +21,8 @@ describe('format', () => {
 
   describe('formatAGS', () => {
     it('should format uAGS to AGS string', () => {
-      expect(formatAGS(100000000).replace(/\u00a0/g, ' ')).toBe('1.00');
-      expect(formatAGS('500000000').replace(/\u00a0/g, ' ')).toBe('5.00');
+      expect(formatAGS(1000000).replace(/\u00a0/g, ' ')).toBe('1.00');
+      expect(formatAGS('5000000').replace(/\u00a0/g, ' ')).toBe('5.00');
     });
   });
 
