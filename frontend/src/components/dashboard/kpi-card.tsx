@@ -24,26 +24,26 @@ const variants = {
     blue: {
         iconBg: 'bg-aegis-blue/10',
         iconColor: 'text-aegis-blue',
-        glow: 'group-hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-blue)/0.2)]',
-        border: 'group-hover:border-aegis-blue/30',
+        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-blue)/0.3)]',
+        border: 'group-hover:border-aegis-blue/40',
     },
     purple: {
         iconBg: 'bg-aegis-purple/10',
         iconColor: 'text-aegis-purple',
-        glow: 'group-hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-purple)/0.2)]',
-        border: 'group-hover:border-aegis-purple/30',
+        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-purple)/0.3)]',
+        border: 'group-hover:border-aegis-purple/40',
     },
     cyan: {
         iconBg: 'bg-aegis-cyan/10',
         iconColor: 'text-aegis-cyan',
-        glow: 'group-hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-cyan)/0.2)]',
-        border: 'group-hover:border-aegis-cyan/30',
+        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-cyan)/0.3)]',
+        border: 'group-hover:border-aegis-cyan/40',
     },
     indigo: {
         iconBg: 'bg-aegis-indigo/10',
         iconColor: 'text-aegis-indigo',
-        glow: 'group-hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-indigo)/0.2)]',
-        border: 'group-hover:border-aegis-indigo/30',
+        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-indigo)/0.3)]',
+        border: 'group-hover:border-aegis-indigo/40',
     },
 };
 
