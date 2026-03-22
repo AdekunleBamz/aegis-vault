@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useWallet } from '@/context/wallet-context';
 import { useBalances } from '@/hooks/use-balances';
 import { useStaking } from '@/hooks/use-staking';
@@ -393,7 +393,7 @@ import { cn } from '@/lib/utils';
                   <div className="h-2 w-full bg-muted/30 rounded-full overflow-hidden p-[2px]">
                     <motion.div
                       initial={{ width: 0 }}
-                      animate={{ width: `${progressToNext}%` }}
+                      animate={{ width: `${stats.progressToNext}%` }}
                       className="h-full bg-gradient-to-r from-aegis-blue to-aegis-purple rounded-full relative"
                     >
                       <div className="absolute inset-0 bg-white/20 animate-pulse" />
