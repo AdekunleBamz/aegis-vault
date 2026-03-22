@@ -33,7 +33,11 @@ export function formatAGS(microAgs: string | number | bigint): string {
 }
 
 /**
- * Convert STX to microSTX
+ * Converts a STX amount to micro-STX (uSTX).
+ * Handles decimal precision by multiplying with 10^STX_DECIMALS.
+ * 
+ * @param stx - The amount in STX as a number
+ * @returns The amount in micro-STX as a bigint
  */
 export function toMicroSTX(stx: number): bigint {
   return BigInt(Math.floor(stx * Math.pow(10, STX_DECIMALS)));
