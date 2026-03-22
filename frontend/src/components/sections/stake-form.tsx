@@ -86,8 +86,11 @@ export function StakeForm() {
   const apy = calculateAPY(microAmount, tier);
 
   // Projected rewards calculation (simplified for UI)
-  const yearlyAGS = numAmount * (apy / 100);
-  const monthlyAGS = yearlyAGS / 12;
+  const [yearlyAGS, monthlyAGS] = useMemo(() => {
+    const yearly = numAmount * (apy / 100);
+    const monthly = yearly / 12;
+    return [yearly, monthly];
+  }, [numAmount, apy]);
 
   const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
   const nextTierMin = nextTier ? nextTier.minStake : 0;
