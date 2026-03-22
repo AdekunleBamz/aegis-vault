@@ -43,7 +43,10 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-4 lg:col-span-5">
             <Link href="/" className="flex items-center gap-2.5 group mb-6" aria-label="Aegis Vault Home">
-              <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20">
+              <div className={cn(
+                "w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20",
+                "transition-all duration-500 group-hover:rotate-6 group-hover:shadow-aegis-blue/40"
+              )}>
                 <ShieldCheck className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-bold tracking-tight text-gradient">
@@ -104,7 +107,10 @@ export function Footer() {
                     target={link.external ? '_blank' : undefined}
                     rel={link.external ? 'noopener noreferrer' : undefined}
                     aria-label={link.external ? `Open ${link.label} in a new tab` : `Navigate to ${link.label}`}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center gap-1 group"
+                    className={cn(
+                      "text-muted-foreground hover:text-foreground text-sm flex items-center gap-1 group",
+                      "transition-colors duration-200"
+                    )}
                   >
                     {link.label}
                     {link.external ? (
