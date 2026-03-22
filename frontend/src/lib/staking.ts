@@ -1,4 +1,4 @@
-import { CONTRACTS, TIERS, BLOCKS_PER_YEAR } from './constants';
+import { CONTRACTS, TIERS, BLOCKS_PER_YEAR, MICRO_STX_DENOMINATOR } from './constants';
 import { callReadOnlyFunction } from './api';
 import { cvToValue, hexToCV } from '@stacks/transactions';
 
@@ -110,7 +110,7 @@ export function calculateEstimatedRewards(
  * Determine tier based on stake amount
  */
 export function determineTier(stakeAmount: bigint): number {
-  const stakeSTX = Number(stakeAmount) / 1e6;
+  const stakeSTX = Number(stakeAmount) / MICRO_STX_DENOMINATOR;
   
   for (let i = TIERS.length - 1; i >= 0; i--) {
     if (stakeSTX >= TIERS[i].minStake) {
