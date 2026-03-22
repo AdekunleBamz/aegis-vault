@@ -34,6 +34,7 @@ export function Footer() {
       { label: 'Documentation', href: 'https://github.com/AdekunleBamz/aegis-vault#readme', external: true },
       { label: 'Analytics Hub', href: '/analytics' },
       { label: 'Security Portal', href: '/security' },
+      { label: 'Bug Bounty', href: 'https://immunefi.com' },
       { label: 'Governance', href: '/governance' },
       { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
     ],
