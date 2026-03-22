@@ -52,7 +52,7 @@ export async function getStakerInfo(address: string): Promise<StakerInfo | null>
       tier: Number(value['tier'] || 0),
     };
   } catch (error) {
-    console.error('Failed to get staker info:', error);
+    console.error(`Failed to get staker info for ${address}:`, error);
     return null;
   }
 }
