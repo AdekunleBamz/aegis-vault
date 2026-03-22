@@ -134,7 +134,7 @@ export function StakeForm() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-background/40 backdrop-blur-3xl border border-border/50 rounded-[48px] p-8 md:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)]"
+          className="bg-background/40 backdrop-blur-3xl border border-border/40 hover:border-aegis-blue/20 rounded-[48px] p-8 md:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)]"
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-12">
@@ -163,7 +163,7 @@ export function StakeForm() {
               animate={{ opacity: 1 }}
               className="py-16 text-center"
             >
-              <div className="w-24 h-24 bg-muted/50 rounded-[40px] flex items-center justify-center mx-auto mb-8 border border-border/50">
+              <div className="w-24 h-24 bg-muted/50 rounded-[40px] flex items-center justify-center mx-auto mb-8 border border-border/40 hover:border-aegis-blue/20">
                 <Wallet className="w-10 h-10 text-muted-foreground/40" />
               </div>
               <h3 className="text-2xl font-black mb-4">Wallet Connection Required</h3>
@@ -267,7 +267,7 @@ export function StakeForm() {
                         type="button"
                         onClick={() => setSuggestedAmount(preset.value)}
                         aria-label={`Set stake amount to ${preset.label} of balance`}
-                        className="rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
+                        className="rounded-full border border-border/40 hover:border-aegis-blue/20 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
                       >
                         {preset.label}
                       </button>
