@@ -37,9 +37,9 @@ export function StakeForm() {
 
   const hasError = useMemo(() => {
     if (!amount) return null;
-    if (numAmount <= 0) return 'Amount must be greater than 0';
+    if (isNaN(numAmount) || numAmount <= 0) return 'Please enter a valid amount';
     if (numAmount > balanceSTX) return 'Insufficient STX balance';
-    if (numAmount < 0.000001) return 'Amount is too small for protocol';
+    if (numAmount < 0.0001) return 'Minimum deposit is 0.0001 STX';
     return null;
   }, [amount, numAmount, balanceSTX]);
 
