@@ -32,6 +32,14 @@ export interface ContractReadResult {
   result?: string;
 }
 
+/**
+ * Fetches the STX and fungible token balances for a given Stacks address.
+ * Uses the Stacks Blockchain API v2 accounts endpoint.
+ * 
+ * @param address - The Stacks address to fetch balances for
+ * @returns A promise that resolves to an AccountBalance object
+ * @throws Error if the API request fails
+ */
 export async function getAccountBalance(address: string): Promise<AccountBalance> {
   const response = await fetch(`${API.STACKS_API}/v2/accounts/${address}`, {
     next: { revalidate: 30 },
