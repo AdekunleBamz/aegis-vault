@@ -35,7 +35,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="border-t border-border bg-muted/30 backdrop-blur-sm mt-auto">
+    <footer className="border-t border-border bg-muted/30 backdrop-blur-sm mt-auto" style={{ contentVisibility: 'auto' }}>
       <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
