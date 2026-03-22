@@ -47,7 +47,7 @@ export function Footer() {
                 "w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20",
                 "transition-all duration-500 group-hover:rotate-6 group-hover:shadow-aegis-blue/40"
               )}>
-                <ShieldCheck className="w-6 h-6 text-white" />
+                <ShieldCheck className="w-6 h-6 text-white" aria-hidden="true" />
               </div>
               <span className="text-xl font-bold tracking-tight text-gradient">
                 Aegis Vault
@@ -126,7 +126,7 @@ export function Footer() {
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-3">
             <div className="p-6 rounded-3xl bg-muted/50 border border-border/50 relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-5 bg-foreground rounded-bl-3xl translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500">
-                <ShieldCheck className="w-12 h-12" />
+                <ShieldCheck className="w-12 h-12" aria-hidden="true" />
               </div>
               <h4 className="text-foreground font-semibold mb-2 text-sm relative z-10">Start Staking</h4>
               <p className="text-muted-foreground text-xs mb-4 relative z-10">Join 5,000+ stakers securing the network.</p>
@@ -136,7 +136,7 @@ export function Footer() {
                 className="inline-flex items-center gap-2 text-xs font-bold text-aegis-blue hover:text-aegis-purple transition-colors relative z-10"
               >
                 Get Started
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3 h-3" aria-hidden="true" />
               </Link>
             </div>
           </div>
