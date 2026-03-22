@@ -1,3 +1,4 @@
+import { AVG_BLOCK_TIME_MINUTES } from './constants';
 import { STX_DECIMALS, AGS_DECIMALS } from './constants';
 
 /**
@@ -57,7 +58,7 @@ export function formatBlockHeight(height: number): string {
  * Calculate time remaining from blocks
  */
 export function blocksToTime(blocks: number): string {
-  const minutes = blocks * 10; // ~10 min per block
+  const minutes = blocks * AVG_BLOCK_TIME_MINUTES;
   
   if (minutes < 60) {
     return `${minutes} min`;
