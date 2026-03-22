@@ -7,7 +7,7 @@ import {
 } from '@stacks/connect';
 import {
   uintCV,
-  principalCV,
+  
   PostConditionMode,
   FungibleConditionCode,
   makeStandardSTXPostCondition,
