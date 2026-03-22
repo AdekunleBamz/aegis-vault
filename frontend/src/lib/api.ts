@@ -34,11 +34,11 @@ export interface ContractReadResult {
 
 /**
  * Fetches the STX and fungible token balances for a given Stacks address.
- * Uses the Stacks Blockchain API v2 accounts endpoint.
+ * Queries the Stacks Blockchain API v2 accounts endpoint with a 30s revalidation.
  * 
- * @param address - The Stacks address to fetch balances for
- * @returns A promise that resolves to an AccountBalance object
- * @throws Error if the API request fails
+ * @param address - The Stacks address whose balance to retrieve
+ * @returns A promise that resolves to an AccountBalance object containing STX and FT balances
+ * @throws {Error} If the network request fails or returns a non-200 status
  */
 export async function getAccountBalance(address: string): Promise<AccountBalance> {
   const response = await fetch(`${API.STACKS_API}/v2/accounts/${address}`, {
@@ -46,7 +46,7 @@ export async function getAccountBalance(address: string): Promise<AccountBalance
   });
   
   if (!response.ok) {
-    throw new Error('Failed to fetch account balance');
+    throw new Error(`Failed to fetch account balance for ${address}`);
   }
   
   return response.json();
@@ -54,11 +54,12 @@ export async function getAccountBalance(address: string): Promise<AccountBalance
 
 /**
  * Retrieves the transaction history for a given Stacks address.
+ * Returns a list of decoded transaction objects.
  * 
  * @param address - The Stacks address to fetch transactions for
- * @param limit - Max number of transactions to return (default: 20)
+ * @param limit - Optional maximum number of transactions to return (default: 20)
  * @returns A promise that resolves to an array of Transaction objects
- * @throws Error if the API request fails
+ * @throws {Error} If the network request fails
  */
 export async function getAccountTransactions(
   address: string,
@@ -70,7 +71,7 @@ export async function getAccountTransactions(
   );
   
   if (!response.ok) {
-    throw new Error('Failed to fetch transactions');
+    throw new Error(`Failed to fetch transactions for ${address}`);
   }
   
   const data = await response.json();
@@ -79,14 +80,14 @@ export async function getAccountTransactions(
 
 /**
  * Calls a read-only function on a Stacks smart contract.
- * Uses the Stacks Blockchain API v2 contracts call-read endpoint.
+ * Used for querying contract state without broadcasting a transaction.
  * 
- * @param contractAddress - The address of the contract
- * @param contractName - The name of the contract
- * @param functionName - The function to call
- * @param args - Array of hexadecimal representations of Clarity values
+ * @param contractAddress - The address of the contract owner
+ * @param contractName - The name of the contract (e.g., 'staking-v1')
+ * @param functionName - The specific read-only function to invoke
+ * @param args - Array of Clarity values as hex strings
  * @returns A promise that resolves to a ContractReadResult
- * @throws Error if the API request fails
+ * @throws {Error} If the contract call request fails
  */
 export async function callReadOnlyFunction(
   contractAddress: string,
@@ -107,17 +108,18 @@ export async function callReadOnlyFunction(
   );
   
   if (!response.ok) {
-    throw new Error('Failed to call contract function');
+    throw new Error(`Contract call failed: ${functionName}`);
   }
   
   return response.json();
 }
 
 /**
- * Fetches the current stacks-tip-height (block height) from the Stacks node.
+ * Fetches the current stacks-tip-height (burn block height) from the Stacks node.
+ * Used for calculating reward maturities and timing sequences.
  * 
  * @returns A promise that resolves to the current block height as a number
- * @throws Error if the API request fails
+ * @throws {Error} If the node information cannot be retrieved
  */
 export async function getCurrentBlockHeight(): Promise<number> {
   const response = await fetch(`${API.STACKS_API}/v2/info`, {
@@ -125,7 +127,7 @@ export async function getCurrentBlockHeight(): Promise<number> {
   });
   
   if (!response.ok) {
-    throw new Error('Failed to fetch block height');
+    throw new Error('Failed to fetch blockchain info');
   }
   
   const data = await response.json();
