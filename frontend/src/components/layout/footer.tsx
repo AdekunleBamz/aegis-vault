@@ -29,6 +29,7 @@ export function Footer() {
       { label: 'Documentation', href: '#' },
       { label: 'Analytics Hub', href: '/analytics' },
       { label: 'Security Portal', href: '/security' },
+      { label: 'Bug Bounty', href: 'https://immunefi.com' },
       { label: 'Governance', href: '/governance' },
       { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
     ],
