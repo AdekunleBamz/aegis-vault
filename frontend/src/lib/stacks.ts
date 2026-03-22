@@ -126,7 +126,10 @@ export async function executeWithdrawComplete(): Promise<TransactionResult> {
 }
 
 /**
- * Execute claim rewards
+ * Claims any accrued AGS rewards from the Aegis Rewards contract.
+ * Rewards are calculated based on the user's staked amount and duration.
+ * 
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeClaimRewards(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
