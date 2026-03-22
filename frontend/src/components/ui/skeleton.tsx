@@ -164,6 +164,21 @@ export function SkeletonChart({ height = 200, className = '' }: { height?: numbe
   );
 }
 
+// Form skeleton
+export function SkeletonForm({ fields = 3, className = '' }: { fields?: number; className?: string }) {
+  return (
+    <div className={`space-y-6 ${className}`}>
+      {Array.from({ length: fields }).map((_, i) => (
+        <div key={i}>
+          <Skeleton height={14} width={80} className="mb-2" />
+          <Skeleton height={44} width="100%" rounded="lg" />
+        </div>
+      ))}
+      <Skeleton height={48} width="100%" rounded="lg" />
+    </div>
+  );
+}
+
 // Card skeleton
 export function CardSkeleton() {
   return (
