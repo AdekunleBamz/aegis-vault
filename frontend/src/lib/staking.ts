@@ -94,7 +94,7 @@ export async function getPoolStats(): Promise<PoolStats | null> {
  */
 export function calculateAPY(stakeAmount: bigint, tier: number): number {
   const baseAPY = 12; // 12% base APY
-  const tierMultiplier = TIERS[tier]?.multiplier || 1;
+  const tierMultiplier = TIERS[tier]?.multiplier ?? 1;
   return baseAPY * tierMultiplier;
 }
 
