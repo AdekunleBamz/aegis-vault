@@ -41,6 +41,14 @@ export const TIERS = [
  * Number of blocks produced per day (10-minute block time).
  */
 export const BLOCKS_PER_DAY = 144;
+export const BLOCKS_PER_YEAR = 52560;
+export const COOLDOWN_BLOCKS = 144;
+export const BLOCK_TIME_MINUTES = 10;
+export const USER_SESSION_INTERVAL = 1000;
+export const SECONDS_PER_MINUTE = 60;
+export const SECONDS_PER_HOUR = 3600;
+export const SECONDS_PER_DAY = 86400;
+export const SECONDS_PER_WEEK = 604800;
 
 /**
  * Number of blocks produced per week.
