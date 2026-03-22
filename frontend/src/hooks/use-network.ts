@@ -32,6 +32,7 @@ export function useNetwork(): UseNetworkReturn {
   const [error, setError] = useState<string | null>(null);
 
   // Determine network type from the imported network object
+  // 1: Mainnet, 2147483648: Testnet, Others: Devnet/Mock
   const networkType = useMemo(() => {
     if (network.chainId === 2147483648) return 'testnet';
     if (network.chainId === 1) return 'mainnet';
