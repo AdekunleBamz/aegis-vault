@@ -1,3 +1,24 @@
+'use client';
+
+import React from 'react';
+import { cn } from '@/lib/utils';
+
+// Skeleton variants
+export interface SkeletonProps {
+  width?: string | number;
+  height?: string | number;
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  className?: string;
+}
+
+const roundedClasses = {
+  none: '',
+  sm: 'rounded',
+  md: 'rounded-md',
+  lg: 'rounded-lg',
+  full: 'rounded-full',
+};
+
 export function Skeleton({
   width,
   height,
