@@ -64,7 +64,7 @@ export function CardHeader({ title, subtitle, action, icon, badge }: CardHeaderP
         )}
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+            <h2 className="text-lg font-semibold text-foreground">{title}</h2>
             {badge}
           </div>
           {subtitle && <p className="text-sm text-muted-foreground mt-0.5">{subtitle}</p>}
