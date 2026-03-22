@@ -60,7 +60,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mb-8">
-              The next-generation staking protocol for the Stacks ecosystem. Secure your assets and earn maximized rewards with institutional-grade technology.
+              The next-generation staking protocol for the Stacks ecosystem. Secure your assets and earn maximized rewards with institutional-grade technology. [Security Audit (v2.0) pending](https://example.com)"
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => (
