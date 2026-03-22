@@ -30,8 +30,8 @@ export function Stats() {
       glow: 'shadow-aegis-blue/10'
     },
     {
-      label: 'Active Stakers',
-      value: '42',
+      label: 'Cooldown Period',
+      value: '24h',
       unit: 'Users',
       note: 'Wallets with live positions in the protocol',
       icon: Users,
