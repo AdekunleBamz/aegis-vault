@@ -49,6 +49,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://api.mainnet.hiro.so" />
+        <link rel="dns-prefetch" href="https://api.mainnet.hiro.so" />
+      </head>
       <body className={outfit.className}>
         <AppProviders>
           <a
