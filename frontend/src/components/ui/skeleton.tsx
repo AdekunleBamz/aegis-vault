@@ -164,6 +164,23 @@ export function SkeletonChart({ height = 200, className = '' }: { height?: numbe
   );
 }
 
+// KPI Card skeleton
+export function SkeletonKPI() {
+  return (
+    <div className="p-6 rounded-[32px] bg-muted/20 border border-border/50 space-y-4">
+      <div className="flex justify-between items-start">
+        <Skeleton height={14} width="40%" />
+        <Skeleton height={32} width={32} rounded="lg" />
+      </div>
+      <div className="space-y-2">
+        <Skeleton height={32} width="70%" />
+        <Skeleton height={14} width="30%" />
+      </div>
+      <Skeleton height={20} width="100%" rounded="lg" />
+    </div>
+  );
+}
+
 // Form skeleton
 export function SkeletonForm({ fields = 3, className = '' }: { fields?: number; className?: string }) {
   return (
