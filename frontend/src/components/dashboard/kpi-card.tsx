@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus, LucideIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, getComponentMetadata } from '@/lib/utils';
 
 import { SkeletonKPI } from '@/components/ui/skeleton';
 
@@ -60,6 +60,7 @@ export const KPICard = React.memo(({
     className,
 }: KPICardProps) => {
     const v = variants[variant];
+    const metadata = getComponentMetadata(label, 'statistic card');
 
     if (loading) {
         return <SkeletonKPI className={className} />;
@@ -75,8 +76,7 @@ export const KPICard = React.memo(({
                 v.border,
                 className
             )}
-            role="region"
-            aria-label={`${label} statistic card`}
+            {...metadata}
         >
             <div className="flex items-center justify-between mb-6">
                 <div className={cn(
