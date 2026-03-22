@@ -211,7 +211,7 @@ export function Header() {
                     <div className="px-4 py-3 border-b border-border/50 mb-1 space-y-3">
                       <div>
                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1.5">Balances</p>
-                        <div className="space-y-1.5">
+                        <div className="space-y-1.5" aria-live="polite">
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-muted-foreground">STX</span>
                             <span className="text-xs font-black tabular-nums">{formatSTX(stxBalance)}</span>
