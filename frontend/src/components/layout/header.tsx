@@ -23,7 +23,10 @@ import {
   Globe,
   Vote,
   Cpu,
-  PieChart
+  PieChart,
+  ChevronDown,
+  RefreshCw,
+  Plus
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NetworkBadge } from '@/components/ui/network-badge';
