@@ -1,4 +1,13 @@
-import { STX_DECIMALS, AGS_DECIMALS, MICRO_STX_DENOMINATOR, BLOCK_TIME_MINUTES } from './constants';
+import { 
+  STX_DECIMALS, 
+  AGS_DECIMALS, 
+  MICRO_STX_DENOMINATOR, 
+  BLOCK_TIME_MINUTES,
+  SECONDS_PER_MINUTE,
+  SECONDS_PER_HOUR,
+  SECONDS_PER_DAY,
+  SECONDS_PER_WEEK
+} from './constants';
 
 /**
  * Formats micro-STX (uSTX) value to a human-readable STX string.
@@ -109,10 +118,10 @@ export function formatRelativeTime(timestamp: number): string {
   const now = Date.now() / 1000;
   const diff = now - timestamp;
   
-  if (diff < 60) return 'Just now';
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-  if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+  if (diff < SECONDS_PER_MINUTE) return 'Just now';
+  if (diff < SECONDS_PER_HOUR) return `${Math.floor(diff / SECONDS_PER_MINUTE)}m ago`;
+  if (diff < SECONDS_PER_DAY) return `${Math.floor(diff / SECONDS_PER_HOUR)}h ago`;
+  if (diff < SECONDS_PER_WEEK) return `${Math.floor(diff / SECONDS_PER_DAY)}d ago`;
   
   return new Date(timestamp * 1000).toLocaleDateString();
 }
