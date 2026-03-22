@@ -2,6 +2,7 @@ import { STX_DECIMALS, AGS_DECIMALS } from './constants';
 
 /**
  * Format microSTX to STX with proper decimals
+ * @example formatSTX(1000000) -> "1.00"
  */
 export function formatSTX(microStx: string | number | bigint): string {
   const value = BigInt(microStx);
