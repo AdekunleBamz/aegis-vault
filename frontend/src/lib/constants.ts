@@ -24,6 +24,7 @@ export const TIERS = [
 // Time constants
 export const BLOCKS_PER_DAY = 144;
 export const BLOCKS_PER_YEAR = 52560;
+export const AVG_BLOCK_TIME_MINUTES = 10;
 export const COOLDOWN_BLOCKS = 144;
 
 // Display constants
