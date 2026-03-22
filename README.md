@@ -121,7 +121,12 @@ clarinet test
 npm test
 
 # Console for local testing
+# Use this to manually call functions and inspect state
 clarinet console
+
+# Run specific test file
+# Example: clarinet test tests/aegis-vault-v3_test.ts
+clarinet test <path-to-test>
 ```
 
 ### Frontend
