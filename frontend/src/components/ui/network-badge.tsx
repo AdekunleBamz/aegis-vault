@@ -13,7 +13,7 @@ export function NetworkBadge() {
     const isMainnet = network.chainId !== 2147483648;
 
     return (
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/50 backdrop-blur-md">
+        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-border/50 backdrop-blur-md">
             <div className="relative flex items-center justify-center">
                 <div className={cn(
                     "w-2 h-2 rounded-full",
