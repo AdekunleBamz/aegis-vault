@@ -148,7 +148,7 @@ export function StakeForm() {
               </p>
             </div>
             <div className="w-16 h-16 bg-muted rounded-[28px] flex items-center justify-center group-hover:rotate-6 transition-transform">
-              <Plus className="w-8 h-8 text-aegis-blue" />
+              <Plus className="w-8 h-8 text-aegis-blue" aria-hidden="true" focusable="false" />
             </div>
           </div>
 
