@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function RecentActivity() {
   const { address, isConnected } = useWallet();
@@ -73,15 +74,15 @@ export function RecentActivity() {
         </Link>
       </div>
 
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden" aria-busy={isLoading}>
         {isLoading ? (
           <div className="space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="flex items-center gap-4 animate-pulse">
-                <div className="w-12 h-12 bg-muted rounded-2xl" />
-                <div className="flex-1">
-                  <div className="w-24 h-4 bg-muted rounded-full mb-2" />
-                  <div className="w-16 h-3 bg-muted rounded-full" />
+              <div key={i} className="flex items-center gap-4">
+                <Skeleton height={48} width={48} rounded="lg" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton height={16} width="60%" />
+                  <Skeleton height={12} width="40%" />
                 </div>
               </div>
             ))}
