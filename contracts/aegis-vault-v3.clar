@@ -249,7 +249,10 @@
   )
 )
 
-;; Claim Rewards
+;; @desc Allows a staker to claim their accrued AGS rewards for a specific stake.
+;; @desc Rewards are minted directly from the linked aegis-token-v3 contract.
+;; @param stake-id - The ID of the stake to claim rewards for.
+;; @returns (ok uint) - The amount of rewards successfully claimed.
 (define-public (claim-rewards (stake-id uint))
   (let
     (
@@ -257,10 +260,14 @@
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
       (pending (calculate-pending-rewards stake-data))
     )
+    ;; Ensure the position is active and has rewards available to claim
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     (asserts! (> pending u0) ERR-INVALID-AMOUNT)
 
+    ;; Mint the reward tokens to the staker
     (try! (as-contract (contract-call? .aegis-token-v3 mint staker pending)))
+    
+    ;; Update the stake's cumulative claimed rewards count
     (map-set stakes { staker: staker, stake-id: stake-id } 
       (merge stake-data { total-claimed: (+ (get total-claimed stake-data) pending) })
     )
