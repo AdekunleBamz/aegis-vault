@@ -29,7 +29,7 @@ export function RecentActivity() {
     return (
       <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 h-full flex flex-col items-center justify-center text-center group">
         <div className="w-16 h-16 bg-muted rounded-[24px] flex items-center justify-center mb-4 text-muted-foreground/40 group-hover:scale-110 transition-transform">
-          <History className="w-8 h-8" />
+          <History className="w-8 h-8" aria-hidden="true" />
         </div>
         <h3 className="text-lg font-black mb-2">History Locked</h3>
         <p className="text-xs text-muted-foreground font-medium max-w-[200px]">
@@ -50,9 +50,9 @@ export function RecentActivity() {
   };
 
   const getStatusIcon = (status: string) => {
-    if (status === 'success') return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />;
-    if (status === 'pending') return <Clock className="w-3.5 h-3.5 text-amber-500 animate-pulse" />;
-    return <AlertCircle className="w-3.5 h-3.5 text-destructive" />;
+    if (status === 'success') return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" aria-hidden="true" />;
+    if (status === 'pending') return <Clock className="w-3.5 h-3.5 text-amber-500 animate-pulse" aria-hidden="true" />;
+    return <AlertCircle className="w-3.5 h-3.5 text-destructive" aria-hidden="true" />;
   };
 
   return (
@@ -60,7 +60,7 @@ export function RecentActivity() {
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-muted rounded-2xl flex items-center justify-center">
-            <History className="w-5 h-5 text-muted-foreground" />
+            <History className="w-5 h-5 text-muted-foreground" aria-hidden="true" />
           </div>
           <h3 className="text-xl font-black tracking-tight">Recent Activity</h3>
         </div>
@@ -69,7 +69,7 @@ export function RecentActivity() {
           className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors flex items-center gap-1.5"
         >
           Full Ledger
-          <ChevronRight className="w-3 h-3" />
+          <ChevronRight className="w-3 h-3" aria-hidden="true" />
         </Link>
       </div>
 
@@ -132,7 +132,7 @@ export function RecentActivity() {
                     </div>
 
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/40" />
+                      <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/40" aria-hidden="true" />
                     </div>
                   </motion.a>
                 );
