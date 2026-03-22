@@ -27,6 +27,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import { useWallet } from '@/context/wallet-context';
+import { SkeletonKPI } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
   const { isConnected } = useWallet();
