@@ -19,6 +19,9 @@ export interface StakerInfo {
   tier: number;
 }
 
+/**
+ * Global protocol statistics across all stakers
+ */
 export interface PoolStats {
   totalStaked: bigint;
   totalStakers: number;
@@ -28,6 +31,8 @@ export interface PoolStats {
 
 /**
  * Get staker information from the contract
+ * @param address Stacks address to query
+ * @returns Staker data or null if not found/error
  */
 export async function getStakerInfo(address: string): Promise<StakerInfo | null> {
   try {
@@ -105,6 +110,9 @@ export function calculateAPY(stakeAmount: bigint, tier: number): number {
 
 /**
  * Calculate estimated rewards for a period
+ * @param stakeAmount Amount of STX staked (microSTX)
+ * @param apy Current APY percentage (e.g., 12.5)
+ * @param blocks Number of blocks to calculate rewards for
  */
 export function calculateEstimatedRewards(
   stakeAmount: bigint,
