@@ -70,8 +70,17 @@ aegis-vault/
 ## Installation
 
 ### Prerequisites
-- Node.js 18+
-- Clarinet 2.0+
+
+- **Node.js**: v18.0.0 or higher is required for the frontend and automation scripts.
+- **Clarinet**: v2.0.0 or higher is required for smart contract development and local simulation.
+- **Git**: Required for version control and cloning the repository.
+- **Stacks Wallet**: Recommended (e.g., Leather or Xverse) for interacting with the protocol in a browser.
+
+### Development Environment
+
+For the best development experience, we recommend:
+- **VS Code** with the **Clarity** extension for syntax highlighting and contract analysis.
+- **Docker** for running local Stacks nodes if advanced integration testing is needed.
 
 ### Setup
 
