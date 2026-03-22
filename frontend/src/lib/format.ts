@@ -23,6 +23,17 @@ export function formatAGS(microAgs: string | number | bigint): string {
     minimumFractionDigits: 2,
     maximumFractionDigits: 6,
   });
+/**
+ * Safe version of formatAGS that handles null, undefined, or zero values gracefully.
+ */
+export function safeFormatAGS(value: string | number | bigint | null | undefined): string {
+  if (value === null || value === undefined) return '0.00';
+  try {
+    return formatAGS(value);
+  } catch {
+    return '0.00';
+  }
+}
 }
 
 /**
