@@ -18,7 +18,17 @@ describe('utils', () => {
     it('should return metadata for valid components', () => {
       const meta = getComponentMetadata('StakeForm');
       expect(meta).toBeDefined();
-      expect(meta?.category).toBe('Staking');
+      expect(meta['aria-label']).toBe('StakeForm');
+    });
+
+    it('should include description in aria-label if provided', () => {
+      const meta = getComponentMetadata('StakeForm', 'Stake your tokens');
+      expect(meta['aria-label']).toBe('StakeForm: Stake your tokens');
+    });
+
+    it('should return role region', () => {
+      const meta = getComponentMetadata('Test');
+      expect(meta.role).toBe('region');
     });
 
     it('should return null for unknown components', () => {
@@ -28,21 +38,6 @@ describe('utils', () => {
     it('should be case sensitive', () => {
       expect(getComponentMetadata('stakeform')).toBeNull();
     });
-
-    it('should return correct metadata with only name', () => {
-      const metadata = getComponentMetadata('Test Component');
-      expect(metadata).toEqual({
-        'aria-label': 'Test Component',
-        'role': 'region',
-      });
-    });
-
-    it('should return correct metadata with name and description', () => {
-      const metadata = getComponentMetadata('Test Component', 'A test component description');
-      expect(metadata).toEqual({
-        'aria-label': 'Test Component: A test component description',
-        'role': 'region',
-      });
     });
   });
 });
