@@ -77,6 +77,17 @@ export async function getAccountTransactions(
   return data.results;
 }
 
+/**
+ * Calls a read-only function on a Stacks smart contract.
+ * Uses the Stacks Blockchain API v2 contracts call-read endpoint.
+ * 
+ * @param contractAddress - The address of the contract
+ * @param contractName - The name of the contract
+ * @param functionName - The function to call
+ * @param args - Array of hexadecimal representations of Clarity values
+ * @returns A promise that resolves to a ContractReadResult
+ * @throws Error if the API request fails
+ */
 export async function callReadOnlyFunction(
   contractAddress: string,
   contractName: string,
