@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   executeWithdrawRequest,
   executeWithdrawComplete,
@@ -8,14 +8,28 @@ import {
 } from '@/lib/stacks';
 import { toMicroSTX } from '@/lib/format';
 
+/**
+ * Return type for the useWithdraw hook.
+ */
 export interface UseWithdrawReturn {
+  /** Function to initiate a withdrawal request transaction */
   requestWithdraw: (amount: number) => Promise<TransactionResult>;
+  /** Function to initiate a withdrawal completion transaction */
   completeWithdraw: () => Promise<TransactionResult>;
+  /** Whether a withdrawal operation is currently being processed */
   isLoading: boolean;
+  /** Error message if the operation failed, otherwise null */
   error: string | null;
+  /** Function to reset the loading and error states */
   reset: () => void;
 }
 
+/**
+ * A custom hook to handle withdrawal operations (request and complete).
+ * Manages loading and error states for the two-step withdrawal process.
+ * 
+ * @returns An object containing withdrawal functions and transaction states
+ */
 export function useWithdraw(): UseWithdrawReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,5 +75,11 @@ export function useWithdraw(): UseWithdrawReturn {
     setIsLoading(false);
   }, []);
 
-  return { requestWithdraw, completeWithdraw, isLoading, error, reset };
+  return useMemo(() => ({
+    requestWithdraw,
+    completeWithdraw,
+    isLoading,
+    error,
+    reset
+  }), [requestWithdraw, completeWithdraw, isLoading, error, reset]);
 }
