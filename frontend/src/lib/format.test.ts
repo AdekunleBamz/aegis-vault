@@ -15,7 +15,6 @@ describe('format', () => {
     it('should format uSTX to STX string', () => {
       expect(formatSTX(1000000).replace(/\u00a0/g, ' ')).toBe('1.00');
       expect(formatSTX('5000000').replace(/\u00a0/g, ' ')).toBe('5.00');
-      expect(formatSTX(0n).replace(/\u00a0/g, ' ')).toBe('0.00');
     });
   });
 
@@ -44,7 +43,13 @@ describe('format', () => {
   describe('formatPercent', () => {
     it('should format percentage', () => {
       expect(formatPercent(12.3456)).toBe('12.35%');
-      expect(formatSTX(0n)).toBe('0.00');
+      expect(formatPercent(0)).toBe('0.00%');
+    });
+  });
+
+  describe('formatSTX_v2', () => {
+    it('should handle bigint zero', () => {
+      expect(formatSTX(BigInt(0)).replace(/\u00a0/g, ' ')).toBe('0.00');
     });
   });
 
