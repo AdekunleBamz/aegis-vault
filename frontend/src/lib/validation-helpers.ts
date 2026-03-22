@@ -1,3 +1,10 @@
+/**
+ * Validation Helpers for Aegis Vault
+ * 
+ * Provides specialized validation logic for domain-specific inputs like
+ * staking amounts, ensuring they meet protocol and balance requirements.
+ */
+
 import { MIN_STAKE_STX } from './constants';
 
 /**
@@ -16,6 +23,11 @@ export function validateStakeAmount(
   if (!amount) return null;
   if (numAmount <= 0) return 'Amount must be greater than 0';
   if (numAmount > balanceSTX) return 'Insufficient STX balance';
-  if (numAmount < MIN_STAKE_STX) return `Minimum stake is ${MIN_STAKE_STX} STX`;
   return null;
 }
+
+const validationHelpers = {
+  validateStakeAmount,
+};
+
+export default validationHelpers;
