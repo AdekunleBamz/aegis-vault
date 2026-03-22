@@ -233,7 +233,12 @@ export function safeValidate<T>(
   return { success: false, error: (result as z.SafeParseError<unknown>).error }
 }
 
-// Validate Stacks address
+/**
+ * Checks if a string is a valid Stacks address (Mainnet or Testnet).
+ * 
+ * @param address - The address string to validate
+ * @returns True if the address format is valid
+ */
 export function isValidStacksAddress(address: string): boolean {
   return stacksAddressSchema.safeParse(address).success
 }
