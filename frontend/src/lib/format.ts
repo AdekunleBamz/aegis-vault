@@ -76,7 +76,11 @@ export function formatBlockHeight(height: number): string {
 }
 
 /**
- * Calculate time remaining from blocks
+ * Estimates the time represented by a number of Stacks blocks.
+ * Assumes an average block time of 10 minutes.
+ * 
+ * @param blocks - The number of blocks
+ * @returns A human-readable time string (e.g., "30 min", "2 hrs", "1 day")
  */
 export function blocksToTime(blocks: number): string {
   const minutes = blocks * 10; // ~10 min per block
