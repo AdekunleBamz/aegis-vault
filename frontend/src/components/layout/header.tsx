@@ -28,6 +28,56 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { NetworkBadge } from '@/components/ui/network-badge';
 
+interface NavLinkProps {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  isActive: boolean;
+  onClick?: () => void;
+  isMobile?: boolean;
+}
+
+function NavLink({ href, label, icon: Icon, isActive, onClick, isMobile }: NavLinkProps) {
+  if (isMobile) {
+    return (
+      <Link
+        href={href}
+        className={cn(
+          "px-4 py-3 text-base font-medium rounded-2xl transition-all flex items-center justify-between",
+          isActive
+            ? "bg-muted text-foreground"
+            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+        )}
+        aria-label={`Go to ${label} section`}
+        onClick={onClick}
+      >
+        <div className="flex items-center gap-3">
+          <Icon className="w-5 h-5" />
+          {label}
+        </div>
+        <ChevronRight className="w-4 h-4 opacity-50" />
+      </Link>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      aria-current={isActive ? 'page' : undefined}
+      aria-label={`Navigate to ${label} Hub`}
+      className={cn(
+        "shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-full transition-all flex items-center gap-2",
+        isActive
+          ? "bg-primary text-primary-foreground shadow-sm"
+          : "text-muted-foreground hover:text-foreground hover:bg-background/50"
+      )}
+    >
+      <Icon className="w-4 h-4" />
+      {label}
+    </Link>
+  );
+}
+
 export function Header() {
   const { address, isConnected, isConnecting, connect, disconnect } = useWallet();
   const { stxBalance } = useBalances(address || '');
@@ -158,26 +208,13 @@ export function Header() {
 
         {/* Center: Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1 max-w-[58vw] overflow-x-auto no-scrollbar bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={isActive ? 'page' : undefined}
-                aria-label={`Navigate to ${link.label} Hub`}
-                className={cn(
-                  "shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-full transition-all flex items-center gap-2",
-                  isActive
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground hover:bg-background/50"
-                )}
-              >
-                <link.icon className="w-4 h-4" />
-                {link.label}
-              </Link>
-            )
-          })}
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.href}
+              {...link}
+              isActive={pathname === link.href}
+            />
+          ))}
         </nav>
 
         {/* Right: Wallet / Mobile Toggle */}
