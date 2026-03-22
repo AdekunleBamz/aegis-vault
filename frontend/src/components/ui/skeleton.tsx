@@ -164,17 +164,29 @@ export function SkeletonChart({ height = 200, className = '' }: { height?: numbe
   );
 }
 
-// Form skeleton
-export function SkeletonForm({ fields = 3, className = '' }: { fields?: number; className?: string }) {
+// Card skeleton
+export function CardSkeleton() {
   return (
-    <div className={`space-y-6 ${className}`}>
-      {Array.from({ length: fields }).map((_, i) => (
-        <div key={i}>
-          <Skeleton height={14} width={80} className="mb-2" />
-          <Skeleton height={44} width="100%" rounded="lg" />
+    <div className="p-6 space-y-4 bg-muted/20 rounded-xl border border-border/50">
+      <Skeleton height="1.5rem" width="80%" />
+      <Skeleton height="1rem" width="100%" className="opacity-50" />
+      <Skeleton height="1rem" width="100%" className="opacity-50" />
+      <Skeleton height="2.5rem" width="100%" rounded="lg" />
+    </div>
+  );
+}
+
+// Skeleton grid for tables or card lists
+export function SkeletonGrid({ rows = 5, columns = 4, className = '' }: { rows?: number; columns?: number; className?: string }) {
+  return (
+    <div className={`space-y-4 ${className}`}>
+      {Array.from({ length: rows }).map((_, rowIdx) => (
+        <div key={rowIdx} className="grid gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+          {Array.from({ length: columns }).map((_, colIdx) => (
+            <Skeleton key={`${rowIdx}-${colIdx}`} height="1.25rem" />
+          ))}
         </div>
       ))}
-      <Skeleton height={48} width="100%" rounded="lg" />
     </div>
   );
 }
