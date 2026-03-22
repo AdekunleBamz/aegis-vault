@@ -94,6 +94,16 @@ npm install
 
 # Install frontend dependencies
 npm --prefix frontend install
+
+### Environment Variables
+
+Before running the frontend, ensure you have the necessary environment variables set in `frontend/.env.local`:
+
+```
+NEXT_PUBLIC_STACKS_API=https://api.mainnet.hiro.so
+NEXT_PUBLIC_VAULT_ADDRESS=SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
+NEXT_PUBLIC_NETWORK=mainnet
+```
 ```
 
 ## Development
