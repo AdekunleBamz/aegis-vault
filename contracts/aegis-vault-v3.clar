@@ -292,9 +292,15 @@
   )
 )
 
+;; @desc Allows the contract owner to withdraw collected protocol fees from the treasury.
+;; @param amount - The amount of microSTX to withdraw.
+;; @param recipient - The address to receive the withdrawn funds.
+;; @returns (ok bool) - True if the withdrawal is successful.
 (define-public (withdraw-treasury (amount uint) (recipient principal))
   (begin
+    ;; Strictly restricted to the protocol administrator
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    ;; Transfer the specified amount from the contract to the recipient
     (try! (as-contract (stx-transfer? amount tx-sender recipient)))
     (ok true)
   )
