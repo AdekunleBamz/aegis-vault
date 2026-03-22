@@ -226,14 +226,14 @@ export function Header() {
                 onClick={() => setShowWalletMenu(!showWalletMenu)}
                 aria-label="Wallet menu"
                 aria-expanded={showWalletMenu}
-                aria-haspopup="true"
+                aria-haspopup="menu"
                 className="flex items-center gap-3 px-4 py-2 bg-muted/50 hover:bg-muted/80 rounded-full border border-border/50 backdrop-blur-sm transition-all group"
               >
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
                 <span className="text-xs font-black tabular-nums tracking-wider text-muted-foreground group-hover:text-foreground transition-colors">
                   {truncateAddress(address || '')}
                 </span>
-                <ChevronRight className={cn(
+                <ChevronDown className={cn(
                   "w-4 h-4 text-muted-foreground transition-transform duration-300",
                   showWalletMenu ? "rotate-90" : ""
                 )} />
@@ -247,6 +247,8 @@ export function Header() {
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
                     transition={{ duration: TRANSITION_DURATION, ease: TRANSITION_EASE }}
                     className="absolute right-0 mt-3 w-56 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
+                    role="menu"
+                    aria-label="Account options"
                   >
                     <div className="px-4 py-3 border-b border-border/50 mb-1 space-y-3">
                       <div>
