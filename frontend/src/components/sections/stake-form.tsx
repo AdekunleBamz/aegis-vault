@@ -57,13 +57,13 @@ import { cn } from '@/lib/utils';
     setValidationError(null);
   };
 
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/[^0-9.]/g, '');
     setAmount(val);
     setValidationError(null);
-  };
+  }, []);
 
-  const handleStake = async (e: React.FormEvent) => {
+  const handleStake = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccess(null);
     setValidationError(null);
@@ -80,27 +80,32 @@ import { cn } from '@/lib/utils';
     } catch (err) {
       // Error is handled by the hook
     }
-  };
+  }, [hasError, numAmount, stake]);
 
-  const microAmount = toMicroSTX(numAmount);
-  const tier = determineTier(microAmount);
-  const apy = calculateAPY(microAmount, tier);
+  const microAmount = useMemo(() => toMicroSTX(numAmount), [numAmount]);
+  const tier = useMemo(() => determineTier(microAmount), [microAmount]);
+  const apy = useMemo(() => calculateAPY(microAmount, tier), [microAmount, tier]);
 
   // Projected rewards calculation (simplified for UI)
-  const yearlyAGS = numAmount * (apy / 100);
-  const monthlyAGS = yearlyAGS / MONTHS_PER_YEAR;
+  const stats = useMemo(() => {
+    const yearlyAGS = numAmount * (apy / 100);
+    const monthlyAGS = yearlyAGS / MONTHS_PER_YEAR;
 
-  const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
-  const nextTierMin = nextTier ? nextTier.minStake : 0;
-  const progressToNext = nextTier
-    ? Math.min(100, (numAmount / nextTierMin) * 100)
-    : 100;
-  const quickAmounts = [
+    const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
+    const nextTierMin = nextTier ? nextTier.minStake : 0;
+    const progressToNext = nextTier
+      ? Math.min(100, (numAmount / nextTierMin) * 100)
+      : 100;
+
+    return { yearlyAGS, monthlyAGS, progressToNext, nextTier };
+  }, [numAmount, apy, tier]);
+
+  const quickAmounts = useMemo(() => [
     { label: '25%', value: balanceSTX * 0.25 },
     { label: '50%', value: balanceSTX * 0.5 },
     { label: '75%', value: balanceSTX * 0.75 },
     { label: 'Max', value: balanceSTX }
-  ].filter((preset) => preset.value > 0);
+  ].filter((preset) => preset.value > 0), [balanceSTX]);
   const canSubmit = Boolean(amount) && !hasError && !isLoading;
 
   return (
