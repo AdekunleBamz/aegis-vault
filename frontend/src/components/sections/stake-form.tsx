@@ -172,7 +172,7 @@ export function StakeForm() {
               </p>
               <button
                 onClick={connect}
-                className="px-12 py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] transition-all active:scale-95"
+                className="px-12 py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] transition-all active:scale-95 animate-pulse"
               >
                 Connect Stacks Wallet
               </button>
