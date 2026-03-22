@@ -68,6 +68,7 @@ export function RecentActivity() {
         <Link
           href="/history"
           className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors flex items-center gap-1.5"
+          aria-label="View full transaction history ledger"
         >
           Full Ledger
           <ChevronRight className="w-3 h-3" aria-hidden="true" />
