@@ -1,14 +1,40 @@
-// Test Utilities for Aegis Vault Frontend
-// Provides mocking helpers, test data generators, and testing utilities
+/**
+ * Testing Utilities for Aegis Vault
+ * 
+ * Provides mock data factories, Stacks blockchain value helpers,
+ * and pre-configured testing environments for Vitest and React Testing Library.
+ */
 
 import { expect, afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
+import { 
+  uintCV, 
+  intCV, 
+  principalCV, 
+  trueCV, 
+  falseCV, 
+  noneCV, 
+  someCV, 
+  bufferCV,
+  stringAsciiCV,
+  stringUtf8CV,
+  standardPrincipalCV,
+  ClarityValue
+} from '@stacks/transactions';
+import { STACKS_MAINNET, STACKS_TESTNET } from '@stacks/network';
 import '@testing-library/jest-dom/vitest';
 import { StakePosition, RewardInfo, ProtocolStats, UserStats, TransactionRecord } from './validation';
 
-// Global setup for Vitest
+// ----------------------------------------------------------------------------
+// TESTING LIBRARY SETUP
+// ----------------------------------------------------------------------------
+
+/**
+ * Global cleanup after each test to ensure DOM isolation.
+ */
 afterEach(() => {
   cleanup();
+  vi.clearAllMocks();
 });
 
 // ============================================================================

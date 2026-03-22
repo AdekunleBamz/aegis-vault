@@ -1,4 +1,3 @@
-```javascript
 import { describe, it, expect } from 'vitest';
 import { cn, getComponentMetadata } from './utils';
 
