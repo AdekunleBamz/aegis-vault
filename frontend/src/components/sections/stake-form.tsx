@@ -149,7 +149,7 @@ import { cn } from '@/lib/utils';
               </p>
             </div>
             <div className="w-16 h-16 bg-muted rounded-[28px] flex items-center justify-center group-hover:rotate-6 transition-transform">
-              <Plus className="w-8 h-8 text-aegis-blue" />
+              <Plus className="w-8 h-8 text-aegis-blue" aria-hidden="true" />
             </div>
           </div>
 
@@ -160,7 +160,7 @@ import { cn } from '@/lib/utils';
               className="py-16 text-center"
             >
               <div className="w-24 h-24 bg-muted/50 rounded-[40px] flex items-center justify-center mx-auto mb-8 border border-border/50">
-                <Wallet className="w-10 h-10 text-muted-foreground/40" />
+                <Wallet className="w-10 h-10 text-muted-foreground/40" aria-hidden="true" />
               </div>
               <h3 className="text-2xl font-black mb-4">Wallet Connection Required</h3>
               <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto">
@@ -326,7 +326,7 @@ import { cn } from '@/lib/utils';
                 <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all" aria-labelledby="yield-label">
                   <div className="flex items-center justify-between mb-4">
                     <span id="yield-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Yield Projection</span>
-                    <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" />
+                    <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" aria-hidden="true" />
                   </div>
                   <div>
                     <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}>
@@ -344,7 +344,7 @@ import { cn } from '@/lib/utils';
                 <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all" aria-labelledby="tier-label">
                   <div className="flex items-center justify-between mb-4">
                     <span id="tier-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Reward Tier</span>
-                    <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" />
+                    <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" aria-hidden="true" />
                   </div>
                   <div>
                     <div
@@ -429,7 +429,7 @@ import { cn } from '@/lib/utils';
               <div className="rounded-[32px] border border-border/40 bg-background/30 p-4">
                 <div className="mb-4 flex items-start gap-3 rounded-[24px] bg-muted/20 p-4">
                   <div className="rounded-2xl bg-aegis-blue/10 p-2.5 text-aegis-blue">
-                    <Sparkles className="h-5 w-5" />
+                    <Sparkles className="h-5 w-5" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">
@@ -461,7 +461,7 @@ import { cn } from '@/lib/utils';
                     ) : (
                       <>
                         CONFIRM STAKING
-                        <ArrowUpRight className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        <ArrowUpRight className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" aria-hidden="true" />
                       </>
                     )}
                   </span>
@@ -471,15 +471,15 @@ import { cn } from '@/lib/utils';
 
               <div className="flex items-center justify-center gap-8 pt-4">
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <Lock className="w-3 h-3" />
+                  <Lock className="w-3 h-3" aria-hidden="true" />
                   24h Lock
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <Activity className="w-3 h-3" />
+                  <Activity className="w-3 h-3" aria-hidden="true" />
                   Instant Rewards
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <ShieldCheck className="w-3 h-3" />
+                  <ShieldCheck className="w-3 h-3" aria-hidden="true" />
                   v2 Verified
                 </div>
               </div>
