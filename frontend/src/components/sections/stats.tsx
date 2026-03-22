@@ -134,7 +134,11 @@ export function Stats() {
               )}
             >
               <div className="flex items-center justify-between mb-6">
-                <div className={cn("p-3 rounded-2xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors duration-500", stat.color)}>
+                <div className={cn(
+                  "p-3 rounded-2xl bg-muted transition-all duration-500",
+                  "group-hover:bg-foreground group-hover:text-background group-hover:scale-110",
+                  stat.color
+                )}>
                   <stat.icon className="w-6 h-6" />
                 </div>
                 <TrendingUp className="w-4 h-4 text-muted-foreground/30 group-hover:text-green-500 transition-colors" />
