@@ -13,22 +13,7 @@ import {
   MONTHS_PER_YEAR 
 } from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
-import {
-  Wallet,
-  ArrowUpRight,
-  AlertCircle,
-  CheckCircle2,
-  Lock,
-  TrendingUp,
-  Activity,
-  LayoutGrid,
-  Plus,
-  RefreshCw,
-  ShieldCheck,
-  Sparkles
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { validateStakeAmount } from '@/lib/validation-helpers';
 
 export function StakeForm() {
   const { address, isConnected, connect } = useWallet();
@@ -42,11 +27,7 @@ export function StakeForm() {
   const balanceSTX = Number(stxBalance) / MICRO_STX_DENOMINATOR;
 
   const hasError = useMemo(() => {
-    if (!amount) return null;
-    if (numAmount <= 0) return 'Amount must be greater than 0';
-    if (numAmount > balanceSTX) return 'Insufficient STX balance';
-    if (numAmount < MIN_STAKE_STX) return `Minimum stake is ${MIN_STAKE_STX} STX`;
-    return null;
+    return validateStakeAmount(amount, numAmount, balanceSTX);
   }, [amount, numAmount, balanceSTX]);
 
   const formatAmount = (value: number) => {
