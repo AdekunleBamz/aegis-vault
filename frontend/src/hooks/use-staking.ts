@@ -39,7 +39,10 @@ export function useStaking(senderAddress: string): UseStakingReturn {
       setError(null);
 
       try {
+        // Convert the user-friendly STX amount to micro-STX (10^-6)
         const microAmount = toMicroSTX(amount);
+        
+        // Execute the staking transaction via the Stacks provider
         const result = await executeStake(microAmount, senderAddress);
         return result;
       } catch (err) {
