@@ -402,9 +402,7 @@ export function StakeForm() {
               {/* Submit Action */}
               <div className="rounded-[32px] border border-border/40 bg-background/30 p-4">
                 <div className="mb-4 flex items-start gap-3 rounded-[24px] bg-muted/20 p-4">
-                  <div className="rounded-2xl bg-aegis-blue/10 p-2.5 text-aegis-blue">
-                    <Sparkles className="h-5 w-5" />
-                  </div>
+                    <Sparkles className="h-5 w-5" aria-hidden="true" />
                   <div>
                     <p className="text-sm font-semibold text-foreground">
                       Review before signing
