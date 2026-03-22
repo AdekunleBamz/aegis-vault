@@ -10,6 +10,11 @@ export interface UseRewardsReturn {
   reset: () => void;
 }
 
+/**
+ * Custom hook for claiming staking rewards.
+ * 
+ * @returns Object containing the claim function, loading state, error, and reset function.
+ */
 export function useRewards(): UseRewardsReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
