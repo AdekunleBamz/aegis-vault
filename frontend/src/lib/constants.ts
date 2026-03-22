@@ -26,6 +26,7 @@ export const TIERS = [
 export const BLOCKS_PER_DAY = 144;
 export const BLOCKS_PER_YEAR = 52560;
 export const COOLDOWN_BLOCKS = 144;
+export const BLOCK_TIME_MINUTES = 10;
 
 // Display constants
 export const STX_DECIMALS = 6;
