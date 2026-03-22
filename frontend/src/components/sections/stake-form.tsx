@@ -180,7 +180,10 @@ import { cn } from '@/lib/utils';
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                     Available Balance
                   </p>
-                  <p className="mt-2 text-2xl font-black tabular-nums">
+                  <p 
+                    className="mt-2 text-2xl font-black tabular-nums"
+                    aria-label={`Available balance: ${balanceSTX.toLocaleString(undefined, { maximumFractionDigits: 2 })} STX`}
+                  >
                     {balanceSTX.toLocaleString(undefined, { maximumFractionDigits: 2 })} STX
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
