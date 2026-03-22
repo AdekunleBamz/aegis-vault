@@ -22,6 +22,48 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 
+const ActivityItem = React.memo(({ tx, index, info }: { tx: any; index: number; info: any }) => {
+  const Icon = info.icon;
+  return (
+    <motion.a
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.05 }}
+      href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`View transaction ${info.label} ${tx.tx_status} from ${formatRelativeTime(tx.burn_block_time)} on Stacks Explorer`}
+      className="group flex items-center gap-4 p-3 rounded-3xl hover:bg-muted/50 border border-transparent hover:border-border/50 transition-all"
+    >
+      <div className={cn(
+        "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
+        "bg-background/80 border border-border/50",
+        info.color
+      )}>
+        <Icon className="w-5 h-5" aria-hidden="true" />
+      </div>
+
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-0.5">
+          <p className="text-sm font-black tracking-tight truncate">
+            {info.label}
+          </p>
+          {tx.status_icon}
+        </div>
+        <p className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+          {formatRelativeTime(tx.burn_block_time)}
+        </p>
+      </div>
+
+      <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+        <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/40" aria-hidden="true" />
+      </div>
+    </motion.a>
+  );
+});
+
+ActivityItem.displayName = 'ActivityItem';
+
 export function RecentActivity() {
   const { address, isConnected } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 10);
@@ -100,48 +142,14 @@ export function RecentActivity() {
         ) : (
           <div className="space-y-2">
             <AnimatePresence initial={false}>
-              {transactions.map((tx: any, index: number) => {
-                const info = getActionInfo(tx.contract_call?.function_name || '');
-                const Icon = info.icon;
-
-                return (
-                  <motion.a
-                    key={tx.tx_id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View transaction ${info.label} ${tx.tx_status} from ${formatRelativeTime(tx.burn_block_time)} on Stacks Explorer`}
-                    className="group flex items-center gap-4 p-3 rounded-3xl hover:bg-muted/50 border border-transparent hover:border-border/50 transition-all"
-                  >
-                    <div className={cn(
-                      "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
-                      "bg-background/80 border border-border/50",
-                      info.color
-                    )}>
-                      <Icon className="w-5 h-5" aria-hidden="true" />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <p className="text-sm font-black tracking-tight truncate">
-                          {info.label}
-                        </p>
-                        {getStatusIcon(tx.tx_status)}
-                      </div>
-                      <p className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
-                        {formatRelativeTime(tx.burn_block_time)}
-                      </p>
-                    </div>
-
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/40" aria-hidden="true" />
-                    </div>
-                  </motion.a>
-                );
-              })}
+              {transactions.map((tx: any, index: number) => (
+                <ActivityItem
+                  key={tx.tx_id}
+                  tx={{ ...tx, status_icon: getStatusIcon(tx.tx_status) }}
+                  index={index}
+                  info={getActionInfo(tx.contract_call?.function_name || '')}
+                />
+              ))}
             </AnimatePresence>
           </div>
         )}
