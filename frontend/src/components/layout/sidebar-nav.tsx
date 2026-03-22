@@ -36,9 +36,9 @@ export function SidebarNav({
       aria-label="Sidebar Navigation"
       className={`
         flex flex-col h-full
-        bg-white dark:bg-gray-800
-        border-r border-gray-200 dark:border-gray-700
-        transition-all duration-200
+        bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl
+        border-r border-gray-200 dark:border-gray-800
+        transition-all duration-300
         ${collapsed ? 'w-16' : 'w-64'}
         ${className}
       `}
