@@ -279,8 +279,13 @@
 ;; ADMIN FUNCTIONS
 ;; ============================================
 
+;; @desc Toggles the operational status of the staking contract.
+;; @desc When paused, new staking positions cannot be created.
+;; @param paused - The new boolean status for the contract pause state.
+;; @returns (ok bool) - True if the status was successfully updated.
 (define-public (set-paused (paused bool))
   (begin
+    ;; Restricted to the contract owner only
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
     (var-set contract-paused paused)
     (ok true)
