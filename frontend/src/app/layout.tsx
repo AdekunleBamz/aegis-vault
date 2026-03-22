@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   description: 'The premier yield optimization protocol on Stacks. Secure, non-custodial Bitcoin DeFi with automated strategies, advanced governance, and institutional-grade analytics.',
   keywords: ['Stacks', 'Bitcoin', 'DeFi', 'Staking', 'Yield Farming', 'Crypto', 'Aegis Vault', 'Smart Contracts'],
   authors: [{ name: 'Aegis Protocol Team' }],
+  themeColor: '#0A0A0B',
   icons: {
     icon: '/images/logo.png',
     shortcut: '/images/favicon-32x32.png',
