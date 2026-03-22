@@ -130,3 +130,10 @@ export function determineTier(stakeAmount: bigint): number {
   
   return 0;
 }
+
+/**
+ * Get tier object by its name (e.g. 'Bronze')
+ */
+export function getTierByName(name: string) {
+  return TIERS.find(t => t.name === name) || TIERS[0];
+}
