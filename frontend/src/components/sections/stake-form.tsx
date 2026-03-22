@@ -198,8 +198,8 @@ export function StakeForm() {
                     <label htmlFor="stake-amount" className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
                       Deposit Amount
                     </label>
-                    <p id="stake-amount-description" className="mt-2 text-sm text-muted-foreground">
-                      Enter how much STX you want to lock into the vault. Rewards update instantly as you type.
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Enter how much STX you want to lock. Maximum 6 decimal places allowed for protocol compatibility.
                     </p>
                   </div>
                   <button
