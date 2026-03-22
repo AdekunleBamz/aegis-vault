@@ -31,7 +31,7 @@ export function Card({
   };
 
   const hoverClasses = hover
-    ? 'hover:border-gray-600 hover:bg-gray-800/70 hover:shadow-lg hover:shadow-black/20 hover:-translate-y-0.5'
+    ? 'hover:border-gray-600 hover:bg-gray-800/70 hover:shadow-lg hover:shadow-black/20 hover:-translate-y-0.5 hover:scale-[1.02]'
     : '';
 
   return (
