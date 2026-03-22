@@ -50,7 +50,9 @@
 
   body {
     @apply bg-background text-foreground min-h-screen;
+    line-height: 1.6;
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image:
@@ -73,7 +75,7 @@
 
   :focus-visible {
     outline: 2px solid hsl(var(--aegis-blue));
-    outline-offset: 3px;
+    outline-offset: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -146,6 +148,6 @@
 
 /* Selection */
 ::selection {
-  background: hsl(var(--aegis-blue) / 0.2);
+  background: hsl(var(--aegis-blue) / 0.3);
   color: hsl(var(--foreground));
 }
