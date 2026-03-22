@@ -265,7 +265,7 @@ export function Header() {
                         </div>
                       </div>
 
-                      <div>
+                      <div aria-live="polite" aria-atomic="true">
                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1.5">Network</p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5">
@@ -286,6 +286,7 @@ export function Header() {
 
                     <button
                       onClick={disconnect}
+                      role="menuitem"
                       className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-destructive hover:bg-destructive/10 rounded-2xl transition-all group"
                     >
                       <LogOut className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
