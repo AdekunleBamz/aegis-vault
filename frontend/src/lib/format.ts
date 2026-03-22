@@ -34,6 +34,7 @@ export function toMicroSTX(stx: number): bigint {
 
 /**
  * Truncate address for display
+ * @example truncateAddress("SP3FKNEZ...") -> "SP3FKN...GG6N"
  */
 export function truncateAddress(address: string, chars = 4): string {
   if (!address) return '';
