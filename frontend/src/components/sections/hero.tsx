@@ -78,7 +78,7 @@ export function Hero() {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1]"
           >
-            Secure Your STX. <br />
+            Secure Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-aegis-blue to-aegis-purple">STX</span>. <br />
             <span className="text-gradient">Maximize Rewards.</span>
           </motion.h1>
 
