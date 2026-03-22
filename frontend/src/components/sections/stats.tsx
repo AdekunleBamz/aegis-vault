@@ -133,7 +133,7 @@ export function Stats() {
               )}
             >
               <div className="flex items-center justify-between mb-6">
-                <div className={cn("p-3 rounded-2xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors duration-500", stat.color)}>
+                <div className={cn("p-3 rounded-2xl bg-muted group-hover:bg-foreground group-hover:text-background group-hover:shadow-[0_0_20px_-5px_currentColor] transition-all duration-500", stat.color)}>
                   <stat.icon className="w-6 h-6" />
                 </div>
                 <TrendingUp className="w-4 h-4 text-muted-foreground/30 group-hover:text-green-500 transition-colors" />
@@ -154,7 +154,7 @@ export function Stats() {
                 <p className="pt-3 text-sm leading-relaxed text-muted-foreground">
                   {stat.note}
                 </p>
-                <div className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground/70">
+                <div className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-foreground/60 group-hover:text-foreground">
                   Review metric
                   <TrendingUp className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
