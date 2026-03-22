@@ -1,4 +1,6 @@
-;; Aegis Vault v3 - Consolidated Staking, Rewards, and Treasury
+;; SPDX-License-Identifier: MIT
+;; @title Aegis Vault v3
+;; @notice Consolidated Staking, Rewards, and Treasury contract for the Aegis Protocol.
 ;; Fixed fees set to 0.01 STX (10,000 microSTX)
 
 (use-trait ft-trait .sip-010-trait.sip-010-trait)
