@@ -97,7 +97,7 @@ export function TierDrawer({ isOpen, onClose }: TierDrawerProps) {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.1 + i * 0.1 }}
-                                        className="p-6 rounded-[32px] bg-muted/30 border border-border group hover:border-aegis-blue/50 transition-colors"
+                                        className="p-8 rounded-[40px] bg-muted/30 border border-border group hover:border-aegis-blue/50 transition-all duration-500"
                                     >
                                         <div className="flex items-start justify-between mb-4">
                                             <div className="flex items-center gap-3">
