@@ -166,7 +166,7 @@ export function Header() {
                 aria-current={isActive ? 'page' : undefined}
                 aria-label={`Navigate to ${link.label} Hub`}
                 className={cn(
-                  "shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-full transition-all flex items-center gap-2",
+                  "shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-full transition-all flex items-center gap-2 active:scale-95",
                   isActive
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground hover:bg-background/50"
