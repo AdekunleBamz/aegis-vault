@@ -1,3 +1,12 @@
+/**
+ * Aegis Vault Core Library Entry Point
+ * 
+ * This file serves as the primary gateway for all shared logic in the frontend,
+ * including constants, API clients, blockchain interaction, error handling,
+ * and data validation. It uses named exports and aliases where necessary to 
+ * ensure a clean and collision-free internal API.
+ */
+
 export * from './constants';
 export * from './staking';
 export * from './stacks';
