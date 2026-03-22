@@ -44,7 +44,11 @@ export function toMicroSTX(stx: number): bigint {
 }
 
 /**
- * Truncate address for display
+ * Truncates a Stacks address for display by showing the first and last few characters.
+ * 
+ * @param address - The full Stacks address string
+ * @param chars - The number of characters to show at the beginning and end (default: 4)
+ * @returns A truncated address string (e.g., "SP2P...1234")
  */
 export function truncateAddress(address: string, chars = 4): string {
   if (!address) return '';
