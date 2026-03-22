@@ -306,6 +306,8 @@
   )
 )
 
+;; @desc Returns a summary of the protocol's current state and liquidity.
+;; @returns (tuple) - Includes total-staked, total-stakers, stake-counter, pause status, and contract balance.
 (define-read-only (get-vault-stats)
   {
     total-staked: (var-get total-staked),
