@@ -32,6 +32,14 @@ export interface ContractReadResult {
   result?: string;
 }
 
+/**
+ * Fetches the STX and fungible token balances for a given Stacks address.
+ * Uses the Stacks Blockchain API v2 accounts endpoint.
+ * 
+ * @param address - The Stacks address to fetch balances for
+ * @returns A promise that resolves to an AccountBalance object
+ * @throws Error if the API request fails
+ */
 export async function getAccountBalance(address: string): Promise<AccountBalance> {
   const response = await fetch(`${API.STACKS_API}/v2/accounts/${address}`, {
     next: { revalidate: 30 },
@@ -44,6 +52,14 @@ export async function getAccountBalance(address: string): Promise<AccountBalance
   return response.json();
 }
 
+/**
+ * Retrieves the transaction history for a given Stacks address.
+ * 
+ * @param address - The Stacks address to fetch transactions for
+ * @param limit - Max number of transactions to return (default: 20)
+ * @returns A promise that resolves to an array of Transaction objects
+ * @throws Error if the API request fails
+ */
 export async function getAccountTransactions(
   address: string,
   limit = 20
@@ -61,6 +77,17 @@ export async function getAccountTransactions(
   return data.results;
 }
 
+/**
+ * Calls a read-only function on a Stacks smart contract.
+ * Uses the Stacks Blockchain API v2 contracts call-read endpoint.
+ * 
+ * @param contractAddress - The address of the contract
+ * @param contractName - The name of the contract
+ * @param functionName - The function to call
+ * @param args - Array of hexadecimal representations of Clarity values
+ * @returns A promise that resolves to a ContractReadResult
+ * @throws Error if the API request fails
+ */
 export async function callReadOnlyFunction(
   contractAddress: string,
   contractName: string,
@@ -86,6 +113,12 @@ export async function callReadOnlyFunction(
   return response.json();
 }
 
+/**
+ * Fetches the current stacks-tip-height (block height) from the Stacks node.
+ * 
+ * @returns A promise that resolves to the current block height as a number
+ * @throws Error if the API request fails
+ */
 export async function getCurrentBlockHeight(): Promise<number> {
   const response = await fetch(`${API.STACKS_API}/v2/info`, {
     next: { revalidate: 10 },

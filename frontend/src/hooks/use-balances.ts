@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { getAccountBalance, AccountBalance } from '@/lib/api';
+import { CONTRACTS } from '@/lib/constants';
 
 export interface UseBalancesReturn {
   stxBalance: bigint;
@@ -29,7 +30,7 @@ export function useBalances(address: string): UseBalancesReturn {
 
       // Find AGS token balance
       const agsTokenKey = Object.keys(balance.fungible_tokens).find((key) =>
-        key.includes('aegis-token')
+        key.includes(CONTRACTS.TOKEN_PATTERN)
       );
 
       if (agsTokenKey) {

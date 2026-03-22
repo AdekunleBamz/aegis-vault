@@ -77,10 +77,16 @@
 ;; PRIVATE HELPERS
 ;; ============================================
 
+;; @desc Internal helper to convert days into Stacks block count.
+;; @param lock-period - Number of days.
+;; @returns uint - Number of blocks based on 144 blocks/day.
 (define-private (get-lock-blocks (lock-period uint))
   (* lock-period BLOCKS-PER-DAY)
 )
 
+;; @desc Internal helper to retrieve the bonus multiplier (basis points) for a given lock period.
+;; @param lock-period - Number of days.
+;; @returns uint - The multiplier (10000 = 1x, 12000 = 1.2x, 15000 = 1.5x).
 (define-private (get-bonus-multiplier (lock-period uint))
   (if (is-eq lock-period LOCK-30-DAYS)
     BONUS-30-DAYS
@@ -91,6 +97,10 @@
   )
 )
 
+;; @desc Internal helper to calculate the accrued rewards for a given stake data tuple.
+;; @desc Uses a daily reward rate (BASE-REWARD-PER-DAY) and applies the position's bonus multiplier.
+;; @param stake-data - The full metadata tuple for the stake.
+;; @returns uint - The net pending rewards (gross minus already claimed).
 (define-private (calculate-pending-rewards (stake-data {
   amount: uint,
   start-block: uint,
@@ -101,11 +111,16 @@
 }))
   (let
     (
+      ;; Calculate block duration since start
       (blocks-staked (- block-height (get start-block stake-data)))
+      ;; Convert blocks to days (integral division)
       (days-staked (/ blocks-staked BLOCKS-PER-DAY))
+      ;; Base calculation: (days * rate * amount) / scaling-factor
       (base-rewards (* (/ (* days-staked BASE-REWARD-PER-DAY) u1000000) (get amount stake-data)))
+      ;; Apply tier bonus multiplier (basis points)
       (with-bonus (/ (* base-rewards (get bonus-multiplier stake-data)) u10000))
     )
+    ;; Return only the portion not yet claimed
     (if (> with-bonus (get total-claimed stake-data))
       (- with-bonus (get total-claimed stake-data))
       u0
@@ -117,7 +132,10 @@
 ;; PUBLIC FUNCTIONS
 ;; ============================================
 
-;; Stake STX
+;; @desc Allows a user to stake STX for a chosen lock period.
+;; @param amount - The quantity of microSTX to stake (must be >= MIN-STAKE).
+;; @param lock-period - The duration in days (3, 7, or 30).
+;; @returns (ok uint) - The unique stake-id generated for this position.
 (define-public (stake (amount uint) (lock-period uint))
   (let
     (
@@ -125,13 +143,19 @@
       (current-ids (default-to (list) (map-get? user-stake-ids staker)))
       (new-id (+ (var-get stake-counter) u1))
     )
+    ;; Ensure contract is not paused
     (asserts! (not (var-get contract-paused)) ERR-CONTRACT-PAUSED)
+    ;; Validate stake amount meets minimum requirement
     (asserts! (>= amount MIN-STAKE) ERR-INVALID-AMOUNT)
+    ;; Validate chosen lock period is one of the supported tiers
     (asserts! (or (is-eq lock-period u3) (or (is-eq lock-period u7) (is-eq lock-period u30))) ERR-INVALID-LOCK-PERIOD)
+    ;; Limit number of active stakes per user to prevent OOG issues
     (asserts! (< (len current-ids) MAX-STAKES-PER-USER) ERR-MAX-STAKES-REACHED)
 
+    ;; Transfer STX from user to the contract
     (try! (stx-transfer? amount staker (as-contract tx-sender)))
 
+    ;; Initialize and store stake metadata
     (map-set stakes { staker: staker, stake-id: new-id }
       {
         amount: amount,
@@ -142,25 +166,33 @@
         total-claimed: u0
       }
     )
+    ;; Update user and global tracking state
     (map-set user-stake-ids staker (unwrap! (as-max-len? (append current-ids new-id) u20) ERR-MAX-STAKES-REACHED))
     (map-set user-total-staked staker (+ (default-to u0 (map-get? user-total-staked staker)) amount))
     (var-set total-staked (+ (var-get total-staked) amount))
     (var-set stake-counter new-id)
+    ;; Increment total stakers count if this is the user's first stake
     (if (is-eq (len current-ids) u0) (var-set total-stakers (+ (var-get total-stakers) u1)) true)
     (ok new-id)
   )
 )
 
-;; Two-step Withdrawal
+;; @desc Initiates the two-step withdrawal process by creating a request.
+;; @desc A 24-hour cooling period (BLOCKS-PER-DAY) must pass before completion.
+;; @param stake-id - The ID of the active stake to withdraw.
+;; @returns (ok bool) - True if the request is successfully registered.
 (define-public (request-withdrawal (stake-id uint))
   (let
     (
       (staker tx-sender)
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
     )
+    ;; Verify the stake belongs to the sender and is still active
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
+    ;; Prevent multiple concurrent withdrawal requests for the same user
     (asserts! (is-eq (map-get? withdrawal-requests staker) none) ERR-INTERNAL-STATE)
 
+    ;; Store request with the unlock block height (current + 1 day)
     (map-set withdrawal-requests staker { 
       amount: (get amount stake-data), 
       unlock-block: (+ block-height BLOCKS-PER-DAY),
@@ -170,6 +202,9 @@
   )
 )
 
+;; @desc Finalizes a pending withdrawal after the cooling period.
+;; @desc Automatically claims any pending rewards before transferring the principal.
+;; @returns (ok bool) - True if the withdrawal is successfully finalized.
 (define-public (complete-withdrawal)
   (let
     (
@@ -178,9 +213,10 @@
       (stake-id (get stake-id request))
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
     )
+    ;; Ensure the cooling period has elapsed (1 day / 144 blocks)
     (asserts! (>= block-height (get unlock-block request)) ERR-NOT-UNLOCKED)
     
-    ;; Claim remaining rewards
+    ;; Calculate and mint any remaining yield before closing the position
     (let ((pending (calculate-pending-rewards stake-data)))
       (if (> pending u0)
         (try! (as-contract (contract-call? .aegis-token-v3 mint staker pending)))
@@ -188,11 +224,12 @@
       )
     )
 
-    ;; Transfer STX - Fee of 0.01 STX deducted for protocol
+    ;; Execute STX transfer from contract back to user
+    ;; A fixed fee (FEE-AMOUNT) is deducted for protocol maintenance
     (try! (as-contract (stx-transfer? (- (get amount request) FEE-AMOUNT) tx-sender staker)))
     (try! (as-contract (stx-transfer? FEE-AMOUNT tx-sender CONTRACT-OWNER)))
 
-    ;; Cleanup
+    ;; Permanent storage cleanup and state updates
     (map-set stakes { staker: staker, stake-id: stake-id } (merge stake-data { is-active: false }))
     (map-delete withdrawal-requests staker)
     (map-set user-total-staked staker (- (default-to u0 (map-get? user-total-staked staker)) (get amount request)))
@@ -201,7 +238,10 @@
   )
 )
 
-;; Emergency Withdrawal - Instant but with 0.01 STX fee
+;; @desc Provides instant liquidity by bypassing the normal withdrawal cooldown.
+;; @desc Users receive their principal immediately minus a fixed protocol fee.
+;; @param stake-id - The ID of the active stake to emergency withdraw.
+;; @returns (ok bool) - True if the emergency withdrawal is successful.
 (define-public (emergency-withdraw (stake-id uint))
   (let
     (
@@ -209,11 +249,14 @@
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
       (amount (get amount stake-data))
     )
+    ;; Ensure the stake is active and belongs to the caller
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     
+    ;; Immediate transfer of principal minus fixed protocol fee
     (try! (as-contract (stx-transfer? (- amount FEE-AMOUNT) tx-sender staker)))
     (try! (as-contract (stx-transfer? FEE-AMOUNT tx-sender CONTRACT-OWNER)))
 
+    ;; State cleanup: mark stake as inactive and update global totals
     (map-set stakes { staker: staker, stake-id: stake-id } (merge stake-data { is-active: false }))
     (map-set user-total-staked staker (- (default-to u0 (map-get? user-total-staked staker)) amount))
     (var-set total-staked (- (var-get total-staked) amount))
@@ -221,7 +264,10 @@
   )
 )
 
-;; Claim Rewards
+;; @desc Allows a staker to claim their accrued AGS rewards for a specific stake.
+;; @desc Rewards are minted directly from the linked aegis-token-v3 contract.
+;; @param stake-id - The ID of the stake to claim rewards for.
+;; @returns (ok uint) - The amount of rewards successfully claimed.
 (define-public (claim-rewards (stake-id uint))
   (let
     (
@@ -229,10 +275,14 @@
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
       (pending (calculate-pending-rewards stake-data))
     )
+    ;; Ensure the position is active and has rewards available to claim
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     (asserts! (> pending u0) ERR-INVALID-AMOUNT)
 
+    ;; Mint the reward tokens to the staker
     (try! (as-contract (contract-call? .aegis-token-v3 mint staker pending)))
+    
+    ;; Update the stake's cumulative claimed rewards count
     (map-set stakes { staker: staker, stake-id: stake-id } 
       (merge stake-data { total-claimed: (+ (get total-claimed stake-data) pending) })
     )
@@ -244,17 +294,28 @@
 ;; ADMIN FUNCTIONS
 ;; ============================================
 
+;; @desc Toggles the operational status of the staking contract.
+;; @desc When paused, new staking positions cannot be created.
+;; @param paused - The new boolean status for the contract pause state.
+;; @returns (ok bool) - True if the status was successfully updated.
 (define-public (set-paused (paused bool))
   (begin
+    ;; Restricted to the contract owner only
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
     (var-set contract-paused paused)
     (ok true)
   )
 )
 
+;; @desc Allows the contract owner to withdraw collected protocol fees from the treasury.
+;; @param amount - The amount of microSTX to withdraw.
+;; @param recipient - The address to receive the withdrawn funds.
+;; @returns (ok bool) - True if the withdrawal is successful.
 (define-public (withdraw-treasury (amount uint) (recipient principal))
   (begin
+    ;; Strictly restricted to the protocol administrator
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    ;; Transfer the specified amount from the contract to the recipient
     (try! (as-contract (stx-transfer? amount tx-sender recipient)))
     (ok true)
   )
@@ -264,6 +325,10 @@
 ;; READ-ONLY
 ;; ============================================
 
+;; @desc Calculates the currently accruable rewards for a specific stake.
+;; @param staker - The address of the position owner.
+;; @param stake-id - The ID of the stake to query.
+;; @returns (ok uint) - The amount of AGS rewards (micro-units) pending.
 (define-read-only (get-pending-rewards (staker principal) (stake-id uint))
   (match (map-get? stakes { staker: staker, stake-id: stake-id })
     stake-data (ok (calculate-pending-rewards stake-data))
@@ -271,6 +336,8 @@
   )
 )
 
+;; @desc Returns a summary of the protocol's current state and liquidity.
+;; @returns (tuple) - Includes total-staked, total-stakers, stake-counter, pause status, and contract balance.
 (define-read-only (get-vault-stats)
   {
     total-staked: (var-get total-staked),

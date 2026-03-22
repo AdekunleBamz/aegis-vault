@@ -1,10 +1,12 @@
 // Contract addresses for mainnet
 export const CONTRACTS = {
-  STAKING: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-staking-v2-15',
-  TREASURY: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15',
-  TOKEN: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v2-15',
-  WITHDRAWALS: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-withdrawals-v2-15',
-  REWARDS: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15',
+  // v3 consolidated vault contract (kept under legacy keys for compatibility)
+  STAKING: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3',
+  WITHDRAWALS: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3',
+  REWARDS: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3',
+  TREASURY: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury',
+  TOKEN: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v3',
+  TOKEN_PATTERN: 'aegis-token',
 } as const;
 
 // API endpoints
@@ -25,7 +27,25 @@ export const TIERS = [
 export const BLOCKS_PER_DAY = 144;
 export const BLOCKS_PER_YEAR = 52560;
 export const COOLDOWN_BLOCKS = 144;
+export const BLOCK_TIME_MINUTES = 10;
+export const USER_SESSION_INTERVAL = 1000;
+export const SECONDS_PER_MINUTE = 60;
+export const SECONDS_PER_HOUR = 3600;
+export const SECONDS_PER_DAY = 86400;
+export const SECONDS_PER_WEEK = 604800;
 
 // Display constants
 export const STX_DECIMALS = 6;
 export const AGS_DECIMALS = 6;
+
+// Animation constants
+export const TRANSITION_DURATION = 0.3;
+export const TRANSITION_EASE = [0.16, 1, 0.3, 1];
+
+// Numeric constants
+export const MICRO_STX_DENOMINATOR = 1_000_000;
+export const MIN_STAKE_STX = 0.01;
+export const SUGGESTED_RESERVE_STX = 1;
+
+// Rewards projection
+export const MONTHS_PER_YEAR = 12;

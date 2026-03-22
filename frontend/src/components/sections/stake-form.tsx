@@ -5,8 +5,15 @@ import { useWallet } from '@/context/wallet-context';
 import { useBalances } from '@/hooks/use-balances';
 import { useStaking } from '@/hooks/use-staking';
 import { formatSTX, toMicroSTX } from '@/lib/format';
-import { TIERS } from '@/lib/constants';
+import { 
+  TIERS, 
+  MICRO_STX_DENOMINATOR, 
+  MIN_STAKE_STX, 
+  SUGGESTED_RESERVE_STX,
+  MONTHS_PER_YEAR 
+} from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
+import { validateStakeAmount } from '@/lib/validation-helpers';
 import {
   Wallet,
   ArrowUpRight,
@@ -23,8 +30,6 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-
-export function StakeForm() {
   const { address, isConnected, connect } = useWallet();
   const { stxBalance } = useBalances(address || '');
   const { stake, isLoading, error } = useStaking(address || '');
@@ -33,14 +38,10 @@ export function StakeForm() {
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const numAmount = parseFloat(amount) || 0;
-  const balanceSTX = Number(stxBalance) / 1e6;
+  const balanceSTX = Number(stxBalance) / MICRO_STX_DENOMINATOR;
 
   const hasError = useMemo(() => {
-    if (!amount) return null;
-    if (numAmount <= 0) return 'Amount must be greater than 0';
-    if (numAmount > balanceSTX) return 'Insufficient STX balance';
-    if (numAmount < 0.000001) return 'Amount is too small for protocol';
-    return null;
+    return validateStakeAmount(amount, numAmount, balanceSTX);
   }, [amount, numAmount, balanceSTX]);
 
   const formatAmount = (value: number) => {
@@ -92,7 +93,7 @@ export function StakeForm() {
 
   // Projected rewards calculation (simplified for UI)
   const yearlyAGS = numAmount * (apy / 100);
-  const monthlyAGS = yearlyAGS / 12;
+  const monthlyAGS = yearlyAGS / MONTHS_PER_YEAR;
 
   const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
   const nextTierMin = nextTier ? nextTier.minStake : 0;
@@ -195,7 +196,7 @@ export function StakeForm() {
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                     Suggested Reserve
                   </p>
-                  <p className="mt-2 text-2xl font-black tabular-nums">1 STX</p>
+                  <p className="mt-2 text-2xl font-black tabular-nums">{SUGGESTED_RESERVE_STX} STX</p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Keep a small balance free for transaction fees and future position changes.
                   </p>

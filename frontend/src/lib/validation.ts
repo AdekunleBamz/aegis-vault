@@ -187,7 +187,14 @@ export class ValidationError extends Error {
   }
 }
 
-// Validate with detailed error reporting
+/**
+ * Validates data against a Zod schema and throws a ValidationError if invalid.
+ * 
+ * @param schema - The Zod schema to validate against
+ * @param data - The data to validate
+ * @returns The validated data with inferred type T
+ * @throws ValidationError with detailed issues if validation fails
+ */
 export function validate<T>(
   schema: z.ZodSchema<T>,
   data: unknown
@@ -195,7 +202,7 @@ export function validate<T>(
   const result = schema.safeParse(data)
   
   if (!result.success) {
-    const issues = result.error.issues
+    const issues = (result as z.SafeParseError<unknown>).error.issues
     const message = issues
       .map(i => `${i.path.join('.')}: ${i.message}`)
       .join('; ')
@@ -205,7 +212,14 @@ export function validate<T>(
   return result.data
 }
 
-// Safe validation (returns result instead of throwing)
+/**
+ * Safely validates data against a Zod schema without throwing.
+ * Returns a success flag and either the data or the ZodError.
+ * 
+ * @param schema - The Zod schema to validate against
+ * @param data - The data to validate
+ * @returns An object with success: true and data, or success: false and error
+ */
 export function safeValidate<T>(
   schema: z.ZodSchema<T>,
   data: unknown
@@ -216,10 +230,15 @@ export function safeValidate<T>(
     return { success: true, data: result.data }
   }
   
-  return { success: false, error: result.error }
+  return { success: false, error: (result as z.SafeParseError<unknown>).error }
 }
 
-// Validate Stacks address
+/**
+ * Checks if a string is a valid Stacks address (Mainnet or Testnet).
+ * 
+ * @param address - The address string to validate
+ * @returns True if the address format is valid
+ */
 export function isValidStacksAddress(address: string): boolean {
   return stacksAddressSchema.safeParse(address).success
 }

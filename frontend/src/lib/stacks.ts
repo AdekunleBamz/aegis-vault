@@ -22,7 +22,12 @@ export interface TransactionResult {
 }
 
 /**
- * Execute stake transaction
+ * Executes a staking transaction to the Aegis Staking contract.
+ * Sets up the required STX post-condition and opens the Stacks Connect contract call modal.
+ * 
+ * @param amount - The amount to stake in micro-STX (uSTX)
+ * @param senderAddress - The Stacks address of the sender
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeStake(
   amount: bigint,
@@ -60,7 +65,11 @@ export async function executeStake(
 }
 
 /**
- * Execute unstake/withdraw request
+ * Initiates a withdrawal request in the Aegis Withdrawals contract.
+ * Users must request a withdrawal before they can complete it after the cooling period.
+ * 
+ * @param amount - The amount to request for withdrawal in micro-STX (uSTX)
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeWithdrawRequest(
   amount: bigint
@@ -88,7 +97,10 @@ export async function executeWithdrawRequest(
 }
 
 /**
- * Execute withdraw completion
+ * Completes a previously requested withdrawal after the cooling period has passed.
+ * Transfers the STX from the Aegis Withdrawals contract back to the user.
+ * 
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeWithdrawComplete(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
@@ -114,7 +126,10 @@ export async function executeWithdrawComplete(): Promise<TransactionResult> {
 }
 
 /**
- * Execute claim rewards
+ * Claims any accrued AGS rewards from the Aegis Rewards contract.
+ * Rewards are calculated based on the user's staked amount and duration.
+ * 
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeClaimRewards(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {

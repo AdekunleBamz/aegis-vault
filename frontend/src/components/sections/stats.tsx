@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useNetwork } from '@/hooks/use-network';
 import { formatSTX, formatBlockHeight } from '@/lib/format';
+import { MICRO_STX_DENOMINATOR } from '@/lib/constants';
 import {
   BarChart3,
   Users,
@@ -22,7 +23,7 @@ export function Stats() {
   const stats = [
     {
       label: 'Total Value Locked',
-      value: formatSTX(BigInt(1500000000000)),
+      value: formatSTX(BigInt(1_500_000 * MICRO_STX_DENOMINATOR)),
       unit: 'STX',
       note: 'Capital actively securing vault strategies',
       icon: BarChart3,
@@ -40,7 +41,7 @@ export function Stats() {
     },
     {
       label: 'Rewards Distributed',
-      value: formatSTX(BigInt(50000000000)),
+      value: formatSTX(BigInt(50_000 * MICRO_STX_DENOMINATOR)),
       unit: 'AGS',
       note: 'Governance incentives paid to participants',
       icon: Gift,
@@ -133,7 +134,11 @@ export function Stats() {
               )}
             >
               <div className="flex items-center justify-between mb-6">
-                <div className={cn("p-3 rounded-2xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors duration-500", stat.color)}>
+                <div className={cn(
+                  "p-3 rounded-2xl bg-muted transition-all duration-500",
+                  "group-hover:bg-foreground group-hover:text-background group-hover:scale-110",
+                  stat.color
+                )}>
                   <stat.icon className="w-6 h-6" />
                 </div>
                 <TrendingUp className="w-4 h-4 text-muted-foreground/30 group-hover:text-green-500 transition-colors" />

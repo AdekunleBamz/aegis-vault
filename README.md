@@ -15,15 +15,15 @@ Aegis Vault is a high-performance, decentralized staking protocol engineered for
 
 ## Architecture
 
-The protocol consists of multiple smart contracts:
+The active protocol surface uses these contracts:
 
 | Contract | Description |
 |----------|-------------|
-| `aegis-staking-v2-15` | Core staking logic, handles deposits and position tracking |
-| `aegis-withdrawals-v2-15` | Withdrawal processing with lock period enforcement |
-| `aegis-rewards-v2-15` | Reward calculation and distribution |
-| `aegis-treasury-v2-15` | Treasury for penalty fees and protocol revenue |
-| `aegis-token-v2-15` | AGS token (SIP-010 compliant) |
+| `aegis-vault-v3` | Consolidated staking, withdrawal, and rewards logic |
+| `aegis-treasury` | Treasury for penalty fees and protocol revenue |
+| `aegis-token-v3` | AGS token (SIP-010 compliant) |
+
+Legacy `v2` and `v2-15` contracts are retained in this repository for migration and reference.
 
 ## Tech Stack
 
@@ -48,11 +48,11 @@ The protocol consists of multiple smart contracts:
 ```
 aegis-vault/
 ├── contracts/           # Clarity smart contracts
-│   ├── aegis-staking-v2-15.clar
-│   ├── aegis-withdrawals-v2-15.clar
-│   ├── aegis-rewards-v2-15.clar
-│   ├── aegis-treasury-v2-15.clar
-│   ├── aegis-token-v2-15.clar
+│   ├── aegis-vault-v3.clar
+│   ├── aegis-token-v3.clar
+│   ├── aegis-treasury-v2-15.clar (published as `aegis-treasury`)
+│   ├── aegis-vault-v2.clar (legacy)
+│   ├── aegis-token-v2-15.clar (legacy)
 │   └── traits/
 ├── frontend/            # Next.js frontend application
 │   └── src/
@@ -70,8 +70,17 @@ aegis-vault/
 ## Installation
 
 ### Prerequisites
-- Node.js 18+
-- Clarinet 2.0+
+
+- **Node.js**: v18.0.0 or higher is required for the frontend and automation scripts.
+- **Clarinet**: v2.0.0 or higher is required for smart contract development and local simulation.
+- **Git**: Required for version control and cloning the repository.
+- **Stacks Wallet**: Recommended (e.g., Leather or Xverse) for interacting with the protocol in a browser.
+
+### Development Environment
+
+For the best development experience, we recommend:
+- **VS Code** with the **Clarity** extension for syntax highlighting and contract analysis.
+- **Docker** for running local Stacks nodes if advanced integration testing is needed.
 
 ### Setup
 
@@ -85,6 +94,16 @@ npm install
 
 # Install frontend dependencies
 npm --prefix frontend install
+
+### Environment Variables
+
+Before running the frontend, ensure you have the necessary environment variables set in `frontend/.env.local`:
+
+```
+NEXT_PUBLIC_STACKS_API=https://api.mainnet.hiro.so
+NEXT_PUBLIC_VAULT_ADDRESS=SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N
+NEXT_PUBLIC_NETWORK=mainnet
+```
 ```
 
 ## Development
@@ -102,7 +121,12 @@ clarinet test
 npm test
 
 # Console for local testing
+# Use this to manually call functions and inspect state
 clarinet console
+
+# Run specific test file
+# Example: clarinet test tests/aegis-vault-v3_test.ts
+clarinet test <path-to-test>
 ```
 
 ### Frontend
@@ -118,71 +142,85 @@ npm run frontend:build
 npm --prefix frontend start
 ```
 
+### Common Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run frontend:dev` | Start frontend development server |
+| `npm run frontend:build` | Build frontend for production |
+| `clarinet check` | Check Clarity contract syntax |
+| `clarinet test` | Run Clarity contract unit tests |
+| `npm run test` | Run frontend unit tests with Vitest |
+| `clarinet console` | Start interactive Clarity repl |
+
 ## Deployment
 
 ### Mainnet Deployment
 
-Contracts are deployed to Stacks mainnet at:
+Active contracts are deployed to Stacks mainnet at:
 
 ```
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-staking-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-withdrawals-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v2-15
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v3
 ```
 
 ### Deployment Plans
 
 ```bash
 # Deploy to mainnet
-clarinet deployments apply -p deployments/v2-15-mainnet-plan.yaml --no-dashboard
+clarinet deployments apply -p deployments/mainnet-v3-plan.yaml --no-dashboard
 ```
 
 ## Usage
 
-### Staking
+### Staking Tiers
 
-Users can stake STX with different lock periods:
+Users can stake STX with different lock periods. Longer durations yield higher reward multipliers:
 
-| Lock Period | Duration | Reward Multiplier |
-|-------------|----------|-------------------|
-| 3 days | 432 blocks | 1.0x |
-| 7 days | 1008 blocks | 1.2x |
-| 30 days | 4320 blocks | 1.5x |
+| Tier | Duration | Blocks | Multiplier | Bonus (bps) |
+|------|----------|--------|------------|-------------|
+| **Trial** | 3 days | 432 | 1.0x | 10,000 |
+| **Elite** | 7 days | 1008 | 1.2x | 12,000 |
+| **Legend** | 30 days | 4320 | 1.5x | 15,000 |
 
 ### Withdrawals
 
-- **Normal withdrawal**: Available after lock period expires, returns full stake + rewards
-- **Emergency withdrawal**: Available anytime, 2% penalty deducted
+- **Normal withdrawal**: Available after lock period expires, returns full stake + pending rewards. Requires a 0.01 STX fixed protocol fee.
+- **Emergency withdrawal**: Available anytime, returns principal minus a 0.01 STX fixed penalty fee.
 
 ## API Reference
 
-### Staking Contract
+### Vault Contract (`aegis-vault-v3`)
 
 ```clarity
 ;; Stake STX with lock period (3, 7, or 30 days)
 (stake (amount uint) (lock-period uint))
 
-;; Get user's stake IDs
-(get-user-stake-ids (user principal))
-
-;; Get stake details
-(get-stake (staker principal) (stake-id uint))
+;; Request and complete withdrawal
+(request-withdrawal (stake-id uint))
+(complete-withdrawal)
 
 ;; Get vault statistics
 (get-vault-stats)
 ```
 
-### Withdrawals Contract
+### Token Contract (`aegis-token-v3`)
 
 ```clarity
-;; Normal withdrawal (after lock expires)
-(withdraw (stake-id uint))
-
-;; Emergency withdrawal (2% penalty)
-(emergency-withdraw (stake-id uint))
+;; Read token metadata
+(get-name)
+(get-symbol)
+(get-decimals)
 ```
+
+## Troubleshooting
+
+### Common Issues
+
+- **Clarinet check fails**: Ensure you are in the root directory and that `Clarinet.toml` is present.
+- **Frontend build errors**: Try clearing the `.next` directory and running `npm run frontend:build` again.
+- **Wallet connection fails**: Ensure your browser wallet (Leather/Xverse) is set to the correct network (Mainnet/Testnet) corresponding to your `.env.local`.
 
 ## Security
 

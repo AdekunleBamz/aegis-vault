@@ -101,10 +101,9 @@ export default function StatsPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-700/50">
                   {[
-                    { name: 'Staking', address: 'aegis-staking-v2-15', status: 'Active' },
-                    { name: 'Treasury', address: 'aegis-treasury-v2-15', status: 'Active' },
-                    { name: 'Rewards', address: 'aegis-rewards-v2-15', status: 'Active' },
-                    { name: 'Token (AGS)', address: 'aegis-token-v2-15', status: 'Active' },
+                    { name: 'Vault (Staking/Withdrawals/Rewards)', address: 'aegis-vault-v3', status: 'Active' },
+                    { name: 'Treasury', address: 'aegis-treasury', status: 'Active' },
+                    { name: 'Token (AGS)', address: 'aegis-token-v3', status: 'Active' },
                   ].map((contract, i) => (
                     <tr key={i} className="hover:bg-gray-800/30 transition-colors">
                       <td className="p-4 text-white font-medium">{contract.name}</td>
