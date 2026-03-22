@@ -72,7 +72,6 @@ export async function executeWithdrawRequest(
       network,
       contractAddress: contractAddr,
       contractName,
-      functionName: 'request-withdrawal',
       functionArgs: [uintCV(amount)],
       postConditionMode: PostConditionMode.Deny,
       onFinish: (data: FinishedTxData) => {
