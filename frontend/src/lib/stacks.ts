@@ -22,7 +22,12 @@ export interface TransactionResult {
 }
 
 /**
- * Execute stake transaction
+ * Executes a staking transaction to the Aegis Staking contract.
+ * Sets up the required STX post-condition and opens the Stacks Connect contract call modal.
+ * 
+ * @param amount - The amount to stake in micro-STX (uSTX)
+ * @param senderAddress - The Stacks address of the sender
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeStake(
   amount: bigint,
