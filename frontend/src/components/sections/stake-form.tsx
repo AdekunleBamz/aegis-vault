@@ -198,15 +198,15 @@ export function StakeForm() {
                     <label htmlFor="stake-amount" className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
                       Deposit Amount
                     </label>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      Enter how much STX you want to lock. Maximum 6 decimal places allowed for protocol compatibility.
+                    <p id="stake-amount-description" className="mt-2 text-sm text-muted-foreground">
+                      Enter how much STX you want to lock into the vault. Rewards update instantly as you type.
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setSuggestedAmount(balanceSTX)}
                     className="self-start rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan"
-                    title="Fill with your entire available STX balance minus gas reserve"
+                    aria-label={`Use maximum balance: ${balanceSTX} STX`}
                   >
                     Use Max Balance
                   </button>
@@ -221,7 +221,10 @@ export function StakeForm() {
                     onChange={handleAmountChange}
                     placeholder="0.00"
                     aria-invalid={!!hasError}
-                    aria-describedby={hasError ? "stake-error" : undefined}
+                    aria-describedby={cn(
+                      "stake-amount-description",
+                      hasError && "stake-error"
+                    )}
                     className={cn(
                       "mt-4 w-full bg-muted/20 border-2 rounded-[32px] px-8 py-7 text-4xl font-black focus:outline-none transition-all duration-500 placeholder:text-muted-foreground/20",
                       hasError
