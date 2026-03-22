@@ -1,4 +1,4 @@
-import { STX_DECIMALS, AGS_DECIMALS } from './constants';
+import { STX_DECIMALS, AGS_DECIMALS, MICRO_STX_DENOMINATOR } from './constants';
 
 /**
  * Formats micro-STX (uSTX) value to a human-readable STX string.
@@ -9,7 +9,7 @@ import { STX_DECIMALS, AGS_DECIMALS } from './constants';
  */
 export function formatSTX(microStx: string | number | bigint): string {
   const value = BigInt(microStx);
-  const stx = Number(value) / Math.pow(10, STX_DECIMALS);
+  const stx = Number(value) / MICRO_STX_DENOMINATOR;
   return stx.toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 6,
