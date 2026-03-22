@@ -36,6 +36,7 @@ export function usePositions(address: string): UsePositionsReturn {
     setError(null);
 
     try {
+      // Fetch the unified staker info from the staking library
       const stakerInfo = await getStakerInfo(address);
       setPosition(stakerInfo);
     } catch (err) {
