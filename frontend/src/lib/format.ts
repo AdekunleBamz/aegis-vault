@@ -15,6 +15,7 @@ export function formatSTX(microStx: string | number | bigint): string {
 
 /**
  * Format AGS tokens with proper decimals
+ * @example formatAGS(1000000) // "1.00"
  */
 export function formatAGS(microAgs: string | number | bigint): string {
   const value = BigInt(microAgs);
