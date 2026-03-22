@@ -142,6 +142,17 @@ npm run frontend:build
 npm --prefix frontend start
 ```
 
+### Common Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run frontend:dev` | Start frontend development server |
+| `npm run frontend:build` | Build frontend for production |
+| `clarinet check` | Check Clarity contract syntax |
+| `clarinet test` | Run Clarity contract unit tests |
+| `npm run test` | Run frontend unit tests with Vitest |
+| `clarinet console` | Start interactive Clarity repl |
+
 ## Deployment
 
 ### Mainnet Deployment
