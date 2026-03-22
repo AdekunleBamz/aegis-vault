@@ -64,7 +64,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
     return (
       <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-12 text-center group">
         <div className="w-20 h-20 bg-muted rounded-[32px] flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-500">
-          <ShieldCheck className="w-10 h-10 text-muted-foreground/40" />
+          <ShieldCheck className="w-10 h-10 text-muted-foreground/40" aria-hidden="true" />
         </div>
         <h3 className="text-2xl font-black mb-4">Staking Entry Locked</h3>
         <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto">
