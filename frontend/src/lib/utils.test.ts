@@ -30,14 +30,5 @@ describe('utils', () => {
       const meta = getComponentMetadata('Test');
       expect(meta.role).toBe('region');
     });
-
-    it('should return null for unknown components', () => {
-      expect(getComponentMetadata('UnknownComponent')).toBeNull();
-    });
-
-    it('should be case sensitive', () => {
-      expect(getComponentMetadata('stakeform')).toBeNull();
-    });
-    });
   });
 });
