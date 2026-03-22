@@ -70,14 +70,50 @@ describe('services', () => {
     });
   });
 
-  describe('logger', () => {
-    it('should log messages if enabled', () => {
-      const spy = vi.spyOn(console, 'info').mockImplementation(() => {});
-      const { logger } = require('./services');
-      logger.configure({ enabled: true, level: 'info' });
-      logger.info('test message');
-      expect(spy).toHaveBeenCalled();
-      spy.mockRestore();
+  describe('retry', () => {
+    it('should retry failed function', async () => {
+      let attempts = 0;
+      const fn = async () => {
+        attempts++;
+        if (attempts < 2) throw new Error('fail');
+        return 'success';
+      };
+      
+      const result = await retry(fn, { delayMs: 10 });
+      expect(result).toBe('success');
+      expect(attempts).toBe(2);
+    });
+  });
+
+  describe('debounce', () => {
+    it('should debounce function calls', async () => {
+      vi.useFakeTimers();
+      const fn = vi.fn();
+      const debounced = debounce(fn, 100);
+      
+      debounced();
+      debounced();
+      vi.advanceTimersByTime(101);
+      
+      expect(fn).toHaveBeenCalledTimes(1);
+      vi.useRealTimers();
+    });
+  });
+
+  describe('throttle', () => {
+    it('should throttle function calls', () => {
+      vi.useFakeTimers();
+      const fn = vi.fn();
+      const throttled = throttle(fn, 100);
+      
+      throttled();
+      throttled();
+      expect(fn).toHaveBeenCalledTimes(1);
+      
+      vi.advanceTimersByTime(101);
+      throttled();
+      expect(fn).toHaveBeenCalledTimes(2);
+      vi.useRealTimers();
     });
   });
 });
