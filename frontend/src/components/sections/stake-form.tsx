@@ -117,7 +117,7 @@ export function StakeForm() {
           rotate: [0, 90, 0]
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-1/4 -right-20 w-96 h-96 bg-aegis-blue/20 rounded-full blur-[120px] pointer-events-none"
+        className="absolute top-1/4 -right-20 w-96 h-96 bg-aegis-blue/20 rounded-full blur-[120px] pointer-events-none" aria-hidden="true"
       />
       <motion.div
         animate={{
@@ -126,7 +126,7 @@ export function StakeForm() {
           rotate: [0, -90, 0]
         }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-aegis-purple/20 rounded-full blur-[140px] pointer-events-none"
+        className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-aegis-purple/20 rounded-full blur-[140px] pointer-events-none" aria-hidden="true"
       />
 
       <div className="container max-w-2xl mx-auto relative z-10">
@@ -240,7 +240,7 @@ export function StakeForm() {
                     )}
                   />
                   <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-4">
-                    <span className="text-xl font-black text-muted-foreground/40">STX</span>
+                    <span className="text-xl font-black text-muted-foreground/40" aria-hidden="true">STX</span>
                   </div>
                 </div>
 
@@ -260,13 +260,14 @@ export function StakeForm() {
                 </AnimatePresence>
 
                 {quickAmounts.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2 px-1">
+                  <div className="mt-4 flex flex-wrap gap-2 px-1" role="group" aria-label="Quick-fill amounts">
                     {quickAmounts.map((preset) => (
                       <button
                         key={preset.label}
                         type="button"
                         onClick={() => setSuggestedAmount(preset.value)}
                         aria-label={`Set stake amount to ${preset.label} of balance`}
+                    aria-current={numAmount === preset.value ? 'true' : undefined}
                         className="rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
                       >
                         {preset.label}
@@ -321,7 +322,8 @@ export function StakeForm() {
                     <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" />
                   </div>
                   <div>
-                    <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}>
+                    <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}
+                      aria-live="polite">
                       {numAmount > 0 ? `+${monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : "0.00"}
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Est. AGS / Month</div>
