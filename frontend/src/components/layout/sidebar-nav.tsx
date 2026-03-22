@@ -33,6 +33,7 @@ export function SidebarNav({
 }: SidebarNavProps) {
   return (
     <nav 
+      aria-label="Sidebar Navigation"
       className={`
         flex flex-col h-full
         bg-white dark:bg-gray-800
