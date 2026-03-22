@@ -162,16 +162,22 @@
   )
 )
 
-;; Two-step Withdrawal
+;; @desc Initiates the two-step withdrawal process by creating a request.
+;; @desc A 24-hour cooling period (BLOCKS-PER-DAY) must pass before completion.
+;; @param stake-id - The ID of the active stake to withdraw.
+;; @returns (ok bool) - True if the request is successfully registered.
 (define-public (request-withdrawal (stake-id uint))
   (let
     (
       (staker tx-sender)
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
     )
+    ;; Verify the stake belongs to the sender and is still active
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
+    ;; Prevent multiple concurrent withdrawal requests for the same user
     (asserts! (is-eq (map-get? withdrawal-requests staker) none) ERR-INTERNAL-STATE)
 
+    ;; Store request with the unlock block height (current + 1 day)
     (map-set withdrawal-requests staker { 
       amount: (get amount stake-data), 
       unlock-block: (+ block-height BLOCKS-PER-DAY),
