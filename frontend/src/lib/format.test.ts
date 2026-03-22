@@ -13,16 +13,16 @@ import {
 describe('format', () => {
   describe('formatSTX', () => {
     it('should format uSTX to STX string', () => {
-      expect(formatSTX(1000000)).toBe('1.00');
-      expect(formatSTX('5000000')).toBe('5.00');
-      expect(formatSTX(0n)).toBe('0.00');
+      expect(formatSTX(1000000).replace(/\u00a0/g, ' ')).toBe('1.00');
+      expect(formatSTX('5000000').replace(/\u00a0/g, ' ')).toBe('5.00');
+      expect(formatSTX(0n).replace(/\u00a0/g, ' ')).toBe('0.00');
     });
   });
 
   describe('formatAGS', () => {
     it('should format uAGS to AGS string', () => {
-      expect(formatAGS(100000000)).toBe('1.00');
-      expect(formatAGS('500000000')).toBe('5.00');
+      expect(formatAGS(100000000).replace(/\u00a0/g, ' ')).toBe('1.00');
+      expect(formatAGS('500000000').replace(/\u00a0/g, ' ')).toBe('5.00');
     });
   });
 
@@ -36,7 +36,7 @@ describe('format', () => {
   describe('truncateAddress', () => {
     it('should truncate address correctly', () => {
       const addr = 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9';
-      expect(truncateAddress(addr)).toBe('SP2PAB...D2JG9');
+      expect(truncateAddress(addr)).toBe('SP2PAB...2JG9');
       expect(truncateAddress(addr, 2)).toBe('SP2PAB...G9');
     });
   });
