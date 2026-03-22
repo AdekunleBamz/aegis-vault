@@ -125,8 +125,9 @@ export function Hero() {
             <Link
               href="#stake-panel"
               aria-label="Jump to the staking calculator"
-              className="px-8 py-4 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground font-bold text-lg hover:bg-muted/50 transition-all flex items-center justify-center gap-2"
+              className="group relative px-8 py-4 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground font-bold text-lg hover:bg-muted/50 hover:border-aegis-purple/30 transition-all flex items-center justify-center gap-2 active:scale-95"
             >
+              <div className="absolute inset-0 rounded-full border border-transparent bg-gradient-to-r from-aegis-blue/0 to-aegis-purple/0 group-hover:from-aegis-blue/20 group-hover:to-aegis-purple/20 transition-all duration-500 [mask:linear-gradient(#fff_0_0)_padding-box,linear-gradient(#fff_0_0)] [mask-composite:exclude]" />
               Estimate My Rewards
             </Link>
           </motion.div>
