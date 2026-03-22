@@ -170,11 +170,17 @@ export function useOptimistic<T>(
   }, [value]);
 
   return {
+    /** The current state, either the confirmed value or the optimistic one if pending */
     value: isPending ? optimisticValue : value,
+    /** The last confirmed value from the server/source */
     actualValue: value,
+    /** Whether an optimistic update is currently awaiting confirmation/reversion */
     isPending,
+    /** Trigger an optimistic update */
     addOptimistic,
+    /** Confirm that the optimistic update was successful */
     confirmOptimistic,
+    /** Roll back the optimistic update to the last confirmed value */
     revertOptimistic,
   };
 }
