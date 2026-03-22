@@ -145,7 +145,7 @@ export function Header() {
               </div>
               <div className="absolute inset-0 bg-aegis-blue/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
-            <span className="text-xl font-bold tracking-tight text-gradient hidden sm:block">
+            <span className="text-xl font-bold tracking-tight text-gradient hidden sm:block group-hover:brightness-110 transition-all duration-500">
               Aegis Vault
             </span>
           </Link>
