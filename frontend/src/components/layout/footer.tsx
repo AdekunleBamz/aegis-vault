@@ -80,7 +80,7 @@ export function Footer() {
                   <Link
                     href={link.href}
                     aria-label={`Navigate to ${link.label}`}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center group"
+                    className="text-muted-foreground hover:text-foreground text-sm transition-all duration-300 flex items-center group hover:translate-x-1"
                   >
                     {link.label}
                   </Link>
