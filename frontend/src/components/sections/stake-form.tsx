@@ -30,6 +30,8 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+
+export function StakeForm() {
   const { address, isConnected, connect } = useWallet();
   const { stxBalance } = useBalances(address || '');
   const { stake, isLoading, error } = useStaking(address || '');
