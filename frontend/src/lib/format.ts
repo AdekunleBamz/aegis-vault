@@ -88,11 +88,8 @@ export function toMicroSTX(stx: number): bigint {
 }
 
 /**
- * Convert AGS to microAGS.
- *
- * @param ags - Amount in AGS (e.g., 2.5 for 2.5 AGS)
- * @returns Amount in microAGS as bigint
- * @example toMicroAGS(1) // 1000000n
+ * Truncate address for display
+ * @example truncateAddress("SP3FKNEZ...") -> "SP3FKN...GG6N"
  */
 export function toMicroAGS(ags: number): bigint {
   if (!Number.isFinite(ags) || ags <= 0) return 0n;
