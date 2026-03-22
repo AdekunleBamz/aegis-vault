@@ -2,27 +2,39 @@
 // ERROR TYPES
 // ============================================================================
 
+/**
+ * Enumeration of standardized error codes used throughout the Aegis Vault application.
+ * Helps in identifying specific error conditions for UI feedback and logic.
+ */
 export type ErrorCode =
-  | 'WALLET_NOT_CONNECTED'
-  | 'WALLET_CONNECTION_REJECTED'
-  | 'INSUFFICIENT_BALANCE'
-  | 'INSUFFICIENT_ALLOWANCE'
-  | 'TRANSACTION_REJECTED'
-  | 'TRANSACTION_FAILED'
-  | 'TRANSACTION_TIMEOUT'
-  | 'NETWORK_ERROR'
-  | 'CONTRACT_ERROR'
-  | 'VALIDATION_ERROR'
-  | 'RATE_LIMITED'
-  | 'NOT_FOUND'
-  | 'UNAUTHORIZED'
-  | 'UNKNOWN_ERROR';
+  | 'WALLET_NOT_CONNECTED'           // No wallet extension detected or connected
+  | 'WALLET_CONNECTION_REJECTED'     // User explicitly rejected the connection request
+  | 'INSUFFICIENT_BALANCE'            // User does not have enough STX/tokens for the action
+  | 'INSUFFICIENT_ALLOWANCE'          // Token allowance is too low for the requested transfer
+  | 'TRANSACTION_REJECTED'            // User cancelled the transaction in their wallet
+  | 'TRANSACTION_FAILED'              // Transaction broadcasted but failed on-chain
+  | 'TRANSACTION_TIMEOUT'             // Transaction did not complete within expected time
+  | 'NETWORK_ERROR'                   // API or blockchain node communication failure
+  | 'CONTRACT_ERROR'                  // Smart contract logic or execution error
+  | 'VALIDATION_ERROR'                // Input data failed pre-submission validation
+  | 'RATE_LIMITED'                    // Too many requests to the Stacks API
+  | 'NOT_FOUND'                       // Requested resource (account, tx, etc) not found
+  | 'UNAUTHORIZED'                    // Action requires a different role or permission
+  | 'UNKNOWN_ERROR';                   // Catch-all for unexpected failures
 
+/**
+ * Standard interface for error objects returned by the API or thrown by hooks.
+ */
 export interface AppError {
+  /** Machine-readable error code */
   code: ErrorCode;
+  /** Human-readable error message */
   message: string;
+  /** Optional additional data about the error */
   details?: unknown;
+  /** When the error occurred */
   timestamp: number;
+  /** Whether the user can potentially fix this without developer intervention */
   recoverable: boolean;
 }
 
@@ -30,12 +42,22 @@ export interface AppError {
 // ERROR CLASS
 // ============================================================================
 
+/**
+ * Custom error class for Aegis Vault that includes metadata like error codes and recoverability.
+ * Extends the native Error class.
+ */
 export class AegisError extends Error {
   code: ErrorCode;
   details?: unknown;
   timestamp: number;
   recoverable: boolean;
 
+  /**
+   * @param code - The standardized error code
+   * @param message - User-facing error message
+   * @param details - Optional debug info
+   * @param recoverable - Whether the action can be retried (default: true)
+   */
   constructor(code: ErrorCode, message: string, details?: unknown, recoverable = true) {
     super(message);
     this.name = 'AegisError';
@@ -45,6 +67,9 @@ export class AegisError extends Error {
     this.recoverable = recoverable;
   }
 
+  /**
+   * Converts the error instance to a plain object for serialization.
+   */
   toJSON(): AppError {
     return {
       code: this.code,
@@ -55,6 +80,12 @@ export class AegisError extends Error {
     };
   }
 
+  /**
+   * Static helper to wrap any unknown error into an AegisError instance.
+   * 
+   * @param error - The unknown error to wrap
+   * @param defaultCode - Fallback error code (default: 'UNKNOWN_ERROR')
+   */
   static fromError(error: unknown, defaultCode: ErrorCode = 'UNKNOWN_ERROR'): AegisError {
     if (error instanceof AegisError) return error;
     
@@ -70,6 +101,9 @@ export class AegisError extends Error {
 // ERROR MESSAGES
 // ============================================================================
 
+/**
+ * Default user-facing messages for each standardized error code.
+ */
 export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   WALLET_NOT_CONNECTED: 'Please connect your wallet to continue.',
   WALLET_CONNECTION_REJECTED: 'Wallet connection was rejected. Please try again.',
@@ -92,14 +126,20 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
 // ============================================================================
 
 /**
- * Creates a specific error with standard message
+ * Creates a specific AegisError with its default standard message.
+ * 
+ * @param code - The error code to use
+ * @param details - Additional debug info
  */
 export function createError(code: ErrorCode, details?: unknown): AegisError {
   return new AegisError(code, ERROR_MESSAGES[code], details);
 }
 
 /**
- * Checks if error is a specific type
+ * Type guard to check if an unknown error is an AegisError with a specific code.
+ * 
+ * @param error - The error to check
+ * @param code - The expected error code
  */
 export function isErrorCode(error: unknown, code: ErrorCode): boolean {
   return error instanceof AegisError && error.code === code;
