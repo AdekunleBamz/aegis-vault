@@ -113,6 +113,12 @@ export async function callReadOnlyFunction(
   return response.json();
 }
 
+/**
+ * Fetches the current stacks-tip-height (block height) from the Stacks node.
+ * 
+ * @returns A promise that resolves to the current block height as a number
+ * @throws Error if the API request fails
+ */
 export async function getCurrentBlockHeight(): Promise<number> {
   const response = await fetch(`${API.STACKS_API}/v2/info`, {
     next: { revalidate: 10 },
