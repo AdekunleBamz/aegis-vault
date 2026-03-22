@@ -340,7 +340,12 @@ import { cn } from '@/lib/utils';
                     <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" />
                   </div>
                   <div>
-                    <div className="text-2xl font-black flex items-center gap-2" style={{ color: TIERS[tier]?.color }} aria-label={`Current Tier: ${TIERS[tier]?.name}, ${apy} percent APY`}>
+                    <div
+                      className="text-2xl font-black flex items-center gap-2"
+                      style={{ color: TIERS[tier]?.color }}
+                      aria-label={`Current Tier: ${TIERS[tier]?.name}, ${apy}% APY`}
+                      aria-live="polite"
+                    >
                       {TIERS[tier]?.name}
                       <span className="text-xs text-muted-foreground/40 font-bold uppercase" aria-hidden="true">{apy}% APY</span>
                     </div>
