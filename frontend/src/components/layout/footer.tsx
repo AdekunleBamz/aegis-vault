@@ -26,7 +26,8 @@ export function Footer() {
       { label: 'Vault Stats', href: '/stats' },
     ],
     resources: [
-      { label: 'Documentation', href: '#' },
+      { label: 'Litepaper', href: '#' },
+      { label: 'Whitepaper', href: '#' },
       { label: 'Analytics Hub', href: '/analytics' },
       { label: 'Security Portal', href: '/security' },
       { label: 'Governance', href: '/governance' },
