@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 import { STACKS_MAINNET, STACKS_TESTNET, StacksNetwork } from '@stacks/network';
+import { USER_SESSION_INTERVAL } from '@/lib/constants';
 
 interface WalletState {
   address: string | null;
@@ -87,7 +88,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
     };
 
     checkUserSession();
-    const interval = setInterval(checkUserSession, 1000);
+    const interval = setInterval(checkUserSession, USER_SESSION_INTERVAL);
     return () => clearInterval(interval);
   }, []);
 
