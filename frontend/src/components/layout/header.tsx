@@ -176,11 +176,10 @@ export function Header() {
 
           <div className="hidden lg:block">
             <NetworkBadge />
-            {!isMainnet && (
-              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[10px] font-black uppercase tracking-widest">
-                Testnet Only
-              </div>
-            )}
+            <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/10">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80">Protocol Healthy</span>
+            </div>
           </div>
         </div>
 
