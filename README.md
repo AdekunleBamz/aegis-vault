@@ -186,8 +186,8 @@ Users can stake STX with different lock periods. Longer durations yield higher r
 
 ### Withdrawals
 
-- **Normal withdrawal**: Available after lock period expires, returns full stake + rewards
-- **Emergency withdrawal**: Available anytime, 2% penalty deducted
+- **Normal withdrawal**: Available after lock period expires, returns full stake + pending rewards. Requires a 0.01 STX fixed protocol fee.
+- **Emergency withdrawal**: Available anytime, returns principal minus a 0.01 STX fixed penalty fee.
 
 ## API Reference
 
