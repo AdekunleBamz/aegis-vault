@@ -1,16 +1,30 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { executeStake, TransactionResult } from '@/lib/stacks';
 import { toMicroSTX } from '@/lib/format';
 
+/**
+ * Return type for the useStaking hook.
+ */
 export interface UseStakingReturn {
+  /** Function to initiate a staking transaction */
   stake: (amount: number) => Promise<TransactionResult>;
+  /** Whether a staking transaction is currently being processed */
   isLoading: boolean;
+  /** Error message if the staking failed, otherwise null */
   error: string | null;
+  /** Function to reset the loading and error states */
   reset: () => void;
 }
 
+/**
+ * A custom hook to handle STX staking operations.
+ * Manages loading and error states for the staking transaction process.
+ * 
+ * @param senderAddress - The Stacks address of the user initiating the stake
+ * @returns An object containing the stake function and transaction states
+ */
 export function useStaking(senderAddress: string): UseStakingReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,5 +58,10 @@ export function useStaking(senderAddress: string): UseStakingReturn {
     setIsLoading(false);
   }, []);
 
-  return { stake, isLoading, error, reset };
+  return useMemo(() => ({
+    stake,
+    isLoading,
+    error,
+    reset
+  }), [stake, isLoading, error, reset]);
 }
