@@ -128,7 +128,7 @@ export function Stats() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               className={cn(
-                "group relative flex h-full flex-col p-8 rounded-[32px] bg-background border border-border shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1",
+                "group relative flex h-full flex-col p-8 rounded-[32px] bg-background/80 border border-border shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1",
                 stat.glow
               )}
             >
