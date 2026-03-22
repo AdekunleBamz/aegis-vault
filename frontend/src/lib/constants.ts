@@ -13,7 +13,9 @@ export const API = {
   EXPLORER: 'https://explorer.stacks.co',
 } as const;
 
-// Staking tiers
+/**
+ * Staking tiers defining minimum requirements and reward multipliers
+ */
 export const TIERS = [
   { name: 'Bronze', minStake: 100, multiplier: 1.0, color: '#CD7F32', baseApy: 12 },
   { name: 'Silver', minStake: 1000, multiplier: 1.25, color: '#C0C0C0', baseApy: 15 },
