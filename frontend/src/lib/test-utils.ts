@@ -1,7 +1,15 @@
 // Test Utilities for Aegis Vault Frontend
 // Provides mocking helpers, test data generators, and testing utilities
 
-import { StakePosition, RewardInfo, ProtocolStats, UserStats, TransactionRecord } from './validation'
+import { expect, afterEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom/vitest';
+import { StakePosition, RewardInfo, ProtocolStats, UserStats, TransactionRecord } from './validation';
+
+// Global setup for Vitest
+afterEach(() => {
+  cleanup();
+});
 
 // ============================================================================
 // Random Data Generators
