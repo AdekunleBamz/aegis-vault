@@ -174,15 +174,15 @@ clarinet deployments apply -p deployments/mainnet-v3-plan.yaml --no-dashboard
 
 ## Usage
 
-### Staking
+### Staking Tiers
 
-Users can stake STX with different lock periods:
+Users can stake STX with different lock periods. Longer durations yield higher reward multipliers:
 
-| Lock Period | Duration | Reward Multiplier |
-|-------------|----------|-------------------|
-| 3 days | 432 blocks | 1.0x |
-| 7 days | 1008 blocks | 1.2x |
-| 30 days | 4320 blocks | 1.5x |
+| Tier | Duration | Blocks | Multiplier | Bonus (bps) |
+|------|----------|--------|------------|-------------|
+| **Trial** | 3 days | 432 | 1.0x | 10,000 |
+| **Elite** | 7 days | 1008 | 1.2x | 12,000 |
+| **Legend** | 30 days | 4320 | 1.5x | 15,000 |
 
 ### Withdrawals
 
