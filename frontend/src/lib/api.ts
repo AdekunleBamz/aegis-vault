@@ -37,6 +37,10 @@ export interface ContractReadResult {
 }
 
 export async function getAccountBalance(address: string): Promise<AccountBalance> {
+  if (!address || address.length < 25) {
+    throw new Error('Invalid Stacks address provided');
+  }
+
   const response = await fetch(`${API.STACKS_API}/v2/accounts/${address}`, {
     next: { revalidate: 30 },
   });
