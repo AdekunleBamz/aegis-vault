@@ -2,15 +2,28 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 
-// Step form state management
+/**
+ * Represents the state of a multi-step form.
+ */
 export interface StepFormState {
+  /** The index of the current active step (0-indexed) */
   currentStep: number;
+  /** The total number of steps in the form */
   totalSteps: number;
+  /** Aggregated data from all completed steps */
   data: Record<string, unknown>;
+  /** Indices of steps that have been successfully validated/completed */
   completedSteps: number[];
+  /** Errors associated with specific steps */
   errors: Record<number, string>;
 }
 
+/**
+ * A custom hook to manage the state and navigation of a multi-step form.
+ * 
+ * @param totalSteps - The total number of steps in the form
+ * @returns An object containing step state, navigation functions, and progress info
+ */
 export function useStepForm(totalSteps: number) {
   const [state, setState] = useState<StepFormState>({
     currentStep: 0,
@@ -102,16 +115,30 @@ export function useStepForm(totalSteps: number) {
   };
 }
 
-// Form field management
+/**
+ * Represents the state of an individual form field.
+ */
 export interface FieldState {
+  /** The current string value of the field */
   value: string;
+  /** Validation error message, or null if valid */
   error: string | null;
+  /** Whether the field has been focused/blurred */
   touched: boolean;
+  /** Whether the field value has changed from its initial state */
   dirty: boolean;
 }
 
 export type FormFields<T extends string> = Record<T, FieldState>;
 
+/**
+ * A custom hook to manage individual form fields, validation, and change tracking.
+ * 
+ * @template T - String literal union of field names
+ * @param initialFields - Initial values for the form fields
+ * @param validators - Optional validation functions for each field
+ * @returns An object containing field states and management functions
+ */
 export function useFormFields<T extends string>(
   initialFields: Record<T, string>,
   validators?: Record<T, (value: string) => string | null>
@@ -204,14 +231,28 @@ export function useFormFields<T extends string>(
   };
 }
 
-// Form submission handling
+/**
+ * Represents the state of a form submission process.
+ */
 export interface SubmitState {
+  /** Whether the form is currently being submitted */
   isSubmitting: boolean;
+  /** Whether the form has been successfully submitted at least once */
   isSubmitted: boolean;
+  /** The total number of successful submissions */
   submitCount: number;
+  /** Top-level submission error message, or null */
   error: string | null;
 }
 
+/**
+ * A custom hook to handle form submission logic, including loading states and callbacks.
+ * 
+ * @template T - The type of the data being submitted
+ * @param onSubmit - Async function to perform the actual submission
+ * @param options - Optional callbacks for success/error and behavior toggles
+ * @returns An object containing submission state and the handler function
+ */
 export function useFormSubmit<T>(
   onSubmit: (data: T) => Promise<void>,
   options?: {
