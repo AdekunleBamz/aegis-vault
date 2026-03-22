@@ -366,7 +366,10 @@ import { cn } from '@/lib/utils';
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                       Path to <span className="text-foreground">{nextTier.name}</span>
                     </span>
-                    <span className="text-[10px] font-black text-aegis-blue uppercase tracking-widest">
+                    <span 
+                      className="text-[10px] font-black text-aegis-blue uppercase tracking-widest"
+                      aria-live="polite"
+                    >
                       {Math.max(0, nextTierMin - numAmount).toLocaleString()} STX to upgrade
                     </span>
                   </div>
