@@ -40,7 +40,7 @@ export function NetworkBadge() {
                         exit={{ width: 0, opacity: 0 }}
                         className="overflow-hidden flex items-center gap-1.5 ml-1 border-l border-border/50 pl-2"
                     >
-                        <AlertTriangle className="w-3 h-3 text-amber-500" />
+                        <AlertTriangle className="w-3 h-3 text-amber-500 pointer-events-none" aria-hidden="true" />
                         <span className="text-[9px] font-bold text-amber-500/80 whitespace-nowrap">Trial Mode</span>
                     </motion.div>
                 )}
