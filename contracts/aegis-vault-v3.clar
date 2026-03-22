@@ -117,7 +117,10 @@
 ;; PUBLIC FUNCTIONS
 ;; ============================================
 
-;; Stake STX
+;; @desc Allows a user to stake STX for a chosen lock period.
+;; @param amount - The quantity of microSTX to stake (must be >= MIN-STAKE).
+;; @param lock-period - The duration in days (3, 7, or 30).
+;; @returns (ok uint) - The unique stake-id generated for this position.
 (define-public (stake (amount uint) (lock-period uint))
   (let
     (
@@ -125,13 +128,19 @@
       (current-ids (default-to (list) (map-get? user-stake-ids staker)))
       (new-id (+ (var-get stake-counter) u1))
     )
+    ;; Ensure contract is not paused
     (asserts! (not (var-get contract-paused)) ERR-CONTRACT-PAUSED)
+    ;; Validate stake amount meets minimum requirement
     (asserts! (>= amount MIN-STAKE) ERR-INVALID-AMOUNT)
+    ;; Validate chosen lock period is one of the supported tiers
     (asserts! (or (is-eq lock-period u3) (or (is-eq lock-period u7) (is-eq lock-period u30))) ERR-INVALID-LOCK-PERIOD)
+    ;; Limit number of active stakes per user to prevent OOG issues
     (asserts! (< (len current-ids) MAX-STAKES-PER-USER) ERR-MAX-STAKES-REACHED)
 
+    ;; Transfer STX from user to the contract
     (try! (stx-transfer? amount staker (as-contract tx-sender)))
 
+    ;; Initialize and store stake metadata
     (map-set stakes { staker: staker, stake-id: new-id }
       {
         amount: amount,
@@ -142,10 +151,12 @@
         total-claimed: u0
       }
     )
+    ;; Update user and global tracking state
     (map-set user-stake-ids staker (unwrap! (as-max-len? (append current-ids new-id) u20) ERR-MAX-STAKES-REACHED))
     (map-set user-total-staked staker (+ (default-to u0 (map-get? user-total-staked staker)) amount))
     (var-set total-staked (+ (var-get total-staked) amount))
     (var-set stake-counter new-id)
+    ;; Increment total stakers count if this is the user's first stake
     (if (is-eq (len current-ids) u0) (var-set total-stakers (+ (var-get total-stakers) u1)) true)
     (ok new-id)
   )
