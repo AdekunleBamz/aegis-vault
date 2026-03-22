@@ -1,40 +1,38 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { 
+  LayoutDashboard, 
+  Layers, 
+  Coins, 
+  TrendingUp, 
+  ShieldCheck,
+  Zap,
+  ChevronRight,
+  ArrowUpRight
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useWallet } from '@/context/wallet-context';
+import { cn } from '@/lib/utils';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
-import { RecentActivity } from '@/components/widgets/recent-activity';
-import { ProtocolStats } from '@/components/widgets/protocol-stats';
+import { ErrorBoundary } from '@/components/layout/error-boundary';
 import { KPICard } from '@/components/dashboard/kpi-card';
 import { RewardChart } from '@/components/dashboard/reward-chart';
 import { ProtocolHealth } from '@/components/dashboard/protocol-health';
-import {
-  Zap,
-  Target,
-  TrendingUp,
-  Wallet,
-  ArrowUpRight,
-  ShieldCheck,
-  Coins,
-  History,
-  LayoutDashboard,
-  Layers,
-  ChevronRight
-} from 'lucide-react';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
+import { RecentActivity } from '@/components/widgets/recent-activity';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
-import { useWallet } from '@/context/wallet-context';
 import { SkeletonKPI } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
   const { isConnected } = useWallet();
   const pathname = usePathname();
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
@@ -50,21 +48,21 @@ export default function DashboardPage() {
       href: '/stake',
       title: 'Stake More',
       description: 'Increase your staked position',
-      variant: 'blue',
+      variant: 'blue' as const,
       icon: Layers,
     },
     {
       href: '/withdraw',
       title: 'Withdraw',
       description: 'Unstake your STX tokens',
-      variant: 'purple',
+      variant: 'purple' as const,
       icon: ArrowUpRight,
     },
     {
       href: '/claim',
       title: 'Claim Rewards',
       description: 'Collect your AGS earnings',
-      variant: 'cyan',
+      variant: 'cyan' as const,
       icon: Coins,
     },
   ];
@@ -80,25 +78,8 @@ export default function DashboardPage() {
       <main className="flex-1 py-32 px-4 relative z-10">
         <div className="container max-w-7xl mx-auto">
           <Breadcrumbs />
-          {/* Page Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-12"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="px-3 py-1 bg-muted/50 border border-border/50 rounded-full text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                <LayoutDashboard className="w-3 h-3" />
-                Control Center
-              </div>
-              {isConnected && (
-                <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                  Live Sync
-      <ErrorBoundary>
-        <main className="flex-1 py-32 px-4 relative z-10">
-          <div className="container max-w-7xl mx-auto">
-            <Breadcrumbs />
+          
+          <ErrorBoundary>
             {/* Page Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -153,73 +134,64 @@ export default function DashboardPage() {
                   </motion.div>
                 ))
               )}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  whileHover={{ y: -5 }}
-                >
-                  <KPICard {...kpi as any} />
-                </motion.div>
-              ))
-            )}
-          </section>
+            </section>
 
-          <div className="space-y-12">
-            <ProtocolHealth />
+            <div className="space-y-12">
+              <ProtocolHealth />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-8">
-                <div className="p-8 rounded-[40px] bg-background border border-border">
-                  <h3 className="text-xl font-black mb-6">Reward <span className="text-gradient">Projection</span></h3>
-                  <RewardChart data={mockRewardData} height={250} />
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 space-y-8">
+                  <div className="p-8 rounded-[40px] bg-background border border-border">
+                    <h3 className="text-xl font-black mb-6">Reward <span className="text-gradient">Projection</span></h3>
+                    <RewardChart data={mockRewardData} height={250} />
+                  </div>
+                  <PortfolioSummary />
+                  <RecentActivity />
                 </div>
-                <PortfolioSummary />
-                <RecentActivity />
-              </div>
 
-              <div className="space-y-8">
-
-                {/* Quick Actions Panel */}
-                <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8" aria-label="Quick actions">
-                  <h3 className="text-xl font-black mb-6 flex items-center gap-3">
-                    <Zap className="w-5 h-5 text-aegis-blue" />
-                    Quick Actions
-                  </h3>
-                  <div className="space-y-4">
-                    {quickActions.map((action) => (
-                      <Link
-                        key={action.href}
-                        href={action.href}
-                        aria-current={pathname === action.href ? 'page' : undefined}
-                        className={cn(
-                          "group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50",
-                          pathname === action.href && "border-aegis-blue/30 bg-muted/50"
-                        )}
-                        aria-label={`${action.title}: ${action.description}`}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={cn(
-                            "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
-                            action.variant === 'blue' && "bg-aegis-blue/10 text-aegis-blue",
-                            action.variant === 'purple' && "bg-aegis-purple/10 text-aegis-purple",
-                            action.variant === 'cyan' && "bg-aegis-cyan/10 text-aegis-cyan",
-                            pathname === action.href && "scale-110 shadow-lg shadow-aegis-blue/10"
-                          )}>
-                            <action.icon className="w-5 h-5" aria-hidden="true" />
+                <div className="space-y-8">
+                  {/* Quick Actions Panel */}
+                  <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8" aria-label="Quick actions">
+                    <h3 className="text-xl font-black mb-6 flex items-center gap-3">
+                      <Zap className="w-5 h-5 text-aegis-blue" />
+                      Quick Actions
+                    </h3>
+                    <div className="space-y-4">
+                      {quickActions.map((action) => (
+                        <Link
+                          key={action.href}
+                          href={action.href}
+                          aria-current={pathname === action.href ? 'page' : undefined}
+                          className={cn(
+                            "group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50",
+                            pathname === action.href && "border-aegis-blue/30 bg-muted/50"
+                          )}
+                          aria-label={`${action.title}: ${action.description}`}
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className={cn(
+                              "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
+                              action.variant === 'blue' && "bg-aegis-blue/10 text-aegis-blue",
+                              action.variant === 'purple' && "bg-aegis-purple/10 text-aegis-purple",
+                              action.variant === 'cyan' && "bg-aegis-cyan/10 text-aegis-cyan",
+                              pathname === action.href && "scale-110 shadow-lg shadow-aegis-blue/10"
+                            )}>
+                              <action.icon className="w-5 h-5" aria-hidden="true" />
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-black tracking-tight">{action.title}</h4>
+                              <p className="text-[10px] font-bold text-muted-foreground/60 uppercase">{action.description}</p>
+                            </div>
                           </div>
-                          <div>
-                            <h4 className="text-sm font-black tracking-tight">{action.title}</h4>
-                            <p className="text-[10px] font-bold text-muted-foreground/60 uppercase">{action.description}</p>
-                          </div>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-1 transition-all" />
-                      </Link>
-                    ))}
+                          <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-1 transition-all" />
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ErrorBoundary>
         </div>
       </main>
 
