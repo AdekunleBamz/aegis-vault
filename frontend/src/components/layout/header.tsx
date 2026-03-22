@@ -193,7 +193,7 @@ export function Header() {
       <div className="container flex items-center justify-between">
         {/* Left: Logo & Network */}
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2.5 group" aria-label="Aegis Vault Home">
+          <Link href="/" className="flex items-center gap-2.5 group" aria-label="Aegis Vault protocol - Back to home page">
             <div className="relative">
               <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20 group-hover:shadow-aegis-blue/40 transition-all duration-500 group-hover:rotate-6">
                 <ShieldCheck className="w-6 h-6 text-white" />
