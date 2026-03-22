@@ -2,19 +2,42 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+/**
+ * Represents the state of a data fetching operation.
+ * @template T - The type of the data being fetched
+ */
 export interface FetchState<T> {
+  /** The fetched data, or null if not yet loaded or if an error occurred */
   data: T | null;
+  /** Whether the initial data is currently being loaded */
   isLoading: boolean;
+  /** Error object if the fetch failed, otherwise null */
   error: Error | null;
+  /** Whether a revalidation fetch is currently in progress */
   isValidating: boolean;
 }
 
+/**
+ * Configuration options for the useFetch hook.
+ */
 export interface UseFetchOptions {
+  /** Interval in milliseconds for automatic background refreshing */
   refreshInterval?: number;
+  /** Whether to revalidate data when the window regains focus (default: true) */
   revalidateOnFocus?: boolean;
+  /** Minimum time in milliseconds between identical requests to prevent spam (default: 2000) */
   dedupingInterval?: number;
 }
 
+/**
+ * A custom hook for data fetching with support for caching, revalidation, and intervals.
+ * Similar to SWR or React Query but lightweight.
+ * 
+ * @template T - The type of the data being fetched
+ * @param url - The URL to fetch data from, or null to skip fetching
+ * @param options - Optional configuration for revalidation and intervals
+ * @returns An object containing the fetch state and a mutate function to manually refresh
+ */
 export function useFetch<T>(
   url: string | null,
   options?: UseFetchOptions
@@ -33,6 +56,7 @@ export function useFetch<T>(
   } = options || {};
 
   const lastFetchTime = useRef<number>(0);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const fetchData = useCallback(async () => {
     if (!url) return;
@@ -43,10 +67,18 @@ export function useFetch<T>(
     }
     lastFetchTime.current = now;
 
+    // Cancel any ongoing request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
     setState(prev => ({ ...prev, isValidating: true }));
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        signal: abortControllerRef.current.signal,
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -58,12 +90,16 @@ export function useFetch<T>(
         isValidating: false,
       });
     } catch (error) {
+      if ((error as Error).name === 'AbortError') return;
+      
       setState(prev => ({
         ...prev,
         isLoading: false,
         error: error as Error,
         isValidating: false,
       }));
+    } finally {
+      abortControllerRef.current = null;
     }
   }, [url, dedupingInterval]);
 
