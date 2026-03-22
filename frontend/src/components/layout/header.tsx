@@ -164,6 +164,11 @@ export function Header() {
 
           <div className="hidden lg:block">
             <NetworkBadge />
+            {!isMainnet && (
+              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[10px] font-black uppercase tracking-widest">
+                Testnet Only
+              </div>
+            )}
           </div>
         </div>
 
