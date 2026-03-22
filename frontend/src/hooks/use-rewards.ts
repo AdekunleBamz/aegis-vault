@@ -32,6 +32,7 @@ export function useRewards(): UseRewardsReturn {
     setError(null);
 
     try {
+      // Execute the reward claim transaction via the connected Stacks wallet
       const result = await executeClaimRewards();
       return result;
     } catch (err) {
