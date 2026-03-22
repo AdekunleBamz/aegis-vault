@@ -50,4 +50,34 @@ describe('services', () => {
       vi.useRealTimers();
     });
   });
+
+  describe('events', () => {
+    it('should emit and listen to events', () => {
+      const callback = vi.fn();
+      const { events } = require('./services');
+      events.on('test-event', callback);
+      events.emit('test-event', { data: 1 });
+      expect(callback).toHaveBeenCalledWith({ data: 1 });
+    });
+
+    it('should unsubscribe correctly', () => {
+      const callback = vi.fn();
+      const { events } = require('./services');
+      const unsub = events.on('unsub-event', callback);
+      unsub();
+      events.emit('unsub-event');
+      expect(callback).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('logger', () => {
+    it('should log messages if enabled', () => {
+      const spy = vi.spyOn(console, 'info').mockImplementation(() => {});
+      const { logger } = require('./services');
+      logger.configure({ enabled: true, level: 'info' });
+      logger.info('test message');
+      expect(spy).toHaveBeenCalled();
+      spy.mockRestore();
+    });
+  });
 });
