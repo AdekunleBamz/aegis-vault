@@ -261,7 +261,7 @@ export function Header() {
                         </div>
                       </div>
 
-                      <div>
+                      <div aria-live="polite" aria-atomic="true">
                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1.5">Network</p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5">
