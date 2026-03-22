@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { getCurrentBlockHeight } from '@/lib/api';
 import { network } from '@/lib/stacks';
 
@@ -18,7 +18,11 @@ export function useNetwork(): UseNetworkReturn {
   const [error, setError] = useState<string | null>(null);
 
   // Determine network type from the imported network object
-  const networkType = network.chainId === 2147483648 ? 'testnet' : 'mainnet';
+  const networkType = useMemo(() => {
+    if (network.chainId === 2147483648) return 'testnet';
+    if (network.chainId === 1) return 'mainnet';
+    return 'devnet';
+  }, []);
 
   const fetchNetworkInfo = useCallback(async () => {
     setIsLoading(true);
@@ -43,5 +47,11 @@ export function useNetwork(): UseNetworkReturn {
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 
-  return { blockHeight, isLoading, error, networkType, refetch: fetchNetworkInfo };
+  return useMemo(() => ({
+    blockHeight,
+    isLoading,
+    error,
+    networkType,
+    refetch: fetchNetworkInfo
+  }), [blockHeight, isLoading, error, networkType, fetchNetworkInfo]);
 }
