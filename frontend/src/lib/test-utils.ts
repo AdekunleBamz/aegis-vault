@@ -76,6 +76,23 @@ function randomTxId(): string {
 // Mock Data Factories
 // ============================================================================
 
+export interface MockStakerInfo {
+  amountStaked: bigint;
+  stakeStartBlock: number;
+  lastRewardBlock: number;
+  pendingRewards: bigint;
+  tier: number;
+}
+
+export const createMockStakerInfo = (overrides: Partial<MockStakerInfo> = {}): MockStakerInfo => ({
+  amountStaked: BigInt(1000000),
+  stakeStartBlock: 100,
+  lastRewardBlock: 110,
+  pendingRewards: BigInt(5000),
+  tier: 0,
+  ...overrides,
+});
+
 export function createMockStakePosition(overrides?: Partial<StakePosition>): StakePosition {
   const startBlock = randomInt(100000, 150000)
   const lockPeriod = randomChoice([30, 60, 90, 180, 365])
@@ -362,6 +379,7 @@ export function createTestContext() {
 }
 
 const testUtils = {
+  createMockStakerInfo,
   createMockStakePosition,
   createMockRewardInfo,
   createMockProtocolStats,
