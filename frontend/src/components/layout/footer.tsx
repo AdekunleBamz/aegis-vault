@@ -10,6 +10,8 @@ import {
   ShieldCheck,
   ArrowRight
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { TRANSITION_DURATION } from '@/lib/constants';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -80,7 +82,10 @@ export function Footer() {
                   <Link
                     href={link.href}
                     aria-label={`Navigate to ${link.label}`}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center group"
+                    className={cn(
+                      "text-muted-foreground hover:text-foreground text-sm flex items-center group",
+                      "transition-colors duration-200"
+                    )}
                   >
                     {link.label}
                   </Link>
