@@ -152,7 +152,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-border mt-16 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <p className="text-muted-foreground text-xs">
-            &copy; {currentYear} Aegis Vault Protocol. All rights reserved.
+            &copy; {currentYear} Aegis Vault Protocol. All rights reserved. <span className="ml-2 px-1.5 py-0.5 bg-muted rounded text-[10px] font-bold opacity-60">v2.0.0-stable</span>
           </p>
           <div className="flex items-center gap-8">
             {legalLinks.map((item) => (
