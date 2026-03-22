@@ -88,8 +88,8 @@ export async function getPoolStats(): Promise<PoolStats | null> {
  * Calculate APY based on stake amount and tier
  */
 export function calculateAPY(stakeAmount: bigint, tier: number): number {
-  const baseAPY = 12; // 12% base APY
-  const tierMultiplier = TIERS[tier]?.multiplier || 1;
+  const baseAPY = TIERS[tier]?.baseApy || 12;
+  const tierMultiplier = TIERS[tier]?.multiplier || 1.0;
   return baseAPY * tierMultiplier;
 }
 
