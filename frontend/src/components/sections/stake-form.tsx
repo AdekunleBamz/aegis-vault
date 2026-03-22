@@ -187,7 +187,11 @@ import { cn } from '@/lib/utils';
                     Use quick-fill controls below to prefill a sensible deposit size.
                   </p>
                 </div>
-                <div>
+                <div 
+                  className="space-y-1"
+                  aria-labelledby="suggested-reserve-label"
+                  aria-describedby="suggested-reserve-description"
+                >
                   <p id="suggested-reserve-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                     Suggested Reserve
                   </p>
