@@ -52,6 +52,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://api.mainnet.hiro.so" />
         <link rel="dns-prefetch" href="https://api.mainnet.hiro.so" />
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </head>
       <body className={outfit.className}>
         <AppProviders>
