@@ -214,6 +214,14 @@ Users can stake STX with different lock periods:
 (get-decimals)
 ```
 
+## Troubleshooting
+
+### Common Issues
+
+- **Clarinet check fails**: Ensure you are in the root directory and that `Clarinet.toml` is present.
+- **Frontend build errors**: Try clearing the `.next` directory and running `npm run frontend:build` again.
+- **Wallet connection fails**: Ensure your browser wallet (Leather/Xverse) is set to the correct network (Mainnet/Testnet) corresponding to your `.env.local`.
+
 ## Security
 
 Aegis Vault prioritizes security at every layer of the stack:
