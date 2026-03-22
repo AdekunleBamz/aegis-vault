@@ -12,7 +12,7 @@ export const API = {
   STACKS_API: 'https://api.mainnet.hiro.so',
   ACCOUNTS_V2: '/v2/accounts',
   TRANSACTIONS_V1: '/extended/v1/address',
-  EXPLORER: 'https://explorer.stacks.co',
+  EXPLORER: 'https://explorer.hiro.so',
 } as const;
 
 // Staking tiers
