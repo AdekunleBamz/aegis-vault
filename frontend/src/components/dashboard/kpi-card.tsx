@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+import { SkeletonKPI } from '@/components/ui/skeleton';
+
 interface KPICardProps {
     label: string;
     value: string | number;
@@ -47,7 +49,7 @@ const variants = {
     },
 };
 
-export function KPICard({
+export const KPICard = React.memo(({
     label,
     value,
     secondaryValue,
@@ -56,23 +58,11 @@ export function KPICard({
     variant = 'blue',
     loading = false,
     className,
-}: KPICardProps) {
+}: KPICardProps) => {
     const v = variants[variant];
 
     if (loading) {
-        return (
-            <div className={cn(
-                "relative rounded-[32px] border border-border bg-background/40 backdrop-blur-xl p-6 h-full animate-pulse",
-                className
-            )}>
-                <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-muted rounded-2xl" />
-                    <div className="w-16 h-4 bg-muted rounded-full" />
-                </div>
-                <div className="w-32 h-8 bg-muted rounded-lg mb-2" />
-                <div className="w-24 h-4 bg-muted rounded-full" />
-            </div>
-        );
+        return <SkeletonKPI className={className} />;
     }
 
     return (
@@ -143,4 +133,6 @@ export function KPICard({
             )} />
         </motion.div>
     );
-}
+});
+
+KPICard.displayName = 'KPICard';
