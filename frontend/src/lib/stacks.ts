@@ -37,7 +37,7 @@ export async function executeStake(
       ),
     ];
 
-    const [contractAddr, contractName] = CONTRACTS.STAKING.split('.');
+    const { STAKING } = CONTRACTS;\n    const [contractAddr, contractName] = STAKING.split('.');
 
     const options: ContractCallOptions = {
       network,
