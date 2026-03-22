@@ -196,7 +196,7 @@ export function StakeForm() {
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                     Suggested Reserve
                   </p>
-                  <p className="mt-2 text-2xl font-black tabular-nums">1 STX</p>
+                  <p className="mt-2 text-2xl font-black tabular-nums">{SUGGESTED_RESERVE_STX} STX</p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Keep a small balance free for transaction fees and future position changes.
                   </p>
