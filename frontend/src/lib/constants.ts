@@ -41,6 +41,7 @@ export const AGS_DECIMALS = 6;
 // Animation constants
 export const TRANSITION_DURATION = 0.3;
 export const TRANSITION_EASE = [0.16, 1, 0.3, 1];
+export const PULSE_DURATION = 2;
 
 // Numeric constants
 export const MICRO_STX_DENOMINATOR = 1_000_000;
