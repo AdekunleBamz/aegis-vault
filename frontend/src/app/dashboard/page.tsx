@@ -7,8 +7,16 @@ import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
 import { RecentActivity } from '@/components/widgets/recent-activity';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
 import { KPICard } from '@/components/dashboard/kpi-card';
-import { RewardChart } from '@/components/dashboard/reward-chart';
-import { ProtocolHealth } from '@/components/dashboard/protocol-health';
+import dynamic from 'next/dynamic';
+
+const RewardChart = dynamic(() => import('@/components/dashboard/reward-chart').then(mod => mod.RewardChart), {
+  ssr: false,
+  loading: () => <div className="h-[250px] w-full bg-muted/20 animate-pulse rounded-3xl" />
+});
+
+const ProtocolHealth = dynamic(() => import('@/components/dashboard/protocol-health').then(mod => mod.ProtocolHealth), {
+  ssr: false
+});
 import {
   Zap,
   Target,
