@@ -66,7 +66,10 @@ export function formatPercent(value: number): string {
 }
 
 /**
- * Format block height with commas
+ * Formats a Stacks block height with thousands separators for better readability.
+ * 
+ * @param height - The numeric block height
+ * @returns A locale-formatted string (e.g., "123,456")
  */
 export function formatBlockHeight(height: number): string {
   return height.toLocaleString('en-US');
