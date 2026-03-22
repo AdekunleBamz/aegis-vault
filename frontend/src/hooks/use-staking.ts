@@ -11,6 +11,12 @@ export interface UseStakingReturn {
   reset: () => void;
 }
 
+/**
+ * Custom hook for managing STX staking operations.
+ * 
+ * @param senderAddress - The Stacks address of the current user.
+ * @returns Object containing the stake function, loading state, error, and reset function.
+ */
 export function useStaking(senderAddress: string): UseStakingReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
