@@ -19,28 +19,24 @@ export function RewardChart({
     height = 200,
     color = 'hsl(var(--aegis-blue))'
 }: RewardChartProps) {
-    const points = useMemo(() => {
-        if (data.length === 0) return '';
+    const { points, areaPoints, maxAmount, maxDay } = useMemo(() => {
+        if (data.length === 0) return { points: '', areaPoints: '', maxAmount: 1, maxDay: 1 };
 
-        const maxAmount = Math.max(...data.map(d => d.amount), 1);
-        const maxDay = Math.max(...data.map(d => d.day), 1);
+        const mAmount = Math.max(...data.map(d => d.amount), 1);
+        const mDay = Math.max(...data.map(d => d.day), 1);
 
-        return data.map((d, i) => {
-            const x = (d.day / maxDay) * 100;
-            const y = 100 - (d.amount / maxAmount) * 100;
+        const pts = data.map((d, i) => {
+            const x = (d.day / mDay) * 100;
+            const y = 100 - (d.amount / mAmount) * 100;
             return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
         }).join(' ');
-    }, [data]);
 
-    const areaPoints = useMemo(() => {
-        if (data.length === 0) return '';
         const lastPoint = data[data.length - 1];
         const firstPoint = data[0];
-        const maxDay = Math.max(...data.map(d => d.day), 1);
+        const aPts = `${pts} L ${(lastPoint.day / mDay) * 100} 100 L ${(firstPoint.day / mDay) * 100} 100 Z`;
 
-        const path = points;
-        return `${path} L ${(lastPoint.day / maxDay) * 100} 100 L ${(firstPoint.day / maxDay) * 100} 100 Z`;
-    }, [data, points]);
+        return { points: pts, areaPoints: aPts, maxAmount: mAmount, maxDay: mDay };
+    }, [data]);
 
     if (data.length === 0) return null;
 
@@ -95,8 +91,6 @@ export function RewardChart({
 
                 {/* Data Points */}
                 {data.map((d, i) => {
-                    const maxAmount = Math.max(...data.map(d => d.amount), 1);
-                    const maxDay = Math.max(...data.map(d => d.day), 1);
                     const x = (d.day / maxDay) * 100;
                     const y = 100 - (d.amount / maxAmount) * 100;
 
