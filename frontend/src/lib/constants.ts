@@ -38,6 +38,10 @@ export const SECONDS_PER_WEEK = 604800;
 export const STX_DECIMALS = 6;
 export const AGS_DECIMALS = 6;
 
+// Animation constants
+export const TRANSITION_DURATION = 0.3;
+export const TRANSITION_EASE = [0.16, 1, 0.3, 1];
+
 // Numeric constants
 export const MICRO_STX_DENOMINATOR = 1_000_000;
 export const MIN_STAKE_STX = 0.01;
