@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useNetwork } from '@/hooks/use-network';
 import { formatSTX, formatBlockHeight } from '@/lib/format';
+import { MICRO_STX_DENOMINATOR } from '@/lib/constants';
 import {
   BarChart3,
   Users,
@@ -22,7 +23,7 @@ export function Stats() {
   const stats = [
     {
       label: 'Total Value Locked',
-      value: formatSTX(BigInt(1500000000000)),
+      value: formatSTX(BigInt(1_500_000 * MICRO_STX_DENOMINATOR)),
       unit: 'STX',
       note: 'Capital actively securing vault strategies',
       icon: BarChart3,
@@ -40,7 +41,7 @@ export function Stats() {
     },
     {
       label: 'Rewards Distributed',
-      value: formatSTX(BigInt(50000000000)),
+      value: formatSTX(BigInt(50_000 * MICRO_STX_DENOMINATOR)),
       unit: 'AGS',
       note: 'Governance incentives paid to participants',
       icon: Gift,
