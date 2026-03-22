@@ -25,7 +25,9 @@ import { TransactionStepper, Step } from '@/components/ui/transaction-stepper';
 import { StakeForm } from '@/components/sections/stake-form';
 
 interface StakingFlowProps {
+  /** Optional callback triggered on successful transaction broadcast */
   onSuccess?: (txId: string) => void;
+  /** Optional callback triggered on transaction or protocol errors */
   onError?: (error: string) => void;
 }
 
