@@ -180,6 +180,12 @@ export function StakeForm() {
             </motion.div>
           ) : (
             <form onSubmit={handleStake} className="space-y-8">
+                <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 flex items-start gap-3">
+                  <AlertCircle className="w-4 h-4 text-amber-500 mt-0.5" />
+                  <p className="text-[11px] leading-relaxed text-amber-500/80">
+                    <span className="font-bold uppercase tracking-widest break-all">Risk Warning:</span> Smart contract staking involves inherent risks. Please ensure you understand the protocol mechanism before proceeding.
+                  </p>
+                </div>
               <div className="grid gap-4 rounded-[32px] border border-border/30 bg-muted/15 p-5 md:grid-cols-2">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
