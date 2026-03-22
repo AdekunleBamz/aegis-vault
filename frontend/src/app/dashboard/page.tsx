@@ -95,36 +95,64 @@ export default function DashboardPage() {
                 <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
                   Live Sync
+      <ErrorBoundary>
+        <main className="flex-1 py-32 px-4 relative z-10">
+          <div className="container max-w-7xl mx-auto">
+            <Breadcrumbs />
+            {/* Page Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-12"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="px-3 py-1 bg-muted/50 border border-border/50 rounded-full text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                  <LayoutDashboard className="w-3 h-3" />
+                  Control Center
                 </div>
-              )}
-            </div>
-            <h1 className="text-5xl font-black tracking-tighter mb-4">
-              Project <span className="text-gradient">Dashboard</span>
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl font-medium">
-              Monitor your staking yields, protocol health, and active positions in real-time.
-            </p>
-          </motion.div>
+                {isConnected && (
+                  <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                    Live Sync
+                  </div>
+                )}
+              </div>
+              <h1 className="text-5xl font-black tracking-tighter mb-4">
+                Project <span className="text-gradient">Dashboard</span>
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-2xl font-medium">
+                Monitor your staking yields, protocol health, and active positions in real-time.
+              </p>
+            </motion.div>
 
-          {/* KPI Grid */}
-          <section 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" 
-            aria-label="Dashboard Statistics"
-            aria-busy={isLoading}
-          >
-            {isLoading ? (
-              Array.from({ length: 4 }).map((_, i) => (
-                <SkeletonKPI key={i} />
-              ))
-            ) : (
-              [
-                { label: "Total Staked", value: "12,450.00", secondaryValue: "STX", icon: Layers, variant: "blue", trend: { value: 12.5, isPositive: true, label: "vs last cycle" } },
-                { label: "Accrued Rewards", value: "452.80", secondaryValue: "AGS", icon: Coins, variant: "purple", trend: { value: 8.2, isPositive: true, label: "velocity" } },
-                { label: "Estimated APY", value: "14.2", secondaryValue: "%", icon: TrendingUp, variant: "cyan", trend: { value: 0.5, isPositive: true, label: "tier bonus" } },
-                { label: "Protocol TVL", value: "2.4M", secondaryValue: "STX", icon: ShieldCheck, variant: "indigo", trend: { value: 2.1, isPositive: true, label: "growth" } }
-              ].map((kpi, i) => (
-                <motion.div
-                  key={kpi.label}
+            {/* KPI Grid */}
+            <section
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+              aria-label="Dashboard Statistics"
+              aria-busy={isLoading}
+            >
+              {isLoading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <SkeletonKPI key={i} />
+                ))
+              ) : (
+                [
+                  { label: "Total Staked", value: "12,450.00", secondaryValue: "STX", icon: Layers, variant: "blue", trend: { value: 12.5, isPositive: true, label: "vs last cycle" } },
+                  { label: "Accrued Rewards", value: "452.80", secondaryValue: "AGS", icon: Coins, variant: "purple", trend: { value: 8.2, isPositive: true, label: "velocity" } },
+                  { label: "Estimated APY", value: "14.2", secondaryValue: "%", icon: TrendingUp, variant: "cyan", trend: { value: 0.5, isPositive: true, label: "tier bonus" } },
+                  { label: "Protocol TVL", value: "2.4M", secondaryValue: "STX", icon: ShieldCheck, variant: "indigo", trend: { value: 2.1, isPositive: true, label: "growth" } }
+                ].map((kpi, i) => (
+                  <motion.div
+                    key={kpi.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    whileHover={{ y: -5 }}
+                  >
+                    <KPICard {...kpi as any} />
+                  </motion.div>
+                ))
+              )}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
