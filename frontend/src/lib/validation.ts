@@ -212,7 +212,14 @@ export function validate<T>(
   return result.data
 }
 
-// Safe validation (returns result instead of throwing)
+/**
+ * Safely validates data against a Zod schema without throwing.
+ * Returns a success flag and either the data or the ZodError.
+ * 
+ * @param schema - The Zod schema to validate against
+ * @param data - The data to validate
+ * @returns An object with success: true and data, or success: false and error
+ */
 export function safeValidate<T>(
   schema: z.ZodSchema<T>,
   data: unknown
@@ -223,7 +230,7 @@ export function safeValidate<T>(
     return { success: true, data: result.data }
   }
   
-  return { success: false, error: result.error }
+  return { success: false, error: (result as z.SafeParseError<unknown>).error }
 }
 
 // Validate Stacks address
