@@ -344,29 +344,15 @@ export function Header() {
             aria-label="Mobile navigation menu"
           >
             <nav className="container py-6 flex flex-col gap-2">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={cn(
-                      "px-4 py-3 text-base font-medium rounded-2xl transition-all flex items-center justify-between",
-                      isActive
-                        ? "bg-muted text-foreground"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                    )}
-                    aria-label={`Go to ${link.label} section`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <link.icon className="w-5 h-5" />
-                      {link.label}
-                    </div>
-                    <ChevronRight className="w-4 h-4 opacity-50" />
-                  </Link>
-                )
-              })}
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.href}
+                  {...link}
+                  isActive={pathname === link.href}
+                  isMobile
+                  onClick={() => setMobileMenuOpen(false)}
+                />
+              ))}
             </nav>
           </motion.div>
         )}
