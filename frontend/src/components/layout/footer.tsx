@@ -62,7 +62,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-muted border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all hover:-translate-y-1"
+                  className="w-10 h-10 rounded-full bg-muted border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all hover:-translate-y-1 hover:scale-110"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" aria-hidden="true" />
