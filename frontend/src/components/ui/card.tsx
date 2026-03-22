@@ -53,7 +53,8 @@ export function CardHeader({ title, subtitle, action, icon, badge }: CardHeaderP
   return (
     <div className="flex items-start justify-between mb-4">
       <div className="flex items-start gap-3">
-        {icon && (
+        {icon {icon && ({icon && ( (
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-gray-700/50 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform" aria-hidden="true">
           <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/10 flex items-center justify-center text-blue-400">
             {icon}
           </div>
@@ -113,7 +114,8 @@ export function StatCard({ label, value, change, changeType = 'neutral', icon }:
             </p>
           )}
         </div>
-        {icon && (
+        {icon {icon && ({icon && ( (
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-gray-700/50 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform" aria-hidden="true">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-gray-700/50 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
             {icon}
           </div>
