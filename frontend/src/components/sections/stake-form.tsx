@@ -161,8 +161,12 @@ export function StakeForm() {
               animate={{ opacity: 1 }}
               className="py-16 text-center"
             >
-              <div className="w-24 h-24 bg-muted/50 rounded-[40px] flex items-center justify-center mx-auto mb-8 border border-border/50">
-                <Wallet className="w-10 h-10 text-muted-foreground/40" aria-hidden="true" />
+              <div className="relative mx-auto mb-8">
+                <div className="absolute inset-0 rounded-[40px] bg-aegis-blue/10 animate-ping" />
+                <div className="absolute inset-0 rounded-[40px] bg-aegis-blue/5 animate-pulse" style={{ animationDuration: '3s' }} />
+                <div className="relative w-24 h-24 bg-muted/60 rounded-[40px] flex items-center justify-center border border-border/50 backdrop-blur-xl">
+                  <Wallet className="w-10 h-10 text-aegis-blue/60" aria-hidden="true" />
+                </div>
               </div>
               <h3 className="text-2xl font-black mb-4">Wallet Connection Required</h3>
               <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto">
