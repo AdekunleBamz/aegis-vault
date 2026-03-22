@@ -5,7 +5,13 @@ import { useWallet } from '@/context/wallet-context';
 import { useBalances } from '@/hooks/use-balances';
 import { useStaking } from '@/hooks/use-staking';
 import { formatSTX, toMicroSTX } from '@/lib/format';
-import { TIERS } from '@/lib/constants';
+import { 
+  TIERS, 
+  MICRO_STX_DENOMINATOR, 
+  MIN_STAKE_STX, 
+  SUGGESTED_RESERVE_STX,
+  MONTHS_PER_YEAR 
+} from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
 import {
   Wallet,
@@ -33,13 +39,13 @@ export function StakeForm() {
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const numAmount = parseFloat(amount) || 0;
-  const balanceSTX = Number(stxBalance) / 1e6;
+  const balanceSTX = Number(stxBalance) / MICRO_STX_DENOMINATOR;
 
   const hasError = useMemo(() => {
     if (!amount) return null;
     if (numAmount <= 0) return 'Amount must be greater than 0';
     if (numAmount > balanceSTX) return 'Insufficient STX balance';
-    if (numAmount < 0.000001) return 'Amount is too small for protocol';
+    if (numAmount < MIN_STAKE_STX) return `Minimum stake is ${MIN_STAKE_STX} STX`;
     return null;
   }, [amount, numAmount, balanceSTX]);
 
@@ -87,7 +93,7 @@ export function StakeForm() {
 
   // Projected rewards calculation (simplified for UI)
   const yearlyAGS = numAmount * (apy / 100);
-  const monthlyAGS = yearlyAGS / 12;
+  const monthlyAGS = yearlyAGS / MONTHS_PER_YEAR;
 
   const nextTier = tier < TIERS.length - 1 ? TIERS[tier + 1] : null;
   const nextTierMin = nextTier ? nextTier.minStake : 0;
