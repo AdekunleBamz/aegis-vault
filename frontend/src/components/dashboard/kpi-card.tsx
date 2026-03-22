@@ -30,8 +30,8 @@ const variants = {
     purple: {
         iconBg: 'bg-aegis-purple/10',
         iconColor: 'text-aegis-purple',
-        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-purple)/0.3)]',
-        border: 'group-hover:border-aegis-purple/40',
+        glow: 'group-hover:shadow-[0_20px_40px_-15px_hsl(var(--aegis-purple)/0.4)]',
+        border: 'group-hover:border-aegis-purple/50',
     },
     cyan: {
         iconBg: 'bg-aegis-cyan/10',
