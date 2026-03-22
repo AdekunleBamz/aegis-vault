@@ -433,25 +433,25 @@ export function StakeForm() {
                     ) : (
                       <>
                         CONFIRM STAKING
-                        <ArrowUpRight className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        <ArrowUpRight className="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" aria-hidden="true" />
                       </>
                     )}
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 </button>
               </div>
-
+ 
               <div className="flex items-center justify-center gap-8 pt-4">
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <Lock className="w-3 h-3" />
+                  <Lock className="w-3 h-3" aria-hidden="true" />
                   24h Lock
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <Activity className="w-3 h-3" />
+                  <Activity className="w-3 h-3" aria-hidden="true" />
                   Instant Rewards
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <ShieldCheck className="w-3 h-3" />
+                  <ShieldCheck className="w-3 h-3" aria-hidden="true" />
                   v2 Verified
                 </div>
               </div>
