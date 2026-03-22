@@ -30,6 +30,7 @@ export function Footer() {
       { label: 'Analytics Hub', href: '/analytics' },
       { label: 'Security Portal', href: '/security' },
       { label: 'Governance', href: '/governance' },
+      { label: 'Bug Bounty', href: '#' },
       { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
     ],
   };
