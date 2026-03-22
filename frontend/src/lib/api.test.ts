@@ -29,6 +29,19 @@ describe('api', () => {
       (fetch as any).mockResolvedValue({ ok: false });
       await expect(getAccountBalance('SP123')).rejects.toThrow();
     });
+
+    it('should throw on malformed JSON', async () => {
+      (fetch as any).mockResolvedValue({
+        ok: true,
+        json: () => Promise.reject(new Error('SyntaxError')),
+      });
+      await expect(getAccountBalance('SP123')).rejects.toThrow('SyntaxError');
+    });
+
+    it('should throw on network failure', async () => {
+      (fetch as any).mockRejectedValue(new Error('Network failure'));
+      await expect(getAccountBalance('SP123')).rejects.toThrow('Network failure');
+    });
   });
 
   describe('callReadOnlyFunction', () => {
