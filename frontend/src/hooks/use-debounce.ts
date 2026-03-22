@@ -1,20 +1,24 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
- * PR #2: Input debouncing for better performance
- * Hook for debouncing values with customizable delay
+ * A custom hook to debounce a value.
+ * Useful for preventing expensive operations (like API calls) on every keystroke.
+ * 
+ * @template T - The type of the value being debounced
+ * @param value - The value to debounce
+ * @param delayMs - The delay in milliseconds (default: 300)
+ * @returns The debounced value
  */
 export function useDebounce<T>(value: T, delayMs: number = 300): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
+    const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delayMs);
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      clearTimeout(handler);
     };
   }, [value, delayMs]);
 
