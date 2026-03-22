@@ -84,6 +84,9 @@
   (* lock-period BLOCKS-PER-DAY)
 )
 
+;; @desc Internal helper to retrieve the bonus multiplier (basis points) for a given lock period.
+;; @param lock-period - Number of days.
+;; @returns uint - The multiplier (10000 = 1x, 12000 = 1.2x, 15000 = 1.5x).
 (define-private (get-bonus-multiplier (lock-period uint))
   (if (is-eq lock-period LOCK-30-DAYS)
     BONUS-30-DAYS
