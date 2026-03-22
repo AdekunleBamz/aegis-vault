@@ -28,7 +28,10 @@ export function RecentActivity() {
 
   if (!isConnected) {
     return (
-      <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 h-full flex flex-col items-center justify-center text-center group">
+      <div 
+        className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 h-full flex flex-col items-center justify-center text-center group"
+        role="status"
+      >
         <div className="w-16 h-16 bg-muted rounded-[24px] flex items-center justify-center mb-4 text-muted-foreground/40 group-hover:scale-110 transition-transform">
           <History className="w-8 h-8" aria-hidden="true" />
         </div>
@@ -57,7 +60,7 @@ export function RecentActivity() {
   };
 
   return (
-    <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 h-full flex flex-col">
+    <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 h-full flex flex-col" aria-live="polite">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-muted rounded-2xl flex items-center justify-center">
