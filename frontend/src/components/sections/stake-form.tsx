@@ -320,7 +320,7 @@ import { cn } from '@/lib/utils';
                       Best next action
                     </p>
                     <p className="mt-2 text-sm font-semibold text-foreground">
-                      {nextTier && numAmount > 0 ? `Add ${Math.max(0, nextTierMin - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX for ${nextTier.name}` : 'Preview your reward tier'}
+                      {stats.nextTier && numAmount > 0 ? `Add ${Math.max(0, stats.nextTier.minStake - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX for ${stats.nextTier.name}` : 'Preview your reward tier'}
                     </p>
                   </div>
                 </div>
@@ -334,13 +334,13 @@ import { cn } from '@/lib/utils';
                     <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" aria-hidden="true" />
                   </div>
                   <div>
-                    <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}>
-                      {numAmount > 0 ? `+${monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : "0.00"}
+                    <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? stats.monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}>
+                      {numAmount > 0 ? `+${stats.monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : "0.00"}
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Est. AGS / Month</div>
                     <p className="mt-3 text-sm text-muted-foreground">
                       {numAmount > 0
-                        ? `${yearlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })} AGS projected over a year at the current tier.`
+                        ? `${stats.yearlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })} AGS projected over a year at the current tier.`
                         : 'Enter an amount to preview monthly and annual AGS rewards.'}
                     </p>
                   </div>
@@ -368,8 +368,8 @@ import { cn } from '@/lib/utils';
                       Multiplier Active
                     </div>
                     <p className="mt-3 text-sm text-muted-foreground">
-                      {nextTier
-                        ? `${Math.max(0, nextTierMin - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX away from ${nextTier.name}.`
+                      {stats.nextTier
+                        ? `${Math.max(0, stats.nextTier.minStake - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX away from ${stats.nextTier.name}.`
                         : 'You are already in the highest available reward tier.'}
                     </p>
                   </div>
@@ -377,17 +377,17 @@ import { cn } from '@/lib/utils';
               </div>
 
               {/* Progress to next tier */}
-              {nextTier && numAmount > 0 && (
+              {stats.nextTier && numAmount > 0 && (
                 <div className="px-2">
                   <div className="flex justify-between items-end mb-3">
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-                      Path to <span className="text-foreground">{nextTier.name}</span>
+                      Path to <span className="text-foreground">{stats.nextTier.name}</span>
                     </span>
                     <span 
                       className="text-[10px] font-black text-aegis-blue uppercase tracking-widest"
                       aria-live="polite"
                     >
-                      {Math.max(0, nextTierMin - numAmount).toLocaleString()} STX to upgrade
+                      {Math.max(0, stats.nextTier.minStake - numAmount).toLocaleString()} STX to upgrade
                     </span>
                   </div>
                   <div className="h-2 w-full bg-muted/30 rounded-full overflow-hidden p-[2px]">
