@@ -1,4 +1,7 @@
-// Contract addresses for mainnet
+/**
+ * Fully qualified Stacks smart contract IDs for the Aegis Vault protocol.
+ * Includes the main staking vault, token, and treasury contracts.
+ */
 export const CONTRACTS = {
   // v3 consolidated vault contract (kept under legacy keys for compatibility)
   STAKING: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3',
@@ -9,13 +12,18 @@ export const CONTRACTS = {
   TOKEN_PATTERN: 'aegis-token',
 } as const;
 
-// API endpoints
+/**
+ * External API base URLs and explorer links.
+ */
 export const API = {
   STACKS_API: 'https://api.mainnet.hiro.so',
   EXPLORER: 'https://explorer.stacks.co',
 } as const;
 
-// Staking tiers
+/**
+ * Definition of staking tiers, their required minimum stake, reward multipliers, and base APYs.
+ * Used for UI display and reward projections.
+ */
 export const TIERS = [
   { name: 'Bronze', minStake: 100, multiplier: 1.0, color: '#CD7F32', baseApy: 12 },
   { name: 'Silver', minStake: 1000, multiplier: 1.25, color: '#C0C0C0', baseApy: 15 },
@@ -23,7 +31,7 @@ export const TIERS = [
   { name: 'Platinum', minStake: 100000, multiplier: 2.0, color: '#E5E4E2', baseApy: 22 },
 ] as const;
 
-// Time constants
+/** Blockchain time and interval constants */
 export const BLOCKS_PER_DAY = 144;
 export const BLOCKS_PER_YEAR = 52560;
 export const COOLDOWN_BLOCKS = 144;
@@ -34,19 +42,19 @@ export const SECONDS_PER_HOUR = 3600;
 export const SECONDS_PER_DAY = 86400;
 export const SECONDS_PER_WEEK = 604800;
 
-// Display constants
+/** Precision and display constants for STX and AGS tokens */
 export const STX_DECIMALS = 6;
 export const AGS_DECIMALS = 6;
 
-// Animation constants
+/** Framer Motion and UI animation timing constants */
 export const TRANSITION_DURATION = 0.3;
 export const TRANSITION_EASE = [0.16, 1, 0.3, 1] as const;
 export const PULSE_DURATION = 2;
 
-// Numeric constants
+/** Protocol-specific numeric limits and denominators */
 export const MICRO_STX_DENOMINATOR = 1_000_000;
 export const MIN_STAKE_STX = 0.01;
 export const SUGGESTED_RESERVE_STX = 1;
 
-// Rewards projection
+/** Projection and calculation constants */
 export const MONTHS_PER_YEAR = 12;

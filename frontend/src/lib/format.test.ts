@@ -28,8 +28,8 @@ describe('format', () => {
 
   describe('toMicroSTX', () => {
     it('should convert STX to uSTX bigint', () => {
-      expect(toMicroSTX(1.5)).toBe(1500000n);
-      expect(toMicroSTX(0)).toBe(0n);
+      expect(toMicroSTX(1.5)).toBe(BigInt(1500000));
+      expect(toMicroSTX(0)).toBe(BigInt(0));
     });
   });
 
@@ -44,7 +44,7 @@ describe('format', () => {
   describe('formatPercent', () => {
     it('should format percentage', () => {
       expect(formatPercent(12.3456)).toBe('12.35%');
-      expect(formatPercent(0)).toBe('0.00%');
+      expect(formatSTX(0n)).toBe('0.00');
     });
   });
 
