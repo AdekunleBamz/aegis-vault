@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { getAccountTransactions, Transaction } from '@/lib/api';
 
 export interface UseTransactionsReturn {
@@ -45,5 +45,10 @@ export function useTransactions(
     fetchTransactions();
   }, [fetchTransactions]);
 
-  return { transactions, isLoading, error, refetch: fetchTransactions };
+  return useMemo(() => ({ 
+    transactions, 
+    isLoading, 
+    error, 
+    refetch: fetchTransactions 
+  }), [transactions, isLoading, error, fetchTransactions]);
 }
