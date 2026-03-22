@@ -223,7 +223,10 @@
   )
 )
 
-;; Emergency Withdrawal - Instant but with 0.01 STX fee
+;; @desc Provides instant liquidity by bypassing the normal withdrawal cooldown.
+;; @desc Users receive their principal immediately minus a fixed protocol fee.
+;; @param stake-id - The ID of the active stake to emergency withdraw.
+;; @returns (ok bool) - True if the emergency withdrawal is successful.
 (define-public (emergency-withdraw (stake-id uint))
   (let
     (
@@ -231,11 +234,14 @@
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
       (amount (get amount stake-data))
     )
+    ;; Ensure the stake is active and belongs to the caller
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     
+    ;; Immediate transfer of principal minus fixed protocol fee
     (try! (as-contract (stx-transfer? (- amount FEE-AMOUNT) tx-sender staker)))
     (try! (as-contract (stx-transfer? FEE-AMOUNT tx-sender CONTRACT-OWNER)))
 
+    ;; State cleanup: mark stake as inactive and update global totals
     (map-set stakes { staker: staker, stake-id: stake-id } (merge stake-data { is-active: false }))
     (map-set user-total-staked staker (- (default-to u0 (map-get? user-total-staked staker)) amount))
     (var-set total-staked (- (var-get total-staked) amount))
