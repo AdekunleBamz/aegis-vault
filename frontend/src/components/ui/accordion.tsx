@@ -2,14 +2,26 @@
 
 import React from 'react';
 
-// Accordion Component
+/**
+ * Props for the AccordionItem component.
+ */
 export interface AccordionItemProps {
+  /** The title to display in the accordion header */
   title: string;
+  /** The content to display when the accordion is open */
   children: React.ReactNode;
+  /** Whether the accordion should be open by default (optional) */
   defaultOpen?: boolean;
+  /** Additional CSS classes for the container (optional) */
   className?: string;
 }
 
+/**
+ * A standard accordion item component with a toggleable content area.
+ * 
+ * @param props - The component props
+ * @returns A rendered AccordionItem component
+ */
 export function AccordionItem({
   title,
   children,
