@@ -202,7 +202,7 @@ export function validate<T>(
   const result = schema.safeParse(data)
   
   if (!result.success) {
-    const issues = result.error.issues
+    const issues = (result as z.SafeParseError<unknown>).error.issues
     const message = issues
       .map(i => `${i.path.join('.')}: ${i.message}`)
       .join('; ')
