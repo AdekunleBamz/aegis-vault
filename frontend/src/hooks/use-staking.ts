@@ -29,8 +29,9 @@ export function useStaking(senderAddress: string): UseStakingReturn {
         const result = await executeStake(microAmount, senderAddress);
         return result;
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Staking transaction failed';
-        setError(message);
+        const rawMessage = err instanceof Error ? err.message : 'Staking transaction failed';
+        const safeMessage = rawMessage.substring(0, 100).replace(/[<>]/g, '');
+        setError(safeMessage);
         throw err;
       } finally {
         setIsLoading(false);
