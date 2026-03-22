@@ -18,7 +18,11 @@ export interface PoolStats {
 }
 
 /**
- * Get staker information from the contract
+ * Retrieves staker information for a given Stacks address.
+ * Queries the smart contract and parses the result into a StakerInfo object.
+ * 
+ * @param address - The Stacks address of the staker
+ * @returns A Promise that resolves to StakerInfo if found, or null otherwise
  */
 export async function getStakerInfo(address: string): Promise<StakerInfo | null> {
   try {
@@ -53,7 +57,10 @@ export async function getStakerInfo(address: string): Promise<StakerInfo | null>
 }
 
 /**
- * Get pool statistics
+ * Retrieves global staking pool statistics.
+ * Provides insights into total value locked and active staker count.
+ * 
+ * @returns A Promise that resolves to PoolStats if found, or null otherwise
  */
 export async function getPoolStats(): Promise<PoolStats | null> {
   try {
@@ -85,7 +92,12 @@ export async function getPoolStats(): Promise<PoolStats | null> {
 }
 
 /**
- * Calculate APY based on stake amount and tier
+ * Calculates current APY based on the user's staking amount and reward tier.
+ * Tiers provide multipliers that boost the base protocol APY.
+ * 
+ * @param stakeAmount - The amount of STX currently staked (as micro-STX)
+ * @param tier - The current reward tier index
+ * @returns The calculated APY percentage as a number
  */
 export function calculateAPY(stakeAmount: bigint, tier: number): number {
   const baseAPY = TIERS[0]?.baseApy || 12;
@@ -95,11 +107,12 @@ export function calculateAPY(stakeAmount: bigint, tier: number): number {
 
 /**
  * Calculates estimated rewards for a given duration in blocks.
+ * Uses the annual percentage yield and principal amount to derive local rewards.
  * 
- * @param stakeAmount - The principal amount staked
+ * @param stakeAmount - The principal amount staked (as micro-STX)
  * @param apy - The annual percentage yield to apply
- * @param blocks - The duration in Stacks blocks
- * @returns BigInt - The estimated reward amount in micro-units
+ * @param blocks - The duration in Stacks blocks for the estimate
+ * @returns The estimated reward amount in micro-AGS units
  */
 export function calculateEstimatedRewards(
   stakeAmount: bigint,
@@ -112,7 +125,11 @@ export function calculateEstimatedRewards(
 }
 
 /**
- * Determine tier based on stake amount
+ * Determines the appropriate reward tier for a given staking amount.
+ * Iterates through the predefined TIERS constant to find the highest eligible level.
+ * 
+ * @param stakeAmount - The amount of STX (as micro-STX)
+ * @returns The index of the earned reward tier
  */
 export function determineTier(stakeAmount: bigint): number {
   const stakeSTX = Number(stakeAmount) / MICRO_STX_DENOMINATOR;
