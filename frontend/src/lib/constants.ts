@@ -29,3 +29,7 @@ export const COOLDOWN_BLOCKS = 144;
 // Display constants
 export const STX_DECIMALS = 6;
 export const AGS_DECIMALS = 6;
+
+// Staking limits
+export const MIN_STX_STAKE_STX = 0.01;
+export const MAX_STX_STAKE_STX = 100000;
