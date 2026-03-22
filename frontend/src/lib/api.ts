@@ -1,3 +1,7 @@
+/**
+ * Stacks Blockchain API interaction layer
+ * Handles account balances, transactions, and read-only contract calls
+ */
 import { API } from './constants';
 
 export interface AccountBalance {
