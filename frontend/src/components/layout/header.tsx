@@ -135,8 +135,19 @@ export function Header() {
     };
   }, []);
 
-  const isActiveRoute = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`);
+  const navLinks = [
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/stake', label: 'Stake', icon: Layers },
+    { href: '/strategies', label: 'Strategies', icon: Cpu },
+    { href: '/analytics', label: 'Analytics', icon: PieChart },
+    { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
+    { href: '/positions', label: 'Positions', icon: History },
+    { href: '/governance', label: 'Governance', icon: Vote },
+    { href: '/security', label: 'Transparency', icon: ShieldCheck },
+    { href: '/stats', label: 'Protocol Stats', icon: BarChart3 },
+    { href: '/stats', label: 'Stats', icon: BarChart3 },
+    { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
+  ];
 
   return (
     <header role="banner"
