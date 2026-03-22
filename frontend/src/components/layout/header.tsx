@@ -42,6 +42,7 @@ function NavLink({ href, label, icon: Icon, isActive, onClick, isMobile }: NavLi
     return (
       <Link
         href={href}
+        aria-current={isActive ? 'page' : undefined}
         className={cn(
           "px-4 py-3 text-base font-medium rounded-2xl transition-all flex items-center justify-between",
           isActive
