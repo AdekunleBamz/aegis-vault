@@ -1,7 +1,11 @@
 import { STX_DECIMALS, AGS_DECIMALS } from './constants';
 
 /**
- * Format microSTX to STX with proper decimals
+ * Formats micro-STX (uSTX) value to a human-readable STX string.
+ * Uses the STX_DECIMALS constant for precision and formats with en-US locale.
+ * 
+ * @param microStx - The amount in micro-STX (string, number, or bigint)
+ * @returns A formatted string representation in STX
  */
 export function formatSTX(microStx: string | number | bigint): string {
   const value = BigInt(microStx);
