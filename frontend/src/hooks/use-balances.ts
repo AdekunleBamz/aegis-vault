@@ -43,12 +43,13 @@ export function useBalances(address: string): UseBalancesReturn {
       const balance = await getAccountBalance(address);
       setStxBalance(BigInt(balance.stx.balance));
 
-      // Find AGS token balance
+      // Identify the AGS token balance by matching against the known contract pattern
       const agsTokenKey = Object.keys(balance.fungible_tokens).find((key) =>
         key.includes(CONTRACTS.TOKEN_PATTERN)
       );
 
       if (agsTokenKey) {
+        // Update state with the BigInt representation of the AGS balance
         setAgsBalance(BigInt(balance.fungible_tokens[agsTokenKey].balance));
       }
     } catch (err) {
