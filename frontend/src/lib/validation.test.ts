@@ -70,7 +70,9 @@ describe('validation', () => {
     it('should fail on invalid amount', () => {
       const result = stakeFormSchema.safeParse({
         amount: '0',
-      const result = stakeFormSchema.safeParse(data);
+        lockPeriod: 30,
+        autoCompound: true,
+      });
       expect(result.success).toBe(false);
     });
   });
