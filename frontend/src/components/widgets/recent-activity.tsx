@@ -141,6 +141,7 @@ export function RecentActivity() {
           </div>
         )}
       </div>
+      <div className="absolute bottom-0 right-0 w-32 h-32 bg-aegis-purple/5 blur-[80px] rounded-full pointer-events-none" />
     </div>
   );
 }
