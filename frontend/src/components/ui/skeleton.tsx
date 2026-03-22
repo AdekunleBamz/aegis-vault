@@ -1,23 +1,3 @@
-'use client';
-
-import React from 'react';
-
-// Skeleton variants
-export interface SkeletonProps {
-  width?: string | number;
-  height?: string | number;
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
-  className?: string;
-}
-
-const roundedClasses = {
-  none: '',
-  sm: 'rounded',
-  md: 'rounded-md',
-  lg: 'rounded-lg',
-  full: 'rounded-full',
-};
-
 export function Skeleton({
   width,
   height,
@@ -30,9 +10,33 @@ export function Skeleton({
 
   return (
     <div
-      className={`bg-gray-700 animate-pulse ${roundedClasses[rounded]} ${className}`}
+      className={cn(
+        "bg-muted/30 animate-pulse",
+        roundedClasses[rounded],
+        className
+      )}
       style={style}
+      aria-hidden="true"
     />
+  );
+}
+
+// Pulse loader variant
+export function PulseLoader({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
+  const sizes = { sm: 'w-2 h-2', md: 'w-3 h-3', lg: 'w-4 h-4' };
+  return (
+    <div className="flex gap-1.5" aria-hidden="true">
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className={cn(
+            sizes[size],
+            "bg-aegis-blue/40 rounded-full animate-pulse"
+          )}
+          style={{ animationDelay: `${i * 0.15}s` }}
+        />
+      ))}
+    </div>
   );
 }
 
