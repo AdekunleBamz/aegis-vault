@@ -11,6 +11,11 @@ export interface UseBalancesReturn {
   refetch: () => Promise<void>;
 }
 
+/**
+ * Hook to fetch and manage STX and AGS token balances for a given address
+ * @param address Stacks address to fetch balances for
+ * @returns Object containing balances, loading state, and refetch function
+ */
 export function useBalances(address: string): UseBalancesReturn {
   const [stxBalance, setStxBalance] = useState<bigint>(BigInt(0));
   const [agsBalance, setAgsBalance] = useState<bigint>(BigInt(0));
