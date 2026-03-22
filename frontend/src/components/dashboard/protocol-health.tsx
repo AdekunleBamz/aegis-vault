@@ -1,9 +1,8 @@
-'use client';
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Activity, TrendingUp, DollarSign, PieChart } from 'lucide-react';
+import { Activity, TrendingUp, DollarSign, PieChart, LucideIcon } from 'lucide-react';
 import { RewardChart } from './reward-chart';
+import { cn } from '@/lib/utils';
 
 export function ProtocolHealth() {
     // Mock data for protocol trends
@@ -17,7 +16,15 @@ export function ProtocolHealth() {
         { day: 30, amount: 1800000 },
     ];
 
-    const metrics = [
+    interface Metric {
+        label: string;
+        value: string;
+        change: string;
+        icon: LucideIcon;
+        color: string;
+    }
+
+    const metrics: Metric[] = [
         {
             label: 'Protocol Revenue',
             value: '$124.5k',
@@ -99,6 +106,3 @@ export function ProtocolHealth() {
         </div>
     );
 }
-
-// Missing import fix
-import { cn } from '@/lib/utils';
