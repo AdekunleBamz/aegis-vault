@@ -64,6 +64,22 @@ const ActivityItem = React.memo(({ tx, index, info }: { tx: any; index: number; 
 
 ActivityItem.displayName = 'ActivityItem';
 
+const getActionInfo = (functionName: string) => {
+  const actions: Record<string, { label: string; icon: any; color: string }> = {
+    stake: { label: 'Staking STX', icon: ShieldCheck, color: 'text-aegis-blue' },
+    'request-withdrawal': { label: 'Withdrawal Request', icon: ArrowUpRight, color: 'text-amber-500' },
+    'complete-withdrawal': { label: 'Settled Withdrawal', icon: Zap, color: 'text-emerald-500' },
+    'claim-rewards': { label: 'Yield Collection', icon: Coins, color: 'text-aegis-purple' },
+  };
+  return actions[functionName] || { label: functionName, icon: ArrowRightLeft, color: 'text-muted-foreground' };
+};
+
+const getStatusIcon = (status: string) => {
+  if (status === 'success') return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" aria-hidden="true" />;
+  if (status === 'pending') return <Clock className="w-3.5 h-3.5 text-amber-500 animate-pulse" aria-hidden="true" />;
+  return <AlertCircle className="w-3.5 h-3.5 text-destructive" aria-hidden="true" />;
+};
+
 export function RecentActivity() {
   const { address, isConnected } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 10);
@@ -84,22 +100,6 @@ export function RecentActivity() {
       </div>
     );
   }
-
-  const getActionInfo = (functionName: string) => {
-    const actions: Record<string, { label: string; icon: any; color: string }> = {
-      stake: { label: 'Staking STX', icon: ShieldCheck, color: 'text-aegis-blue' },
-      'request-withdrawal': { label: 'Withdrawal Request', icon: ArrowUpRight, color: 'text-amber-500' },
-      'complete-withdrawal': { label: 'Settled Withdrawal', icon: Zap, color: 'text-emerald-500' },
-      'claim-rewards': { label: 'Yield Collection', icon: Coins, color: 'text-aegis-purple' },
-    };
-    return actions[functionName] || { label: functionName, icon: ArrowRightLeft, color: 'text-muted-foreground' };
-  };
-
-  const getStatusIcon = (status: string) => {
-    if (status === 'success') return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" aria-hidden="true" />;
-    if (status === 'pending') return <Clock className="w-3.5 h-3.5 text-amber-500 animate-pulse" aria-hidden="true" />;
-    return <AlertCircle className="w-3.5 h-3.5 text-destructive" aria-hidden="true" />;
-  };
 
   return (
     <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 h-full flex flex-col" aria-live="polite">
