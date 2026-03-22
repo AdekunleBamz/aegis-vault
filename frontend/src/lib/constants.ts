@@ -30,3 +30,11 @@ export const COOLDOWN_BLOCKS = 144;
 // Display constants
 export const STX_DECIMALS = 6;
 export const AGS_DECIMALS = 6;
+
+// Numeric constants
+export const MICRO_STX_DENOMINATOR = 1_000_000;
+export const MIN_STAKE_STX = 0.01;
+export const SUGGESTED_RESERVE_STX = 1;
+
+// Rewards projection
+export const MONTHS_PER_YEAR = 12;
