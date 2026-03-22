@@ -40,7 +40,7 @@ interface NavLinkProps {
   isMobile?: boolean;
 }
 
-function NavLink({ href, label, icon: Icon, isActive, onClick, isMobile }: NavLinkProps) {
+const NavLink = React.memo(({ href, label, icon: Icon, isActive, onClick, isMobile }: NavLinkProps) => {
   if (isMobile) {
     return (
       <Link
@@ -80,7 +80,22 @@ function NavLink({ href, label, icon: Icon, isActive, onClick, isMobile }: NavLi
       {label}
     </Link>
   );
-}
+});
+
+NavLink.displayName = 'NavLink';
+
+const NAV_LINKS = [
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/stake', label: 'Stake', icon: Layers },
+  { href: '/strategies', label: 'Strategies', icon: Cpu },
+  { href: '/analytics', label: 'Analytics', icon: PieChart },
+  { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
+  { href: '/positions', label: 'Positions', icon: History },
+  { href: '/governance', label: 'Governance', icon: Vote },
+  { href: '/security', label: 'Transparency', icon: ShieldCheck },
+  { href: '/stats', label: 'Stats', icon: BarChart3 },
+  { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
+];
 
 export function Header() {
   const { address, isConnected, isConnecting, connect, disconnect } = useWallet();
@@ -167,19 +182,6 @@ export function Header() {
       document.removeEventListener('keydown', handleEscape);
     };
   }, []);
-
-  const navLinks = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/stake', label: 'Stake', icon: Layers },
-    { href: '/strategies', label: 'Strategies', icon: Cpu },
-    { href: '/analytics', label: 'Analytics', icon: PieChart },
-    { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
-    { href: '/positions', label: 'Positions', icon: History },
-    { href: '/governance', label: 'Governance', icon: Vote },
-    { href: '/security', label: 'Transparency', icon: ShieldCheck },
-    { href: '/stats', label: 'Stats', icon: BarChart3 },
-    { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
-  ];
 
   return (
     <header
