@@ -31,6 +31,7 @@ import { SkeletonKPI } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
   const { isConnected } = useWallet();
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -161,7 +162,11 @@ export default function DashboardPage() {
                       <Link
                         key={action.href}
                         href={action.href}
-                        className="group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50"
+                        aria-current={pathname === action.href ? 'page' : undefined}
+                        className={cn(
+                          "group flex items-center justify-between p-4 rounded-3xl bg-muted/30 border border-border/50 hover:border-aegis-blue/30 transition-all hover:bg-muted/50",
+                          pathname === action.href && "border-aegis-blue/30 bg-muted/50"
+                        )}
                         aria-label={`${action.title}: ${action.description}`}
                       >
                         <div className="flex items-center gap-4">
@@ -169,9 +174,10 @@ export default function DashboardPage() {
                             "w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110",
                             action.variant === 'blue' && "bg-aegis-blue/10 text-aegis-blue",
                             action.variant === 'purple' && "bg-aegis-purple/10 text-aegis-purple",
-                            action.variant === 'cyan' && "bg-aegis-cyan/10 text-aegis-cyan"
+                            action.variant === 'cyan' && "bg-aegis-cyan/10 text-aegis-cyan",
+                            pathname === action.href && "scale-110 shadow-lg shadow-aegis-blue/10"
                           )}>
-                            <action.icon className="w-5 h-5" />
+                            <action.icon className="w-5 h-5" aria-hidden="true" />
                           </div>
                           <div>
                             <h4 className="text-sm font-black tracking-tight">{action.title}</h4>
