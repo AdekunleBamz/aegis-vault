@@ -65,7 +65,11 @@ export async function executeStake(
 }
 
 /**
- * Execute unstake/withdraw request
+ * Initiates a withdrawal request in the Aegis Withdrawals contract.
+ * Users must request a withdrawal before they can complete it after the cooling period.
+ * 
+ * @param amount - The amount to request for withdrawal in micro-STX (uSTX)
+ * @returns A promise that resolves to a TransactionResult with txId and success status
  */
 export async function executeWithdrawRequest(
   amount: bigint
