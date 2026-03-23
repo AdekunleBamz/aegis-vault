@@ -110,6 +110,7 @@ export function Stats() {
           </div>
           <Link
             href="/stats"
+            aria-label="Open the full protocol analytics page"
             className="inline-flex items-center justify-center gap-2 rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-5 py-3 text-sm font-semibold text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan"
           >
             Open full analytics
