@@ -414,7 +414,7 @@ export function StakeForm() {
                     role="status"
                     aria-live="polite"
                   >
-                    <CheckCircle2 className="w-5 h-5" />
+                    <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
                     {success}
                   </motion.div>
                 )}
