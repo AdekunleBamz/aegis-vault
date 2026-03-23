@@ -173,6 +173,7 @@ export function StakeForm() {
                 Please connect your Stacks wallet to access the vault and manage your positions.
               </p>
               <button
+                type="button"
                 onClick={connect}
                 className="px-12 py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] transition-all active:scale-95"
               >
