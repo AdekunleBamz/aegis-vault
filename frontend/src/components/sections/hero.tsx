@@ -48,7 +48,7 @@ export function Hero() {
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-aegis-blue/10 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
         <div className="absolute top-[20%] -right-[10%] w-[35%] h-[35%] bg-aegis-purple/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} aria-hidden="true" />
-        <div className="absolute -bottom-[10%] left-[20%] w-[45%] h-[45%] bg-aegis-indigo/5 rounded-full blur-[140px]" />
+        <div className="absolute -bottom-[10%] left-[20%] w-[45%] h-[45%] bg-aegis-indigo/5 rounded-full blur-[140px]" aria-hidden="true" />
       </div>
 
       <div className="container relative z-10">
