@@ -402,7 +402,7 @@ export function StakeForm() {
                     role="alert"
                     aria-live="assertive"
                   >
-                    <AlertCircle className="w-5 h-5" />
+                    <AlertCircle className="w-5 h-5" aria-hidden="true" />
                     {error || validationError}
                   </motion.div>
                 )}
