@@ -135,9 +135,8 @@ export function StakeForm() {
                 Deposit STX to earn AGS governance tokens.
               </p>
             </div>
-            <div className="w-16 h-16 bg-muted rounded-[28px] flex items-center justify-center group-hover:rotate-6 transition-transform">
-              <Plus className="w-8 h-8 text-aegis-blue" />
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-background rounded-full border border-border flex items-center justify-center text-[10px] font-black text-muted-foreground hover:text-foreground cursor-help" title="How it works">?</div>
+            <div className="w-16 h-16 bg-muted rounded-[28px] flex items-center justify-center group-hover:rotate-6 transition-transform" aria-hidden="true">
+              <Plus className="w-8 h-8 text-aegis-blue" aria-hidden="true" focusable="false" />
             </div>
           </div>
 
