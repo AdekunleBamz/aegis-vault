@@ -82,7 +82,7 @@ export function Stats() {
           </div>
           <div className="flex flex-wrap gap-2">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-muted border border-border rounded-2xl text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              <Activity className="w-3.5 h-3.5 text-green-500" />
+              <Activity className="w-3.5 h-3.5 text-green-500" aria-hidden="true" />
               Live Network Data
             </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/60 border border-border/60 rounded-2xl text-xs font-bold uppercase tracking-widest text-muted-foreground">
