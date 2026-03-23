@@ -136,7 +136,7 @@ SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v2-15
 
 ```bash
 # Deploy to mainnet
-clarinet deployments apply -p deployments/v2-15-mainnet-plan.yaml --no-dashboard
+clarinet deployments apply --mainnet --no-dashboard
 ```
 
 ## Usage
