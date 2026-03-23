@@ -97,7 +97,7 @@ export function Stats() {
             <p className="max-w-2xl text-sm text-muted-foreground">
               Use these numbers to sanity-check vault health before staking. The cards below separate capital, participation, rewards, and chain sync so the protocol state is easier to scan.
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2" role="list">
               {highlights.map((highlight) => (
                 <span
                   key={highlight}
