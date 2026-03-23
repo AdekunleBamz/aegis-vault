@@ -315,7 +315,7 @@ export function StakeForm() {
                     <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                       Best next action
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
+                    <p className="mt-2 text-sm font-semibold tabular-nums text-foreground">
                       {nextTier && numAmount > 0 ? `Add ${Math.max(0, nextTierMin - numAmount).toLocaleString(undefined, { maximumFractionDigits: 2 })} STX for ${nextTier.name}` : 'Preview your reward tier'}
                     </p>
                   </div>
