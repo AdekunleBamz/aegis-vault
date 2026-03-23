@@ -327,7 +327,7 @@ export function StakeForm() {
                 <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all" aria-labelledby="yield-label">
                   <div className="flex items-center justify-between mb-4">
                     <span id="yield-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Yield Projection</span>
-                    <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" />
+                    <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" aria-hidden="true" />
                   </div>
                   <div>
                     <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}>
