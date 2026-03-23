@@ -234,6 +234,7 @@ export function StakeForm() {
                     type="text"
                     inputMode="decimal"
                     autoComplete="off"
+                    spellCheck={false}
                     value={amount}
                     onChange={handleAmountChange}
                     placeholder="0.00"
