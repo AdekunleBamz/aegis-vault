@@ -386,7 +386,7 @@ export function StakeForm() {
                       animate={{ width: `${progressToNext}%` }}
                       className="h-full bg-gradient-to-r from-aegis-blue to-aegis-purple rounded-full relative"
                     >
-                      <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                      <div className="absolute inset-0 bg-white/20 animate-pulse" aria-hidden="true" />
                     </motion.div>
                   </div>
                 </div>
