@@ -116,6 +116,7 @@ export function StakeForm() {
         }}
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         className="absolute top-1/4 -right-20 w-96 h-96 bg-aegis-blue/20 rounded-full blur-[120px] pointer-events-none"
+        aria-hidden="true"
       />
       <motion.div
         animate={{
