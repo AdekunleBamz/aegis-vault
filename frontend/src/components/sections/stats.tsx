@@ -170,7 +170,7 @@ export function Stats() {
 
       {/* Background decoration */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-aegis-blue/5 rounded-full blur-[80px] pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-aegis-purple/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-aegis-purple/5 rounded-full blur-[100px] pointer-events-none" aria-hidden="true" />
     </section>
   );
 }
