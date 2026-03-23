@@ -338,7 +338,7 @@ export function StakeForm() {
                 <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all" aria-labelledby="tier-label">
                   <div className="flex items-center justify-between mb-4">
                     <span id="tier-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Reward Tier</span>
-                    <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" />
+                    <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" aria-hidden="true" />
                   </div>
                   <div>
                     <div className="text-2xl font-black flex items-center gap-2" style={{ color: TIERS[tier]?.color }} aria-label={`Current Tier: ${TIERS[tier]?.name}, ${apy} percent APY`}>
