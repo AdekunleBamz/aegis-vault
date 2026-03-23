@@ -456,9 +456,9 @@ export function StakeForm() {
                   <Lock className="w-3 h-3" />
                   24h Lock
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <Activity className="w-3 h-3" />
-                  Instant Rewards
+                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter" role="listitem" aria-label="Rewards status indicator">
+                  <Activity className="w-3 h-3" aria-hidden="true" />
+                  Live Rewards
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
                   <ShieldCheck className="w-3 h-3" />
