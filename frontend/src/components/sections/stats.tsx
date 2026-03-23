@@ -113,7 +113,7 @@ export function Stats() {
             aria-label="Open the full protocol analytics page"
             className="inline-flex items-center justify-center gap-2 rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-5 py-3 text-sm font-semibold text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            Open full analytics
+            View full analytics
             <TrendingUp className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
