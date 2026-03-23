@@ -165,7 +165,7 @@ export function StakeForm() {
             >
               <div className="relative mx-auto mb-8">
                 <div className="absolute inset-0 rounded-[40px] bg-aegis-blue/10 animate-ping" aria-hidden="true" />
-                <div className="absolute inset-0 rounded-[40px] bg-aegis-blue/5 animate-pulse" style={{ animationDuration: '3s' }} />
+                <div className="absolute inset-0 rounded-[40px] bg-aegis-blue/5 animate-pulse" style={{ animationDuration: '3s' }} aria-hidden="true" />
                 <div className="relative w-24 h-24 bg-muted/60 rounded-[40px] flex items-center justify-center border border-border/50 backdrop-blur-xl">
                   <Wallet className="w-10 h-10 text-aegis-blue/60" aria-hidden="true" />
                 </div>
