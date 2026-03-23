@@ -235,6 +235,7 @@ export function StakeForm() {
                     inputMode="decimal"
                     autoComplete="off"
                     spellCheck={false}
+                    enterKeyHint="done"
                     value={amount}
                     onChange={handleAmountChange}
                     placeholder="0.00"
