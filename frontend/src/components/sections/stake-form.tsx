@@ -141,7 +141,7 @@ export function StakeForm() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <div className="px-3 py-1 bg-aegis-blue/10 border border-aegis-blue/20 rounded-full text-[10px] font-black uppercase tracking-widest text-aegis-blue flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-aegis-blue rounded-full animate-pulse" />
+                  <span className="w-1.5 h-1.5 bg-aegis-blue rounded-full animate-pulse" aria-hidden="true" />
                   Liquid Staking v2
                 </div>
               </div>
