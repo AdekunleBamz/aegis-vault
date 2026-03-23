@@ -455,8 +455,8 @@ export function StakeForm() {
                   <Activity className="w-3 h-3" aria-hidden="true" />
                   Live Rewards
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <ShieldCheck className="w-3 h-3" />
+                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter" role="listitem" aria-label="Protocol verification indicator">
+                  <ShieldCheck className="w-3 h-3" aria-hidden="true" />
                   v2 Verified
                 </div>
               </div>
