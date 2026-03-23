@@ -20,7 +20,7 @@ The protocol consists of multiple smart contracts:
 | Contract | Description |
 |----------|-------------|
 | `aegis-staking-v2-15` | Core staking logic, handles deposits and position tracking |
-| `aegis-withdrawals-v2-15` | Withdrawal processing with lock period enforcement |
+| `aegis-vault-v2` | Withdrawal processing with lock period enforcement |
 | `aegis-rewards-v2-15` | Reward calculation and distribution |
 | `aegis-treasury-v2-15` | Treasury for penalty fees and protocol revenue |
 | `aegis-token-v2-15` | AGS token (SIP-010 compliant) |
