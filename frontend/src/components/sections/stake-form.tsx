@@ -350,7 +350,7 @@ export function StakeForm() {
                   <div>
                     <div className="text-2xl font-black flex items-center gap-2" style={{ color: TIERS[tier]?.color }} aria-label={`Current Tier: ${TIERS[tier]?.name}, ${apy} percent APY`}>
                       {TIERS[tier]?.name}
-                      <span className="text-xs text-muted-foreground/40 font-bold uppercase" aria-hidden="true">{apy}% APY</span>
+                      <span className="text-xs text-muted-foreground/40 font-bold tabular-nums uppercase" aria-hidden="true">{apy}% APY</span>
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Multiplier Active</div>
                     <p className="mt-3 text-sm text-muted-foreground">
