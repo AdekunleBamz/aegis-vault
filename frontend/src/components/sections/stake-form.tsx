@@ -373,7 +373,14 @@ export function StakeForm() {
                       {Math.max(0, nextTierMin - numAmount).toLocaleString()} STX to upgrade
                     </span>
                   </div>
-                  <div className="h-2 w-full bg-muted/30 rounded-full overflow-hidden p-[2px]">
+                  <div
+                    className="h-2 w-full bg-muted/30 rounded-full overflow-hidden p-[2px]"
+                    role="progressbar"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round(progressToNext)}
+                    aria-label={`Progress toward ${nextTier.name} tier`}
+                  >
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${progressToNext}%` }}
