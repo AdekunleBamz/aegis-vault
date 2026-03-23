@@ -221,6 +221,7 @@ export function StakeForm() {
                   <button
                     type="button"
                     onClick={() => setSuggestedAmount(balanceSTX)}
+                    aria-label="Set stake amount to your available balance"
                     className="self-start rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan"
                   >
                     Use Max Balance
