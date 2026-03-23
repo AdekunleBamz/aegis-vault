@@ -299,7 +299,7 @@ export function StakeForm() {
                     <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                       Vault entry
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-foreground">
+                    <p className="mt-2 text-sm font-semibold tabular-nums text-foreground">
                       {numAmount > 0 ? `${numAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })} STX queued` : 'Waiting for amount'}
                     </p>
                   </div>
