@@ -214,7 +214,7 @@ export function Hero() {
                   </h2>
                 </div>
                 <div className="rounded-2xl border border-aegis-blue/20 bg-aegis-blue/10 p-3">
-                  <ShieldCheck className="h-5 w-5 text-aegis-blue" />
+                  <ShieldCheck className="h-5 w-5 text-aegis-blue" aria-hidden="true" />
                 </div>
               </div>
 
