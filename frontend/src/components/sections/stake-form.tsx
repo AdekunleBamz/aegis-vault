@@ -286,7 +286,7 @@ export function StakeForm() {
                         type="button"
                         onClick={() => setSuggestedAmount(nextTierMin)}
                         aria-label={`Set stake amount to reach ${nextTier.name} tier`}
-                        className="rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan"
+                        className="rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                       >
                         Reach {nextTier.name}
                       </button>
