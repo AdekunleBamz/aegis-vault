@@ -249,7 +249,7 @@ export function StakeForm() {
                     )}
                   />
                   <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-4">
-                    <span className="text-xl font-black text-muted-foreground/40">STX</span>
+                    <span className="text-xl font-black text-muted-foreground/40" aria-hidden="true">STX</span>
                   </div>
                 </div>
 
