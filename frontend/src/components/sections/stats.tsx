@@ -114,7 +114,7 @@ export function Stats() {
             className="inline-flex items-center justify-center gap-2 rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-5 py-3 text-sm font-semibold text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan"
           >
             Open full analytics
-            <TrendingUp className="h-4 w-4" />
+            <TrendingUp className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
 
