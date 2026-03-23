@@ -76,7 +76,7 @@ export function Stats() {
             <h2 id="stats-headline" className="text-3xl md:text-4xl font-black tracking-tight mb-4">
               Protocol <span className="text-gradient">Performance</span>
             </h2>
-            <p className="text-muted-foreground font-medium">
+            <p className="max-w-xl text-muted-foreground font-medium">
               Real-time metrics from the Aegis Vault protocol. Transparency at the core of decentralization.
             </p>
           </div>
