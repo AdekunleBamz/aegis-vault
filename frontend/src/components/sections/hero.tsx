@@ -181,7 +181,7 @@ export function Hero() {
             className="mt-16 flex flex-wrap items-center justify-center gap-8 text-xs font-bold uppercase tracking-widest text-muted-foreground/50 lg:justify-start"
           >
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
-              <ShieldCheck className="w-4 h-4 text-green-500/50 group-hover:text-green-500 transition-colors" />
+              <ShieldCheck className="w-4 h-4 text-green-500/50 group-hover:text-green-500 transition-colors" aria-hidden="true" />
               Smart Contract Audited
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
