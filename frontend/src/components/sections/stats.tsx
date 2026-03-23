@@ -162,7 +162,7 @@ export function Stats() {
               </div>
 
               {/* Hover Decorative Element */}
-              <div className="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-transparent to-muted rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-transparent to-muted rounded-full opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
             </motion.div>
           ))}
         </div>
