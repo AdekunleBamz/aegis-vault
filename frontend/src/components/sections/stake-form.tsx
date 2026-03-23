@@ -262,7 +262,7 @@ export function StakeForm() {
                       exit={{ opacity: 0, y: -10 }}
                       className="text-destructive text-[10px] font-black uppercase tracking-widest mt-4 px-4 flex items-center gap-2"
                     >
-                      <AlertCircle className="w-3.5 h-3.5" />
+                      <AlertCircle className="w-3.5 h-3.5" aria-hidden="true" />
                       {hasError}
                     </motion.p>
                   )}
