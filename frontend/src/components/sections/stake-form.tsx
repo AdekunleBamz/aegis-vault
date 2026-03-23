@@ -276,7 +276,7 @@ export function StakeForm() {
                         type="button"
                         onClick={() => setSuggestedAmount(preset.value)}
                         aria-label={`Set stake amount to ${preset.label} of balance`}
-                        className="rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
+                        className="rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                       >
                         {preset.label}
                       </button>
