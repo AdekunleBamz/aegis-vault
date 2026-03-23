@@ -183,7 +183,7 @@ export function StakeForm() {
               </button>
             </motion.div>
           ) : (
-            <form onSubmit={handleStake} className="space-y-8">
+            <form onSubmit={handleStake} className="space-y-8" aria-label="Stake STX in Aegis Vault">
               <div className="grid gap-4 rounded-[32px] border border-border/30 bg-muted/15 p-5 md:grid-cols-2">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
