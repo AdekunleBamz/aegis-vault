@@ -66,7 +66,7 @@ export function Hero() {
             </span>
             <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
               Mainnet Protocol Live
-              <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
             </span>
           </motion.div>
 
