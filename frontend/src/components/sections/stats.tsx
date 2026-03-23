@@ -101,7 +101,7 @@ export function Stats() {
               {highlights.map((highlight) => (
                 <span
                   key={highlight}
-                  className="rounded-full border border-border/50 bg-muted/30 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground"
+                  className="rounded-full border border-border/50 bg-muted/30 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground" role="listitem"
                 >
                   {highlight}
                 </span>
