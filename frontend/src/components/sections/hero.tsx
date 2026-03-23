@@ -236,12 +236,12 @@ export function Hero() {
                 </p>
                 <ol className="mt-4 grid gap-3">
                   {['Connect wallet', 'Preview rewards', 'Confirm stake'].map((step, index) => (
-                    <div key={step} className="flex items-center gap-3">
+                    <li key={step} className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-xs font-black text-background">
                         0{index + 1}
                       </div>
                       <span className="text-sm font-medium text-foreground">{step}</span>
-                    </div>
+                    </li>
                   ))}
                 </ol>
               </div>
