@@ -182,7 +182,7 @@ export function Hero() {
               Smart Contract Audited
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
-              <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" />
+              <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" aria-hidden="true" />
               Fully Decentralized
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
