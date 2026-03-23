@@ -95,7 +95,7 @@ export function Stats() {
         <div className="mb-8 grid gap-4 rounded-[32px] border border-border/60 bg-background/50 p-5 backdrop-blur-sm lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div>
             <p className="max-w-2xl text-sm text-muted-foreground">
-              Use these numbers to sanity-check vault health before staking. The cards below separate capital, participation, rewards, and chain sync so the protocol state is easier to scan.
+              Use these metrics to sanity-check vault health before staking. The cards below separate capital, participation, rewards, and chain sync so the protocol state is easier to scan.
             </p>
             <div className="mt-4 flex flex-wrap gap-2" role="list">
               {highlights.map((highlight) => (
