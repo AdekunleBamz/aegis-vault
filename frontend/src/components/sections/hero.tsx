@@ -234,7 +234,7 @@ export function Hero() {
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/70">
                   Deposit Workflow
                 </p>
-                <div className="mt-4 grid gap-3">
+                <ol className="mt-4 grid gap-3">
                   {['Connect wallet', 'Preview rewards', 'Confirm stake'].map((step, index) => (
                     <div key={step} className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-xs font-black text-background">
@@ -243,7 +243,7 @@ export function Hero() {
                       <span className="text-sm font-medium text-foreground">{step}</span>
                     </div>
                   ))}
-                </div>
+                </ol>
               </div>
             </div>
           </motion.aside>
