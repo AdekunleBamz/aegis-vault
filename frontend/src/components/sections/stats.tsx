@@ -67,7 +67,7 @@ export function Stats() {
 
   return (
     <section
-      className="py-24 relative overflow-hidden bg-muted/20"
+      className="py-20 md:py-24 relative overflow-hidden bg-muted/20"
       aria-labelledby="stats-headline"
     >
       <div className="container relative z-10">
