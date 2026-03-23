@@ -447,7 +447,7 @@ export function StakeForm() {
                           animate={{ rotate: 360 }}
                           transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
                         >
-                          <RefreshCw className="w-6 h-6" />
+                          <RefreshCw className="w-6 h-6" aria-hidden="true" />
                         </motion.div>
                         SIGNING TRANSACTION...
                       </>
