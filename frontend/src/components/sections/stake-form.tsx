@@ -294,7 +294,7 @@ export function StakeForm() {
                   </div>
                 )}
 
-                <div className="mt-5 grid gap-3 rounded-[28px] border border-border/30 bg-muted/10 p-4 sm:grid-cols-3">
+                <div className="mt-5 grid gap-3 rounded-[28px] border border-border/30 bg-muted/10 p-4 sm:grid-cols-3" aria-live="polite">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                       Vault entry
