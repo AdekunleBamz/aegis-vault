@@ -113,6 +113,7 @@ export function Hero() {
               </Link>
             ) : (
               <button
+                type="button"
                 onClick={connect}
                 className="group relative px-8 py-4 bg-foreground text-background rounded-full font-bold text-lg hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-blue)/0.5)] transition-all overflow-hidden"
               >
