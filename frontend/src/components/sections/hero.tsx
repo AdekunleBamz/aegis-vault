@@ -189,7 +189,7 @@ export function Hero() {
               Fully Decentralized
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
-              <Zap className="w-4 h-4 text-purple-500/50 group-hover:text-purple-500 transition-colors" />
+              <Zap className="w-4 h-4 text-purple-500/50 group-hover:text-purple-500 transition-colors" aria-hidden="true" />
               Real-time Rewards
             </div>
           </motion.div>
