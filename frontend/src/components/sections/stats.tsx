@@ -85,7 +85,7 @@ export function Stats() {
               <Activity className="w-3.5 h-3.5 text-green-500" aria-hidden="true" />
               Live Network Data
             </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/60 border border-border/60 rounded-2xl text-xs font-bold uppercase tracking-widest text-muted-foreground" aria-live="polite">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/60 border border-border/60 rounded-2xl text-xs font-bold uppercase tracking-widest text-muted-foreground" aria-live="polite" aria-label="Current synced Stacks block height">
               <Box className="w-3.5 h-3.5 text-aegis-blue" aria-hidden="true" />
               Block {formatBlockHeight(blockHeight)}
             </div>
