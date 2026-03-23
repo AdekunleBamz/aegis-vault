@@ -86,7 +86,7 @@ export function Stats() {
               Live Network Data
             </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/60 border border-border/60 rounded-2xl text-xs font-bold uppercase tracking-widest text-muted-foreground">
-              <Box className="w-3.5 h-3.5 text-aegis-blue" />
+              <Box className="w-3.5 h-3.5 text-aegis-blue" aria-hidden="true" />
               Block {formatBlockHeight(blockHeight)}
             </div>
           </div>
