@@ -126,6 +126,7 @@ export function StakeForm() {
         }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-aegis-purple/20 rounded-full blur-[140px] pointer-events-none"
+        aria-hidden="true"
       />
 
       <div className="container max-w-2xl mx-auto relative z-10">
