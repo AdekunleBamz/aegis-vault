@@ -159,7 +159,7 @@ export function Hero() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="p-5 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default text-left"
+                className="p-5 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default text-left" role="listitem"
               >
                 <stat.icon className={cn("w-5 h-5 mb-4 opacity-70 group-hover:opacity-100 transition-opacity", stat.color)} />
                 <div className="text-3xl font-black tabular-nums tracking-tighter mb-1">
