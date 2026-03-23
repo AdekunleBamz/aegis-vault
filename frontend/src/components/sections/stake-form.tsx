@@ -237,7 +237,7 @@ export function StakeForm() {
                     onChange={handleAmountChange}
                     placeholder="0.00"
                     aria-invalid={!!hasError}
-                    aria-describedby={hasError ? "stake-error" : undefined}
+                    aria-describedby={hasError ? "stake-amount-help stake-error" : "stake-amount-help"}
                     className={cn(
                       "mt-4 w-full bg-muted/20 border-2 rounded-[32px] px-8 py-7 text-4xl font-black focus:outline-none transition-all duration-500 placeholder:text-muted-foreground/20",
                       hasError
