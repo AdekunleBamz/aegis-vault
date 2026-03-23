@@ -233,6 +233,7 @@ export function StakeForm() {
                     id="stake-amount"
                     type="text"
                     inputMode="decimal"
+                    autoComplete="off"
                     value={amount}
                     onChange={handleAmountChange}
                     placeholder="0.00"
