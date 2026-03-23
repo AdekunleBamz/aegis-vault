@@ -147,7 +147,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--aegis-blue) / 0.5);
+  background: hsl(var(--aegis-blue) / 0.58);
 }
 
 /* Selection */
