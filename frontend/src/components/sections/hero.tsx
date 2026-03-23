@@ -202,7 +202,7 @@ export function Hero() {
             className="relative"
             aria-label="Operator snapshot panel"
           >
-            <div className="absolute inset-x-12 top-10 h-40 rounded-full bg-aegis-blue/20 blur-[90px]" />
+            <div className="absolute inset-x-12 top-10 h-40 rounded-full bg-aegis-blue/20 blur-[90px]" aria-hidden="true" />
             <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-background/65 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] backdrop-blur-2xl">
               <div className="mb-6 flex items-start justify-between gap-4">
                 <div>
