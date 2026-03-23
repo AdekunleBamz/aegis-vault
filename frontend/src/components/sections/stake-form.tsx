@@ -440,7 +440,7 @@ export function StakeForm() {
                   aria-label={isLoading ? "Processing transaction" : "Confirm staking deposit"}
                   className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-3">
+                  <span className="relative z-10 flex items-center justify-center gap-3" aria-live="polite">
                     {isLoading ? (
                       <>
                         <motion.div
