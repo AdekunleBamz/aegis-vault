@@ -30,7 +30,9 @@ const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 
 // Default to mainnet, but can be configured
-const defaultNetwork = STACKS_MAINNET;
+const configuredNetwork = (process.env.NEXT_PUBLIC_STACKS_NETWORK || 'mainnet').toLowerCase();
+const defaultNetwork = configuredNetwork === 'testnet' ? STACKS_TESTNET : STACKS_MAINNET;
+const preferredAddressNetwork: 'mainnet' | 'testnet' = configuredNetwork === 'testnet' ? 'testnet' : 'mainnet';
 
 interface WalletProviderProps {
   children: ReactNode;
@@ -58,7 +60,9 @@ export function WalletProvider({ children }: WalletProviderProps) {
     const checkUserSession = () => {
       if (userSession.isUserSignedIn()) {
         const userData = userSession.loadUserData();
-        const currentAddress = userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet;
+        const currentAddress = userData.profile.stxAddress[preferredAddressNetwork]
+          || userData.profile.stxAddress.mainnet
+          || userData.profile.stxAddress.testnet;
 
         setState((prev) => {
           if (prev.address !== currentAddress) {
@@ -104,7 +108,9 @@ export function WalletProvider({ children }: WalletProviderProps) {
         const userData = userSession.loadUserData();
         setState((prev) => ({
           ...prev,
-          address: userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet,
+          address: userData.profile.stxAddress[preferredAddressNetwork]
+            || userData.profile.stxAddress.mainnet
+            || userData.profile.stxAddress.testnet,
           isConnected: true,
           isConnecting: false,
         }));
