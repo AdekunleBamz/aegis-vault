@@ -9,7 +9,7 @@ export const CONTRACTS = {
 
 // API endpoints
 export const API = {
-  STACKS_API: 'https://api.mainnet.hiro.so',
+  STACKS_API: import.meta.env.VITE_STACKS_API_URL || 'https://api.mainnet.hiro.so',
   EXPLORER: 'https://explorer.stacks.co',
 } as const;
 
