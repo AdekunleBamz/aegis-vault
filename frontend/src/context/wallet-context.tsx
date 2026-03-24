@@ -28,6 +28,7 @@ const WalletContext = createContext<WalletContextValue | undefined>(undefined);
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
+const SESSION_POLL_INTERVAL_MS = 3000;
 
 // Default to mainnet, but can be configured
 const defaultNetwork = STACKS_MAINNET;
@@ -87,7 +88,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
     };
 
     checkUserSession();
-    const interval = setInterval(checkUserSession, 1000);
+    const interval = setInterval(checkUserSession, SESSION_POLL_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
