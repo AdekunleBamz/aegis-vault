@@ -19,11 +19,10 @@ The protocol consists of multiple smart contracts:
 
 | Contract | Description |
 |----------|-------------|
-| `aegis-staking-v2-15` | Core staking logic, handles deposits and position tracking |
-| `aegis-withdrawals-v2-15` | Withdrawal processing with lock period enforcement |
-| `aegis-rewards-v2-15` | Reward calculation and distribution |
-| `aegis-treasury-v2-15` | Treasury for penalty fees and protocol revenue |
-| `aegis-token-v2-15` | AGS token (SIP-010 compliant) |
+| `aegis-vault-v3` | Core staking, withdrawal queue, and reward accrual logic |
+| `aegis-token-v3` | AGS token (SIP-010 compliant) used for rewards |
+| `aegis-treasury` (`aegis-treasury-v2-15`) | Treasury controls and protocol asset distribution |
+| `sip-010-trait` | Fungible token trait dependency used by AGS token/treasury flows |
 
 ## Tech Stack
 
@@ -48,11 +47,9 @@ The protocol consists of multiple smart contracts:
 ```
 aegis-vault/
 ├── contracts/           # Clarity smart contracts
-│   ├── aegis-staking-v2-15.clar
-│   ├── aegis-withdrawals-v2-15.clar
-│   ├── aegis-rewards-v2-15.clar
+│   ├── aegis-vault-v3.clar
+│   ├── aegis-token-v3.clar
 │   ├── aegis-treasury-v2-15.clar
-│   ├── aegis-token-v2-15.clar
 │   └── traits/
 ├── frontend/            # Next.js frontend application
 │   └── src/
@@ -62,8 +59,6 @@ aegis-vault/
 │       ├── hooks/       # Custom hooks
 │       └── lib/         # Utilities and helpers
 ├── tests/               # Contract tests
-├── scripts/             # Automation scripts (private)
-├── deployments/         # Deployment plans
 └── settings/            # Network configurations
 ```
 
@@ -96,9 +91,6 @@ npm --prefix frontend install
 clarinet check
 
 # Run tests
-clarinet test
-
-# Run tests with vitest
 npm test
 
 # Console for local testing
@@ -125,19 +117,12 @@ npm --prefix frontend start
 Contracts are deployed to Stacks mainnet at:
 
 ```
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-staking-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-withdrawals-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v2-15
+ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.aegis-vault-v3
+ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.aegis-token-v3
+ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.aegis-treasury-v2-15
 ```
 
-### Deployment Plans
-
-```bash
-# Deploy to mainnet
-clarinet deployments apply -p deployments/v2-15-mainnet-plan.yaml --no-dashboard
-```
+For the full historical/current contract matrix, see `contract-addresses.md`.
 
 ## Usage
 
@@ -158,30 +143,27 @@ Users can stake STX with different lock periods:
 
 ## API Reference
 
-### Staking Contract
+### Vault Contract
 
 ```clarity
 ;; Stake STX with lock period (3, 7, or 30 days)
 (stake (amount uint) (lock-period uint))
-
-;; Get user's stake IDs
-(get-user-stake-ids (user principal))
 
 ;; Get stake details
 (get-stake (staker principal) (stake-id uint))
 
 ;; Get vault statistics
 (get-vault-stats)
-```
 
-### Withdrawals Contract
-
-```clarity
-;; Normal withdrawal (after lock expires)
-(withdraw (stake-id uint))
+;; Request + complete withdrawal flow
+(request-withdrawal (stake-id uint))
+(complete-withdrawal)
 
 ;; Emergency withdrawal (2% penalty)
 (emergency-withdraw (stake-id uint))
+
+;; Claim AGS rewards
+(claim-rewards (stake-id uint))
 ```
 
 ## Security
