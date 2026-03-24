@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   ArrowRightLeft
 } from 'lucide-react';
+import { API } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
@@ -105,7 +106,7 @@ export function RecentActivity() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
+                    href={`${API.EXPLORER}/txid/${tx.tx_id}?chain=mainnet`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`View transaction ${info.label} ${tx.tx_status} from ${formatRelativeTime(tx.burn_block_time)} on Stacks Explorer`}
