@@ -10,7 +10,7 @@ export const CONTRACTS = {
 // API endpoints
 export const API = {
   STACKS_API: 'https://api.mainnet.hiro.so',
-  EXPLORER: 'https://explorer.stacks.co',
+  EXPLORER: 'https://explorer.hiro.so',
 } as const;
 
 // Staking tiers
