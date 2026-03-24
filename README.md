@@ -1,10 +1,20 @@
 # Aegis Vault
 
+[![Project Status: Active](https://img.shields.io/badge/Project%20Status-Active-brightgreen.svg)](https://github.com/AdekunleBamz/aegis-vault)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A decentralized staking protocol built on the Stacks blockchain.
 
 ## Overview
 
 Aegis Vault is a high-performance, decentralized staking protocol engineered for the Stacks ecosystem. It empowers users to maximize their STX capital efficiency through a sophisticated tiered multiplier system and algorithmic reward distribution.
+
+## Roadmap
+
+- [x] Phase 1: Core Staking Logic & SIP-010 Integration
+- [/] Phase 2: Enhanced UI/UX & PWA Support
+- [ ] Phase 3: Multi-vault Strategy Support
+- [ ] Phase 4: Decentralized Governance (DAO)
 
 ### Key Features
 
