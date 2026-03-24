@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { API } from '@/lib/constants';
 
 interface WithdrawFlowProps {
   onSuccess?: (txId: string) => void;
@@ -159,7 +160,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
 
         {txId && (
           <a
-            href={`https://explorer.stacks.co/txid/${txId}?chain=mainnet`}
+            href={`${API.EXPLORER}/txid/${txId}?chain=mainnet`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm mb-6"
