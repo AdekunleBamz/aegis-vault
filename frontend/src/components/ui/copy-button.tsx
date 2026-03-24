@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { API } from '@/lib/constants';
 
 export interface CopyButtonProps {
   text: string;
@@ -103,7 +104,7 @@ export function TxHashDisplay({
   className = '',
 }: TxHashDisplayProps) {
   const truncated = `${txId.slice(0, 8)}...${txId.slice(-6)}`;
-  const explorerUrl = `https://explorer.stacks.co/txid/${txId}?chain=${network}`;
+  const explorerUrl = `${API.EXPLORER}/txid/${txId}?chain=${network}`;
 
   return (
     <div className={`inline-flex items-center gap-2 ${className}`}>
