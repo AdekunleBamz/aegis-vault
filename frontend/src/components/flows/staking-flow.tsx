@@ -5,7 +5,7 @@ import { useWallet } from '@/context/wallet-context';
 import { useBalances } from '@/hooks/use-balances';
 import { useStaking } from '@/hooks/use-staking';
 import { formatSTX, toMicroSTX } from '@/lib/format';
-import { TIERS } from '@/lib/constants';
+import { API, TIERS } from '@/lib/constants';
 import { determineTier, calculateAPY } from '@/lib/staking';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -146,7 +146,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
 
             <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto mb-10">
               <a
-                href={`https://explorer.stacks.co/txid/${txId}?chain=mainnet`}
+                href={`${API.EXPLORER}/txid/${txId}?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 p-4 bg-muted/50 hover:bg-muted border border-border/50 rounded-3xl font-black text-[10px] uppercase tracking-widest transition-all"
