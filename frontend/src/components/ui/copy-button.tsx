@@ -93,7 +93,7 @@ export function AddressDisplay({
 // Transaction hash display
 export interface TxHashDisplayProps {
   txId: string;
-  network?: 'mainnet' | 'testnet';
+  network?: 'mainnet' | 'testnet' | 'devnet';
   className?: string;
 }
 
@@ -103,7 +103,8 @@ export function TxHashDisplay({
   className = '',
 }: TxHashDisplayProps) {
   const truncated = `${txId.slice(0, 8)}...${txId.slice(-6)}`;
-  const explorerUrl = `https://explorer.stacks.co/txid/${txId}?chain=${network}`;
+  const explorerChain = network === 'testnet' || network === 'devnet' ? network : 'mainnet';
+  const explorerUrl = `https://explorer.stacks.co/txid/${txId}?chain=${explorerChain}`;
 
   return (
     <div className={`inline-flex items-center gap-2 ${className}`}>
