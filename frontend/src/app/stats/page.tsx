@@ -79,7 +79,7 @@ export default function StatsPage() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Contract Addresses</h2>
               <a
-                href="https://explorer.stacks.co"
+                href="https://explorer.hiro.so/?chain=mainnet"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1"
@@ -110,7 +110,7 @@ export default function StatsPage() {
                       <td className="p-4 text-white font-medium">{contract.name}</td>
                       <td className="p-4">
                         <a
-                          href={`https://explorer.stacks.co/txid/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.${contract.address}?chain=mainnet`}
+                          href={`https://explorer.hiro.so/address/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.${contract.address}?chain=mainnet`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-400 hover:text-blue-300 font-mono text-sm flex items-center gap-2 group"
