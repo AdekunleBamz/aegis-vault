@@ -5,6 +5,7 @@ import { STACKS_MAINNET } from '@stacks/network';
 import { useWallet } from '@/context/wallet-context';
 import { useTransactions } from '@/hooks/use-transactions';
 import { formatRelativeTime, truncateAddress, formatSTX, formatAGS } from '@/lib/format';
+import { API } from '@/lib/constants';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -228,7 +229,7 @@ export default function HistoryPage() {
                   return (
                     <a
                       key={tx.tx_id}
-                      href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
+                      href={`${API.EXPLORER}/txid/${tx.tx_id}?chain=mainnet`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-4 py-4 hover:bg-gray-800/30 px-3 -mx-3 rounded-xl transition-colors group"
@@ -279,7 +280,7 @@ export default function HistoryPage() {
             <p className="text-center text-gray-500 text-sm mt-6">
               Showing latest 50 transactions. View more on{' '}
               <a
-                href={`https://explorer.stacks.co/address/${address}?chain=mainnet`}
+                href={`${API.EXPLORER}/address/${address}?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300"
