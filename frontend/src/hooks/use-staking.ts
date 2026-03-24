@@ -5,7 +5,7 @@ import { executeStake, TransactionResult } from '@/lib/stacks';
 import { toMicroSTX } from '@/lib/format';
 
 export interface UseStakingReturn {
-  stake: (amount: number) => Promise<TransactionResult>;
+  stake: (amount: number, lockPeriodDays?: number) => Promise<TransactionResult>;
   isLoading: boolean;
   error: string | null;
   reset: () => void;
@@ -16,7 +16,7 @@ export function useStaking(senderAddress: string): UseStakingReturn {
   const [error, setError] = useState<string | null>(null);
 
   const stake = useCallback(
-    async (amount: number): Promise<TransactionResult> => {
+    async (amount: number, lockPeriodDays: number = 7): Promise<TransactionResult> => {
       if (!senderAddress) {
         throw new Error('Wallet not connected');
       }
@@ -26,7 +26,7 @@ export function useStaking(senderAddress: string): UseStakingReturn {
 
       try {
         const microAmount = toMicroSTX(amount);
-        const result = await executeStake(microAmount, senderAddress);
+        const result = await executeStake(microAmount, senderAddress, lockPeriodDays);
         return result;
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Stake failed';
