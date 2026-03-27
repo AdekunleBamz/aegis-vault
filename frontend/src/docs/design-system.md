@@ -26,6 +26,10 @@ The interface relies on layered transparency and light-refraction effects.
 - `.glass-card`: Semi-transparent background with a subtle white border-top/left for lighting effect.
 - `.text-gradient`: Linear gradient text from blue to purple.
 
+## 🎞️ Motion Preference
+- When animations are decorative (not functional), provide a reduced-motion fallback.
+- Prefer shorter transitions for frequently repeated UI interactions.
+
 ## 📐 Layout Principles
 - **Border Radius**: Consistent `32px` to `48px` for large containers, `full` for interactive elements.
 - **Spacing**: Generous padding (`p-8` to `p-12`) to allow the design to "breathe".
