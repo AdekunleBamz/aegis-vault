@@ -85,6 +85,9 @@ npm install
 
 # Install frontend dependencies
 npm --prefix frontend install
+
+# Alternative via root script
+npm run frontend:install
 ```
 
 ## Development
