@@ -84,7 +84,7 @@ cd aegis-vault
 npm install
 
 # Install frontend dependencies
-npm --prefix frontend install
+npm --prefix frontend ci
 ```
 
 ## Development
