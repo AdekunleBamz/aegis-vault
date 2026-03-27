@@ -35,6 +35,8 @@ Avoid non-essential autoplay looping animations in dense data views.
 - **Spacing**: Generous padding (`p-8` to `p-12`) to allow the design to "breathe".
 - **Motion**: Standardized spring transitions for all hover and entrance animations via `framer-motion`.
 
+<<<<<<< HEAD
 ## ♿ Accessibility Baseline
 - Prefer foreground/background combinations that maintain at least WCAG AA contrast for body text.
 - Ensure keyboard focus visibility remains intact when creating custom interactive components.
+- Interactive elements should keep a visible focus style with at least a 2px outline equivalent.
