@@ -81,7 +81,7 @@ git clone https://github.com/AdekunleBamz/aegis-vault.git
 cd aegis-vault
 
 # Install root dependencies
-npm install
+npm ci
 
 # Install frontend dependencies
 npm --prefix frontend install
