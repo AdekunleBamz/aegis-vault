@@ -95,6 +95,9 @@ npm --prefix frontend install
 # Check contracts
 clarinet check
 
+# Format contracts
+npm run fmt
+
 # Run tests
 clarinet test
 
