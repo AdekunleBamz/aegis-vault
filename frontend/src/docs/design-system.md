@@ -18,6 +18,8 @@ We use a primary set of institutional-grade colors for key UI elements.
   - `text-2xl`: Component headers.
   - `text-xs`: Labels and secondary metadata.
 
+For body copy, prefer line-height values around `1.5` to preserve readability in dense panels.
+
 ## ✨ Glassmorphism
 The interface relies on layered transparency and light-refraction effects.
 
