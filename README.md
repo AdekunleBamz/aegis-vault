@@ -58,7 +58,8 @@ Legacy `v2` and `v2-15` contracts remain in `contracts/` for reference and migra
 ```
 aegis-vault/
 ├── contracts/           # Clarity smart contracts
-│   ├── aegis-staking-v2-15.clar
+│   ├── aegis-vault-v3.clar
+│   ├── aegis-withdrawals-v2-15.clar
 │   ├── aegis-rewards-v2-15.clar
 │   ├── aegis-treasury-v2-15.clar
 │   ├── aegis-vault-v2.clar
