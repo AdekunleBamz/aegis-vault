@@ -10,6 +10,8 @@ We use a primary set of institutional-grade colors for key UI elements.
 - **Aegis Cyan**: `hsl(var(--aegis-cyan))` - Growth indicators, tier benefits.
 - **Aegis Indigo**: `hsl(var(--aegis-indigo))` - Protocol health, background accents.
 
+Status meaning should not rely on color alone; pair it with iconography or labels.
+
 ## 🔠 Typography
 - **Font Family**: `Outfit`, sans-serif.
 - **Scale**:
