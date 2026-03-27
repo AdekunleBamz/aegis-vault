@@ -75,7 +75,10 @@ describe("Aegis Token", () => {
 
     const symbolResult = simnet.callReadOnlyFn("aegis-token-v3", "get-symbol", [], DEPLOYER_ADDR);
     expect(isOk(symbolResult.result)).toBe(true);
-    expect((getOkValue(symbolResult.result) as any).data).toBe("AGS");
+    const symbolValue = getOkValue(symbolResult.result) as any;
+    const parsedSymbol =
+      typeof symbolValue === 'string' ? symbolValue : typeof symbolValue?.value === 'string' ? symbolValue.value : symbolValue?.data;
+    expect(parsedSymbol).toBe("AGS");
 
     const decimalsResult = simnet.callReadOnlyFn("aegis-token-v3", "get-decimals", [], DEPLOYER_ADDR);
     expect(isOk(decimalsResult.result)).toBe(true);
