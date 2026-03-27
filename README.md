@@ -49,7 +49,6 @@ The protocol consists of multiple smart contracts:
 aegis-vault/
 ├── contracts/           # Clarity smart contracts
 │   ├── aegis-staking-v2-15.clar
-│   ├── aegis-withdrawals-v2-15.clar
 │   ├── aegis-rewards-v2-15.clar
 │   ├── aegis-treasury-v2-15.clar
 │   ├── aegis-token-v2-15.clar
