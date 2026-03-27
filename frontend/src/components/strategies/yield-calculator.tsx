@@ -5,19 +5,19 @@ import { motion } from 'framer-motion';
 import { Calculator, CalculatorIcon, ArrowRight, TrendingUp, DollarSign, Clock, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const STRATEGIES = {
+    Stable: { name: 'Stable Harvester', apy: 18.4, risk: 'Low' },
+    Momentum: { name: 'AGS Momentum', apy: 32.1, risk: 'Medium' },
+    Max: { name: 'Delta-Neutral', apy: 45.2, risk: 'High' }
+};
+
 export function YieldCalculator() {
     const [principal, setPrincipal] = useState(1000);
     const [duration, setDuration] = useState(365);
     const [selectedStrategy, setSelectedStrategy] = useState('Stable');
 
-    const strategies = {
-        Stable: { name: 'Stable Harvester', apy: 18.4, risk: 'Low' },
-        Momentum: { name: 'AGS Momentum', apy: 32.1, risk: 'Medium' },
-        Max: { name: 'Delta-Neutral', apy: 45.2, risk: 'High' }
-    };
-
     const results = useMemo(() => {
-        const strategy = strategies[selectedStrategy as keyof typeof strategies];
+        const strategy = STRATEGIES[selectedStrategy as keyof typeof STRATEGIES];
         const dailyRate = strategy.apy / 100 / 365;
         const totalReturn = principal * Math.pow(1 + dailyRate, duration);
         const profit = totalReturn - principal;
@@ -26,7 +26,7 @@ export function YieldCalculator() {
             profit: profit.toFixed(2),
             percent: ((profit / principal) * 100).toFixed(1)
         };
-    }, [principal, duration, selectedStrategy, strategies]);
+    }, [principal, duration, selectedStrategy]);
 
     return (
         <div className="p-10 lg:p-12 rounded-[48px] bg-background border border-border shadow-2xl relative overflow-hidden group">
@@ -86,7 +86,7 @@ export function YieldCalculator() {
                     <div>
                         <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Select Strategy</label>
                         <div className="space-y-3">
-                            {Object.entries(strategies).map(([id, s]) => (
+                            {Object.entries(STRATEGIES).map(([id, s]) => (
                                 <button
                                     key={id}
                                     onClick={() => setSelectedStrategy(id)}
