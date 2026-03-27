@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   ArrowRight
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -99,7 +100,6 @@ export function Footer() {
                     href={link.href}
                     aria-label={`Navigate to ${link.label}`}
                     className={cn("text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center group", link.href === "/dashboard" && "text-foreground font-bold")}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center group"
                   >
                     {link.label}
                   </Link>
