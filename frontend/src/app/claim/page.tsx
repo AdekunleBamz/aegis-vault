@@ -78,6 +78,5 @@ export default function ClaimPage() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
