@@ -121,6 +121,9 @@ clarinet console
 # Development server
 npm run frontend:dev
 
+# Lint frontend
+npm run frontend:lint
+
 # Build for production
 npm run frontend:build
 
