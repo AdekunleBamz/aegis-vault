@@ -70,6 +70,5 @@ export default function WithdrawPage() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
