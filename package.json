@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "contracts:check": "clarinet check",
     "check": "clarinet check",
+    "contracts:test": "clarinet test",
     "console": "clarinet console",
     "fmt": "clarinet format"
   },
