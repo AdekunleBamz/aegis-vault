@@ -80,7 +80,10 @@ describe("Aegis Token", () => {
 
     const decimalsResult = simnet.callReadOnlyFn("aegis-token-v3", "get-decimals", [], DEPLOYER_ADDR);
     expect(isOk(decimalsResult.result)).toBe(true);
-    expect((getOkValue(decimalsResult.result) as any).value).toBe(6n);
+    const decimalsValue = getOkValue(decimalsResult.result) as any;
+    const parsedDecimals =
+      typeof decimalsValue === 'bigint' ? decimalsValue : typeof decimalsValue?.value === 'bigint' ? decimalsValue.value : decimalsValue?.value;
+    expect(parsedDecimals).toBe(6n);
   });
 
   it("deployer can add minter", () => {
