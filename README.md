@@ -242,5 +242,5 @@ Aegis Vault prioritizes security at every layer of the stack:
 
 - [Stacks Explorer](https://explorer.stacks.co/address/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N)
 - [Stacks Documentation](https://docs.stacks.co)
-- [@stacks/connect](https://github.com/hirosystems/connect)
-- [@stacks/transactions](https://www.npmjs.com/package/@stacks/transactions)
+- [@stacks/connect](https://www.npmjs.com/package/@stacks/connect)
+- [@stacks/transactions](https://github.com/hirosystems/stacks.js)
