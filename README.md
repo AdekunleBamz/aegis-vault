@@ -107,6 +107,7 @@ clarinet check
 
 # Equivalent root script
 npm run contracts:check
+npm run check
 
 # Run tests
 clarinet test
