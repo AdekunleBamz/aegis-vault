@@ -18,6 +18,8 @@ We use a primary set of institutional-grade colors for key UI elements.
   - `text-2xl`: Component headers.
   - `text-xs`: Labels and secondary metadata.
 
+Maintain semantic heading order (`h1` -> `h2` -> `h3`) regardless of visual size choices.
+
 ## ✨ Glassmorphism
 The interface relies on layered transparency and light-refraction effects.
 
