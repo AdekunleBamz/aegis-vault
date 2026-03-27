@@ -98,6 +98,9 @@ clarinet check
 # Run tests
 clarinet test
 
+# Equivalent root script
+npm run contracts:test
+
 # Run tests with vitest
 npm test
 
