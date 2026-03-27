@@ -98,7 +98,7 @@ clarinet check
 # Run tests
 clarinet test
 
-# Run tests with vitest
+# Run JavaScript/TypeScript tests with Vitest
 npm test
 
 # Console for local testing
