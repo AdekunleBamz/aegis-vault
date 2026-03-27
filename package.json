@@ -6,6 +6,7 @@
   "scripts": {
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
+    "frontend:start": "npm --prefix frontend run start",
     "frontend:lint": "npm --prefix frontend run lint",
     "lint:frontend": "npm run frontend:lint",
     "test": "vitest run",
