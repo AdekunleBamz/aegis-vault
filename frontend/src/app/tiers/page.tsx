@@ -178,6 +178,5 @@ export default function TiersPage() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
