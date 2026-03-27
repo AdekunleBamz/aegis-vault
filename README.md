@@ -62,7 +62,7 @@ aegis-vault/
 │       ├── hooks/       # Custom hooks
 │       └── lib/         # Utilities and helpers
 ├── tests/               # Contract tests
-├── scripts/             # Automation scripts (private)
+├── scripts/             # Automation scripts
 ├── deployments/         # Deployment plans
 └── settings/            # Network configurations
 ```
