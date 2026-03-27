@@ -10,6 +10,7 @@
     "lint:frontend": "npm run frontend:lint",
     "test": "vitest run",
     "test:watch": "vitest",
+    "contracts:check": "clarinet check",
     "check": "clarinet check",
     "console": "clarinet console",
     "fmt": "clarinet format"
