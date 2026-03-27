@@ -125,7 +125,7 @@ npm run frontend:dev
 npm run frontend:build
 
 # Start production server
-npm --prefix frontend start
+npm run frontend:start
 ```
 
 ## Deployment
