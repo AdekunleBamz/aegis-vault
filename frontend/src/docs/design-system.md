@@ -29,13 +29,13 @@ The interface relies on layered transparency and light-refraction effects.
 - `.text-gradient`: Linear gradient text from blue to purple.
 
 Avoid non-essential autoplay looping animations in dense data views.
+Gradient text should be reserved for short headings, not dense body content.
 
 ## 📐 Layout Principles
 - **Border Radius**: Consistent `32px` to `48px` for large containers, `full` for interactive elements.
 - **Spacing**: Generous padding (`p-8` to `p-12`) to allow the design to "breathe".
 - **Motion**: Standardized spring transitions for all hover and entrance animations via `framer-motion`.
 
-<<<<<<< HEAD
 ## ♿ Accessibility Baseline
 - Prefer foreground/background combinations that maintain at least WCAG AA contrast for body text.
 - Ensure keyboard focus visibility remains intact when creating custom interactive components.
