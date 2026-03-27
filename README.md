@@ -105,6 +105,9 @@ npm --prefix frontend ci
 # Check contracts
 clarinet check
 
+# Equivalent root script
+npm run contracts:check
+
 # Run tests
 clarinet test
 
