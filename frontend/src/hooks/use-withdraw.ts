@@ -16,18 +16,22 @@ export interface UseWithdrawReturn {
   reset: () => void;
 }
 
-export function useWithdraw(): UseWithdrawReturn {
+export function useWithdraw(senderAddress: string): UseWithdrawReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const requestWithdraw = useCallback(
     async (amount: number): Promise<TransactionResult> => {
+      if (!senderAddress) {
+        throw new Error('Wallet not connected');
+      }
+
       setIsLoading(true);
       setError(null);
 
       try {
         const microAmount = toMicroSTX(amount);
-        const result = await executeWithdrawRequest(microAmount);
+        const result = await executeWithdrawRequest(microAmount, senderAddress);
         return result;
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Withdraw request failed';
@@ -37,10 +41,14 @@ export function useWithdraw(): UseWithdrawReturn {
         setIsLoading(false);
       }
     },
-    []
+    [senderAddress]
   );
 
   const completeWithdraw = useCallback(async (): Promise<TransactionResult> => {
+    if (!senderAddress) {
+      throw new Error('Wallet not connected');
+    }
+
     setIsLoading(true);
     setError(null);
 
@@ -54,7 +62,7 @@ export function useWithdraw(): UseWithdrawReturn {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [senderAddress]);
 
   const reset = useCallback(() => {
     setError(null);

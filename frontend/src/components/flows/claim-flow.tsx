@@ -19,7 +19,7 @@ interface ClaimFlowProps {
 export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
   const { address, isConnected, connect } = useWallet();
   const { position, refetch: refetchPositions } = usePositions(address || '');
-  const { claimRewards, isLoading, error } = useRewards();
+  const { claimRewards, isLoading, error } = useRewards(address || '');
   const [step, setStep] = useState<'view' | 'pending' | 'success'>('view');
   const [txId, setTxId] = useState<string | null>(null);
   const [claimedAmount, setClaimedAmount] = useState<bigint>(BigInt(0));

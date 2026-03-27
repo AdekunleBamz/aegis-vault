@@ -58,7 +58,7 @@ function TimelineStep({
 export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
   const { address, isConnected, connect } = useWallet();
   const { position, refetch: refetchPositions } = usePositions(address || '');
-  const { requestWithdraw, completeWithdraw, isLoading, error } = useWithdraw();
+  const { requestWithdraw, completeWithdraw, isLoading, error } = useWithdraw(address || '');
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState<'input' | 'confirm' | 'pending' | 'success'>('input');
   const [txId, setTxId] = useState<string | null>(null);

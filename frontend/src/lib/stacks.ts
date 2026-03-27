@@ -1,20 +1,12 @@
-import { STACKS_MAINNET } from '@stacks/network';
-// Note: If Vercel still fails, we may need to use new StacksMainnet() from a different subpath
 import {
   openContractCall,
   ContractCallOptions,
   FinishedTxData,
 } from '@stacks/connect';
-import {
-  uintCV,
-  principalCV,
-  PostConditionMode,
-  FungibleConditionCode,
-  makeStandardSTXPostCondition,
-} from '@stacks/transactions';
-import { CONTRACTS } from './constants';
+import { aegisSdk, DEFAULT_LOCK_PERIOD_DAYS } from './sdk';
+import { getBestClaimStakeId, getStakeIdForExactAmount } from './staking';
 
-const network = STACKS_MAINNET;
+const network = aegisSdk.stacksNetwork;
 
 export interface TransactionResult {
   txId: string;
@@ -26,27 +18,14 @@ export interface TransactionResult {
  */
 export async function executeStake(
   amount: bigint,
-  senderAddress: string
+  senderAddress: string,
+  lockPeriodDays: number = DEFAULT_LOCK_PERIOD_DAYS
 ): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
-    const postConditions = [
-      makeStandardSTXPostCondition(
-        senderAddress,
-        FungibleConditionCode.Equal,
-        amount
-      ),
-    ];
+    const sdkOptions = aegisSdk.buildStakeTxOptions(amount, lockPeriodDays, senderAddress);
 
-    const [contractAddr, contractName] = CONTRACTS.STAKING.split('.');
-
-    const options: ContractCallOptions = {
-      network,
-      contractAddress: contractAddr,
-      contractName,
-      functionName: 'stake',
-      functionArgs: [uintCV(amount)],
-      postConditions,
-      postConditionMode: PostConditionMode.Deny,
+    const options = {
+      ...(sdkOptions as unknown as Record<string, unknown>),
       onFinish: (data: FinishedTxData) => {
         resolve({ txId: data.txId, success: true });
       },
@@ -55,7 +34,7 @@ export async function executeStake(
       },
     };
 
-    openContractCall(options);
+    openContractCall(options as ContractCallOptions);
   });
 }
 
@@ -63,17 +42,25 @@ export async function executeStake(
  * Execute unstake/withdraw request
  */
 export async function executeWithdrawRequest(
-  amount: bigint
+  amount: bigint,
+  senderAddress: string
 ): Promise<TransactionResult> {
-  return new Promise((resolve, reject) => {
-    const [contractAddr, contractName] = CONTRACTS.WITHDRAWALS.split('.');
+  if (!senderAddress) {
+    throw new Error('Wallet not connected');
+  }
 
-    const options: ContractCallOptions = {
-      network,
-      contractAddress: contractAddr,
-      contractName,
-      functionArgs: [uintCV(amount)],
-      postConditionMode: PostConditionMode.Deny,
+  const stakeId = await getStakeIdForExactAmount(senderAddress, amount);
+  if (!stakeId) {
+    throw new Error(
+      'Withdrawals currently require an exact active stake amount. Use one of your exact position amounts.'
+    );
+  }
+
+  return new Promise((resolve, reject) => {
+    const sdkOptions = aegisSdk.buildRequestWithdrawalTxOptions(stakeId);
+
+    const options = {
+      ...(sdkOptions as unknown as Record<string, unknown>),
       onFinish: (data: FinishedTxData) => {
         resolve({ txId: data.txId, success: true });
       },
@@ -82,7 +69,7 @@ export async function executeWithdrawRequest(
       },
     };
 
-    openContractCall(options);
+    openContractCall(options as ContractCallOptions);
   });
 }
 
@@ -91,15 +78,10 @@ export async function executeWithdrawRequest(
  */
 export async function executeWithdrawComplete(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
-    const [contractAddr, contractName] = CONTRACTS.WITHDRAWALS.split('.');
+    const sdkOptions = aegisSdk.buildCompleteWithdrawalTxOptions();
 
-    const options: ContractCallOptions = {
-      network,
-      contractAddress: contractAddr,
-      contractName,
-      functionName: 'complete-withdrawal',
-      functionArgs: [],
-      postConditionMode: PostConditionMode.Allow,
+    const options = {
+      ...(sdkOptions as unknown as Record<string, unknown>),
       onFinish: (data: FinishedTxData) => {
         resolve({ txId: data.txId, success: true });
       },
@@ -108,24 +90,28 @@ export async function executeWithdrawComplete(): Promise<TransactionResult> {
       },
     };
 
-    openContractCall(options);
+    openContractCall(options as ContractCallOptions);
   });
 }
 
 /**
  * Execute claim rewards
  */
-export async function executeClaimRewards(): Promise<TransactionResult> {
-  return new Promise((resolve, reject) => {
-    const [contractAddr, contractName] = CONTRACTS.REWARDS.split('.');
+export async function executeClaimRewards(senderAddress: string): Promise<TransactionResult> {
+  if (!senderAddress) {
+    throw new Error('Wallet not connected');
+  }
 
-    const options: ContractCallOptions = {
-      network,
-      contractAddress: contractAddr,
-      contractName,
-      functionName: 'claim-rewards',
-      functionArgs: [],
-      postConditionMode: PostConditionMode.Deny,
+  const stakeId = await getBestClaimStakeId(senderAddress);
+  if (!stakeId) {
+    throw new Error('No active stake with claimable rewards found.');
+  }
+
+  return new Promise((resolve, reject) => {
+    const sdkOptions = aegisSdk.buildClaimRewardsTxOptions(stakeId);
+
+    const options = {
+      ...(sdkOptions as unknown as Record<string, unknown>),
       onFinish: (data: FinishedTxData) => {
         resolve({ txId: data.txId, success: true });
       },
@@ -134,7 +120,7 @@ export async function executeClaimRewards(): Promise<TransactionResult> {
       },
     };
 
-    openContractCall(options);
+    openContractCall(options as ContractCallOptions);
   });
 }
 

@@ -39,7 +39,7 @@ export function StakeForm() {
     if (!amount) return null;
     if (isNaN(numAmount) || numAmount <= 0) return 'Please enter a valid amount';
     if (numAmount > balanceSTX) return 'Insufficient STX balance';
-    if (numAmount < 0.0001) return 'Minimum deposit is 0.0001 STX';
+    if (numAmount < 0.01) return 'Minimum deposit is 0.01 STX';
     return null;
   }, [amount, numAmount, balanceSTX]);
 

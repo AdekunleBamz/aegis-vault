@@ -1,6 +1,5 @@
-import { CONTRACTS, TIERS, BLOCKS_PER_YEAR } from './constants';
-import { callReadOnlyFunction } from './api';
-import { cvToValue, hexToCV } from '@stacks/transactions';
+import { TIERS, BLOCKS_PER_YEAR } from './constants';
+import { aegisSdk, normalizeCvValue, asBigInt, asBoolean, asNumber } from './sdk';
 
 export interface StakerInfo {
   amountStaked: bigint;
@@ -8,6 +7,7 @@ export interface StakerInfo {
   lastRewardBlock: number;
   pendingRewards: bigint;
   tier: number;
+  activeStakeIds: bigint[];
 }
 
 /**
@@ -20,6 +20,106 @@ export interface PoolStats {
   lastDistributionBlock: number;
 }
 
+interface UserStakePosition {
+  stakeId: bigint;
+  amount: bigint;
+  startBlock: number;
+  lockBlocks: number;
+  lockPeriodType: number;
+  bonusMultiplier: number;
+  isActive: boolean;
+  totalClaimed: bigint;
+  pendingRewards: bigint;
+}
+
+function normalizeStakeId(rawId: unknown): bigint | null {
+  const normalized = normalizeCvValue(rawId);
+  if (typeof normalized === 'bigint') return normalized;
+  if (typeof normalized === 'number' && Number.isFinite(normalized)) {
+    return BigInt(Math.trunc(normalized));
+  }
+  if (typeof normalized === 'string' && normalized.trim() !== '') {
+    try {
+      return BigInt(normalized);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
+function parseStakePosition(
+  stakeId: bigint,
+  rawStake: unknown,
+  pendingRewards: bigint
+): UserStakePosition | null {
+  if (!rawStake) return null;
+
+  const normalized = normalizeCvValue(rawStake) as Record<string, unknown>;
+  if (!normalized || typeof normalized !== 'object') return null;
+
+  return {
+    stakeId,
+    amount: asBigInt(normalized['amount']),
+    startBlock: asNumber(normalized['start-block']),
+    lockBlocks: asNumber(normalized['lock-blocks']),
+    lockPeriodType: asNumber(normalized['lock-period-type']),
+    bonusMultiplier: asNumber(normalized['bonus-multiplier']),
+    isActive: asBoolean(normalized['is-active']),
+    totalClaimed: asBigInt(normalized['total-claimed']),
+    pendingRewards,
+  };
+}
+
+export async function getUserStakePositions(address: string): Promise<UserStakePosition[]> {
+  const rawStakeIds = (await aegisSdk.getUserStakeIds(address)) as unknown[];
+  const stakeIds = rawStakeIds
+    .map((id: unknown) => normalizeStakeId(id))
+    .filter((id): id is bigint => id !== null);
+
+  if (stakeIds.length === 0) return [];
+
+  const positions = await Promise.all(
+    stakeIds.map(async (stakeId: bigint) => {
+      const [stakeData, pendingRewards] = await Promise.all([
+        aegisSdk.getStake(address, stakeId),
+        aegisSdk.getPendingRewards(address, stakeId),
+      ]);
+
+      return parseStakePosition(stakeId, stakeData, asBigInt(normalizeCvValue(pendingRewards)));
+    })
+  );
+
+  return positions.filter((position): position is UserStakePosition => position !== null);
+}
+
+export async function getBestClaimStakeId(address: string): Promise<bigint | null> {
+  const positions = await getUserStakePositions(address);
+  const activePositions = positions.filter((position) => position.isActive);
+  if (activePositions.length === 0) return null;
+
+  activePositions.sort((a, b) => {
+    if (a.pendingRewards === b.pendingRewards) {
+      if (a.stakeId === b.stakeId) return 0;
+      return b.stakeId > a.stakeId ? 1 : -1;
+    }
+    return a.pendingRewards > b.pendingRewards ? -1 : 1;
+  });
+
+  return activePositions[0].stakeId;
+}
+
+export async function getStakeIdForExactAmount(
+  address: string,
+  requestedAmountMicroStx: bigint
+): Promise<bigint | null> {
+  const positions = await getUserStakePositions(address);
+  const exactMatch = positions.find(
+    (position) => position.isActive && position.amount === requestedAmountMicroStx
+  );
+  return exactMatch?.stakeId ?? null;
+}
+
 /**
  * Get staker information from the contract
  * @param address Stacks address to query
@@ -27,29 +127,29 @@ export interface PoolStats {
  */
 export async function getStakerInfo(address: string): Promise<StakerInfo | null> {
   try {
-    const [contractAddr, contractName] = CONTRACTS.STAKING.split('.');
-    const result = await callReadOnlyFunction(
-      contractAddr,
-      contractName,
-      'get-staker-info',
-      [`0x${Buffer.from(address).toString('hex')}`]
+    const positions = await getUserStakePositions(address);
+    const activePositions = positions.filter((position) => position.isActive);
+
+    if (activePositions.length === 0) return null;
+
+    const amountStaked = activePositions.reduce(
+      (sum, position) => sum + position.amount,
+      BigInt(0)
     );
-    
-    if (!result.okay || !result.result) {
-      return null;
-    }
-    
-    const cv = hexToCV(result.result);
-    const value = cvToValue(cv);
-    
-    if (!value) return null;
-    
+    const pendingRewards = activePositions.reduce(
+      (sum, position) => sum + position.pendingRewards,
+      BigInt(0)
+    );
+    const stakeStartBlock = Math.min(...activePositions.map((position) => position.startBlock));
+    const lastRewardBlock = Math.max(...activePositions.map((position) => position.startBlock));
+
     return {
-      amountStaked: BigInt(value['amount-staked'] || 0),
-      stakeStartBlock: Number(value['stake-start-block'] || 0),
-      lastRewardBlock: Number(value['last-reward-block'] || 0),
-      pendingRewards: BigInt(value['pending-rewards'] || 0),
-      tier: Number(value['tier'] || 0),
+      amountStaked,
+      stakeStartBlock,
+      lastRewardBlock,
+      pendingRewards,
+      tier: determineTier(amountStaked),
+      activeStakeIds: activePositions.map((position) => position.stakeId),
     };
   } catch (error) {
     console.error(`Failed to get staker info for ${address}:`, error);
@@ -62,26 +162,23 @@ export async function getStakerInfo(address: string): Promise<StakerInfo | null>
  */
 export async function getPoolStats(): Promise<PoolStats | null> {
   try {
-    const [contractAddr, contractName] = CONTRACTS.STAKING.split('.');
-    const result = await callReadOnlyFunction(
-      contractAddr,
-      contractName,
-      'get-pool-stats',
-      []
-    );
-    
-    if (!result.okay || !result.result) {
-      return null;
-    }
-    
-    const cv = hexToCV(result.result);
-    const value = cvToValue(cv);
-    
+    const [vaultStatsRaw, rewardsStatsRaw] = await Promise.all([
+      aegisSdk.getStakingVaultStats(),
+      aegisSdk.getRewardsStats(),
+    ]);
+
+    const vaultStats = normalizeCvValue(vaultStatsRaw) as Record<string, unknown>;
+    const rewardsStats = normalizeCvValue(rewardsStatsRaw) as Record<string, unknown>;
+
+    // Aegis v2.15 split contracts do not expose a simple per-block global reward rate.
+    // We surface a stable baseline (5 AGS/day) for UI compatibility.
+    const baselineRewardRatePerBlock = BigInt(5_000_000) / BigInt(144);
+
     return {
-      totalStaked: BigInt(value['total-staked'] || 0),
-      totalStakers: Number(value['total-stakers'] || 0),
-      rewardRate: BigInt(value['reward-rate'] || 0),
-      lastDistributionBlock: Number(value['last-distribution-block'] || 0),
+      totalStaked: asBigInt(vaultStats['total-staked']),
+      totalStakers: asNumber(vaultStats['total-stakers']),
+      rewardRate: baselineRewardRatePerBlock,
+      lastDistributionBlock: asNumber(rewardsStats['merkle-update-block']),
     };
   } catch (error) {
     console.error('Failed to get pool stats:', error);
