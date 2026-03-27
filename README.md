@@ -29,11 +29,11 @@ The active protocol surface in this repo is centered around the current v3 vault
 
 | Contract | Description |
 |----------|-------------|
-| `aegis-vault-v3` | Consolidated staking, reward accrual, and withdrawal flow |
-| `aegis-token-v3` | AGS token implementation with mint control |
-| `aegis-treasury-v2-15` | Treasury accounting for protocol-owned STX flows |
-
-Legacy `v2` and `v2-15` contracts remain in `contracts/` for reference and migration context.
+| `aegis-staking-v2-15` | Core staking logic, handles deposits and position tracking |
+| `aegis-withdrawals-v2-15` | Withdrawal processing with lock period enforcement |
+| `aegis-rewards-v2-15` | Reward calculation and distribution |
+| `aegis-treasury-v2-15` | Treasury for penalty fees and protocol revenue |
+| `aegis-token-v3` | AGS token (SIP-010 compliant) |
 
 ## Tech Stack
 
