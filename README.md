@@ -80,7 +80,7 @@ aegis-vault/
 ## Installation
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 18+ (LTS recommended)
 - Clarinet 2.0+
 
 ### Setup
