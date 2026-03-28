@@ -36,7 +36,7 @@ export function Footer() {
       { label: 'Analytics Hub', href: '/analytics' },
       { label: 'Security Portal', href: '/security' },
       { label: 'Governance', href: '/governance' },
-      { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
+      { label: 'Stacks Explorer', href: 'https://explorer.hiro.so/?chain=mainnet', external: true },
     ],
   };
 
