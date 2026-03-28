@@ -13,7 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "contracts:check": "clarinet check",
-    "check": "clarinet check",
+    "check": "npm run contracts:check && npm run test",
     "contracts:test": "clarinet test",
     "console": "clarinet console",
     "fmt": "clarinet format"
