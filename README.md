@@ -12,7 +12,7 @@ Aegis Vault is a high-performance, decentralized staking protocol engineered for
 ## Roadmap
 
 - [x] Phase 1: Core Staking Logic & SIP-010 Integration
-- [/] Phase 2: Enhanced UI/UX & PWA Support
+- [ ] Phase 2: Enhanced UI/UX & PWA Support (in progress)
 - [ ] Phase 3: Multi-vault Strategy Support
 - [ ] Phase 4: Decentralized Governance (DAO)
 
