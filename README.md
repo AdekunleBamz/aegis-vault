@@ -167,6 +167,14 @@ Ensure wallet network is set to mainnet before interacting with these deployed c
 
 ### Deployment Plans
 
+Recommended pre-deployment verification:
+
+```bash
+npm run check
+npm run contracts:test
+npm run frontend:build
+```
+
 ```bash
 # Use Clarinet.toml as the source of truth for the active contract names
 clarinet check
