@@ -111,7 +111,7 @@ npm run contracts:check
 
 # Equivalent root script
 npm run contracts:check
-npm run check
+npm run check   # runs contracts:check + vitest
 
 # Run tests
 clarinet test
