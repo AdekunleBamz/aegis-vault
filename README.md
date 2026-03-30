@@ -95,6 +95,9 @@ npm ci
 
 # Install frontend dependencies
 npm --prefix frontend ci
+
+# Run project-wide checks
+npm run check
 ```
 
 ## Development
