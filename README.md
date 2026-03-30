@@ -157,6 +157,8 @@ SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15
 SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15
 ```
 
+Ensure wallet network is set to mainnet before interacting with these deployed contracts.
+
 ### Deployment Plans
 
 ```bash
