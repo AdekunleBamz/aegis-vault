@@ -16,5 +16,6 @@ We take the security of Aegis Vault seriously. If you believe you've found a sec
 1. Send an email to security@aegisprotocol.finance (Placeholder)
 2. Include a detailed description of the vulnerability and steps to reproduce.
 3. We will acknowledge your report within 48 hours and provide a timeline for a fix.
+4. Include affected network, contract name, and transaction IDs when available.
 
 Thank you for helping keep Aegis Vault secure.
