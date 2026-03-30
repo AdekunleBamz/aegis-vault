@@ -17,6 +17,7 @@ First off, thanks for taking the time to contribute!
 - Fill out the PR template.
 - Ensure your code follows the project's style.
 - Include tests if applicable.
+- Run `npm run check` at repo root before requesting review.
 
 ## Development Setup
 
