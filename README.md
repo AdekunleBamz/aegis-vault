@@ -138,6 +138,12 @@ npm run console
 # Development server
 npm run frontend:dev
 
+# Lint frontend
+npm run frontend:lint
+
+# Run frontend tests
+npm run frontend:test
+
 # Build for production
 npm run frontend:build
 
