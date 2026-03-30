@@ -4,4 +4,4 @@
 - Validate emergency withdrawal fee deductions.
 - Confirm treasury accounting reflects penalties.
 - Verify position status updates on successful withdraw.
-- Confirm explorer links point to the correct network during withdrawal QA.
+- Capture wallet rejection/error codes alongside contract responses for failed withdrawals.
