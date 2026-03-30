@@ -4,4 +4,4 @@
 - Verify frontend constants can be reverted quickly.
 - Preserve logs and transaction links before rollback.
 - Run staking and withdrawal smoke tests after rollback.
-- Confirm support messaging template is ready before rollback is triggered.
+- Record rollback start/end block heights for postmortem traceability.
