@@ -22,14 +22,11 @@ export interface TransactionResult {
 }
 
 /**
- * Executes a staking transaction on the Stacks blockchain.
+ * Execute stake transaction
  * 
- * @param amount - Amount in microSTX.
+ * @param amount - Amount in microSTX to stake.
  * @param senderAddress - The address of the staker.
  * @returns Promise resolving to the transaction ID and success status.
- */
-/**
- * Execute stake transaction
  */
 export async function executeStake(
   amount: bigint,
@@ -44,7 +41,8 @@ export async function executeStake(
       ),
     ];
 
-    const { STAKING } = CONTRACTS;\n    const [contractAddr, contractName] = STAKING.split('.');
+    const { STAKING } = CONTRACTS;
+    const [contractAddr, contractName] = STAKING.split('.');
 
     const options: ContractCallOptions = {
       network,
