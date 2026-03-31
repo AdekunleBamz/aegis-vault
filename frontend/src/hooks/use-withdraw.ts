@@ -1,5 +1,12 @@
 'use client';
 
+/**
+ * @file Hook for managing withdrawal operations
+ * 
+ * Provides two-phase withdrawal functionality: request and complete.
+ * Handles loading states and error management for withdrawal flows.
+ */
+
 import { useState, useCallback } from 'react';
 import {
   executeWithdrawRequest,
@@ -8,6 +15,9 @@ import {
 } from '@/lib/stacks';
 import { toMicroSTX } from '@/lib/format';
 
+/**
+ * Return type for the useWithdraw hook.
+ */
 export interface UseWithdrawReturn {
   requestWithdraw: (amount: number) => Promise<TransactionResult>;
   completeWithdraw: () => Promise<TransactionResult>;
@@ -16,6 +26,14 @@ export interface UseWithdrawReturn {
   reset: () => void;
 }
 
+/**
+ * Hook to manage STX withdrawal operations.
+ * 
+ * Supports two-phase withdrawals: request (initiates withdrawal)
+ * and complete (finalizes after lock period).
+ * 
+ * @returns Object containing withdraw functions, loading state, error, and reset.
+ */
 export function useWithdraw(): UseWithdrawReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
