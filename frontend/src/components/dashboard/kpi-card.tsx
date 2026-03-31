@@ -1,10 +1,20 @@
 'use client';
 
+/**
+ * @file Key Performance Indicator (KPI) card component
+ * 
+ * Displays a single metric with optional trend indicator and icon.
+ * Used throughout dashboards to show important statistics.
+ */
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/**
+ * Props for the KPICard component.
+ */
 interface KPICardProps {
     label: string;
     value: string | number;
