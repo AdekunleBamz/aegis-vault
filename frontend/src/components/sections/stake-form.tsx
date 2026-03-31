@@ -250,7 +250,16 @@ export function StakeForm() {
                     <span className="text-xl font-black text-muted-foreground/40" aria-hidden="true">STX</span>
                   </div>
                 </div>
-                <div className="mt-6 p-4 rounded-2xl bg-muted/10 border border-border/30">n                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-3">Transaction Fee</p>n                  <div className="flex gap-2">n                    {['Standard', 'Fast', 'Instant'].map((speed) => (n                      <button key={speed} type="button" className="flex-1 py-2 rounded-xl border border-border/50 text-[10px] font-bold hover:border-aegis-blue/40 transition-all">n                        {speed}n                      </button>n                    ))}n                  </div>n                </div>
+                <div className="mt-6 p-4 rounded-2xl bg-muted/10 border border-border/30">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-3">Transaction Fee</p>
+                  <div className="flex gap-2">
+                    {['Standard', 'Fast', 'Instant'].map((speed) => (
+                      <button key={speed} type="button" className="flex-1 py-2 rounded-xl border border-border/50 text-[10px] font-bold hover:border-aegis-blue/40 transition-all">
+                        {speed}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
                 <AnimatePresence>
                   {hasError && (
