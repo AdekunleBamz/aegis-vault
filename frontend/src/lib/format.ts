@@ -85,7 +85,14 @@ export function truncateAddress(address: string, chars = 4): string {
 }
 
 /**
- * Format percentage
+ * Format a number as a percentage string.
+ * 
+ * Converts a decimal number to a percentage string with 2 decimal places.
+ * 
+ * @param value - The decimal value to format (e.g., 12.5 for 12.5%)
+ * @returns Formatted percentage string with % suffix
+ * @example formatPercent(12.5) // "12.50%"
+ * @example formatPercent(0) // "0.00%"
  */
 export function formatPercent(value: number): string {
   return `${value.toFixed(2)}%`;
