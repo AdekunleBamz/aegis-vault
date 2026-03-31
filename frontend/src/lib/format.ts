@@ -138,7 +138,15 @@ export function blocksToTime(blocks: number): string {
 }
 
 /**
- * Format relative time from timestamp
+ * Format a Unix timestamp as a relative time string.
+ * 
+ * Converts a Unix timestamp (seconds since epoch) to a human-readable
+ * relative time string like "Just now", "5m ago", "2h ago", etc.
+ * 
+ * @param timestamp - Unix timestamp in seconds
+ * @returns Relative time string describing how long ago the timestamp was
+ * @example formatRelativeTime(Date.now() / 1000 - 3600) // "1h ago"
+ * @example formatRelativeTime(Date.now() / 1000 - 30) // "Just now"
  */
 export function formatRelativeTime(timestamp: number): string {
   const now = Date.now() / 1000;
