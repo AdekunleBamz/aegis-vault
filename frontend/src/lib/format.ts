@@ -69,7 +69,15 @@ export function toMicroSTX(stx: number): bigint {
 }
 
 /**
- * Truncate address for display
+ * Truncate a Stacks address for display.
+ * 
+ * Displays the first and last few characters of an address with an ellipsis
+ * in between, making long addresses more readable in UI components.
+ * 
+ * @param address - The full Stacks address to truncate
+ * @param chars - Number of characters to show at start and end (default: 4)
+ * @returns Truncated address string (e.g., "SP3F...CGG6N")
+ * @example truncateAddress("SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N") // "SP3F...CGG6N"
  */
 export function truncateAddress(address: string, chars = 4): string {
   if (!address) return '';
