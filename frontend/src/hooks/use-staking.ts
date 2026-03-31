@@ -1,9 +1,19 @@
 'use client';
 
+/**
+ * @file Hook for managing STX staking operations
+ * 
+ * Provides staking functionality including deposit execution,
+ * loading states, and error handling.
+ */
+
 import { useState, useCallback } from 'react';
 import { executeStake, TransactionResult } from '@/lib/stacks';
 import { toMicroSTX } from '@/lib/format';
 
+/**
+ * Return type for the useStaking hook.
+ */
 export interface UseStakingReturn {
   stake: (amount: number) => Promise<TransactionResult>;
   isLoading: boolean;
