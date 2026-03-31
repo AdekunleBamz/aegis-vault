@@ -1,7 +1,20 @@
+/**
+ * @file Error handling utilities for Aegis Vault
+ * 
+ * Provides comprehensive error types, error classes, error messages,
+ * and helper functions for consistent error handling throughout the application.
+ * 
+ * @author Aegis Vault Team
+ */
+
 // ============================================================================
 // ERROR TYPES
 // ============================================================================
 
+/**
+ * Standardized error codes for the application.
+ * Used for consistent error handling and user-facing messages.
+ */
 export type ErrorCode =
   | 'WALLET_NOT_CONNECTED'
   | 'WALLET_CONNECTION_REJECTED'
@@ -18,6 +31,9 @@ export type ErrorCode =
   | 'UNAUTHORIZED'
   | 'UNKNOWN_ERROR';
 
+/**
+ * Standardized error object structure for serialization.
+ */
 export interface AppError {
   code: ErrorCode;
   message: string;
@@ -30,6 +46,14 @@ export interface AppError {
 // ERROR CLASS
 // ============================================================================
 
+/**
+ * Custom error class for Aegis Vault with error codes and metadata.
+ */
+
+/**
+ * Base error class for all Aegis Vault errors.
+ * Includes error codes, timestamps, and recoverability flags.
+ */
 export class AegisError extends Error {
   code: ErrorCode;
   details?: unknown;
