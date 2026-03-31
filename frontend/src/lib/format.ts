@@ -99,7 +99,13 @@ export function formatPercent(value: number): string {
 }
 
 /**
- * Format block height with commas
+ * Format a block height with thousand separators.
+ * 
+ * Adds commas to block heights for improved readability in UI components.
+ * 
+ * @param height - The block height number to format
+ * @returns Formatted string with comma separators
+ * @example formatBlockHeight(1234567) // "1,234,567"
  */
 export function formatBlockHeight(height: number): string {
   return height.toLocaleString('en-US');
