@@ -1,5 +1,12 @@
 'use client';
 
+/**
+ * @file Protocol statistics display section
+ * 
+ * Displays key protocol metrics including TVL, user count,
+ * rewards distributed, and current block height.
+ */
+
 import React from 'react';
 import Link from 'next/link';
 import { useNetwork } from '@/hooks/use-network';
@@ -15,6 +22,10 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+/**
+ * Stats section displays real-time protocol metrics.
+ * Shows TVL, user participation, rewards distributed, and block height.
+ */
 export function Stats() {
   const { blockHeight } = useNetwork();
 
