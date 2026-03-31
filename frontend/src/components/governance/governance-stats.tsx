@@ -1,10 +1,21 @@
 'use client';
 
+/**
+ * @file Governance statistics display component
+ * 
+ * Displays real-time governance metrics including treasury value,
+ * quorum status, active voters, and staked governance tokens.
+ */
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Landmark, PieChart, Users2, TrendingUp, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/**
+ * GovernanceStats displays key governance metrics for the protocol.
+ * Shows treasury value, quorum status, active voters, and staked vAGS.
+ */
 export function GovernanceStats() {
     const stats = [
         {
