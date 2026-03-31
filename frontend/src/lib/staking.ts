@@ -107,10 +107,6 @@ export function calculateEstimatedRewards(
   apy: number,
   blocks: number
 ): bigint {
-  stakeAmount: bigint,
-  apy: number,
-  blocks: number
-): bigint {
   const yearlyRewards = (Number(stakeAmount) * apy) / 100;
   const blockRewards = (yearlyRewards * blocks) / BLOCKS_PER_YEAR;
   return BigInt(Math.floor(blockRewards));
