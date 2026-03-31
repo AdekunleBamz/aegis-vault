@@ -2,8 +2,15 @@ import { AVG_BLOCK_TIME_MINUTES } from './constants';
 import { STX_DECIMALS, AGS_DECIMALS } from './constants';
 
 /**
- * Format microSTX to STX with proper decimals
+ * Format microSTX to STX with proper decimals.
+ * 
+ * STX uses 6 decimal places (microSTX). This function converts
+ * microSTX values to human-readable STX format.
+ * 
+ * @param microStx - Amount in microSTX (1 STX = 1,000,000 microSTX)
+ * @returns Formatted STX string with 2-6 decimal places
  * @example formatSTX(1000000) // "1.00"
+ * @example formatSTX(1234567) // "1.234567"
  */
 export function formatSTX(microStx: string | number | bigint): string {
   const value = BigInt(microStx);
