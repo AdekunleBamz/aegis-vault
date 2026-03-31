@@ -1,5 +1,15 @@
 'use client';
 
+/**
+ * @file Wallet connection context for Aegis Vault
+ * 
+ * Provides wallet connection functionality using Stacks connect.
+ * Manages user sessions, connection state, and network configuration.
+ * 
+ * @author Aegis Vault Team
+ * @see {@link https://github.com/hirosystems/connect}
+ */
+
 import React, {
   createContext,
   useContext,
@@ -11,6 +21,9 @@ import React, {
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 import { STACKS_MAINNET, STACKS_TESTNET, StacksNetwork } from '@stacks/network';
 
+/**
+ * Internal state shape for wallet connection.
+ */
 interface WalletState {
   address: string | null;
   isConnected: boolean;
