@@ -1,3 +1,13 @@
+/**
+ * @file Format utilities for Aegis Vault
+ * 
+ * Provides formatting functions for STX tokens, AGS tokens, addresses,
+ * percentages, block heights, and time durations.
+ * 
+ * @author Aegis Vault Team
+ * @see {@link https://github.com/AdekunleBamz/aegis-vault}
+ */
+
 import { AVG_BLOCK_TIME_MINUTES } from './constants';
 import { STX_DECIMALS, AGS_DECIMALS } from './constants';
 
