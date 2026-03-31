@@ -112,7 +112,14 @@ export function formatBlockHeight(height: number): string {
 }
 
 /**
- * Calculate time remaining from blocks
+ * Convert block count to human-readable time duration.
+ * 
+ * Uses the average Stacks block time (10 minutes) to estimate
+ * the time duration represented by a given number of blocks.
+ * 
+ * @param blocks - Number of blocks to convert
+ * @returns Human-readable time string (e.g., "2 hr", "3 day")
+ * @example blocksToTime(144) // "1 day" (144 blocks * 10 min = 1440 min = 24 hr)
  */
 export function blocksToTime(blocks: number): string {
   const minutes = blocks * AVG_BLOCK_TIME_MINUTES;
