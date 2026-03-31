@@ -22,8 +22,15 @@ export function formatSTX(microStx: string | number | bigint): string {
 }
 
 /**
- * Format AGS tokens with proper decimals
+ * Format AGS tokens with proper decimals.
+ * 
+ * AGS (Aegis governance token) uses 6 decimal places like STX.
+ * This function converts microAGS values to human-readable format.
+ * 
+ * @param microAgs - Amount in microAGS (1 AGS = 1,000,000 microAGS)
+ * @returns Formatted AGS string with 2-6 decimal places
  * @example formatAGS(1000000) // "1.00"
+ * @example formatAGS(2500000) // "2.50"
  */
 export function formatAGS(microAgs: string | number | bigint): string {
   const value = BigInt(microAgs);
