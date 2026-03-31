@@ -1,8 +1,11 @@
 /**
- * Staking Module
+ * @file Staking utilities for Aegis Vault
  * 
  * Provides functions for interacting with the Aegis Staking protocol,
- * including staker info retrieval, APY calculation, and reward estimation.
+ * including staker info retrieval, APY calculation, tier determination,
+ * and reward estimation.
+ * 
+ * @author Aegis Vault Team
  */
 import { CONTRACTS, TIERS, BLOCKS_PER_YEAR } from './constants';
 import { callReadOnlyFunction } from './api';
