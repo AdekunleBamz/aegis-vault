@@ -1,8 +1,18 @@
 'use client';
 
+/**
+ * @file Hook for claiming staking rewards
+ * 
+ * Provides reward claiming functionality with loading states
+ * and error handling for the AGS token distribution.
+ */
+
 import { useState, useCallback } from 'react';
 import { executeClaimRewards, TransactionResult } from '@/lib/stacks';
 
+/**
+ * Return type for the useRewards hook.
+ */
 export interface UseRewardsReturn {
   claimRewards: () => Promise<TransactionResult>;
   isLoading: boolean;
