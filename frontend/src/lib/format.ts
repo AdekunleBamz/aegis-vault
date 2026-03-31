@@ -54,7 +54,15 @@ export function safeFormatAGS(value: string | number | bigint | null | undefined
 }
 
 /**
- * Convert STX to microSTX
+ * Convert STX to microSTX.
+ * 
+ * This is the inverse of formatSTX. Takes a human-readable STX amount
+ * and converts it to the smallest unit (microSTX) for on-chain operations.
+ * 
+ * @param stx - Amount in STX (e.g., 1.5 for 1.5 STX)
+ * @returns Amount in microSTX as bigint
+ * @example toMicroSTX(1) // 1000000n
+ * @example toMicroSTX(0.5) // 500000n
  */
 export function toMicroSTX(stx: number): bigint {
   return BigInt(Math.floor(stx * Math.pow(10, STX_DECIMALS)));
