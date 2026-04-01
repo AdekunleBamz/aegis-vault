@@ -5,6 +5,7 @@ import { useWallet } from '@/context/wallet-context';
 import { usePositions } from '@/hooks/use-positions';
 import { useWithdraw } from '@/hooks/use-withdraw';
 import { formatSTX, toMicroSTX } from '@/lib/format';
+import { API } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
@@ -159,7 +160,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
 
         {txId && (
           <a
-            href={`https://explorer.stacks.co/txid/${txId}?chain=mainnet`}
+            href={`${API.EXPLORER}/txid/${txId}?chain=mainnet`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm mb-6"
