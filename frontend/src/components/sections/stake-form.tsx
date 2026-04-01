@@ -226,7 +226,7 @@ export function StakeForm() {
                     className="self-start rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan"
                     title="Fill with your entire available STX balance minus gas reserve"
                   >
-                    Use Max Balance
+                    Use Max Balance" title="Fill with your entire available STX balance minus gas reserve
                   </button>
                 </div>
 
