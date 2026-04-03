@@ -219,7 +219,7 @@ MIT
 
 ## Links
 
-- [Stacks Explorer](https://explorer.stacks.co/address/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N)
+- [Stacks Explorer](https://explorer.hiro.so/address/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N?chain=mainnet)
 - [Stacks Documentation](https://docs.stacks.co)
 - [@stacks/connect](https://github.com/hirosystems/connect)
 - [@stacks/transactions](https://github.com/hirosystems/stacks.js)
