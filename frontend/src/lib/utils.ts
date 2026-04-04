@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
  * Check if a Stacks address is a mainnet address
  */
 export function isMainnetAddress(address: string): boolean {
-  return address.startsWith('SP');
+  return address.startsWith('SP') || address.startsWith('SM');
 }
 
 /**
