@@ -9,4 +9,8 @@ describe('splitContractId', () => {
       'aegis-staking-v2-15',
     ]);
   });
+
+  it('rejects malformed contract ids', () => {
+    expect(() => splitContractId('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N')).toThrow('Invalid contract ID');
+  });
 });

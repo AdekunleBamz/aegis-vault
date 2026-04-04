@@ -17,5 +17,8 @@ export function isMainnetAddress(address: string): boolean {
  */
 export function splitContractId(contractId: string): [string, string] {
   const parts = contractId.split('.');
+  if (parts.length !== 2 || !parts[0] || !parts[1]) {
+    throw new Error('Invalid contract ID');
+  }
   return [parts[0], parts[1]];
 }
