@@ -76,4 +76,13 @@ describe('formatRelativeTime', () => {
 
     vi.useRealTimers();
   });
+
+  it('falls back to a locale date for older timestamps', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-04-04T12:00:00Z'));
+
+    expect(formatRelativeTime(Date.parse('2026-03-20T00:00:00Z') / 1000)).toBe('3/20/2026');
+
+    vi.useRealTimers();
+  });
 });
