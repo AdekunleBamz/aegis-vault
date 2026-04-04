@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { formatAGS, formatSTX, safeFormatAGS, truncateAddress } from '../format';
+import {
+  formatAGS,
+  formatBlockHeight,
+  formatPercent,
+  formatSTX,
+  safeFormatAGS,
+  truncateAddress,
+} from '../format';
 
 describe('formatSTX', () => {
   it('formats whole STX amounts with two decimal places', () => {
@@ -40,5 +47,12 @@ describe('safeFormatAGS', () => {
 describe('truncateAddress', () => {
   it('shortens Stacks addresses with a middle ellipsis', () => {
     expect(truncateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N')).toBe('SP3FKN...GG6N');
+  });
+});
+
+describe('numeric display helpers', () => {
+  it('formats percentages and block heights for dashboards', () => {
+    expect(formatPercent(12.3456)).toBe('12.35%');
+    expect(formatBlockHeight(1234567)).toBe('1,234,567');
   });
 });
