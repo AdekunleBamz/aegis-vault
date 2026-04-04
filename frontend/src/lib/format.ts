@@ -53,11 +53,7 @@ export function formatSTX(microStx: string | number | bigint): string {
  */
 export function formatAGS(microAgs: string | number | bigint): string {
   const value = BigInt(microAgs);
-  const ags = Number(value) / Math.pow(10, AGS_DECIMALS);
-  return ags.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 6,
-  });
+  return formatMicroAmount(value, AGS_DECIMALS);
 }
 
 /**

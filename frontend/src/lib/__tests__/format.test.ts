@@ -23,4 +23,8 @@ describe('formatAGS', () => {
     expect(formatAGS(1_000_000)).toBe('1.00');
     expect(formatAGS(7_500_000)).toBe('7.50');
   });
+
+  it('preserves bigint precision for large AGS balances', () => {
+    expect(formatAGS(987_654_321_123_456_789n)).toBe('987,654,321,123.456789');
+  });
 });
