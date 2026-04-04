@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  blocksToTime,
   formatAGS,
   formatBlockHeight,
   formatPercent,
@@ -54,5 +55,13 @@ describe('numeric display helpers', () => {
   it('formats percentages and block heights for dashboards', () => {
     expect(formatPercent(12.3456)).toBe('12.35%');
     expect(formatBlockHeight(1234567)).toBe('1,234,567');
+  });
+});
+
+describe('blocksToTime', () => {
+  it('converts block counts into minutes, hours, and days', () => {
+    expect(blocksToTime(3)).toBe('30 min');
+    expect(blocksToTime(12)).toBe('2 hrs');
+    expect(blocksToTime(144)).toBe('1 day');
   });
 });
