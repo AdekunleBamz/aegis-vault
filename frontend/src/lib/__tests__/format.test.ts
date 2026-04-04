@@ -1,10 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   blocksToTime,
   formatAGS,
   formatBlockHeight,
   formatPercent,
+  formatRelativeTime,
   formatSTX,
   safeFormatAGS,
   truncateAddress,
@@ -63,5 +64,16 @@ describe('blocksToTime', () => {
     expect(blocksToTime(3)).toBe('30 min');
     expect(blocksToTime(12)).toBe('2 hrs');
     expect(blocksToTime(144)).toBe('1 day');
+  });
+});
+
+describe('formatRelativeTime', () => {
+  it('labels recent timestamps in minutes', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-04-04T12:00:00Z'));
+
+    expect(formatRelativeTime(Date.parse('2026-04-04T11:55:00Z') / 1000)).toBe('5m ago');
+
+    vi.useRealTimers();
   });
 });
