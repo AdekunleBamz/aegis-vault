@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { formatAGS, formatSTX, safeFormatAGS } from '../format';
+import { formatAGS, formatSTX, safeFormatAGS, truncateAddress } from '../format';
 
 describe('formatSTX', () => {
   it('formats whole STX amounts with two decimal places', () => {
@@ -34,5 +34,11 @@ describe('safeFormatAGS', () => {
     expect(safeFormatAGS(null)).toBe('0.00');
     expect(safeFormatAGS(undefined)).toBe('0.00');
     expect(safeFormatAGS('invalid')).toBe('0.00');
+  });
+});
+
+describe('truncateAddress', () => {
+  it('shortens Stacks addresses with a middle ellipsis', () => {
+    expect(truncateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N')).toBe('SP3FKN...GG6N');
   });
 });
