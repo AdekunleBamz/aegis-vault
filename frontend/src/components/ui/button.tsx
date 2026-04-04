@@ -22,6 +22,7 @@ export function Button({
   children,
   className = '',
   disabled,
+  type,
   ...props
 }: ButtonProps) {
   const baseClasses = 'inline-flex items-center justify-center gap-2 font-medium rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none';
@@ -46,6 +47,7 @@ export function Button({
 
   return (
     <button
+      type={type ?? 'button'}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
       disabled={disabled || isLoading}
       aria-busy={isLoading}
