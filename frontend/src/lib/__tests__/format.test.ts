@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { formatAGS, formatSTX } from '../format';
+import { formatAGS, formatSTX, safeFormatAGS } from '../format';
 
 describe('formatSTX', () => {
   it('formats whole STX amounts with two decimal places', () => {
@@ -26,5 +26,13 @@ describe('formatAGS', () => {
 
   it('preserves bigint precision for large AGS balances', () => {
     expect(formatAGS(987_654_321_123_456_789n)).toBe('987,654,321,123.456789');
+  });
+});
+
+describe('safeFormatAGS', () => {
+  it('falls back to zero for missing or invalid values', () => {
+    expect(safeFormatAGS(null)).toBe('0.00');
+    expect(safeFormatAGS(undefined)).toBe('0.00');
+    expect(safeFormatAGS('invalid')).toBe('0.00');
   });
 });
