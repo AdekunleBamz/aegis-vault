@@ -11,6 +11,19 @@
 import { AVG_BLOCK_TIME_MINUTES } from './constants';
 import { STX_DECIMALS, AGS_DECIMALS } from './constants';
 
+function formatMicroAmount(value: bigint, decimals: number): string {
+  const isNegative = value < 0n;
+  const absoluteValue = isNegative ? -value : value;
+  const raw = absoluteValue.toString().padStart(decimals + 1, '0');
+  const whole = raw.slice(0, -decimals) || '0';
+  const trimmedFraction = raw.slice(-decimals).replace(/0+$/, '');
+  const fraction = trimmedFraction.length === 1 ? `${trimmedFraction}0` : trimmedFraction;
+  const groupedWhole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const formatted = fraction ? `${groupedWhole}.${fraction}` : `${groupedWhole}.00`;
+
+  return isNegative ? `-${formatted}` : formatted;
+}
+
 /**
  * Format microSTX to STX with proper decimals.
  * 
@@ -24,11 +37,7 @@ import { STX_DECIMALS, AGS_DECIMALS } from './constants';
  */
 export function formatSTX(microStx: string | number | bigint): string {
   const value = BigInt(microStx);
-  const stx = Number(value) / Math.pow(10, STX_DECIMALS);
-  return stx.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 6,
-  });
+  return formatMicroAmount(value, STX_DECIMALS);
 }
 
 /**

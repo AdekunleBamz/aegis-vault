@@ -12,4 +12,8 @@ describe('formatSTX', () => {
     expect(formatSTX(1_234_567)).toBe('1.234567');
     expect(formatSTX(2_500_000)).toBe('2.50');
   });
+
+  it('preserves bigint precision for large STX balances', () => {
+    expect(formatSTX(123_456_789_123_456_789n)).toBe('123,456,789,123.456789');
+  });
 });
