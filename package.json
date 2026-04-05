@@ -16,7 +16,11 @@
     "check": "clarinet check",
     "contracts:test": "clarinet test",
     "console": "clarinet console",
-    "fmt": "clarinet format"
+    "fmt": "clarinet format",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "stacks",
