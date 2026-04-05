@@ -36,9 +36,14 @@ deployments/
 # Local development
 scripts/
 docs/
+notes/
 *.mjs
 *.sh
 history.txt
+
+# Security files
+*.pem
+*.key
 
 # IDE - VS Code
 .vscode/*
