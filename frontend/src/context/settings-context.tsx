@@ -185,7 +185,7 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
 // HOOK
 // =============================================================================
 
-export function useSettings() {
+export function useSettings(): SettingsContextType {
   const context = useContext(SettingsContext);
   if (!context) {
     throw new Error('useSettings must be used within a SettingsProvider');
@@ -197,7 +197,13 @@ export function useSettings() {
 // SPECIALIZED HOOKS
 // =============================================================================
 
-export function useTheme() {
+export interface UseThemeReturn {
+  theme: string;
+  setTheme: (theme: AppSettings['theme']) => void;
+  isDark: boolean;
+}
+
+export function useTheme(): UseThemeReturn {
   const { settings, updateSetting } = useSettings();
 
   return {
@@ -209,7 +215,14 @@ export function useTheme() {
   };
 }
 
-export function useCurrency() {
+export interface UseCurrencyReturn {
+  currency: Currency;
+  setCurrency: (currency: Currency) => void;
+  formatCurrency: (amount: number) => string;
+  showUsdValues: boolean;
+}
+
+export function useCurrency(): UseCurrencyReturn {
   const { settings, updateSetting } = useSettings();
 
   const formatCurrency = useCallback((amount: number): string => {
@@ -239,7 +252,18 @@ export function useCurrency() {
   };
 }
 
-export function useTransactionSettings() {
+export interface UseTransactionSettingsReturn {
+  slippage: number;
+  setSlippage: (slippage: number) => void;
+  gasPreference: GasPreference;
+  setGasPreference: (pref: GasPreference) => void;
+  autoCompound: boolean;
+  setAutoCompound: (auto: boolean) => void;
+  expertMode: boolean;
+  setExpertMode: (expert: boolean) => void;
+}
+
+export function useTransactionSettings(): UseTransactionSettingsReturn {
   const { settings, updateSetting } = useSettings();
 
   return {
@@ -254,7 +278,14 @@ export function useTransactionSettings() {
   };
 }
 
-export function usePrivacySettings() {
+export interface UsePrivacySettingsReturn {
+  hideBalances: boolean;
+  setHideBalances: (hide: boolean) => void;
+  anonymousAnalytics: boolean;
+  setAnonymousAnalytics: (anon: boolean) => void;
+}
+
+export function usePrivacySettings(): UsePrivacySettingsReturn {
   const { settings, updateSetting } = useSettings();
 
   return {
