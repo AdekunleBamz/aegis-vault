@@ -16,7 +16,8 @@
     "check": "clarinet check",
     "contracts:test": "clarinet test",
     "console": "clarinet console",
-    "fmt": "clarinet format"
+    "fmt": "clarinet format",
+    "format": "prettier --write ."
   },
   "keywords": [
     "stacks",
