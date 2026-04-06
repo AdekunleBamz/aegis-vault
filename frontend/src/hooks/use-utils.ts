@@ -2,8 +2,15 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
+export interface UseLocalStorageReturn<T> {
+  value: T;
+  setValue: (value: T | ((val: T) => T)) => void;
+  removeValue: () => void;
+  isLoaded: boolean;
+}
+
 // Local storage hook with SSR support
-export function useLocalStorage<T>(key: string, initialValue: T) {
+export function useLocalStorage<T>(key: string, initialValue: T): UseLocalStorageReturn<T> {
   const [storedValue, setStoredValue] = useState<T>(initialValue);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -84,15 +91,15 @@ export function useMediaQuery(query: string): boolean {
 }
 
 // Predefined breakpoint hooks
-export function useIsMobile() {
+export function useIsMobile(): boolean {
   return useMediaQuery('(max-width: 639px)');
 }
 
-export function useIsTablet() {
+export function useIsTablet(): boolean {
   return useMediaQuery('(min-width: 640px) and (max-width: 1023px)');
 }
 
-export function useIsDesktop() {
+export function useIsDesktop(): boolean {
   return useMediaQuery('(min-width: 1024px)');
 }
 
@@ -109,8 +116,16 @@ export function usePrevious<T>(value: T): T | undefined {
   return previous;
 }
 
+export interface UseToggleReturn {
+  value: boolean;
+  toggle: () => void;
+  setTrue: () => void;
+  setFalse: () => void;
+  setValue: (value: boolean) => void;
+}
+
 // Toggle hook
-export function useToggle(initialValue = false) {
+export function useToggle(initialValue = false): UseToggleReturn {
   const [value, setValue] = useState(initialValue);
 
   const toggle = useCallback(() => setValue(v => !v), []);
@@ -121,7 +136,7 @@ export function useToggle(initialValue = false) {
 }
 
 // Interval hook
-export function useInterval(callback: () => void, delay: number | null) {
+export function useInterval(callback: () => void, delay: number | null): void {
   const savedCallback = useCallback(callback, [callback]);
 
   useEffect(() => {
@@ -136,7 +151,7 @@ export function useInterval(callback: () => void, delay: number | null) {
 export function useClickOutside(
   ref: React.RefObject<HTMLElement>,
   handler: () => void
-) {
+): void {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
       if (!ref.current || ref.current.contains(event.target as Node)) {
@@ -155,9 +170,14 @@ export function useClickOutside(
   }, [ref, handler]);
 }
 
+export interface WindowSize {
+  width: number;
+  height: number;
+}
+
 // Window size hook
-export function useWindowSize() {
-  const [size, setSize] = useState({ width: 0, height: 0 });
+export function useWindowSize(): WindowSize {
+  const [size, setSize] = useState<WindowSize>({ width: 0, height: 0 });
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -177,12 +197,18 @@ export function useWindowSize() {
   return size;
 }
 
+export interface UseCopyToClipboardReturn {
+  copiedText: string | null;
+  isCopied: boolean;
+  copy: (text: string) => Promise<boolean>;
+}
+
 // Copy to clipboard hook
-export function useCopyToClipboard() {
+export function useCopyToClipboard(): UseCopyToClipboardReturn {
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const [isCopied, setIsCopied] = useState(false);
 
-  const copy = useCallback(async (text: string) => {
+  const copy = useCallback(async (text: string): Promise<boolean> => {
     if (!navigator?.clipboard) {
       console.warn('Clipboard not supported');
       return false;
