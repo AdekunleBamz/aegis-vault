@@ -11,7 +11,20 @@ export interface StepFormState {
   errors: Record<number, string>;
 }
 
-export function useStepForm(totalSteps: number) {
+export interface UseStepFormReturn extends StepFormState {
+  isFirstStep: boolean;
+  isLastStep: boolean;
+  progress: number;
+  goToStep: (step: number) => void;
+  nextStep: () => void;
+  prevStep: () => void;
+  setStepData: (stepData: Record<string, unknown>) => void;
+  setStepError: (step: number, error: string) => void;
+  clearStepError: (step: number) => void;
+  reset: () => void;
+}
+
+export function useStepForm(totalSteps: number): UseStepFormReturn {
   const [state, setState] = useState<StepFormState>({
     currentStep: 0,
     totalSteps,
@@ -112,10 +125,24 @@ export interface FieldState {
 
 export type FormFields<T extends string> = Record<T, FieldState>;
 
+export interface UseFormFieldsReturn<T extends string> {
+  fields: FormFields<T>;
+  setFieldValue: (name: T, value: string) => void;
+  setFieldTouched: (name: T) => void;
+  setFieldError: (name: T, error: string | null) => void;
+  validateField: (name: T) => boolean;
+  validateAll: () => boolean;
+  reset: () => void;
+  getValues: () => Record<T, string>;
+  hasErrors: boolean;
+  isDirty: boolean;
+  isTouched: boolean;
+}
+
 export function useFormFields<T extends string>(
   initialFields: Record<T, string>,
   validators?: Record<T, (value: string) => string | null>
-) {
+): UseFormFieldsReturn<T> {
   const initialState = Object.keys(initialFields).reduce((acc, key) => {
     acc[key as T] = {
       value: initialFields[key as T],
@@ -212,6 +239,15 @@ export interface SubmitState {
   error: string | null;
 }
 
+export interface UseFormSubmitReturn<T> {
+  isSubmitting: boolean;
+  isSubmitted: boolean;
+  submitCount: number;
+  error: string | null;
+  handleSubmit: (data: T) => Promise<void>;
+  reset: () => void;
+}
+
 export function useFormSubmit<T>(
   onSubmit: (data: T) => Promise<void>,
   options?: {
@@ -219,7 +255,7 @@ export function useFormSubmit<T>(
     onError?: (error: Error) => void;
     resetOnSuccess?: boolean;
   }
-) {
+): UseFormSubmitReturn<T> {
   const [state, setState] = useState<SubmitState>({
     isSubmitting: false,
     isSubmitted: false,
@@ -269,11 +305,17 @@ export function useFormSubmit<T>(
 }
 
 // Autosave hook
+export interface UseAutosaveReturn {
+  isSaving: boolean;
+  lastSaved: Date | null;
+  error: string | null;
+}
+
 export function useAutosave<T>(
   data: T,
   saveFn: (data: T) => Promise<void>,
   delay: number = 2000
-) {
+): UseAutosaveReturn {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
