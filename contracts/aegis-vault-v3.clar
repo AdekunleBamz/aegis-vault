@@ -149,6 +149,7 @@
     (var-set total-staked (+ (var-get total-staked) amount))
     (var-set stake-counter new-id)
     (if (is-eq (len current-ids) u0) (var-set total-stakers (+ (var-get total-stakers) u1)) true)
+    (print { event: "stake", staker: staker, amount: amount, lock-period: lock-period, stake-id: new-id })
     (ok new-id)
   )
 )
