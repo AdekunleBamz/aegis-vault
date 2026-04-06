@@ -149,6 +149,7 @@
     (var-set total-staked (+ (var-get total-staked) amount))
     (var-set stake-counter new-id)
     (if (is-eq (len current-ids) u0) (var-set total-stakers (+ (var-get total-stakers) u1)) true)
+    (print { event: "stake", staker: staker, amount: amount, lock-period: lock-period, stake-id: new-id })
     (ok new-id)
   )
 )
@@ -257,6 +258,7 @@
 (define-public (withdraw-treasury (amount uint) (recipient principal))
   (begin
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (asserts! (> amount u0) ERR-INVALID-AMOUNT)
     (try! (as-contract (stx-transfer? amount tx-sender recipient)))
     (ok true)
   )
@@ -271,6 +273,10 @@
     stake-data (ok (calculate-pending-rewards stake-data))
     (ok u0)
   )
+)
+
+(define-read-only (get-user-stake-ids (user principal))
+  (ok (default-to (list) (map-get? user-stake-ids user)))
 )
 
 (define-read-only (get-vault-stats)
