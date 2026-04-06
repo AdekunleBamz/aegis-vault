@@ -220,7 +220,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
 // HOOK
 // =============================================================================
 
-export function useModal() {
+export function useModal(): ModalContextType {
   const context = useContext(ModalContext);
   if (!context) {
     throw new Error('useModal must be used within a ModalProvider');
@@ -232,27 +232,59 @@ export function useModal() {
 // SPECIALIZED HOOKS
 // =============================================================================
 
-export function useConfirm() {
+export interface UseConfirmReturn {
+  (options: {
+    title: string;
+    description?: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    variant?: 'default' | 'danger';
+  }): Promise<boolean>;
+}
+
+export function useConfirm(): UseConfirmReturn {
   const { confirm } = useModal();
   return confirm;
 }
 
-export function useAlert() {
+export interface UseAlertReturn {
+  (options: {
+    title: string;
+    description?: string;
+    confirmLabel?: string;
+  }): Promise<void>;
+}
+
+export function useAlert(): UseAlertReturn {
   const { alert } = useModal();
   return alert;
 }
 
-export function useWalletModal() {
+export interface UseWalletModalReturn {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+}
+
+export function useWalletModal(): UseWalletModalReturn {
   const { openModal, closeModal, isOpen, currentModal } = useModal();
   
   return {
-    isOpen: isOpen && currentModal?.type === 'wallet-connect',
+    isOpen: isOpen && (currentModal?.type === 'wallet-connect'),
     open: () => openModal({ type: 'wallet-connect', title: 'Connect Wallet', size: 'md' }),
     close: closeModal,
   };
 }
 
-export function useTransactionModal() {
+export interface UseTransactionModalReturn {
+  isOpen: boolean;
+  showConfirm: (data: { type: string; amount: string; details?: Record<string, unknown> }) => void;
+  showSuccess: (data: { txHash: string; message?: string }) => void;
+  showError: (data: { error: string; retry?: () => void }) => void;
+  close: () => void;
+}
+
+export function useTransactionModal(): UseTransactionModalReturn {
   const { openModal, closeModal, replaceModal, isOpen, currentModal } = useModal();
   
   return {
@@ -282,7 +314,13 @@ export function useTransactionModal() {
   };
 }
 
-export function useSettingsModal() {
+export interface UseSettingsModalReturn {
+  isOpen: boolean;
+  open: (tab?: string) => void;
+  close: () => void;
+}
+
+export function useSettingsModal(): UseSettingsModalReturn {
   const { openModal, closeModal, isOpen, currentModal } = useModal();
   
   return {
