@@ -97,11 +97,20 @@ export function useFetch<T>(
   return { ...state, mutate };
 }
 
+interface UseOptimisticReturn<T> {
+  value: T;
+  actualValue: T;
+  isPending: boolean;
+  addOptimistic: (newValue: T) => void;
+  confirmOptimistic: () => void;
+  revertOptimistic: () => void;
+}
+
 // Optimistic update hook
 export function useOptimistic<T>(
   initialValue: T,
   updateFn: (current: T, optimistic: T) => T
-) {
+): UseOptimisticReturn<T> {
   const [value, setValue] = useState(initialValue);
   const [optimisticValue, setOptimisticValue] = useState(initialValue);
   const [isPending, setIsPending] = useState(false);
@@ -134,6 +143,15 @@ export function useOptimistic<T>(
   };
 }
 
+interface UseInfiniteScrollReturn<T> {
+  items: T[];
+  isLoading: boolean;
+  hasMore: boolean;
+  error: Error | null;
+  loadMore: () => Promise<void>;
+  reset: () => void;
+}
+
 // Infinite scroll hook
 export function useInfiniteScroll<T>(
   fetchFn: (page: number) => Promise<T[]>,
@@ -141,7 +159,7 @@ export function useInfiniteScroll<T>(
     threshold?: number;
     initialPage?: number;
   }
-) {
+): UseInfiniteScrollReturn<T> {
   const { threshold = 100, initialPage = 1 } = options || {};
   const [items, setItems] = useState<T[]>([]);
   const [page, setPage] = useState(initialPage);
@@ -194,10 +212,24 @@ export function useInfiniteScroll<T>(
   return { items, isLoading, hasMore, error, loadMore, reset };
 }
 
+interface UseMutationState<TData> {
+  data: TData | null;
+  isLoading: boolean;
+  error: Error | null;
+}
+
+interface UseMutationReturn<TData, TVariables> {
+  data: TData | null;
+  isLoading: boolean;
+  error: Error | null;
+  mutate: (variables: TVariables) => Promise<TData>;
+  reset: () => void;
+}
+
 // Mutation hook for POST/PUT/DELETE
 export function useMutation<TData, TVariables>(
   mutationFn: (variables: TVariables) => Promise<TData>
-) {
+): UseMutationReturn<TData, TVariables> {
   const [state, setState] = useState<{
     data: TData | null;
     isLoading: boolean;
