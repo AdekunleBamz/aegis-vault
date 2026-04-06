@@ -174,7 +174,7 @@ export function NotificationProvider({
  * @returns {NotificationContextType} The current notification context value.
  * @throws {Error} If used outside of NotificationProvider.
  */
-export function useNotifications() {
+export function useNotifications(): NotificationContextType {
   const context = useContext(NotificationContext);
   if (!context) {
     throw new Error('useNotifications must be used within a NotificationProvider');
@@ -186,7 +186,20 @@ export function useNotifications() {
 // HELPER FUNCTIONS
 // =============================================================================
 
-export function createNotifyHelpers(addNotification: NotificationContextType['addNotification']) {
+export interface NotifyHelpers {
+  info: (title: string, message?: string) => string;
+  success: (title: string, message?: string) => string;
+  warning: (title: string, message?: string) => string;
+  error: (title: string, message?: string) => string;
+  txSubmitted: (txHash: string) => string;
+  txConfirmed: (txHash: string) => string;
+  txFailed: (error?: string) => string;
+  stakeCreated: (amount: string) => string;
+  rewardsClaimed: (amount: string) => string;
+  withdrawalComplete: (amount: string) => string;
+}
+
+export function createNotifyHelpers(addNotification: NotificationContextType['addNotification']): NotifyHelpers {
   return {
     info: (title: string, message?: string) => 
       addNotification({ type: 'info', title, message }),
