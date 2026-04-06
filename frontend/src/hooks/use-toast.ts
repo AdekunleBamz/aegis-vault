@@ -12,7 +12,13 @@ export interface Toast {
     duration?: number;
 }
 
-export function useToast() {
+interface UseToastReturn {
+    toasts: Toast[];
+    addToast: (toast: Omit<Toast, 'id'>) => string;
+    removeToast: (id: string) => void;
+}
+
+export function useToast(): UseToastReturn {
     const [toasts, setToasts] = useState<Toast[]>([]);
 
     const removeToast = useCallback((id: string) => {
