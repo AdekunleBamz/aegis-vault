@@ -1,5 +1,12 @@
 'use client';
 
+/**
+ * @file Accordion components for Aegis Vault
+ * 
+ * Provides collapsible container components including Accordion,
+ * AccordionItem, Collapsible, ExpandableCard, and Details.
+ */
+
 import React from 'react';
 
 /**
@@ -58,16 +65,29 @@ export function AccordionItem({
   );
 }
 
+/**
+ * Props for the Accordion container component.
+ */
 export interface AccordionProps {
+  /** Child accordion items */
   children: React.ReactNode;
+  /** Additional CSS classes */
   className?: string;
 }
 
+/**
+ * Container component for grouping accordion items.
+ * 
+ * @param props - Component props
+ * @returns A vertically stacked container for accordion items
+ */
 export function Accordion({ children, className = '' }: AccordionProps) {
   return <div className={`space-y-2 ${className}`}>{children}</div>;
 }
 
-// Collapsible Section
+/**
+ * Props for the Collapsible section component.
+ */
 export interface CollapsibleProps {
   title: string;
   children: React.ReactNode;
@@ -77,6 +97,12 @@ export interface CollapsibleProps {
   className?: string;
 }
 
+/**
+ * Collapsible section with optional icon and badge.
+ * 
+ * @param props - Component props
+ * @returns A collapsible content section
+ */
 export function Collapsible({
   title,
   children,
@@ -123,7 +149,9 @@ export function Collapsible({
   );
 }
 
-// Expandable Card
+/**
+ * Props for the ExpandableCard component.
+ */
 export interface ExpandableCardProps {
   header: React.ReactNode;
   children: React.ReactNode;
@@ -132,6 +160,12 @@ export interface ExpandableCardProps {
   className?: string;
 }
 
+/**
+ * Card component with expandable additional content.
+ * 
+ * @param props - Component props
+ * @returns A card with optional expandable section
+ */
 export function ExpandableCard({
   header,
   children,
@@ -178,13 +212,21 @@ export function ExpandableCard({
   );
 }
 
-// Details/Summary
+/**
+ * Props for the Details component.
+ */
 export interface DetailsProps {
   summary: React.ReactNode;
   children: React.ReactNode;
   className?: string;
 }
 
+/**
+ * Details/summary style collapsible component.
+ * 
+ * @param props - Component props
+ * @returns A details/summary style collapsible
+ */
 export function Details({ summary, children, className = '' }: DetailsProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
