@@ -1,3 +1,10 @@
+/**
+ * @file Library barrel export for Aegis Vault
+ * 
+ * Central export point for all library modules including constants,
+ * API utilities, error handling, types, validation, formatting, and services.
+ */
+
 // Core modules
 export * from './constants';
 export * from './staking';
@@ -5,7 +12,10 @@ export * from './stacks';
 export * from './services';
 export * from './test-utils';
 
-// API with aliased Transaction to avoid collision with types.ts
+/**
+ * API utilities for Stacks blockchain interaction.
+ * Transaction is aliased to avoid collision with types.ts
+ */
 export {
     getAccountBalance,
     getAccountTransactions,
@@ -16,7 +26,10 @@ export {
     type ContractReadResult
 } from './api';
 
-// Errors with aliased ValidationError to avoid collision with validation.ts
+/**
+ * Error handling utilities.
+ * ValidationError is aliased to avoid collision with validation.ts
+ */
 export {
     AegisError,
     ERROR_MESSAGES,
@@ -40,13 +53,19 @@ export {
     type ValidationError as FieldValidationError
 } from './errors';
 
-// Types - Primary source for App types
+/**
+ * Type definitions - Primary source for application types.
+ */
 export * from './types';
 
-// Utils - Primary source for general utilities
+/**
+ * General utility functions - Primary source for utilities.
+ */
 export * from './utils';
 
-// Validation - Export Zod schemas and specific utilities
+/**
+ * Zod validation schemas and helper functions.
+ */
 export {
     stacksAddressSchema,
     microStxSchema,
@@ -80,7 +99,9 @@ export {
     type Pagination
 } from './validation';
 
-// Format - Specific formatting functions
+/**
+ * Formatting utilities for tokens, percentages, and time values.
+ */
 export {
     formatSTX,
     formatAGS,
