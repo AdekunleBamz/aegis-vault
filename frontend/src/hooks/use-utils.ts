@@ -1,15 +1,36 @@
 'use client';
 
+/**
+ * @file Utility hooks for Aegis Vault
+ * 
+ * Provides reusable utility hooks for common patterns: local storage,
+ * debouncing, media queries, toggle state, intervals, click outside detection,
+ * window size tracking, and clipboard operations.
+ */
+
 import { useState, useEffect, useCallback } from 'react';
 
+/**
+ * Return type for the useLocalStorage hook.
+ */
 export interface UseLocalStorageReturn<T> {
+  /** The current stored value */
   value: T;
+  /** Function to update the stored value */
   setValue: (value: T | ((val: T) => T)) => void;
+  /** Function to remove the stored value */
   removeValue: () => void;
+  /** Whether the value has been loaded from localStorage */
   isLoaded: boolean;
 }
 
-// Local storage hook with SSR support
+/**
+ * Hook for managing state in localStorage with SSR support.
+ * 
+ * @param key - The localStorage key
+ * @param initialValue - The value to use if no stored value exists
+ * @returns Object containing value, setValue, removeValue, and isLoaded
+ */
 export function useLocalStorage<T>(key: string, initialValue: T): UseLocalStorageReturn<T> {
   const [storedValue, setStoredValue] = useState<T>(initialValue);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,7 +73,13 @@ export function useLocalStorage<T>(key: string, initialValue: T): UseLocalStorag
   return { value: storedValue, setValue, removeValue, isLoaded };
 }
 
-// Debounce hook
+/**
+ * Hook for debouncing a value change.
+ * 
+ * @param value - The value to debounce
+ * @param delay - Delay in milliseconds before the value updates
+ * @returns The debounced value
+ */
 export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
@@ -69,7 +96,12 @@ export function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-// Media query hook
+/**
+ * Hook for tracking a CSS media query match state.
+ * 
+ * @param query - The media query string to track
+ * @returns Whether the media query currently matches
+ */
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(false);
 
@@ -90,20 +122,39 @@ export function useMediaQuery(query: string): boolean {
   return matches;
 }
 
-// Predefined breakpoint hooks
+/**
+ * Hook for detecting mobile viewport (max-width: 639px).
+ * 
+ * @returns Whether the current viewport is mobile-sized
+ */
 export function useIsMobile(): boolean {
   return useMediaQuery('(max-width: 639px)');
 }
 
+/**
+ * Hook for detecting tablet viewport (640px - 1023px).
+ * 
+ * @returns Whether the current viewport is tablet-sized
+ */
 export function useIsTablet(): boolean {
   return useMediaQuery('(min-width: 640px) and (max-width: 1023px)');
 }
 
+/**
+ * Hook for detecting desktop viewport (min-width: 1024px).
+ * 
+ * @returns Whether the current viewport is desktop-sized
+ */
 export function useIsDesktop(): boolean {
   return useMediaQuery('(min-width: 1024px)');
 }
 
-// Previous value hook
+/**
+ * Hook for tracking the previous value of a variable.
+ * 
+ * @param value - The value to track
+ * @returns The previous value, or undefined on first render
+ */
 export function usePrevious<T>(value: T): T | undefined {
   const [current, setCurrent] = useState<T>(value);
   const [previous, setPrevious] = useState<T | undefined>(undefined);
@@ -116,15 +167,28 @@ export function usePrevious<T>(value: T): T | undefined {
   return previous;
 }
 
+/**
+ * Return type for the useToggle hook.
+ */
 export interface UseToggleReturn {
+  /** The current boolean value */
   value: boolean;
+  /** Function to toggle the value */
   toggle: () => void;
+  /** Function to set the value to true */
   setTrue: () => void;
+  /** Function to set the value to false */
   setFalse: () => void;
+  /** Function to set the value directly */
   setValue: (value: boolean) => void;
 }
 
-// Toggle hook
+/**
+ * Hook for managing a boolean toggle state.
+ * 
+ * @param initialValue - The initial boolean value (default: false)
+ * @returns Object containing value and manipulation functions
+ */
 export function useToggle(initialValue = false): UseToggleReturn {
   const [value, setValue] = useState(initialValue);
 
@@ -135,7 +199,12 @@ export function useToggle(initialValue = false): UseToggleReturn {
   return { value, toggle, setTrue, setFalse, setValue };
 }
 
-// Interval hook
+/**
+ * Hook for executing a callback at regular intervals.
+ * 
+ * @param callback - The function to execute on each interval
+ * @param delay - The interval duration in milliseconds, or null to pause
+ */
 export function useInterval(callback: () => void, delay: number | null): void {
   const savedCallback = useCallback(callback, [callback]);
 
@@ -147,7 +216,12 @@ export function useInterval(callback: () => void, delay: number | null): void {
   }, [delay, savedCallback]);
 }
 
-// Click outside hook
+/**
+ * Hook for detecting clicks outside a referenced element.
+ * 
+ * @param ref - React ref to the element to monitor
+ * @param handler - Callback to execute when a click outside is detected
+ */
 export function useClickOutside(
   ref: React.RefObject<HTMLElement>,
   handler: () => void
@@ -170,12 +244,21 @@ export function useClickOutside(
   }, [ref, handler]);
 }
 
+/**
+ * Current window dimensions.
+ */
 export interface WindowSize {
+  /** The width of the browser window in pixels */
   width: number;
+  /** The height of the browser window in pixels */
   height: number;
 }
 
-// Window size hook
+/**
+ * Hook for tracking the current window dimensions.
+ * 
+ * @returns Object containing current width and height
+ */
 export function useWindowSize(): WindowSize {
   const [size, setSize] = useState<WindowSize>({ width: 0, height: 0 });
 
@@ -197,13 +280,23 @@ export function useWindowSize(): WindowSize {
   return size;
 }
 
+/**
+ * Return type for the useCopyToClipboard hook.
+ */
 export interface UseCopyToClipboardReturn {
+  /** The last successfully copied text */
   copiedText: string | null;
+  /** Whether text was recently copied */
   isCopied: boolean;
+  /** Function to copy text to clipboard */
   copy: (text: string) => Promise<boolean>;
 }
 
-// Copy to clipboard hook
+/**
+ * Hook for copying text to the system clipboard.
+ * 
+ * @returns Object containing copy status and copy function
+ */
 export function useCopyToClipboard(): UseCopyToClipboardReturn {
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const [isCopied, setIsCopied] = useState(false);
