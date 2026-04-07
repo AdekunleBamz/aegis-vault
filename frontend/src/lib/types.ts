@@ -1,10 +1,23 @@
+/**
+ * @file Type definitions for Aegis Vault
+ * 
+ * Central type definitions for the application including network configuration,
+ * tokens, wallets, transactions, staking, rewards, protocol stats, API responses,
+ * form data, events, notifications, and user settings.
+ */
+
 // ============================================================================
 // TYPE DEFINITIONS
 // ============================================================================
 
-// Stacks Network Types
+/**
+ * Supported Stacks network types.
+ */
 export type StacksNetwork = 'mainnet' | 'testnet' | 'devnet';
 
+/**
+ * Configuration for a Stacks network connection.
+ */
 export interface NetworkConfig {
   name: StacksNetwork;
   chainId: number;
@@ -13,7 +26,9 @@ export interface NetworkConfig {
   apiUrl: string;
 }
 
-// Token Types
+/**
+ * Token metadata.
+ */
 export interface Token {
   symbol: string;
   name: string;
@@ -22,6 +37,9 @@ export interface Token {
   logoUrl?: string;
 }
 
+/**
+ * Token balance with formatted display value.
+ */
 export interface TokenBalance {
   token: Token;
   balance: bigint;
@@ -29,9 +47,14 @@ export interface TokenBalance {
   usdValue?: number;
 }
 
-// Wallet Types
+/**
+ * Current wallet connection status.
+ */
 export type WalletStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
 
+/**
+ * Complete wallet connection state.
+ */
 export interface WalletState {
   status: WalletStatus;
   address: string | null;
@@ -40,6 +63,9 @@ export interface WalletState {
   error?: string;
 }
 
+/**
+ * Wallet adapter interface for connecting to different wallet providers.
+ */
 export interface WalletAdapter {
   name: string;
   icon: string;
@@ -49,7 +75,9 @@ export interface WalletAdapter {
   isAvailable: () => boolean;
 }
 
-// Transaction Types
+/**
+ * Possible states for a transaction lifecycle.
+ */
 export type TransactionStatus = 
   | 'pending'
   | 'submitted'
@@ -57,6 +85,9 @@ export type TransactionStatus =
   | 'failed'
   | 'cancelled';
 
+/**
+ * Types of transactions supported by the protocol.
+ */
 export type TransactionType =
   | 'stake'
   | 'unstake'
@@ -65,6 +96,9 @@ export type TransactionType =
   | 'approve'
   | 'transfer';
 
+/**
+ * Transaction record with full lifecycle tracking.
+ */
 export interface Transaction {
   id: string;
   txHash?: string;
@@ -78,6 +112,9 @@ export interface Transaction {
   metadata?: Record<string, unknown>;
 }
 
+/**
+ * Confirmed transaction receipt from the blockchain.
+ */
 export interface TransactionReceipt {
   txHash: string;
   status: 'success' | 'failed';
@@ -86,14 +123,22 @@ export interface TransactionReceipt {
   events: TransactionEvent[];
 }
 
+/**
+ * Event emitted during transaction execution.
+ */
 export interface TransactionEvent {
   type: string;
   data: Record<string, unknown>;
 }
 
-// Staking Types
+/**
+ * Staking tier levels for reward multipliers.
+ */
 export type StakeTier = 'bronze' | 'silver' | 'gold' | 'platinum' | 'diamond';
 
+/**
+ * User's staking position details.
+ */
 export interface StakePosition {
   id: string;
   owner: string;
@@ -110,6 +155,9 @@ export interface StakePosition {
   status: 'active' | 'unlocking' | 'unlocked' | 'withdrawn';
 }
 
+/**
+ * Global staking protocol configuration.
+ */
 export interface StakeConfig {
   minStakeAmount: bigint;
   maxStakeAmount: bigint;
@@ -119,6 +167,9 @@ export interface StakeConfig {
   tiers: TierConfig[];
 }
 
+/**
+ * Configuration for a single staking tier.
+ */
 export interface TierConfig {
   tier: StakeTier;
   minAmount: bigint;
@@ -128,7 +179,9 @@ export interface TierConfig {
   icon: string;
 }
 
-// Rewards Types
+/**
+ * Summary of a user's rewards across all positions.
+ */
 export interface RewardSummary {
   totalEarned: bigint;
   totalClaimed: bigint;
@@ -139,6 +192,9 @@ export interface RewardSummary {
   estimatedMonthlyReward: bigint;
 }
 
+/**
+ * Individual reward earning or claim record.
+ */
 export interface RewardHistory {
   id: string;
   amount: bigint;
@@ -147,7 +203,9 @@ export interface RewardHistory {
   type: 'earned' | 'claimed';
 }
 
-// Protocol Stats Types
+/**
+ * Global protocol statistics.
+ */
 export interface ProtocolStats {
   totalValueLocked: bigint;
   totalValueLockedUsd: number;
@@ -159,6 +217,9 @@ export interface ProtocolStats {
   nextEpochTime: Date;
 }
 
+/**
+ * Per-user statistics summary.
+ */
 export interface UserStats {
   totalStaked: bigint;
   totalRewardsEarned: bigint;
@@ -168,7 +229,9 @@ export interface UserStats {
   joinedAt: Date;
 }
 
-// API Response Types
+/**
+ * Standard API response wrapper.
+ */
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -176,6 +239,9 @@ export interface ApiResponse<T> {
   timestamp: number;
 }
 
+/**
+ * Paginated API response envelope.
+ */
 export interface PaginatedResponse<T> {
   items: T[];
   total: number;
@@ -184,7 +250,9 @@ export interface PaginatedResponse<T> {
   hasMore: boolean;
 }
 
-// Filter & Sort Types
+/**
+ * Filter criteria for querying positions or transactions.
+ */
 export interface FilterOptions {
   status?: string[];
   tier?: StakeTier[];
@@ -196,11 +264,17 @@ export interface FilterOptions {
   maxAmount?: bigint;
 }
 
+/**
+ * Sort configuration for list queries.
+ */
 export interface SortOptions {
   field: string;
   direction: 'asc' | 'desc';
 }
 
+/**
+ * Combined query options for paginated, filtered, sorted requests.
+ */
 export interface QueryOptions {
   page?: number;
   pageSize?: number;
@@ -208,25 +282,35 @@ export interface QueryOptions {
   sort?: SortOptions;
 }
 
-// Form Types
+/**
+ * Form data for creating a new stake position.
+ */
 export interface StakeFormData {
   amount: string;
   lockPeriod: number;
   autoCompound: boolean;
 }
 
+/**
+ * Form data for withdrawing from a stake position.
+ */
 export interface WithdrawFormData {
   positionId: string;
   amount: string;
   acceptPenalty: boolean;
 }
 
+/**
+ * Form data for claiming rewards.
+ */
 export interface ClaimFormData {
   positionIds: string[];
   reinvest: boolean;
 }
 
-// Event Types
+/**
+ * Event emitted when a staking action occurs.
+ */
 export interface StakeEvent {
   type: 'stake' | 'unstake' | 'claim' | 'tier-change';
   positionId: string;
@@ -237,9 +321,14 @@ export interface StakeEvent {
   txHash: string;
 }
 
-// Notification Types
+/**
+ * Severity levels for user notifications.
+ */
 export type NotificationType = 'info' | 'success' | 'warning' | 'error';
 
+/**
+ * User notification with optional action.
+ */
 export interface Notification {
   id: string;
   type: NotificationType;
@@ -254,7 +343,9 @@ export interface Notification {
   };
 }
 
-// Settings Types
+/**
+ * User preferences and application settings.
+ */
 export interface UserSettings {
   theme: 'light' | 'dark' | 'system';
   currency: 'USD' | 'EUR' | 'GBP' | 'BTC' | 'STX';
@@ -270,11 +361,19 @@ export interface UserSettings {
   gasPreference: 'slow' | 'normal' | 'fast';
 }
 
-// Utility Types
+/**
+ * Recursively makes all properties optional.
+ */
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
+/**
+ * Ensures specified keys are required.
+ */
 export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
+/**
+ * Makes specified keys optional.
+ */
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
