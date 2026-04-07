@@ -1,17 +1,38 @@
 'use client';
 
+/**
+ * @file Network hook for Aegis Vault
+ * 
+ * Provides a reusable hook for fetching and monitoring network state,
+ * including current block height and network type detection.
+ */
+
 import { useState, useEffect, useCallback } from 'react';
 import { getCurrentBlockHeight } from '@/lib/api';
 import { network } from '@/lib/stacks';
 
+/**
+ * Return type for the useNetwork hook.
+ */
 export interface UseNetworkReturn {
+  /** Current Stacks blockchain block height */
   blockHeight: number;
+  /** Whether the network info is currently being fetched */
   isLoading: boolean;
+  /** Error message if the fetch failed, or null */
   error: string | null;
+  /** The current network type (mainnet, testnet, or devnet) */
   networkType: 'mainnet' | 'testnet' | 'devnet';
+  /** Function to manually refetch the network info */
   refetch: () => Promise<void>;
 }
 
+/**
+ * Hook for fetching current network state.
+ * Automatically refreshes every 30 seconds.
+ * 
+ * @returns Object containing block height, loading state, error, network type, and refetch function
+ */
 export function useNetwork(): UseNetworkReturn {
   const [blockHeight, setBlockHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
