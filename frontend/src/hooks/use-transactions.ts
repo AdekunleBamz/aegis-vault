@@ -1,15 +1,37 @@
 'use client';
 
+/**
+ * @file Transactions hook for Aegis Vault
+ * 
+ * Provides a reusable hook for fetching and managing transaction history
+ * for a given wallet address, filtered for Aegis protocol interactions.
+ */
+
 import { useState, useEffect, useCallback } from 'react';
 import { getAccountTransactions, Transaction } from '@/lib/api';
 
+/**
+ * Return type for the useTransactions hook.
+ */
 export interface UseTransactionsReturn {
+  /** Array of transactions for the given address */
   transactions: Transaction[];
+  /** Whether the transactions are currently being fetched */
   isLoading: boolean;
+  /** Error message if the fetch failed, or null */
   error: string | null;
+  /** Function to manually refetch the transactions */
   refetch: () => Promise<void>;
 }
 
+/**
+ * Hook for fetching a user's transaction history.
+ * Automatically filters for Aegis protocol-related transactions.
+ * 
+ * @param address - The Stacks address to fetch transactions for
+ * @param limit - Maximum number of transactions to fetch (default: 20)
+ * @returns Object containing transactions, loading state, error, and refetch function
+ */
 export function useTransactions(
   address: string,
   limit = 20
