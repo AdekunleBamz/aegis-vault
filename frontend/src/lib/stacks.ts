@@ -1,3 +1,10 @@
+/**
+ * @file Stacks blockchain interaction utilities for Aegis Vault
+ * 
+ * Provides functions for executing smart contract transactions on the
+ * Stacks blockchain, including staking, withdrawals, and reward claims.
+ */
+
 import { STACKS_MAINNET } from '@stacks/network';
 // Note: If Vercel still fails, we may need to use new StacksMainnet() from a different subpath
 import {
@@ -16,8 +23,13 @@ import { CONTRACTS } from './constants';
 
 const network = STACKS_MAINNET;
 
+/**
+ * Result of a blockchain transaction submission.
+ */
 export interface TransactionResult {
+  /** The transaction ID hash */
   txId: string;
+  /** Whether the transaction was successfully submitted */
   success: boolean;
 }
 
@@ -65,7 +77,10 @@ export async function executeStake(
 }
 
 /**
- * Execute unstake/withdraw request
+ * Execute a withdrawal request from a staking position.
+ * 
+ * @param amount - Amount in microSTX to request withdrawal of.
+ * @returns Promise resolving to the transaction ID and success status.
  */
 export async function executeWithdrawRequest(
   amount: bigint
@@ -93,7 +108,9 @@ export async function executeWithdrawRequest(
 }
 
 /**
- * Execute withdraw completion
+ * Complete a pending withdrawal request.
+ * 
+ * @returns Promise resolving to the transaction ID and success status.
  */
 export async function executeWithdrawComplete(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
@@ -119,7 +136,9 @@ export async function executeWithdrawComplete(): Promise<TransactionResult> {
 }
 
 /**
- * Execute claim rewards
+ * Claim accumulated staking rewards.
+ * 
+ * @returns Promise resolving to the transaction ID and success status.
  */
 export async function executeClaimRewards(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
