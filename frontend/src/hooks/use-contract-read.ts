@@ -1,16 +1,39 @@
 'use client';
 
+/**
+ * @file Contract read hook for Aegis Vault
+ * 
+ * Provides a reusable hook for calling read-only functions on Clarity smart contracts.
+ * Handles loading states, error handling, and automatic refetching.
+ */
+
 import { useState, useEffect, useCallback } from 'react';
 import { callReadOnlyFunction } from '@/lib/api';
 import { hexToCV, cvToValue } from '@stacks/transactions';
 
+/**
+ * Return type for the useContractRead hook.
+ */
 export interface UseContractReadReturn<T> {
+  /** The data returned from the contract call, or null if not loaded */
   data: T | null;
+  /** Whether the contract call is currently in progress */
   isLoading: boolean;
+  /** Error message if the call failed, or null */
   error: string | null;
+  /** Function to manually refetch the data */
   refetch: () => Promise<void>;
 }
 
+/**
+ * Hook for calling read-only functions on Clarity smart contracts.
+ * 
+ * @param contractId - Full contract ID (address.contract-name)
+ * @param functionName - Name of the read-only function to call
+ * @param args - Function arguments as hex-encoded strings
+ * @param enabled - Whether to automatically execute the call
+ * @returns Object containing data, loading state, error, and refetch function
+ */
 export function useContractRead<T>(
   contractId: string,
   functionName: string,
