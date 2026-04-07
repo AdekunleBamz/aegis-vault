@@ -5,7 +5,9 @@
  * staking tiers, time constants, and display settings.
  */
 
-// Smart contract addresses for mainnet
+/**
+ * Smart contract addresses for mainnet deployment.
+ */
 export const CONTRACTS = {
   STAKING: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-staking-v2-15',
   TREASURY: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15',
@@ -14,7 +16,9 @@ export const CONTRACTS = {
   REWARDS: 'SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15',
 } as const;
 
-// Stacks API configuration and endpoints
+/**
+ * Stacks API configuration and endpoint paths.
+ */
 export const API = {
   STACKS_API: 'https://api.mainnet.hiro.so',
   ACCOUNTS_V2: '/v2/accounts',
@@ -22,7 +26,9 @@ export const API = {
   EXPLORER: 'https://explorer.hiro.so',
 } as const;
 
-// Reward tier configuration with multipliers and base APY
+/**
+ * Staking reward tier configurations with multipliers and base APY.
+ */
 export const TIERS = [
   { name: 'Bronze', minStake: 100, multiplier: 1.0, color: '#CD7F32', baseApy: 12 },
   { name: 'Silver', minStake: 1000, multiplier: 1.25, color: '#C0C0C0', baseApy: 15 },
@@ -30,16 +36,42 @@ export const TIERS = [
   { name: 'Platinum', minStake: 100000, multiplier: 2.0, color: '#E5E4E2', baseApy: 22 },
 ] as const;
 
-// Block time and scheduling constants
+/**
+ * Number of blocks produced per day (10-minute block time).
+ */
 export const BLOCKS_PER_DAY = 144;
+
+/**
+ * Number of blocks produced per year.
+ */
 export const BLOCKS_PER_YEAR = 52560;
+
+/**
+ * Average time between blocks in minutes.
+ */
 export const AVG_BLOCK_TIME_MINUTES = 10;
+
+/**
+ * Cooldown period in blocks before rewards can be claimed.
+ */
 export const COOLDOWN_BLOCKS = 144;
 
-// Token decimal precision for display formatting
+/**
+ * Decimal precision for STX token display formatting.
+ */
 export const STX_DECIMALS = 6;
+
+/**
+ * Decimal precision for AGS token display formatting.
+ */
 export const AGS_DECIMALS = 6;
 
-// Protocol staking limits (in STX)
+/**
+ * Minimum STX stake amount in STX.
+ */
 export const MIN_STX_STAKE_STX = 0.01;
+
+/**
+ * Maximum STX stake amount in STX.
+ */
 export const MAX_STX_STAKE_STX = 100000;
