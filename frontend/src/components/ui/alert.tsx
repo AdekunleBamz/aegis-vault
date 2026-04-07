@@ -1,7 +1,17 @@
 'use client';
 
+/**
+ * @file Alert components for Aegis Vault
+ * 
+ * Provides Alert and BannerAlert components for displaying
+ * contextual feedback messages to users.
+ */
+
 import React from 'react';
 
+/**
+ * Props for the Alert component.
+ */
 export interface AlertProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
   title?: string;
@@ -12,6 +22,9 @@ export interface AlertProps {
   className?: string;
 }
 
+/**
+ * Style configurations for each alert variant.
+ */
 const variantStyles = {
   info: {
     container: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
@@ -51,6 +64,12 @@ const variantStyles = {
   },
 };
 
+/**
+ * Alert component for displaying contextual feedback messages.
+ * 
+ * @param props - Component props
+ * @returns A styled alert message container
+ */
 export function Alert({
   variant = 'info',
   title,
@@ -97,7 +116,9 @@ export function Alert({
   );
 }
 
-// Banner Alert - full width, often at top of page
+/**
+ * Props for the BannerAlert component.
+ */
 export interface BannerAlertProps extends Omit<AlertProps, 'dismissible'> {
   action?: {
     label: string;
@@ -105,6 +126,12 @@ export interface BannerAlertProps extends Omit<AlertProps, 'dismissible'> {
   };
 }
 
+/**
+ * Full-width banner alert, typically displayed at the top of a page.
+ * 
+ * @param props - Component props
+ * @returns A full-width banner alert message
+ */
 export function BannerAlert({
   variant = 'info',
   children,
