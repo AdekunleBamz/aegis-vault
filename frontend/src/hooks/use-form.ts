@@ -1,29 +1,62 @@
 'use client';
 
+/**
+ * @file Form hooks for Aegis Vault
+ * 
+ * Provides reusable hooks for form management: multi-step forms,
+ * field management, form submission, and autosave functionality.
+ */
+
 import { useState, useCallback, useEffect, useRef } from 'react';
 
-// Step form state management
+/**
+ * State management for multi-step forms.
+ */
 export interface StepFormState {
+  /** The current step index (0-based) */
   currentStep: number;
+  /** Total number of steps in the form */
   totalSteps: number;
+  /** Data collected from all steps */
   data: Record<string, unknown>;
+  /** Array of completed step indices */
   completedSteps: number[];
+  /** Error messages keyed by step index */
   errors: Record<number, string>;
 }
 
+/**
+ * Return type for the useStepForm hook.
+ */
 export interface UseStepFormReturn extends StepFormState {
+  /** Whether the current step is the first step */
   isFirstStep: boolean;
+  /** Whether the current step is the last step */
   isLastStep: boolean;
+  /** Progress percentage (0-100) */
   progress: number;
+  /** Navigate to a specific step */
   goToStep: (step: number) => void;
+  /** Advance to the next step */
   nextStep: () => void;
+  /** Go back to the previous step */
   prevStep: () => void;
+  /** Set data for the current step */
   setStepData: (stepData: Record<string, unknown>) => void;
+  /** Set an error message for a step */
   setStepError: (step: number, error: string) => void;
+  /** Clear the error message for a step */
   clearStepError: (step: number) => void;
+  /** Reset the form to initial state */
   reset: () => void;
 }
 
+/**
+ * Hook for managing multi-step form state.
+ * 
+ * @param totalSteps - Total number of steps in the form
+ * @returns Object containing step state and navigation functions
+ */
 export function useStepForm(totalSteps: number): UseStepFormReturn {
   const [state, setState] = useState<StepFormState>({
     currentStep: 0,
@@ -115,30 +148,60 @@ export function useStepForm(totalSteps: number): UseStepFormReturn {
   };
 }
 
-// Form field management
+/**
+ * State for a single form field.
+ */
 export interface FieldState {
+  /** The current field value */
   value: string;
+  /** Validation error message, or null if valid */
   error: string | null;
+  /** Whether the field has been touched/blurred */
   touched: boolean;
+  /** Whether the field value has changed from initial */
   dirty: boolean;
 }
 
+/**
+ * Collection of form fields keyed by field name.
+ */
 export type FormFields<T extends string> = Record<T, FieldState>;
 
+/**
+ * Return type for the useFormFields hook.
+ */
 export interface UseFormFieldsReturn<T extends string> {
+  /** The form fields state */
   fields: FormFields<T>;
+  /** Set the value of a field */
   setFieldValue: (name: T, value: string) => void;
+  /** Mark a field as touched */
   setFieldTouched: (name: T) => void;
+  /** Set an error message for a field */
   setFieldError: (name: T, error: string | null) => void;
+  /** Validate a single field */
   validateField: (name: T) => boolean;
+  /** Validate all fields */
   validateAll: () => boolean;
+  /** Reset all fields to initial values */
   reset: () => void;
+  /** Get all field values as a plain object */
   getValues: () => Record<T, string>;
+  /** Whether any field has an error */
   hasErrors: boolean;
+  /** Whether any field has been modified */
   isDirty: boolean;
+  /** Whether any field has been touched */
   isTouched: boolean;
 }
 
+/**
+ * Hook for managing form field state with validation.
+ * 
+ * @param initialFields - Initial field values
+ * @param validators - Optional validation functions for each field
+ * @returns Object containing fields state and manipulation functions
+ */
 export function useFormFields<T extends string>(
   initialFields: Record<T, string>,
   validators?: Record<T, (value: string) => string | null>
@@ -231,23 +294,45 @@ export function useFormFields<T extends string>(
   };
 }
 
-// Form submission handling
+/**
+ * State for form submission tracking.
+ */
 export interface SubmitState {
+  /** Whether a submission is currently in progress */
   isSubmitting: boolean;
+  /** Whether the form has been successfully submitted */
   isSubmitted: boolean;
+  /** Number of successful submissions */
   submitCount: number;
+  /** Error message from the last failed submission */
   error: string | null;
 }
 
+/**
+ * Return type for the useFormSubmit hook.
+ */
 export interface UseFormSubmitReturn<T> {
+  /** Whether a submission is currently in progress */
   isSubmitting: boolean;
+  /** Whether the form has been successfully submitted */
   isSubmitted: boolean;
+  /** Number of successful submissions */
   submitCount: number;
+  /** Error message from the last failed submission */
   error: string | null;
+  /** Function to handle form submission */
   handleSubmit: (data: T) => Promise<void>;
+  /** Reset submission state */
   reset: () => void;
 }
 
+/**
+ * Hook for handling form submission with loading and error states.
+ * 
+ * @param onSubmit - The function to call with form data
+ * @param options - Optional callbacks for success/error and reset behavior
+ * @returns Object containing submission state and handleSubmit function
+ */
 export function useFormSubmit<T>(
   onSubmit: (data: T) => Promise<void>,
   options?: {
@@ -304,13 +389,26 @@ export function useFormSubmit<T>(
   return { ...state, handleSubmit, reset };
 }
 
-// Autosave hook
+/**
+ * Return type for the useAutosave hook.
+ */
 export interface UseAutosaveReturn {
+  /** Whether a save operation is currently in progress */
   isSaving: boolean;
+  /** Timestamp of the last successful save */
   lastSaved: Date | null;
+  /** Error message from the last failed save */
   error: string | null;
 }
 
+/**
+ * Hook for automatically saving data after a debounce delay.
+ * 
+ * @param data - The data to save
+ * @param saveFn - The function that performs the save operation
+ * @param delay - Debounce delay in milliseconds (default: 2000)
+ * @returns Object containing save state information
+ */
 export function useAutosave<T>(
   data: T,
   saveFn: (data: T) => Promise<void>,
