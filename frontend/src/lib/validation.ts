@@ -1,5 +1,9 @@
-// API Validation Utilities for Aegis Vault
-// Provides type-safe validation for API requests and responses
+/**
+ * @file Validation utilities for Aegis Vault
+ * 
+ * Provides Zod schemas and validation functions for API requests,
+ * form data, and blockchain data validation.
+ */
 
 import { z } from 'zod'
 
@@ -7,25 +11,35 @@ import { z } from 'zod'
 // Base Schemas
 // ============================================================================
 
-// Stacks address validation
+/**
+ * Validates a Stacks address format.
+ */
 export const stacksAddressSchema = z.string().regex(
   /^(S[PM]|ST)[A-Z0-9]{39,40}$/,
   'Invalid Stacks address format'
 )
 
-// Micro-STX amount (unsigned integer)
+/**
+ * Validates a micro-STX amount (unsigned integer).
+ */
 export const microStxSchema = z.number().int().nonnegative()
 
-// STX amount string
+/**
+ * Validates an STX amount string format.
+ */
 export const stxAmountSchema = z.string().regex(
   /^\d+(\.\d{1,6})?$/,
   'Invalid STX amount format'
 )
 
-// Block height
+/**
+ * Validates a block height number.
+ */
 export const blockHeightSchema = z.number().int().positive()
 
-// Transaction ID
+/**
+ * Validates a transaction ID format.
+ */
 export const txIdSchema = z.string().regex(
   /^0x[a-fA-F0-9]{64}$/,
   'Invalid transaction ID format'
@@ -35,7 +49,9 @@ export const txIdSchema = z.string().regex(
 // Staking Schemas
 // ============================================================================
 
-// Stake position
+/**
+ * Schema for validating a stake position.
+ */
 export const stakePositionSchema = z.object({
   staker: stacksAddressSchema,
   amount: microStxSchema,
@@ -49,7 +65,9 @@ export const stakePositionSchema = z.object({
 
 export type StakePosition = z.infer<typeof stakePositionSchema>
 
-// Stake request
+/**
+ * Schema for validating a stake request.
+ */
 export const stakeRequestSchema = z.object({
   amount: stxAmountSchema,
   lockPeriod: z.number().int().min(1).max(365),
@@ -57,7 +75,9 @@ export const stakeRequestSchema = z.object({
 
 export type StakeRequest = z.infer<typeof stakeRequestSchema>
 
-// Unstake request
+/**
+ * Schema for validating an unstake request.
+ */
 export const unstakeRequestSchema = z.object({
   positionId: z.number().int().nonnegative(),
 })
@@ -68,7 +88,9 @@ export type UnstakeRequest = z.infer<typeof unstakeRequestSchema>
 // Rewards Schemas
 // ============================================================================
 
-// Reward info
+/**
+ * Schema for validating reward information.
+ */
 export const rewardInfoSchema = z.object({
   pendingRewards: microStxSchema,
   claimedRewards: microStxSchema,
@@ -79,7 +101,9 @@ export const rewardInfoSchema = z.object({
 
 export type RewardInfo = z.infer<typeof rewardInfoSchema>
 
-// Claim request
+/**
+ * Schema for validating a claim request.
+ */
 export const claimRequestSchema = z.object({
   positionIds: z.array(z.number().int().nonnegative()).optional(),
 })
@@ -90,7 +114,9 @@ export type ClaimRequest = z.infer<typeof claimRequestSchema>
 // Transaction Schemas
 // ============================================================================
 
-// Transaction status
+/**
+ * Schema for validating transaction status values.
+ */
 export const transactionStatusSchema = z.enum([
   'pending',
   'success',
@@ -98,7 +124,9 @@ export const transactionStatusSchema = z.enum([
   'aborted',
 ])
 
-// Transaction record
+/**
+ * Schema for validating a transaction record.
+ */
 export const transactionRecordSchema = z.object({
   txId: txIdSchema,
   type: z.enum(['stake', 'unstake', 'claim', 'transfer']),
@@ -117,6 +145,9 @@ export type TransactionRecord = z.infer<typeof transactionRecordSchema>
 // Protocol Stats Schemas
 // ============================================================================
 
+/**
+ * Schema for validating protocol statistics.
+ */
 export const protocolStatsSchema = z.object({
   totalStaked: microStxSchema,
   totalStakers: z.number().int().nonnegative(),
@@ -133,6 +164,9 @@ export type ProtocolStats = z.infer<typeof protocolStatsSchema>
 // User Stats Schemas
 // ============================================================================
 
+/**
+ * Schema for validating user statistics.
+ */
 export const userStatsSchema = z.object({
   address: stacksAddressSchema,
   stakedBalance: microStxSchema,
@@ -150,7 +184,9 @@ export type UserStats = z.infer<typeof userStatsSchema>
 // API Response Schemas
 // ============================================================================
 
-// Generic API response wrapper
+/**
+ * Generic API response wrapper schema factory.
+ */
 export const apiResponseSchema = <T extends z.ZodType>(dataSchema: T) =>
   z.object({
     success: z.boolean(),
@@ -163,7 +199,9 @@ export const apiResponseSchema = <T extends z.ZodType>(dataSchema: T) =>
     timestamp: z.number().int().positive(),
   })
 
-// Pagination schema
+/**
+ * Schema for validating pagination parameters.
+ */
 export const paginationSchema = z.object({
   page: z.number().int().positive().default(1),
   limit: z.number().int().min(1).max(100).default(20),
@@ -177,6 +215,9 @@ export type Pagination = z.infer<typeof paginationSchema>
 // Validation Helpers
 // ============================================================================
 
+/**
+ * Custom error class for validation failures.
+ */
 export class ValidationError extends Error {
   constructor(
     message: string,
@@ -187,7 +228,14 @@ export class ValidationError extends Error {
   }
 }
 
-// Validate with detailed error reporting
+/**
+ * Validates data against a schema, throwing on failure.
+ * 
+ * @param schema - The Zod schema to validate against
+ * @param data - The data to validate
+ * @returns The validated and typed data
+ * @throws ValidationError if validation fails
+ */
 export function validate<T>(
   schema: z.ZodSchema<T>,
   data: unknown
@@ -205,7 +253,13 @@ export function validate<T>(
   return result.data
 }
 
-// Safe validation (returns result instead of throwing)
+/**
+ * Safe validation that returns a result instead of throwing.
+ * 
+ * @param schema - The Zod schema to validate against
+ * @param data - The data to validate
+ * @returns Success with data or failure with ZodError
+ */
 export function safeValidate<T>(
   schema: z.ZodSchema<T>,
   data: unknown
@@ -219,28 +273,54 @@ export function safeValidate<T>(
   return { success: false, error: result.error }
 }
 
-// Validate Stacks address
+/**
+ * Checks if a string is a valid Stacks address.
+ * 
+ * @param address - The address string to validate
+ * @returns True if the address is valid
+ */
 export function isValidStacksAddress(address: string): boolean {
   return stacksAddressSchema.safeParse(address).success
 }
 
-// Validate transaction ID
+/**
+ * Checks if a string is a valid transaction ID.
+ * 
+ * @param txId - The transaction ID string to validate
+ * @returns True if the transaction ID is valid
+ */
 export function isValidTxId(txId: string): boolean {
   return txIdSchema.safeParse(txId).success
 }
 
-// Validate STX amount
+/**
+ * Checks if a string is a valid STX amount.
+ * 
+ * @param amount - The amount string to validate
+ * @returns True if the amount is valid
+ */
 export function isValidStxAmount(amount: string): boolean {
   return stxAmountSchema.safeParse(amount).success
 }
 
-// Parse and validate micro-STX to STX
+/**
+ * Converts micro-STX to STX with validation.
+ * 
+ * @param microStx - Amount in micro-STX
+ * @returns Amount in STX
+ */
 export function microStxToStx(microStx: number): number {
   const validated = microStxSchema.parse(microStx)
   return validated / 1_000_000
 }
 
-// Parse and validate STX to micro-STX
+/**
+ * Converts STX to micro-STX with validation.
+ * 
+ * @param stx - Amount in STX (number or string)
+ * @returns Amount in micro-STX
+ * @throws Error if the amount is invalid
+ */
 export function stxToMicroStx(stx: number | string): number {
   const amount = typeof stx === 'string' ? parseFloat(stx) : stx
   if (isNaN(amount) || amount < 0) {
@@ -253,6 +333,9 @@ export function stxToMicroStx(stx: number | string): number {
 // Form Validation Schemas
 // ============================================================================
 
+/**
+ * Schema for validating stake form input.
+ */
 export const stakeFormSchema = z.object({
   amount: z.string()
     .min(1, 'Amount is required')
@@ -268,6 +351,9 @@ export const stakeFormSchema = z.object({
 
 export type StakeFormData = z.infer<typeof stakeFormSchema>
 
+/**
+ * Schema for validating withdraw form input.
+ */
 export const withdrawFormSchema = z.object({
   positionId: z.number().int().nonnegative('Invalid position'),
   amount: z.string()
