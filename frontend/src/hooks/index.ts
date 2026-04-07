@@ -6,30 +6,49 @@
  * data fetching, form management, and UI utilities.
  */
 
-// Staking operations
+/**
+ * Staking operations - hooks for managing stake positions.
+ */
 export { useStaking } from './use-staking';
-// Withdrawal operations
+
+/**
+ * Withdrawal operations - hooks for managing withdrawals.
+ */
 export { useWithdraw } from './use-withdraw';
 
-// Rewards claiming
+/**
+ * Rewards claiming - hooks for claiming accumulated rewards.
+ */
 export { useRewards } from './use-rewards';
 
-// Contract interactions
+/**
+ * Contract interactions - hooks for reading from smart contracts.
+ */
 export { useContractRead } from './use-contract-read';
 
-// Balance queries
+/**
+ * Balance queries - hooks for fetching account balances.
+ */
 export { useBalances } from './use-balances';
 
-// Position management
+/**
+ * Position management - hooks for fetching staking positions.
+ */
 export { usePositions } from './use-positions';
 
-// Transaction history
+/**
+ * Transaction history - hooks for fetching transaction history.
+ */
 export { useTransactions } from './use-transactions';
 
-// Network status
+/**
+ * Network status - hooks for monitoring network state.
+ */
 export { useNetwork } from './use-network';
 
-// UI utility hooks
+/**
+ * UI utility hooks - hooks for common UI patterns.
+ */
 export {
   useLocalStorage,
   useDebounce,
@@ -45,7 +64,9 @@ export {
   useCopyToClipboard
 } from './use-utils';
 
-// Data fetching hooks
+/**
+ * Data fetching hooks - hooks for API calls and data loading.
+ */
 export {
   useFetch,
   useOptimistic,
@@ -53,7 +74,9 @@ export {
   useMutation
 } from './use-fetch';
 
-// Form management hooks
+/**
+ * Form management hooks - hooks for form state and submission.
+ */
 export {
   useStepForm,
   useFormFields,
