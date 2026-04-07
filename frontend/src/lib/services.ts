@@ -1,3 +1,10 @@
+/**
+ * @file Application services for Aegis Vault
+ * 
+ * Provides core services for storage, caching, event emission,
+ * logging, retry logic, and utility functions like debounce/throttle.
+ */
+
 // ============================================================================
 // STORAGE SERVICE
 // ============================================================================
@@ -5,7 +12,7 @@
 const STORAGE_PREFIX = 'aegis_vault_';
 
 /**
- * Storage service with type safety and prefixing
+ * Type-safe localStorage service with namespaced key prefixing.
  */
 export const storage = {
   /**
@@ -62,10 +69,9 @@ export const storage = {
   },
 };
 
-// ============================================================================
-// SESSION STORAGE SERVICE
-// ============================================================================
-
+/**
+ * Type-safe sessionStorage service with namespaced key prefixing.
+ */
 export const sessionStore = {
   get<T>(key: string, defaultValue?: T): T | null {
     if (typeof window === 'undefined') return defaultValue ?? null;
@@ -99,18 +105,23 @@ export const sessionStore = {
   },
 };
 
-// ============================================================================
-// CACHED FETCH SERVICE
-// ============================================================================
-
+/**
+ * Cache entry with TTL support.
+ */
 interface CacheEntry<T> {
+  /** The cached data */
   data: T;
+  /** Timestamp when the entry was created */
   timestamp: number;
+  /** TTL in milliseconds */
   expiry: number;
 }
 
 const memoryCache = new Map<string, CacheEntry<unknown>>();
 
+/**
+ * In-memory cache service with TTL support.
+ */
 export const cache = {
   /**
    * Gets a cached value
@@ -167,12 +178,14 @@ export const cache = {
   },
 };
 
-// ============================================================================
-// EVENT EMITTER SERVICE
-// ============================================================================
-
+/**
+ * Callback function type for event listeners.
+ */
 type EventCallback<T = unknown> = (data: T) => void;
 
+/**
+ * Simple event emitter for application-wide event handling.
+ */
 class EventEmitter {
   private events = new Map<string, Set<EventCallback>>();
 
@@ -213,7 +226,9 @@ class EventEmitter {
 
 export const events = new EventEmitter();
 
-// Event types for the app
+/**
+ * Application event type constants.
+ */
 export const AppEvents = {
   WALLET_CONNECTED: 'wallet:connected',
   WALLET_DISCONNECTED: 'wallet:disconnected',
@@ -228,15 +243,20 @@ export const AppEvents = {
   ERROR_OCCURRED: 'error:occurred',
 } as const;
 
-// ============================================================================
-// LOGGER SERVICE
-// ============================================================================
-
+/**
+ * Supported log levels.
+ */
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
+/**
+ * Logger configuration options.
+ */
 interface LoggerConfig {
+  /** Minimum log level to display */
   level: LogLevel;
+  /** Whether logging is enabled */
   enabled: boolean;
+  /** Prefix to add to all log messages */
   prefix: string;
 }
 
@@ -247,6 +267,9 @@ const LOG_LEVELS: Record<LogLevel, number> = {
   error: 3,
 };
 
+/**
+ * Structured logger with level filtering and timestamp formatting.
+ */
 class Logger {
   private config: LoggerConfig = {
     level: 'info',
@@ -318,17 +341,27 @@ class Logger {
 
 export const logger = new Logger();
 
-// ============================================================================
-// RETRY SERVICE
-// ============================================================================
-
+/**
+ * Options for retry configuration.
+ */
 interface RetryOptions {
+  /** Maximum number of retry attempts */
   maxAttempts?: number;
+  /** Initial delay between retries in milliseconds */
   delayMs?: number;
+  /** Backoff strategy: linear or exponential */
   backoff?: 'linear' | 'exponential';
+  /** Callback invoked on each retry attempt */
   onRetry?: (attempt: number, error: Error) => void;
 }
 
+/**
+ * Retries an async function with configurable backoff.
+ * 
+ * @param fn - The async function to retry
+ * @param options - Retry configuration options
+ * @returns The resolved value from the function
+ */
 export async function retry<T>(
   fn: () => Promise<T>,
   options: RetryOptions = {}
@@ -365,10 +398,13 @@ export async function retry<T>(
   throw lastError;
 }
 
-// ============================================================================
-// DEBOUNCE & THROTTLE
-// ============================================================================
-
+/**
+ * Debounces a function by delaying its execution.
+ * 
+ * @param fn - The function to debounce
+ * @param delayMs - Delay in milliseconds
+ * @returns Debounced function
+ */
 export function debounce<T extends (...args: unknown[]) => unknown>(
   fn: T,
   delayMs: number
@@ -381,6 +417,13 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   };
 }
 
+/**
+ * Throttles a function to limit execution frequency.
+ * 
+ * @param fn - The function to throttle
+ * @param limitMs - Minimum time between executions in milliseconds
+ * @returns Throttled function
+ */
 export function throttle<T extends (...args: unknown[]) => unknown>(
   fn: T,
   limitMs: number
