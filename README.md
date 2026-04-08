@@ -25,15 +25,15 @@ Aegis Vault is a high-performance, decentralized staking protocol engineered for
 
 ## Architecture
 
-The protocol consists of multiple smart contracts:
+The active protocol surface in this repo is centered around the current v3 vault stack:
 
 | Contract | Description |
 |----------|-------------|
-| `aegis-staking-v2-15` | Core staking logic, handles deposits and position tracking |
-| `aegis-withdrawals-v2-15` | Withdrawal processing with lock period enforcement |
-| `aegis-rewards-v2-15` | Reward calculation and distribution |
-| `aegis-treasury-v2-15` | Treasury for penalty fees and protocol revenue |
-| `aegis-token-v2-15` | AGS token (SIP-010 compliant) |
+| `aegis-vault-v3` | Consolidated staking, reward accrual, and withdrawal flow |
+| `aegis-token-v3` | AGS token implementation with mint control |
+| `aegis-treasury` | Treasury accounting for protocol-owned STX flows |
+
+Legacy `v2` and `v2-15` contracts remain in `contracts/` for reference and migration context.
 
 ## Tech Stack
 
@@ -58,11 +58,11 @@ The protocol consists of multiple smart contracts:
 ```
 aegis-vault/
 ├── contracts/           # Clarity smart contracts
-│   ├── aegis-staking-v2-15.clar
-│   ├── aegis-withdrawals-v2-15.clar
-│   ├── aegis-rewards-v2-15.clar
+│   ├── aegis-vault-v3.clar
+│   ├── aegis-token-v3.clar
 │   ├── aegis-treasury-v2-15.clar
-│   ├── aegis-token-v2-15.clar
+│   ├── aegis-vault-v2.clar
+│   ├── aegis-token-v2.clar
 │   └── traits/
 ├── frontend/            # Next.js frontend application
 │   └── src/
@@ -72,8 +72,7 @@ aegis-vault/
 │       ├── hooks/       # Custom hooks
 │       └── lib/         # Utilities and helpers
 ├── tests/               # Contract tests
-├── scripts/             # Automation scripts (private)
-├── deployments/         # Deployment plans
+├── notes/               # Operational notes and checklists
 └── settings/            # Network configurations
 ```
 
@@ -145,18 +144,16 @@ npm run frontend:start
 Contracts are deployed to Stacks mainnet at:
 
 ```
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-staking-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-withdrawals-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v2-15
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v3
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury
 ```
 
 ### Deployment Plans
 
 ```bash
-# Deploy to mainnet
-clarinet deployments apply -p deployments/v2-15-mainnet-plan.yaml --no-dashboard
+# Use Clarinet.toml as the source of truth for the active contract names
+clarinet check
 ```
 
 ## Usage
