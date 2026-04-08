@@ -1,23 +1,35 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { ClarityType } from "@stacks/transactions";
 import { initSimnet } from "@stacks/clarinet-sdk";
 import { Cl } from "../node_modules/@stacks/clarinet-sdk/node_modules/@stacks/transactions/dist/index.js";
 
-// Initialize simnet
-const simnet = await initSimnet();
-const accounts = simnet.getAccounts();
-const deployer = accounts.get("deployer")!;
-const wallet1 = accounts.get("wallet_1")!;
-const wallet2 = accounts.get("wallet_2")!;
+let simnet: Awaited<ReturnType<typeof initSimnet>>;
+let accounts: Map<string, string>;
+let deployer: string;
+let wallet1: string;
+let wallet2: string;
+let DEPLOYER_ADDR: string;
+let WALLET1_ADDR: string;
+let WALLET2_ADDR: string;
+let VAULT_CONTRACT: string;
+let TREASURY_CONTRACT: string;
+let TOKEN_CONTRACT: string;
 
-const DEPLOYER_ADDR = deployer;
-const WALLET1_ADDR = wallet1;
-const WALLET2_ADDR = wallet2;
+beforeEach(async () => {
+  simnet = await initSimnet();
+  accounts = simnet.getAccounts();
+  deployer = accounts.get("deployer")!;
+  wallet1 = accounts.get("wallet_1")!;
+  wallet2 = accounts.get("wallet_2")!;
 
-// Simnet needs the exact contract identifier
-const VAULT_CONTRACT = `${DEPLOYER_ADDR}.aegis-vault-v3`;
-const TREASURY_CONTRACT = `${DEPLOYER_ADDR}.aegis-treasury`;
-const TOKEN_CONTRACT = `${DEPLOYER_ADDR}.aegis-token-v3`;
+  DEPLOYER_ADDR = deployer;
+  WALLET1_ADDR = wallet1;
+  WALLET2_ADDR = wallet2;
+
+  VAULT_CONTRACT = `${DEPLOYER_ADDR}.aegis-vault-v3`;
+  TREASURY_CONTRACT = `${DEPLOYER_ADDR}.aegis-treasury`;
+  TOKEN_CONTRACT = `${DEPLOYER_ADDR}.aegis-token-v3`;
+}, 20000);
 
 // Helper to check ClarityType (handles string or number)
 function checkType(val: any, expected: ClarityType): boolean {
