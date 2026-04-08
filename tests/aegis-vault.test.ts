@@ -39,8 +39,8 @@ function checkType(val: any, expected: ClarityType): boolean {
     const typeMap: Record<number, string> = {
       [ClarityType.ResponseOk]: 'ok',
       [ClarityType.ResponseErr]: 'err',
-      [ClarityType.BoolTrue]: 'bool',
-      [ClarityType.BoolFalse]: 'bool',
+      [ClarityType.BoolTrue]: 'true',
+      [ClarityType.BoolFalse]: 'false',
       [ClarityType.Tuple]: 'tuple',
       [ClarityType.UInt]: 'uint',
       [ClarityType.Int]: 'int',
@@ -187,12 +187,12 @@ describe("Aegis Treasury", () => {
     const block = simnet.callPublicFn("aegis-treasury", "add-vault", [Cl.principal(VAULT_CONTRACT)], DEPLOYER_ADDR);
     expect(isOk(block.result)).toBe(true);
     const isVault = simnet.callReadOnlyFn("aegis-treasury", "is-vault", [Cl.principal(VAULT_CONTRACT)], DEPLOYER_ADDR);
-    expect(isVault.result.type).toBe(ClarityType.BoolTrue);
+    expect(checkType(isVault.result.type, ClarityType.BoolTrue)).toBe(true);
   });
 
   it("can view treasury stats", () => {
     const stats = simnet.callReadOnlyFn("aegis-treasury", "get-stats", [], DEPLOYER_ADDR);
-    expect(stats.result.type).toBe(ClarityType.Tuple);
+    expect(checkType(stats.result.type, ClarityType.Tuple)).toBe(true);
   });
 });
 
