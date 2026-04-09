@@ -172,6 +172,17 @@ describe("Aegis Token", () => {
     expect(isOk(uriResult.result)).toBe(true);
     expect((getOkValue(uriResult.result) as any).value.value).toBe("https://aegis.finance/token-updated.json");
   });
+
+  it("non-deployer cannot update the token uri", () => {
+    const block = simnet.callPublicFn(
+      "aegis-token-v3",
+      "set-token-uri",
+      [Cl.some(Cl.stringUtf8("https://aegis.finance/token-updated.json"))],
+      WALLET1_ADDR
+    );
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(7001n);
+  });
 });
 
 describe("Aegis Vault", () => {
