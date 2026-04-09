@@ -323,6 +323,15 @@ describe("Aegis Treasury", () => {
     expect((getErrValue(block.result) as any).value).toBe(8001n);
   });
 
+  it("admin can remove vault access", () => {
+    simnet.callPublicFn("aegis-treasury", "add-vault", [Cl.principal(VAULT_CONTRACT)], DEPLOYER_ADDR);
+    const block = simnet.callPublicFn("aegis-treasury", "remove-vault", [Cl.principal(VAULT_CONTRACT)], DEPLOYER_ADDR);
+    expect(isOk(block.result)).toBe(true);
+
+    const isVault = simnet.callReadOnlyFn("aegis-treasury", "is-vault", [Cl.principal(VAULT_CONTRACT)], DEPLOYER_ADDR);
+    expect(checkType(isVault.result.type, ClarityType.BoolFalse)).toBe(true);
+  });
+
   it("can view treasury stats", () => {
     const stats = simnet.callReadOnlyFn("aegis-treasury", "get-stats", [], DEPLOYER_ADDR);
     expect(checkType(stats.result.type, ClarityType.Tuple)).toBe(true);
