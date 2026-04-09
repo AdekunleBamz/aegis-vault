@@ -332,6 +332,12 @@ describe("Aegis Treasury", () => {
     expect(checkType(isVault.result.type, ClarityType.BoolFalse)).toBe(true);
   });
 
+  it("cannot receive zero STX into treasury", () => {
+    const block = simnet.callPublicFn("aegis-treasury", "receive-stx", [Cl.uint(0)], WALLET1_ADDR);
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(8003n);
+  });
+
   it("can view treasury stats", () => {
     const stats = simnet.callReadOnlyFn("aegis-treasury", "get-stats", [], DEPLOYER_ADDR);
     expect(checkType(stats.result.type, ClarityType.Tuple)).toBe(true);
