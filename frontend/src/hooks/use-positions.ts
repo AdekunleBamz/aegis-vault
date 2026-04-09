@@ -36,7 +36,12 @@ export function usePositions(address: string): UsePositionsReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchPositions = useCallback(async () => {
-    if (!address) return;
+    if (!address) {
+      setPosition(null);
+      setError(null);
+      setIsLoading(false);
+      return;
+    }
 
     setIsLoading(true);
     setError(null);
