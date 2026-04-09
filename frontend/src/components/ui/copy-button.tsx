@@ -30,6 +30,7 @@ export function CopyButton({
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
       className={`
         inline-flex items-center gap-2 px-3 py-1.5 
