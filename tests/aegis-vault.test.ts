@@ -141,6 +141,17 @@ describe("Aegis Token", () => {
     expect(isErr(block.result)).toBe(true);
     expect((getErrValue(block.result) as any).value).toBe(7001n);
   });
+
+  it("cannot transfer zero tokens", () => {
+    const block = simnet.callPublicFn(
+      "aegis-token-v3",
+      "transfer",
+      [Cl.uint(0), Cl.principal(WALLET1_ADDR), Cl.principal(WALLET2_ADDR), Cl.none()],
+      WALLET1_ADDR
+    );
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(7004n);
+  });
 });
 
 describe("Aegis Vault", () => {
