@@ -1,6 +1,7 @@
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
 import { RewardsCalculator } from '@/components/widgets/rewards-calculator';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { API } from '@/lib/constants';
 
 export default function StatsPage() {
   return (
@@ -79,7 +80,7 @@ export default function StatsPage() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Contract Addresses</h2>
               <a
-                href="https://explorer.stacks.co"
+                href={`${API.EXPLORER}/address/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3?chain=mainnet`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1"
@@ -101,16 +102,15 @@ export default function StatsPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-700/50">
                   {[
-                    { name: 'Staking', address: 'aegis-staking-v2-15', status: 'Active' },
-                    { name: 'Treasury', address: 'aegis-treasury-v2-15', status: 'Active' },
-                    { name: 'Rewards', address: 'aegis-rewards-v2-15', status: 'Active' },
-                    { name: 'Token (AGS)', address: 'aegis-token-v2-15', status: 'Active' },
+                    { name: 'Vault', address: 'aegis-vault-v3', status: 'Active' },
+                    { name: 'Treasury', address: 'aegis-treasury', status: 'Active' },
+                    { name: 'Token (AGS)', address: 'aegis-token-v3', status: 'Active' },
                   ].map((contract, i) => (
                     <tr key={i} className="hover:bg-gray-800/30 transition-colors">
                       <td className="p-4 text-white font-medium">{contract.name}</td>
                       <td className="p-4">
                         <a
-                          href={`https://explorer.stacks.co/txid/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.${contract.address}?chain=mainnet`}
+                          href={`${API.EXPLORER}/address/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.${contract.address}?chain=mainnet`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-400 hover:text-blue-300 font-mono text-sm flex items-center gap-2 group"
