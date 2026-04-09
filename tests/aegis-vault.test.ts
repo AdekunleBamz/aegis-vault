@@ -220,6 +220,12 @@ describe("Aegis Vault", () => {
     expect(isOk(s3.result)).toBe(true);
   });
 
+  it("cannot request withdrawal for a missing stake", () => {
+    const block = simnet.callPublicFn("aegis-vault-v3", "request-withdrawal", [Cl.uint(999)], WALLET1_ADDR);
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(1007n);
+  });
+
   it("can request withdrawal but not complete immediately", () => {
     simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(1000000), Cl.uint(3)], WALLET1_ADDR);
     const block = simnet.callPublicFn("aegis-vault-v3", "request-withdrawal", [Cl.uint(1)], WALLET1_ADDR);
