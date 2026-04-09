@@ -134,6 +134,13 @@ describe("Aegis Token", () => {
     expect(isErr(block.result)).toBe(true);
     expect((getErrValue(block.result) as any).value).toBe(7001n);
   });
+
+  it("non-deployer cannot remove minter", () => {
+    simnet.callPublicFn("aegis-token-v3", "add-minter", [Cl.principal(VAULT_CONTRACT)], DEPLOYER_ADDR);
+    const block = simnet.callPublicFn("aegis-token-v3", "remove-minter", [Cl.principal(VAULT_CONTRACT)], WALLET1_ADDR);
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(7001n);
+  });
 });
 
 describe("Aegis Vault", () => {
