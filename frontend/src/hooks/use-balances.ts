@@ -34,7 +34,12 @@ export function useBalances(address: string): UseBalancesReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchBalances = useCallback(async () => {
-    if (!address) return;
+    if (!address) {
+      setStxBalance(BigInt(0));
+      setAgsBalance(BigInt(0));
+      setError(null);
+      return;
+    }
 
     setIsLoading(true);
     setError(null);
@@ -50,6 +55,8 @@ export function useBalances(address: string): UseBalancesReturn {
 
       if (agsTokenKey) {
         setAgsBalance(BigInt(balance.fungible_tokens[agsTokenKey].balance));
+      } else {
+        setAgsBalance(BigInt(0));
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to fetch balances';
