@@ -13,7 +13,7 @@ import { useNetwork } from '@/hooks/use-network';
 import { formatSTX, formatBlockHeight } from '@/lib/format';
 import {
   BarChart3,
-  Users,
+  Clock3,
   Gift,
   Box,
   TrendingUp,
@@ -43,9 +43,9 @@ export function Stats() {
     {
       label: 'Cooldown Period',
       value: '24h',
-      unit: 'Users',
-      note: 'Wallets with live positions in the protocol',
-      icon: Users,
+      unit: 'Window',
+      note: 'Withdrawal requests unlock after one full day',
+      icon: Clock3,
       color: 'text-aegis-purple',
       glow: 'shadow-aegis-purple/10'
     },
