@@ -244,6 +244,19 @@ describe("Aegis Vault", () => {
     expect(isErr(complete.result)).toBe(true);
   });
 
+  it("can complete withdrawal after the cooldown window", () => {
+    simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(1000000), Cl.uint(3)], WALLET1_ADDR);
+    simnet.callPublicFn("aegis-vault-v3", "request-withdrawal", [Cl.uint(1)], WALLET1_ADDR);
+    simnet.mineEmptyBlocks(144);
+
+    const complete = simnet.callPublicFn("aegis-vault-v3", "complete-withdrawal", [], WALLET1_ADDR);
+    expect(isOk(complete.result)).toBe(true);
+
+    const again = simnet.callPublicFn("aegis-vault-v3", "request-withdrawal", [Cl.uint(1)], WALLET1_ADDR);
+    expect(isErr(again.result)).toBe(true);
+    expect((getErrValue(again.result) as any).value).toBe(1007n);
+  });
+
   it("can emergency withdraw", () => {
     simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(1000000), Cl.uint(3)], WALLET1_ADDR);
     const block = simnet.callPublicFn("aegis-vault-v3", "emergency-withdraw", [Cl.uint(1)], WALLET1_ADDR);
