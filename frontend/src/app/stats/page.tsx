@@ -49,8 +49,8 @@ export default function StatsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
               </div>
-              <p className="text-3xl font-bold text-white">v2.15</p>
-              <p className="text-gray-400 text-sm mt-2">Split architecture • Latest stable</p>
+              <p className="text-3xl font-bold text-white">v3</p>
+              <p className="text-gray-400 text-sm mt-2">Consolidated vault • Current mainnet stack</p>
             </div>
             <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl p-6 hover:border-purple-500/40 transition-colors group">
               <div className="flex items-center justify-between mb-3">
