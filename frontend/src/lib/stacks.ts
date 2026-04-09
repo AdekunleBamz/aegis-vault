@@ -114,7 +114,7 @@ export async function executeWithdrawRequest(
  */
 export async function executeWithdrawComplete(): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
-    const [contractAddr, contractName] = CONTRACTS.WITHDRAWALS.split('.');
+    const [contractAddr, contractName] = CONTRACTS.VAULT.split('.');
 
     const options: ContractCallOptions = {
       network,
