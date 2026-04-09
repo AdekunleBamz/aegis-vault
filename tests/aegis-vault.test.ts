@@ -263,6 +263,13 @@ describe("Aegis Vault", () => {
     expect(isOk(block.result)).toBe(true);
   });
 
+  it("cannot claim rewards before any rewards accrue", () => {
+    simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(1000000), Cl.uint(7)], WALLET1_ADDR);
+    const block = simnet.callPublicFn("aegis-vault-v3", "claim-rewards", [Cl.uint(1)], WALLET1_ADDR);
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(1002n);
+  });
+
   it("admin can set paused", () => {
     const p1 = simnet.callPublicFn("aegis-vault-v3", "set-paused", [Cl.bool(true)], DEPLOYER_ADDR);
     expect(isOk(p1.result)).toBe(true);
