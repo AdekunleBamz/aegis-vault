@@ -226,6 +226,16 @@ describe("Aegis Vault", () => {
     expect((getErrValue(block.result) as any).value).toBe(1007n);
   });
 
+  it("cannot request withdrawal twice before completing it", () => {
+    simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(1000000), Cl.uint(3)], WALLET1_ADDR);
+    const first = simnet.callPublicFn("aegis-vault-v3", "request-withdrawal", [Cl.uint(1)], WALLET1_ADDR);
+    expect(isOk(first.result)).toBe(true);
+
+    const second = simnet.callPublicFn("aegis-vault-v3", "request-withdrawal", [Cl.uint(1)], WALLET1_ADDR);
+    expect(isErr(second.result)).toBe(true);
+    expect((getErrValue(second.result) as any).value).toBe(1008n);
+  });
+
   it("can request withdrawal but not complete immediately", () => {
     simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(1000000), Cl.uint(3)], WALLET1_ADDR);
     const block = simnet.callPublicFn("aegis-vault-v3", "request-withdrawal", [Cl.uint(1)], WALLET1_ADDR);
