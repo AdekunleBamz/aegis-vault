@@ -133,6 +133,7 @@ export function Modal({
             </div>
             {showCloseButton && (
               <button
+                type="button"
                 onClick={onClose}
                 className="flex-shrink-0 p-2 text-gray-400 hover:text-white hover:bg-gray-700/50 
                   rounded-lg transition-all duration-150"
@@ -209,6 +210,7 @@ export function ConfirmModal({
       footer={
         <>
           <button
+            type="button"
             onClick={onClose}
             disabled={isLoading}
             className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white 
@@ -217,6 +219,7 @@ export function ConfirmModal({
             {cancelText}
           </button>
           <button
+            type="button"
             onClick={onConfirm}
             disabled={isLoading}
             className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors 
