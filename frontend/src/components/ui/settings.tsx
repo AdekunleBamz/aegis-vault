@@ -27,6 +27,7 @@ export function ThemeToggle({
       {themes.map((t) => (
         <button
           key={t.id}
+          type="button"
           onClick={() => onChange(t.id)}
           className={`px-3 py-1.5 rounded-md text-sm transition-all ${
             theme === t.id
@@ -63,6 +64,7 @@ export function LanguageSelector({
   return (
     <div className={`relative ${className}`}>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-300 hover:border-gray-600 transition-colors"
       >
@@ -83,6 +85,7 @@ export function LanguageSelector({
           {languages.map((lang) => (
             <button
               key={lang.code}
+              type="button"
               onClick={() => {
                 onChange(lang.code);
                 setIsOpen(false);
@@ -123,6 +126,7 @@ export function CurrencySelector({
   return (
     <div className={`relative ${className}`}>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-300 hover:border-gray-600 transition-colors"
       >
@@ -143,6 +147,7 @@ export function CurrencySelector({
           {currencies.map((curr) => (
             <button
               key={curr.code}
+              type="button"
               onClick={() => {
                 onChange(curr.code);
                 setIsOpen(false);
