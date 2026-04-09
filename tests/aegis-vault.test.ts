@@ -81,6 +81,12 @@ function getErrValue(result: any): any {
 // ============================================
 
 describe("Aegis Token", () => {
+  it("starts with zero token supply", () => {
+    const supplyResult = simnet.callReadOnlyFn("aegis-token-v3", "get-total-supply", [], DEPLOYER_ADDR);
+    expect(isOk(supplyResult.result)).toBe(true);
+    expect((getOkValue(supplyResult.result) as any).value).toBe(0n);
+  });
+
   it("should return correct token metadata", () => {
     const nameResult = simnet.callReadOnlyFn("aegis-token-v3", "get-name", [], DEPLOYER_ADDR);
     expect(isOk(nameResult.result)).toBe(true);
