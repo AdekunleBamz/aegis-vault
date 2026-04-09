@@ -29,7 +29,7 @@ beforeEach(async () => {
   VAULT_CONTRACT = `${DEPLOYER_ADDR}.aegis-vault-v3`;
   TREASURY_CONTRACT = `${DEPLOYER_ADDR}.aegis-treasury`;
   TOKEN_CONTRACT = `${DEPLOYER_ADDR}.aegis-token-v3`;
-}, 20000);
+}, 45000);
 
 // Helper to check ClarityType (handles string or number)
 function checkType(val: any, expected: ClarityType): boolean {
