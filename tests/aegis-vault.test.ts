@@ -152,6 +152,12 @@ describe("Aegis Token", () => {
     expect(isErr(block.result)).toBe(true);
     expect((getErrValue(block.result) as any).value).toBe(7004n);
   });
+
+  it("cannot burn zero tokens", () => {
+    const block = simnet.callPublicFn("aegis-token-v3", "burn", [Cl.uint(0)], WALLET1_ADDR);
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(7004n);
+  });
 });
 
 describe("Aegis Vault", () => {
