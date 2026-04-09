@@ -317,6 +317,12 @@ describe("Aegis Treasury", () => {
     expect(checkType(isVault.result.type, ClarityType.BoolTrue)).toBe(true);
   });
 
+  it("non-admin cannot add vault", () => {
+    const block = simnet.callPublicFn("aegis-treasury", "add-vault", [Cl.principal(VAULT_CONTRACT)], WALLET1_ADDR);
+    expect(isErr(block.result)).toBe(true);
+    expect((getErrValue(block.result) as any).value).toBe(8001n);
+  });
+
   it("can view treasury stats", () => {
     const stats = simnet.callReadOnlyFn("aegis-treasury", "get-stats", [], DEPLOYER_ADDR);
     expect(checkType(stats.result.type, ClarityType.Tuple)).toBe(true);
