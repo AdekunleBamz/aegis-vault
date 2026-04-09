@@ -288,6 +288,20 @@ describe("Aegis Vault", () => {
     expect(checkType(statsData["is-paused"].type ?? statsData["is-paused"], ClarityType.BoolTrue)).toBe(true);
   });
 
+  it("vault stats track unique stakers and stake ids", () => {
+    simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(1000000), Cl.uint(3)], WALLET1_ADDR);
+    simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(2000000), Cl.uint(7)], WALLET1_ADDR);
+    simnet.callPublicFn("aegis-vault-v3", "stake", [Cl.uint(3000000), Cl.uint(30)], WALLET2_ADDR);
+
+    const stats = simnet.callReadOnlyFn("aegis-vault-v3", "get-vault-stats", [], DEPLOYER_ADDR);
+    const result = stats.result as any;
+    const statsData = result.data || result.value;
+
+    expect(statsData["stake-counter"].value).toBe(3n);
+    expect(statsData["total-stakers"].value).toBe(2n);
+    expect(statsData["total-staked"].value).toBe(6000000n);
+  });
+
   it("non-admin cannot pause", () => {
     const block = simnet.callPublicFn("aegis-vault-v3", "set-paused", [Cl.bool(true)], WALLET1_ADDR);
     expect(isErr(block.result)).toBe(true);
