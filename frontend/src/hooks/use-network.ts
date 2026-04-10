@@ -52,7 +52,11 @@ export function useNetwork(): UseNetworkReturn {
 
     try {
       const height = await getCurrentBlockHeight();
-      setBlockHeight(height);
+      const parsedHeight = Number(height);
+      if (!Number.isFinite(parsedHeight) || parsedHeight < 0) {
+        throw new Error('Received an invalid block height');
+      }
+      setBlockHeight(Math.floor(parsedHeight));
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to fetch network info';
       setError(message);
