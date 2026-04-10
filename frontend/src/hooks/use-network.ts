@@ -39,7 +39,12 @@ export function useNetwork(): UseNetworkReturn {
   const [error, setError] = useState<string | null>(null);
 
   // Determine network type from the imported network object
-  const networkType = network.chainId === 2147483648 ? 'testnet' : 'mainnet';
+  const networkType =
+    network.chainId === 2147483648
+      ? 'testnet'
+      : network.chainId === 1
+        ? 'mainnet'
+        : 'devnet';
 
   const fetchNetworkInfo = useCallback(async () => {
     setIsLoading(true);
