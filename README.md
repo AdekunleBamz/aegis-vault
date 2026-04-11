@@ -31,7 +31,7 @@ The active protocol surface in this repo is centered around the current v3 vault
 |----------|-------------|
 | `aegis-vault-v3` | Consolidated staking, reward accrual, and withdrawal flow |
 | `aegis-token-v3` | AGS token implementation with mint control |
-| `aegis-treasury` | Treasury accounting for protocol-owned STX flows |
+| `aegis-treasury-v2-15` | Treasury accounting for protocol-owned STX flows |
 
 Legacy `v2` and `v2-15` contracts remain in `contracts/` for reference and migration context.
 
@@ -146,7 +146,7 @@ Contracts are deployed to Stacks mainnet at:
 ```
 SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3
 SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v3
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15
 ```
 
 ### Deployment Plans
