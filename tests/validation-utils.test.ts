@@ -1,0 +1,33 @@
+import { describe, expect, it } from 'vitest'
+import {
+  microStxToStx,
+  stxToMicroStx,
+  isValidStacksAddress,
+  isValidTxId,
+} from '../frontend/src/lib/validation'
+
+describe('validation utils', () => {
+  it('converts STX and micro-STX values in both directions', () => {
+    expect(stxToMicroStx('1.5')).toBe(1_500_000)
+    expect(stxToMicroStx(0.000001)).toBe(1)
+    expect(microStxToStx(2_500_000)).toBe(2.5)
+  })
+
+  it('rejects STX values with more than 6 decimal places', () => {
+    expect(() => stxToMicroStx('0.0000001')).toThrow('STX amount cannot have more than 6 decimal places')
+    expect(() => stxToMicroStx(1.0000007)).toThrow('STX amount cannot have more than 6 decimal places')
+  })
+
+  it('rejects malformed STX amount inputs', () => {
+    expect(() => stxToMicroStx('1abc')).toThrow('Invalid STX amount')
+    expect(() => stxToMicroStx('-1')).toThrow('Invalid STX amount')
+    expect(() => stxToMicroStx('')).toThrow('Invalid STX amount')
+  })
+
+  it('validates stacks addresses and tx ids', () => {
+    expect(isValidStacksAddress('SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT')).toBe(true)
+    expect(isValidStacksAddress('SP5K2RHMSB')).toBe(false)
+    expect(isValidTxId(`0x${'a'.repeat(64)}`)).toBe(true)
+    expect(isValidTxId('0x123')).toBe(false)
+  })
+})
