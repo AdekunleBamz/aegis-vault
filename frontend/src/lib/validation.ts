@@ -322,11 +322,32 @@ export function microStxToStx(microStx: number): number {
  * @throws Error if the amount is invalid
  */
 export function stxToMicroStx(stx: number | string): number {
-  const amount = typeof stx === 'string' ? parseFloat(stx) : stx
-  if (isNaN(amount) || amount < 0) {
+  const normalizedInput = typeof stx === 'string' ? stx.trim() : stx
+
+  if (typeof normalizedInput === 'string') {
+    if (!/^\d+(\.\d{1,6})?$/.test(normalizedInput)) {
+      throw new Error('Invalid STX amount')
+    }
+  }
+
+  const amount = typeof normalizedInput === 'string'
+    ? Number(normalizedInput)
+    : normalizedInput
+
+  if (!Number.isFinite(amount) || amount < 0) {
     throw new Error('Invalid STX amount')
   }
-  return Math.floor(amount * 1_000_000)
+
+  const microStx = amount * 1_000_000
+  if (!Number.isFinite(microStx)) {
+    throw new Error('Invalid STX amount')
+  }
+
+  if (Math.abs(microStx - Math.round(microStx)) > 0.000001) {
+    throw new Error('STX amount cannot have more than 6 decimal places')
+  }
+
+  return Math.round(microStx)
 }
 
 // ============================================================================
