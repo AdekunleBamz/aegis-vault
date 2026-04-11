@@ -280,7 +280,8 @@ export function safeValidate<T>(
  * @returns True if the address is valid
  */
 export function isValidStacksAddress(address: string): boolean {
-  return stacksAddressSchema.safeParse(address).success
+  const normalized = typeof address === 'string' ? address.trim() : ''
+  return stacksAddressSchema.safeParse(normalized).success
 }
 
 /**
@@ -290,7 +291,8 @@ export function isValidStacksAddress(address: string): boolean {
  * @returns True if the transaction ID is valid
  */
 export function isValidTxId(txId: string): boolean {
-  return txIdSchema.safeParse(txId).success
+  const normalized = typeof txId === 'string' ? txId.trim() : ''
+  return txIdSchema.safeParse(normalized).success
 }
 
 /**
@@ -300,7 +302,8 @@ export function isValidTxId(txId: string): boolean {
  * @returns True if the amount is valid
  */
 export function isValidStxAmount(amount: string): boolean {
-  return stxAmountSchema.safeParse(amount).success
+  const normalized = typeof amount === 'string' ? amount.trim() : ''
+  return stxAmountSchema.safeParse(normalized).success
 }
 
 /**
