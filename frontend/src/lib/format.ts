@@ -106,6 +106,7 @@ export function truncateAddress(address: string, chars = 4): string {
  * @example formatPercent(0) // "0.00%"
  */
 export function formatPercent(value: number): string {
+  if (!Number.isFinite(value)) return '0.00%';
   return `${value.toFixed(2)}%`;
 }
 
