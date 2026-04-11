@@ -11,9 +11,11 @@
     "frontend:lint": "npm --prefix frontend run lint",
     "lint:frontend": "npm run frontend:lint",
     "test": "vitest run",
+    "test:validation": "vitest run tests/validation-utils.test.ts",
     "test:watch": "vitest",
     "contracts:check": "clarinet check",
     "check": "clarinet check",
+    "check:fast": "npm run contracts:check && npm run test:validation",
     "contracts:test": "clarinet test",
     "console": "clarinet console",
     "fmt": "clarinet format"
