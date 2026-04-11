@@ -117,6 +117,12 @@ npm run contracts:test
 # Run JavaScript/TypeScript tests with Vitest
 npm test
 
+# Run focused validation utility tests
+npm run test:validation
+
+# Run a fast pre-push check bundle
+npm run check:fast
+
 # Console for local testing
 npm run console
 ```
