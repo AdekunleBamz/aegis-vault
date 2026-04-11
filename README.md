@@ -118,7 +118,7 @@ npm run contracts:test
 npm test
 
 # Console for local testing
-clarinet console
+npm run console
 ```
 
 ### Frontend
