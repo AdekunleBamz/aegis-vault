@@ -36,6 +36,6 @@ export function isMainnetAddress(address: string): boolean {
  * @returns Tuple of [address, contractName]
  */
 export function splitContractId(contractId: string): [string, string] {
-  const parts = contractId.split('.');
-  return [parts[0], parts[1]];
+  const [address = '', ...nameParts] = contractId.split('.');
+  return [address, nameParts.join('.')];
 }
