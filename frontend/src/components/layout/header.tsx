@@ -132,7 +132,6 @@ export function Header() {
     { href: '/governance', label: 'Governance', icon: Vote },
     { href: '/security', label: 'Transparency', icon: ShieldCheck },
     { href: '/stats', label: 'Protocol Stats', icon: BarChart3 },
-    { href: '/stats', label: 'Stats', icon: BarChart3 },
     { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
   ];
 
