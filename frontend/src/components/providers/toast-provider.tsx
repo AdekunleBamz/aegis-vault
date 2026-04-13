@@ -71,6 +71,7 @@ function ToastItem({ toast, onRemove }: { toast: Toast; onRemove: () => void }) 
                 )}
             </div>
             <button
+                type="button"
                 onClick={onRemove}
                 className="mt-0.5 opacity-50 hover:opacity-100 transition-opacity"
             >
