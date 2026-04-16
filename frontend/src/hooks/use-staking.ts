@@ -37,6 +37,10 @@ export function useStaking(senderAddress: string): UseStakingReturn {
         throw new Error('Wallet not connected');
       }
 
+      if (amount <= 0) {
+        throw new Error('Stake amount must be greater than zero');
+      }
+
       setIsLoading(true);
       setError(null);
 
