@@ -41,7 +41,7 @@ export function useContractRead<T>(
   enabled = true
 ): UseContractReadReturn<T> {
   const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(enabled);
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
