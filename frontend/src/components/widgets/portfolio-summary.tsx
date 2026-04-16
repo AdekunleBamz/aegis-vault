@@ -28,9 +28,9 @@ export function PortfolioSummary() {
   const { position, isLoading: positionLoading } = usePositions(address || '');
 
   const isLoading = balancesLoading || positionLoading;
-  const stakedAmount = position?.amountStaked || BigInt(0);
+  const stakedAmount = position?.amountStaked ?? 0n;
   const tier = determineTier(stakedAmount);
-  const pendingRewards = position?.pendingRewards || BigInt(0);
+  const pendingRewards = position?.pendingRewards ?? 0n;
 
   // Calculate portfolio metrics
   const metrics = useMemo(() => {
