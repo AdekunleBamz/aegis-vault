@@ -14,7 +14,6 @@ import {
 } from '@stacks/connect';
 import {
   uintCV,
-  
   PostConditionMode,
   FungibleConditionCode,
   makeStandardSTXPostCondition,
