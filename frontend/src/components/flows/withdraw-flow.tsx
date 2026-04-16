@@ -63,7 +63,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
   const [step, setStep] = useState<'input' | 'confirm' | 'pending' | 'success'>('input');
   const [txId, setTxId] = useState<string | null>(null);
 
-  const stakedAmount = position?.amountStaked || BigInt(0);
+  const stakedAmount = position?.amountStaked ?? 0n;
   const maxWithdrawable = Number(stakedAmount) / 1e6;
   const numAmount = parseFloat(amount) || 0;
   const exceedsStake = numAmount > maxWithdrawable;
