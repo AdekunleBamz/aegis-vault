@@ -211,6 +211,23 @@ export const paginationSchema = z.object({
 
 export type Pagination = z.infer<typeof paginationSchema>
 
+/**
+ * Schema for validating lock period values (days).
+ * Accepts only the three supported lock durations: 3, 7, or 30 days.
+ */
+export const lockPeriodDaysSchema = z.union([
+  z.literal(3),
+  z.literal(7),
+  z.literal(30),
+])
+
+export type LockPeriodDays = z.infer<typeof lockPeriodDaysSchema>
+
+/**
+ * Schema for a positive integer (e.g. stake IDs, block counts).
+ */
+export const positiveIntSchema = z.number().int().positive()
+
 // ============================================================================
 // Validation Helpers
 // ============================================================================
