@@ -150,6 +150,15 @@ export function getErrorMessage(error: unknown): string {
 }
 
 /**
+ * Returns true if the error represents a recoverable condition
+ * (i.e. the user can retry without taking corrective action).
+ */
+export function isRecoverable(error: unknown): boolean {
+  if (error instanceof AegisError) return error.recoverable;
+  return true;
+}
+
+/**
  * Parses transaction error from Stacks
  */
 export function parseTransactionError(error: unknown): AegisError {
