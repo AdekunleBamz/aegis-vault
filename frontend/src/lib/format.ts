@@ -91,6 +91,17 @@ export function toMicroSTX(stx: number): bigint {
 }
 
 /**
+ * Convert AGS to microAGS.
+ *
+ * @param ags - Amount in AGS (e.g., 2.5 for 2.5 AGS)
+ * @returns Amount in microAGS as bigint
+ * @example toMicroAGS(1) // 1000000n
+ */
+export function toMicroAGS(ags: number): bigint {
+  return BigInt(Math.floor(ags * Math.pow(10, AGS_DECIMALS)));
+}
+
+/**
  * Truncate a Stacks address for display.
  * 
  * Displays the first and last few characters of an address with an ellipsis
