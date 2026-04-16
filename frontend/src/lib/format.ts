@@ -64,6 +64,18 @@ export function safeFormatAGS(value: string | number | bigint | null | undefined
 }
 
 /**
+ * Safe version of formatSTX that handles null, undefined, or invalid values gracefully.
+ */
+export function safeFormatSTX(value: string | number | bigint | null | undefined): string {
+  if (value === null || value === undefined) return '0.00';
+  try {
+    return formatSTX(value);
+  } catch {
+    return '0.00';
+  }
+}
+
+/**
  * Convert STX to microSTX.
  * 
  * This is the inverse of formatSTX. Takes a human-readable STX amount
