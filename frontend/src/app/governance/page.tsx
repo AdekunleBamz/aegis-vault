@@ -50,7 +50,9 @@ export default function GovernancePage() {
 
     const filteredProposals = proposals.filter(p =>
         (filter === 'All' || p.status === filter) &&
-        (p.title.toLowerCase().includes(search.toLowerCase()) || p.id.toLowerCase().includes(search.toLowerCase()))
+        (p.title.toLowerCase().includes(search.toLowerCase()) ||
+         p.id.toLowerCase().includes(search.toLowerCase()) ||
+         p.description.toLowerCase().includes(search.toLowerCase()))
     );
 
     return (
