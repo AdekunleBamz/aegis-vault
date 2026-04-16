@@ -33,7 +33,7 @@ export function Stats() {
   const stats = [
     {
       label: 'Total Value Locked',
-      value: formatSTX(BigInt(1500000000000)),
+      value: formatSTX(1500000000000n),
       unit: 'STX',
       note: 'Capital actively securing vault strategies',
       icon: BarChart3,
@@ -51,7 +51,7 @@ export function Stats() {
     },
     {
       label: 'Rewards Distributed',
-      value: formatSTX(BigInt(50000000000)),
+      value: formatSTX(50000000000n),
       unit: 'AGS',
       note: 'Governance incentives paid to participants',
       icon: Gift,
