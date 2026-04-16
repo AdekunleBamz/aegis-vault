@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
 import { AppProviders } from '@/components/providers';
@@ -41,6 +41,12 @@ export const metadata: Metadata = {
   other: {
     'talentapp:project_verification': '36aec8876745b73a508e63b8c62b758a9b3cbf52bf469e2db41d5c2a1a65294eab81b60bd435d913b20894a9a09e86672a56efc5f7ad3da8df4f45caf9523e2e',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#0A0A0B',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
