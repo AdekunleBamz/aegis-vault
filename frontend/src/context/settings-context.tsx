@@ -159,8 +159,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
       }
       setSettings(validated);
       return true;
-    } catch (e) {
-      console.error('Failed to import settings:', e);
+    } catch (err) {
+      console.error('Failed to import settings:', err);
       return false;
     }
   }, []);
