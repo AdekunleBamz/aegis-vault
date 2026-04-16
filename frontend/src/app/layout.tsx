@@ -66,9 +66,7 @@ export default function RootLayout({
           </a>
           <Header />
           <NetworkWarning />
-          <main id="main-content" className="flex-1 pt-20" aria-label="Main protocol dashboard">
-            {children}
-          </main>
+          <main id="main-content" className="flex-1 pt-20" aria-label="Main content">{children}</main>
           <Footer />
         </AppProviders>
         <PerformanceMonitor />
