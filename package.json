@@ -18,7 +18,8 @@
     "check:fast": "npm run contracts:check && npm run test:validation",
     "contracts:test": "clarinet test",
     "console": "clarinet console",
-    "fmt": "clarinet format"
+    "fmt": "clarinet format",
+    "validate": "npm run check:fast && npm run lint:frontend"
   },
   "keywords": [
     "stacks",
