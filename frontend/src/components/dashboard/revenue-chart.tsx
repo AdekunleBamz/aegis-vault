@@ -92,7 +92,7 @@ export function RevenueChart() {
     );
 }
 
-function Plus(props: any) {
+function Plus(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
             {...props}
