@@ -102,8 +102,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
     if (typeof window === 'undefined' || !isLoaded) return;
     try {
       localStorage.setItem(storageKey, JSON.stringify(settings));
-    } catch (e) {
-      console.error('Failed to save settings:', e);
+    } catch (err) {
+      console.error('Failed to save settings:', err);
     }
   }, [settings, storageKey, isLoaded]);
 
