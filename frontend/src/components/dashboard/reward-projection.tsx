@@ -30,7 +30,7 @@ export function RewardProjection() {
 
     const nextTier = tierIndex < TIERS.length - 1 ? TIERS[tierIndex + 1] : null;
     const nextTierMin = nextTier ? nextTier.minStake : 0;
-    const nextTierApy = nextTier ? calculateAPY(BigInt(nextTier.minStake) * BigInt(1000000), tierIndex + 1) : 0;
+    const nextTierApy = nextTier ? calculateAPY(BigInt(nextTier.minStake) * 1000000n, tierIndex + 1) : 0;
 
     return (
         <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-3xl p-8 md:p-10 relative overflow-hidden group">
