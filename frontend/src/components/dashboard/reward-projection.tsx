@@ -67,7 +67,7 @@ export function RewardProjection() {
                                 max="50000"
                                 step="100"
                                 value={projectedAmount}
-                                onChange={(e) => setProjectedAmount(parseInt(e.target.value))}
+                                onChange={(e) => setProjectedAmount(parseInt(e.target.value, 10))}
                                 className="w-full h-2 bg-muted rounded-full appearance-none cursor-pointer accent-aegis-blue"
                                 aria-label="Estimated stake amount in STX"
                             />
