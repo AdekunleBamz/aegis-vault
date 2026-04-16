@@ -37,7 +37,7 @@ export function useTransactions(
   limit = 20
 ): UseTransactionsReturn {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(!!address);
   const [error, setError] = useState<string | null>(null);
 
   const fetchTransactions = useCallback(async () => {
