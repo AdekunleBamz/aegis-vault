@@ -86,3 +86,13 @@ export const MIN_LOCK_PERIOD_DAYS = 3;
  * Maximum lock period in days.
  */
 export const MAX_LOCK_PERIOD_DAYS = 30;
+
+/**
+ * Interval in milliseconds for polling on-chain data in the UI.
+ */
+export const REFRESH_INTERVAL_MS = 30000;
+
+/**
+ * Time in milliseconds after which cached data is considered stale.
+ */
+export const STALE_AFTER_MS = 60000;
