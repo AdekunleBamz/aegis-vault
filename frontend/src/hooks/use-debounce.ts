@@ -1,8 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 
 /**
- * PR #2: Input debouncing for better performance
- * Hook for debouncing values with customizable delay
+ * Hook for debouncing values with customizable delay.
+ * Useful for search inputs and any field that triggers expensive operations.
  */
 export function useDebounce<T>(value: T, delayMs: number = 300): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
