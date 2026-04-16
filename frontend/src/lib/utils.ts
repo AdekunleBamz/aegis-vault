@@ -40,3 +40,27 @@ export function splitContractId(contractId: string): [string, string] {
   const [address = '', ...nameParts] = contractId.split('.');
   return [address, nameParts.join('.')];
 }
+
+/**
+ * Checks if a Stacks address is a testnet address.
+ * Testnet addresses start with 'ST'.
+ *
+ * @param address - The Stacks address to check
+ * @returns True if the address is a testnet address
+ */
+export function isTestnetAddress(address: string): boolean {
+  const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
+  return normalized.startsWith('ST');
+}
+
+/**
+ * Validates that a string is a well-formed contract ID (address.name).
+ *
+ * @param contractId - The string to validate
+ * @returns True if the string contains exactly one dot separating two non-empty parts
+ */
+export function isValidContractId(contractId: string): boolean {
+  if (typeof contractId !== 'string') return false;
+  const parts = contractId.split('.');
+  return parts.length === 2 && parts[0].length > 0 && parts[1].length > 0;
+}
