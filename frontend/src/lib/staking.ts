@@ -137,3 +137,13 @@ export function determineTier(stakeAmount: bigint): number {
 export function getTierByName(name: string): (typeof TIERS)[number] {
   return TIERS.find(t => t.name === name) || TIERS[0];
 }
+
+/**
+ * Convert microSTX stake amount to a human-readable STX value.
+ *
+ * @param microStx - Amount in microSTX
+ * @returns Amount in STX as a floating-point number
+ */
+export function stakeAmountToSTX(microStx: bigint): number {
+  return Number(microStx) / 1e6;
+}
