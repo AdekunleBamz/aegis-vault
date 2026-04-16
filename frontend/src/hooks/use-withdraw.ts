@@ -40,6 +40,10 @@ export function useWithdraw(): UseWithdrawReturn {
 
   const requestWithdraw = useCallback(
     async (amount: number): Promise<TransactionResult> => {
+      if (amount <= 0) {
+        throw new Error('Withdrawal amount must be greater than zero');
+      }
+
       setIsLoading(true);
       setError(null);
 
