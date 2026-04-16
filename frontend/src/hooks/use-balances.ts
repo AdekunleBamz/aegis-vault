@@ -28,8 +28,8 @@ export interface UseBalancesReturn {
  * @returns Object containing balances, loading state, error, and refetch function.
  */
 export function useBalances(address: string): UseBalancesReturn {
-  const [stxBalance, setStxBalance] = useState<bigint>(BigInt(0));
-  const [agsBalance, setAgsBalance] = useState<bigint>(BigInt(0));
+  const [stxBalance, setStxBalance] = useState<bigint>(0n);
+  const [agsBalance, setAgsBalance] = useState<bigint>(0n);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
