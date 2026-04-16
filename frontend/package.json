@@ -13,7 +13,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx}\"",
+    "validate": "npm run lint && npm run build"
   },
   "dependencies": {
     "@stacks/connect": "^8.2.4",
