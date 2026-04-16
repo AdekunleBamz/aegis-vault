@@ -76,3 +76,13 @@ export const MIN_STX_STAKE_STX = 0.01;
  * Maximum STX stake amount in STX.
  */
 export const MAX_STX_STAKE_STX = 100000;
+
+/**
+ * Minimum lock period in days.
+ */
+export const MIN_LOCK_PERIOD_DAYS = 3;
+
+/**
+ * Maximum lock period in days.
+ */
+export const MAX_LOCK_PERIOD_DAYS = 30;
