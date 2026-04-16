@@ -9,8 +9,8 @@ export interface UseFormFocusReturn {
 }
 
 /**
- * PR #9: Auto-focus management in forms
- * Hook for managing form field focus order
+ * Hook for managing form field focus order.
+ * Tracks registered input elements and supports sequential focus navigation.
  */
 export function useFormFocus(): UseFormFocusReturn {
   const [focusedField, setFocusedField] = React.useState<string | null>(null);
