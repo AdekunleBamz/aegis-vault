@@ -1,8 +1,8 @@
 import React from 'react';
 
 /**
- * PR #10: Form submission state persistence
- * Hook for managing form state and auto-save
+ * Hook for managing form state with localStorage auto-save.
+ * Persists field values across page reloads using a namespaced key.
  */
 export type FormState = Record<string, unknown>;
 
