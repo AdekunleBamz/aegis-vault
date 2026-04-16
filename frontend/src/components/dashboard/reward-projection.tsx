@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 export function RewardProjection() {
     const [projectedAmount, setProjectedAmount] = useState(1000);
 
-    const microAmount = BigInt(projectedAmount) * BigInt(1000000);
+    const microAmount = BigInt(projectedAmount) * 1000000n;
     const tierIndex = determineTier(microAmount);
     const tier = TIERS[tierIndex];
     const apy = calculateAPY(microAmount, tierIndex);
