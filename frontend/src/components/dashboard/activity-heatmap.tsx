@@ -11,7 +11,7 @@ export function ActivityHeatmap() {
     const days = 7;
     const levels = [0, 1, 2, 3, 4]; // Activity intensity levels
 
-    const generateData = () => {
+    const generateData = React.useMemo(() => {
         return Array.from({ length: weeks * days }, () => {
             // Randomly weight towards lower activity to look realistic
             const r = Math.random();
@@ -21,9 +21,10 @@ export function ActivityHeatmap() {
             if (r > 0.3) return 1;
             return 0;
         });
-    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    const data = generateData();
+    const data = generateData;
 
     const getLevelColor = (level: number) => {
         switch (level) {
