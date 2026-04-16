@@ -71,8 +71,8 @@ export function NotificationProvider({
         const parsed = JSON.parse(stored) as Notification[];
         setNotifications(parsed.map(n => ({ ...n, timestamp: new Date(n.timestamp) })));
       }
-    } catch (e) {
-      console.error('Failed to load notifications:', e);
+    } catch (err) {
+      console.error('Failed to load notifications:', err);
     }
   }, [persistKey]);
 
@@ -81,8 +81,8 @@ export function NotificationProvider({
     if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(persistKey, JSON.stringify(notifications));
-    } catch (e) {
-      console.error('Failed to save notifications:', e);
+    } catch (err) {
+      console.error('Failed to save notifications:', err);
     }
   }, [notifications, persistKey]);
 
