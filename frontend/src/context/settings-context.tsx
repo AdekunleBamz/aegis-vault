@@ -91,8 +91,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
         const parsed = JSON.parse(stored);
         setSettings(prev => ({ ...prev, ...parsed }));
       }
-    } catch (e) {
-      console.error('Failed to load settings:', e);
+    } catch (err) {
+      console.error('Failed to load settings:', err);
     }
     setIsLoaded(true);
   }, [storageKey]);
