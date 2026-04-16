@@ -81,6 +81,7 @@ aegis-vault/
 ### Prerequisites
 - Node.js 18+ (LTS recommended)
 - Clarinet 2.0+
+- Git 2.34+ (for better performance and security)
 
 ### Setup
 
@@ -94,6 +95,9 @@ npm ci
 
 # Install frontend dependencies
 npm --prefix frontend ci
+
+# Verify installation
+npm run check:fast
 ```
 
 ## Development
