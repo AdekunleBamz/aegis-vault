@@ -26,7 +26,7 @@ export function useToast(): UseToastReturn {
     }, []);
 
     const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
-        const id = Math.random().toString(36).substring(2, 9);
+        const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
         const newToast = { ...toast, id };
 
         setToasts((prev) => [...prev, newToast]);
