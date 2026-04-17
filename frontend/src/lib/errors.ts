@@ -79,6 +79,10 @@ export class AegisError extends Error {
     };
   }
 
+  override toString(): string {
+    return `AegisError(${this.code}): ${this.message}`;
+  }
+
   static fromError(error: unknown, defaultCode: ErrorCode = 'UNKNOWN_ERROR'): AegisError {
     if (error instanceof AegisError) return error;
     
