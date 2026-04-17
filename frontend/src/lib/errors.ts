@@ -168,7 +168,7 @@ export function isRecoverable(error: unknown): boolean {
 export function parseTransactionError(error: unknown): AegisError {
   const message = error instanceof Error ? error.message : String(error);
 
-  if (message.includes('rejected') || message.includes('cancelled')) {
+  if (message.includes('rejected') || message.includes('cancelled') || message.includes('canceled')) {
     return createError('TRANSACTION_REJECTED');
   }
   if (message.includes('insufficient')) {
