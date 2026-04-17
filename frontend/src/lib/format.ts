@@ -143,6 +143,7 @@ export function formatPercent(value: number): string {
  * @example formatBlockHeight(1234567) // "1,234,567"
  */
 export function formatBlockHeight(height: number): string {
+  if (!Number.isFinite(height)) return '0';
   return height.toLocaleString('en-US');
 }
 
