@@ -158,6 +158,7 @@ export function formatBlockHeight(height: number): string {
  * @example blocksToTime(144) // "1 day" (144 blocks * 10 min = 1440 min = 24 hr)
  */
 export function blocksToTime(blocks: number): string {
+  if (!Number.isFinite(blocks) || blocks <= 0) return '0 min';
   const minutes = blocks * AVG_BLOCK_TIME_MINUTES;
   
   if (minutes < 60) {
