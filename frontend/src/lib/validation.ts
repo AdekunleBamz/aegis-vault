@@ -27,7 +27,7 @@ export const microStxSchema = z.number().int().nonnegative()
 /**
  * Validates an STX amount string format.
  */
-export const stxAmountSchema = z.string().regex(
+export const stxAmountSchema = z.string().trim().regex(
   /^\d+(\.\d{1,6})?$/,
   'Invalid STX amount format'
 )
