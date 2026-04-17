@@ -64,3 +64,15 @@ export function isValidContractId(contractId: string): boolean {
   const parts = contractId.split('.');
   return parts.length === 2 && parts[0].length > 0 && parts[1].length > 0;
 }
+
+/**
+ * Checks if a Stacks address is a devnet/mocknet address.
+ * Devnet addresses start with 'SN'.
+ *
+ * @param address - The Stacks address to check
+ * @returns True if the address is a devnet address
+ */
+export function isDevnetAddress(address: string): boolean {
+  const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
+  return normalized.startsWith('SN');
+}
