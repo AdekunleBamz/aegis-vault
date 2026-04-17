@@ -43,6 +43,11 @@ export const TIERS = [
 export const BLOCKS_PER_DAY = 144;
 
 /**
+ * Number of blocks produced per week.
+ */
+export const BLOCKS_PER_WEEK = 1008;
+
+/**
  * Number of blocks produced per year.
  */
 export const BLOCKS_PER_YEAR = 52560;
