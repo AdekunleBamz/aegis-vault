@@ -5,23 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Download, FileText, FileSpreadsheet, FileCode, CheckCircle2, Loader2, ArrowRight, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const EXPORT_FORMATS = [
+    { id: 'PDF', label: 'Financial Statement', icon: FileText, desc: 'Professional report for tax prep' },
+    { id: 'CSV', label: 'Raw Data (Excel)', icon: FileSpreadsheet, desc: 'Analysis ready spreadsheet' },
+    { id: 'JSON', label: 'Developer API', icon: FileCode, desc: 'Structured data for custom apps' }
+] as const;
+
 export function PortfolioExport() {
     const [status, setStatus] = useState<'idle' | 'generating' | 'success'>('idle');
     const [format, setFormat] = useState<'PDF' | 'CSV' | 'JSON'>('PDF');
-
-    const handleExport = () => {
-        setStatus('generating');
-        setTimeout(() => {
-            setStatus('success');
-            setTimeout(() => setStatus('idle'), 3000);
-        }, 2000);
-    };
-
-    const formats = [
-        { id: 'PDF', label: 'Financial Statement', icon: FileText, desc: 'Professional report for tax prep' },
-        { id: 'CSV', label: 'Raw Data (Excel)', icon: FileSpreadsheet, desc: 'Analysis ready spreadsheet' },
-        { id: 'JSON', label: 'Developer API', icon: FileCode, desc: 'Structured data for custom apps' }
-    ];
 
     return (
         <div className="p-8 lg:p-10 rounded-[40px] bg-foreground text-background shadow-2xl relative overflow-hidden group">
@@ -41,7 +33,7 @@ export function PortfolioExport() {
                 </div>
 
                 <div className="space-y-4 mb-10">
-                    {formats.map((f) => (
+                    {EXPORT_FORMATS.map((f) => (
                         <button
                             key={f.id}
                             onClick={() => setFormat(f.id as any)}
