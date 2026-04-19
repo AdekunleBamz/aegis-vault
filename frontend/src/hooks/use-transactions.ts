@@ -50,9 +50,7 @@ export function useTransactions(
       const txs = await getAccountTransactions(address, limit);
       // Filter for Aegis-related transactions
       const aegisTxs = txs.filter(
-        (tx) =>
-          tx.contract_call?.contract_id.includes('aegis-') ||
-          tx.contract_call?.contract_id.includes('aegis-vault')
+        (tx) => tx.contract_call?.contract_id.includes('aegis-')
       );
       setTransactions(aegisTxs);
     } catch (err) {
