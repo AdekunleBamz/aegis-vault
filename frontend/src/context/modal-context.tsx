@@ -6,7 +6,7 @@ import React, { createContext, useContext, useState, useCallback, useMemo, useRe
 // TYPES
 // =============================================================================
 
-export type ModalType = 
+export type ModalType =
   | 'wallet-connect'
   | 'transaction-confirm'
   | 'transaction-success'
@@ -34,14 +34,14 @@ interface ModalContextType {
   isOpen: boolean;
   currentModal: ModalConfig | null;
   modalHistory: ModalConfig[];
-  
+
   // Actions
   openModal: (config: ModalConfig) => void;
   closeModal: () => void;
   closeAllModals: () => void;
   replaceModal: (config: ModalConfig) => void;
   goBackModal: () => void;
-  
+
   // Confirmation dialog helper
   confirm: (options: {
     title: string;
@@ -50,7 +50,7 @@ interface ModalContextType {
     cancelLabel?: string;
     variant?: 'default' | 'danger';
   }) => Promise<boolean>;
-  
+
   // Alert dialog helper
   alert: (options: {
     title: string;
@@ -73,7 +73,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
   const [modalStack, setModalStack] = useState<ModalConfig[]>([]);
   const resolveRef = useRef<((value: boolean) => void) | null>(null);
 
-  const currentModal = useMemo(() => 
+  const currentModal = useMemo(() =>
     modalStack.length > 0 ? modalStack[modalStack.length - 1] : null,
     [modalStack]
   );
@@ -268,7 +268,7 @@ export interface UseWalletModalReturn {
 
 export function useWalletModal(): UseWalletModalReturn {
   const { openModal, closeModal, isOpen, currentModal } = useModal();
-  
+
   return {
     isOpen: isOpen && (currentModal?.type === 'wallet-connect'),
     open: () => openModal({ type: 'wallet-connect', title: 'Connect Wallet', size: 'md' }),
@@ -286,7 +286,7 @@ export interface UseTransactionModalReturn {
 
 export function useTransactionModal(): UseTransactionModalReturn {
   const { openModal, closeModal, replaceModal, isOpen, currentModal } = useModal();
-  
+
   return {
     isOpen: isOpen && currentModal?.type?.startsWith('transaction-'),
     showConfirm: (data: { type: string; amount: string; details?: Record<string, unknown> }) =>
@@ -322,14 +322,14 @@ export interface UseSettingsModalReturn {
 
 export function useSettingsModal(): UseSettingsModalReturn {
   const { openModal, closeModal, isOpen, currentModal } = useModal();
-  
+
   return {
     isOpen: isOpen && currentModal?.type === 'settings',
-    open: (tab?: string) => openModal({ 
-      type: 'settings', 
-      title: 'Settings', 
+    open: (tab?: string) => openModal({
+      type: 'settings',
+      title: 'Settings',
       data: { initialTab: tab },
-      size: 'lg' 
+      size: 'lg'
     }),
     close: closeModal,
   };
