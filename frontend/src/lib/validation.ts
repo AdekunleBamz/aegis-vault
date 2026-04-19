@@ -1,6 +1,6 @@
 /**
  * @file Validation utilities for Aegis Vault
- * 
+ *
  * Provides Zod schemas and validation functions for API requests,
  * form data, and blockchain data validation.
  */
@@ -247,7 +247,7 @@ export class ValidationError extends Error {
 
 /**
  * Validates data against a schema, throwing on failure.
- * 
+ *
  * @param schema - The Zod schema to validate against
  * @param data - The data to validate
  * @returns The validated and typed data
@@ -258,7 +258,7 @@ export function validate<T>(
   data: unknown
 ): T {
   const result = schema.safeParse(data)
-  
+
   if (!result.success) {
     const issues = result.error.issues
     const message = issues
@@ -266,13 +266,13 @@ export function validate<T>(
       .join('; ')
     throw new ValidationError(`Validation failed: ${message}`, issues)
   }
-  
+
   return result.data
 }
 
 /**
  * Safe validation that returns a result instead of throwing.
- * 
+ *
  * @param schema - The Zod schema to validate against
  * @param data - The data to validate
  * @returns Success with data or failure with ZodError
@@ -282,17 +282,17 @@ export function safeValidate<T>(
   data: unknown
 ): { success: true; data: T } | { success: false; error: z.ZodError } {
   const result = schema.safeParse(data)
-  
+
   if (result.success) {
     return { success: true, data: result.data }
   }
-  
+
   return { success: false, error: result.error }
 }
 
 /**
  * Checks if a string is a valid Stacks address.
- * 
+ *
  * @param address - The address string to validate
  * @returns True if the address is valid
  */
@@ -303,7 +303,7 @@ export function isValidStacksAddress(address: string): boolean {
 
 /**
  * Checks if a string is a valid transaction ID.
- * 
+ *
  * @param txId - The transaction ID string to validate
  * @returns True if the transaction ID is valid
  */
@@ -314,7 +314,7 @@ export function isValidTxId(txId: string): boolean {
 
 /**
  * Checks if a string is a valid STX amount.
- * 
+ *
  * @param amount - The amount string to validate
  * @returns True if the amount is valid
  */
@@ -325,7 +325,7 @@ export function isValidStxAmount(amount: string): boolean {
 
 /**
  * Converts micro-STX to STX with validation.
- * 
+ *
  * @param microStx - Amount in micro-STX
  * @returns Amount in STX
  */
@@ -336,7 +336,7 @@ export function microStxToStx(microStx: number): number {
 
 /**
  * Converts STX to micro-STX with validation.
- * 
+ *
  * @param stx - Amount in STX (number or string)
  * @returns Amount in micro-STX
  * @throws Error if the amount is invalid

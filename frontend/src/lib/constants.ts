@@ -1,6 +1,6 @@
 /**
  * @file Application constants for Aegis Vault
- * 
+ *
  * Centralized configuration including contract addresses, API endpoints,
  * staking tiers, time constants, and display settings.
  */

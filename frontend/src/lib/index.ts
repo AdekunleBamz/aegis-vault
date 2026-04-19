@@ -1,6 +1,6 @@
 /**
  * @file Library barrel export for Aegis Vault
- * 
+ *
  * Central export point for all library modules including constants,
  * API utilities, error handling, types, validation, formatting, and services.
  */

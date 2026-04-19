@@ -2,7 +2,7 @@
 
 /**
  * @file Utility hooks for Aegis Vault
- * 
+ *
  * Provides reusable utility hooks for common patterns: local storage,
  * debouncing, media queries, toggle state, intervals, click outside detection,
  * window size tracking, and clipboard operations.
@@ -26,7 +26,7 @@ export interface UseLocalStorageReturn<T> {
 
 /**
  * Hook for managing state in localStorage with SSR support.
- * 
+ *
  * @param key - The localStorage key
  * @param initialValue - The value to use if no stored value exists
  * @returns Object containing value, setValue, removeValue, and isLoaded
@@ -77,7 +77,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): UseLocalStorag
 
 /**
  * Hook for debouncing a value change.
- * 
+ *
  * @param value - The value to debounce
  * @param delay - Delay in milliseconds before the value updates
  * @returns The debounced value
@@ -100,7 +100,7 @@ export function useDebounce<T>(value: T, delay: number): T {
 
 /**
  * Hook for tracking a CSS media query match state.
- * 
+ *
  * @param query - The media query string to track
  * @returns Whether the media query currently matches
  */
@@ -109,7 +109,7 @@ export function useMediaQuery(query: string): boolean {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
     const media = window.matchMedia(query);
     setMatches(media.matches);
 
@@ -126,7 +126,7 @@ export function useMediaQuery(query: string): boolean {
 
 /**
  * Hook for detecting mobile viewport (max-width: 639px).
- * 
+ *
  * @returns Whether the current viewport is mobile-sized
  */
 export function useIsMobile(): boolean {
@@ -135,7 +135,7 @@ export function useIsMobile(): boolean {
 
 /**
  * Hook for detecting tablet viewport (640px - 1023px).
- * 
+ *
  * @returns Whether the current viewport is tablet-sized
  */
 export function useIsTablet(): boolean {
@@ -144,7 +144,7 @@ export function useIsTablet(): boolean {
 
 /**
  * Hook for detecting desktop viewport (min-width: 1024px).
- * 
+ *
  * @returns Whether the current viewport is desktop-sized
  */
 export function useIsDesktop(): boolean {
@@ -153,7 +153,7 @@ export function useIsDesktop(): boolean {
 
 /**
  * Hook for tracking the previous value of a variable.
- * 
+ *
  * @param value - The value to track
  * @returns The previous value, or undefined on first render
  */
@@ -187,7 +187,7 @@ export interface UseToggleReturn {
 
 /**
  * Hook for managing a boolean toggle state.
- * 
+ *
  * @param initialValue - The initial boolean value (default: false)
  * @returns Object containing value and manipulation functions
  */
@@ -203,7 +203,7 @@ export function useToggle(initialValue = false): UseToggleReturn {
 
 /**
  * Hook for executing a callback at regular intervals.
- * 
+ *
  * @param callback - The function to execute on each interval
  * @param delay - The interval duration in milliseconds, or null to pause
  */
@@ -220,7 +220,7 @@ export function useInterval(callback: () => void, delay: number | null): void {
 
 /**
  * Hook for detecting clicks outside a referenced element.
- * 
+ *
  * @param ref - React ref to the element to monitor
  * @param handler - Callback to execute when a click outside is detected
  */
@@ -258,7 +258,7 @@ export interface WindowSize {
 
 /**
  * Hook for tracking the current window dimensions.
- * 
+ *
  * @returns Object containing current width and height
  */
 export function useWindowSize(): WindowSize {
@@ -296,7 +296,7 @@ export interface UseCopyToClipboardReturn {
 
 /**
  * Hook for copying text to the system clipboard.
- * 
+ *
  * @returns Object containing copy status and copy function
  */
 export function useCopyToClipboard(): UseCopyToClipboardReturn {
@@ -313,11 +313,11 @@ export function useCopyToClipboard(): UseCopyToClipboardReturn {
       await navigator.clipboard.writeText(text);
       setCopiedText(text);
       setIsCopied(true);
-      
+
       setTimeout(() => {
         setIsCopied(false);
       }, 2000);
-      
+
       return true;
     } catch (error) {
       console.warn('Copy failed', error);

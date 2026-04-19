@@ -21,7 +21,7 @@ const AMOUNT_PRESETS = [1000, 5000, 10000, 50000];
 
 /**
  * RewardsCalculator Component
- * 
+ *
  * Provides an interactive interface for users to estimate their potential AGS earnings.
  * Calculates rewards based on STX stake amount, duration, and protocol reward tiers.
  */

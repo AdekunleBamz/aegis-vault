@@ -2,7 +2,7 @@
 
 /**
  * @file Hook for fetching and managing token balances
- * 
+ *
  * Provides real-time balance data for STX and AGS tokens
  * for a connected wallet address.
  */
@@ -23,7 +23,7 @@ export interface UseBalancesReturn {
 
 /**
  * Hook to fetch and manage STX and AGS token balances.
- * 
+ *
  * @param address - The Stacks address to fetch balances for.
  * @returns Object containing balances, loading state, error, and refetch function.
  */

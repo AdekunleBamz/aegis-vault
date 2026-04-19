@@ -2,7 +2,7 @@
 
 /**
  * @file Key Performance Indicator (KPI) card component
- * 
+ *
  * Displays a single metric with optional trend indicator and icon.
  * Used throughout dashboards to show important statistics.
  */

@@ -1,6 +1,6 @@
 /**
  * @file Page section components for Aegis Vault
- * 
+ *
  * Exports major page sections used throughout the application,
  * including hero banners, statistics displays, and staking forms.
  */

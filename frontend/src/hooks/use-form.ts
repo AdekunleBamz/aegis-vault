@@ -2,7 +2,7 @@
 
 /**
  * @file Form hooks for Aegis Vault
- * 
+ *
  * Provides reusable hooks for form management: multi-step forms,
  * field management, form submission, and autosave functionality.
  */
@@ -53,7 +53,7 @@ export interface UseStepFormReturn extends StepFormState {
 
 /**
  * Hook for managing multi-step form state.
- * 
+ *
  * @param totalSteps - Total number of steps in the form
  * @returns Object containing step state and navigation functions
  */
@@ -197,7 +197,7 @@ export interface UseFormFieldsReturn<T extends string> {
 
 /**
  * Hook for managing form field state with validation.
- * 
+ *
  * @param initialFields - Initial field values
  * @param validators - Optional validation functions for each field
  * @returns Object containing fields state and manipulation functions
@@ -328,7 +328,7 @@ export interface UseFormSubmitReturn<T> {
 
 /**
  * Hook for handling form submission with loading and error states.
- * 
+ *
  * @param onSubmit - The function to call with form data
  * @param options - Optional callbacks for success/error and reset behavior
  * @returns Object containing submission state and handleSubmit function
@@ -403,7 +403,7 @@ export interface UseAutosaveReturn {
 
 /**
  * Hook for automatically saving data after a debounce delay.
- * 
+ *
  * @param data - The data to save
  * @param saveFn - The function that performs the save operation
  * @param delay - Debounce delay in milliseconds (default: 2000)

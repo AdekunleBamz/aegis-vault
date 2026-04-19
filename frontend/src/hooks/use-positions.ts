@@ -2,7 +2,7 @@
 
 /**
  * @file Positions hook for Aegis Vault
- * 
+ *
  * Provides a reusable hook for fetching and managing staking position data
  * for a given wallet address.
  */
@@ -26,7 +26,7 @@ export interface UsePositionsReturn {
 
 /**
  * Hook for fetching a user's staking position.
- * 
+ *
  * @param address - The Stacks address to fetch position for
  * @returns Object containing position data, loading state, error, and refetch function
  */

@@ -2,7 +2,7 @@
 
 /**
  * @file Governance statistics display component
- * 
+ *
  * Displays real-time governance metrics including treasury value,
  * quorum status, active voters, and staked governance tokens.
  */

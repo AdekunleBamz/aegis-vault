@@ -1,10 +1,10 @@
 /**
  * @file Staking utilities for Aegis Vault
- * 
+ *
  * Provides functions for interacting with the Aegis Staking protocol,
  * including staker info retrieval, APY calculation, tier determination,
  * and reward estimation.
- * 
+ *
  * @author Aegis Vault Team
  */
 import { CONTRACTS, TIERS, BLOCKS_PER_YEAR } from './constants';
@@ -38,16 +38,16 @@ export async function getStakerInfo(address: string): Promise<StakerInfo | null>
       'get-staker-info',
       [`0x${Buffer.from(address).toString('hex')}`]
     );
-    
+
     if (!result.okay || !result.result) {
       return null;
     }
-    
+
     const cv = hexToCV(result.result);
     const value = cvToValue(cv);
-    
+
     if (!value) return null;
-    
+
     return {
       amountStaked: BigInt(value['amount-staked'] || 0),
       stakeStartBlock: Number(value['stake-start-block'] || 0),
@@ -73,14 +73,14 @@ export async function getPoolStats(): Promise<PoolStats | null> {
       'get-pool-stats',
       []
     );
-    
+
     if (!result.okay || !result.result) {
       return null;
     }
-    
+
     const cv = hexToCV(result.result);
     const value = cvToValue(cv);
-    
+
     return {
       totalStaked: BigInt(value['total-staked'] || 0),
       totalStakers: Number(value['total-stakers'] || 0),
@@ -121,13 +121,13 @@ export function calculateEstimatedRewards(
  */
 export function determineTier(stakeAmount: bigint): number {
   const stakeSTX = Number(stakeAmount) / 1e6;
-  
+
   for (let i = TIERS.length - 1; i >= 0; i--) {
     if (stakeSTX >= TIERS[i].minStake) {
       return i;
     }
   }
-  
+
   return 0;
 }
 

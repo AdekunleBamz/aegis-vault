@@ -286,7 +286,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
                   e.stopPropagation();
                   setAmount(qa.value.toFixed(6));
                 }}
-                className="flex-1 py-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white 
+                className="flex-1 py-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white
                   rounded-lg text-sm font-medium transition-colors"
               >
                 {qa.label}

@@ -1,6 +1,6 @@
 /**
  * @file Utility functions for Aegis Vault
- * 
+ *
  * Provides general-purpose utility functions including CSS class merging,
  * address validation, and contract ID parsing.
  */
@@ -10,7 +10,7 @@ import { twMerge } from "tailwind-merge"
 
 /**
  * Merges CSS classes with Tailwind CSS conflict resolution.
- * 
+ *
  * @param inputs - Class values to merge (strings, objects, arrays)
  * @returns Merged class string with Tailwind conflicts resolved
  */
@@ -21,7 +21,7 @@ export function cn(...inputs: ClassValue[]): string {
 /**
  * Checks if a Stacks address is a mainnet address.
  * Mainnet addresses start with 'SP'.
- * 
+ *
  * @param address - The Stacks address to check
  * @returns True if the address is a mainnet address
  */
@@ -32,7 +32,7 @@ export function isMainnetAddress(address: string): boolean {
 
 /**
  * Splits a full contract ID into its address and name components.
- * 
+ *
  * @param contractId - Full contract ID in format "address.contract-name"
  * @returns Tuple of [address, contractName]
  */

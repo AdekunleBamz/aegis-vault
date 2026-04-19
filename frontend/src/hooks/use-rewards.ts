@@ -2,7 +2,7 @@
 
 /**
  * @file Hook for claiming staking rewards
- * 
+ *
  * Provides reward claiming functionality with loading states
  * and error handling for the AGS token distribution.
  */
@@ -22,7 +22,7 @@ export interface UseRewardsReturn {
 
 /**
  * Custom hook for claiming staking rewards.
- * 
+ *
  * @returns Object containing the claim function, loading state, error, and reset function.
  */
 export function useRewards(): UseRewardsReturn {

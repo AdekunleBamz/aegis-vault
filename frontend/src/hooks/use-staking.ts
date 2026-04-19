@@ -2,7 +2,7 @@
 
 /**
  * @file Hook for managing STX staking operations
- * 
+ *
  * Provides staking functionality including deposit execution,
  * loading states, and error handling.
  */
@@ -23,7 +23,7 @@ export interface UseStakingReturn {
 
 /**
  * Custom hook for managing STX staking operations.
- * 
+ *
  * @param senderAddress - The Stacks address of the current user.
  * @returns Object containing the stake function, loading state, error, and reset function.
  */

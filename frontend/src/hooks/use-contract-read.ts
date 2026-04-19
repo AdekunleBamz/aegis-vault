@@ -2,7 +2,7 @@
 
 /**
  * @file Contract read hook for Aegis Vault
- * 
+ *
  * Provides a reusable hook for calling read-only functions on Clarity smart contracts.
  * Handles loading states, error handling, and automatic refetching.
  */
@@ -27,7 +27,7 @@ export interface UseContractReadReturn<T> {
 
 /**
  * Hook for calling read-only functions on Clarity smart contracts.
- * 
+ *
  * @param contractId - Full contract ID (address.contract-name)
  * @param functionName - Name of the read-only function to call
  * @param args - Function arguments as hex-encoded strings

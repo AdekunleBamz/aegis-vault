@@ -1,6 +1,6 @@
 /**
  * @file Layout components for Aegis Vault
- * 
+ *
  * Exports layout-related components including headers, footers,
  * page headers, page layouts, and navigation elements.
  */

@@ -2,7 +2,7 @@
 
 /**
  * @file Protocol statistics display section
- * 
+ *
  * Displays key protocol metrics including TVL, user count,
  * rewards distributed, and current block height.
  */

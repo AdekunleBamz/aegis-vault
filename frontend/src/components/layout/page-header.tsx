@@ -42,22 +42,22 @@ export function Breadcrumbs({ items }: { items: PageHeaderProps['breadcrumbs'] }
       {items.map((item, index) => (
         <React.Fragment key={index}>
           {index > 0 && (
-            <svg 
-              className="w-4 h-4 text-gray-400" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M9 5l7 7-7 7" 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
               />
             </svg>
           )}
           {item.href ? (
-            <Link 
+            <Link
               href={item.href}
               className="hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
             >
@@ -77,21 +77,21 @@ export function Breadcrumbs({ items }: { items: PageHeaderProps['breadcrumbs'] }
 // Back Link Component
 export function BackLink({ href, label }: NonNullable<PageHeaderProps['backLink']>) {
   return (
-    <Link 
+    <Link
       href={href}
       className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors mb-4"
     >
-      <svg 
-        className="w-4 h-4 mr-1" 
-        fill="none" 
-        stroke="currentColor" 
+      <svg
+        className="w-4 h-4 mr-1"
+        fill="none"
+        stroke="currentColor"
         viewBox="0 0 24 24"
       >
-        <path 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          strokeWidth={2} 
-          d="M15 19l-7-7 7-7" 
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M15 19l-7-7 7-7"
         />
       </svg>
       {label}
@@ -114,7 +114,7 @@ export function PageHeader({
     <header className={`mb-8 ${className}`}>
       {/* Breadcrumbs */}
       {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
-      
+
       {/* Back Link */}
       {backLink && !breadcrumbs && <BackLink {...backLink} />}
 
@@ -127,7 +127,7 @@ export function PageHeader({
               {title}
             </h1>
             {badge && (
-              <span 
+              <span
                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                   badgeVariants[badge.variant || 'default']
                 }`}
@@ -136,7 +136,7 @@ export function PageHeader({
               </span>
             )}
           </div>
-          
+
           {/* Description */}
           {description && (
             <p className="mt-1 text-sm sm:text-base text-gray-500 dark:text-gray-400">
@@ -166,7 +166,7 @@ export function PageHeader({
 // Page Title Component for SEO
 export function PageTitle({ title, suffix = 'Aegis Vault' }: { title: string; suffix?: string }) {
   const fullTitle = suffix ? `${title} | ${suffix}` : title
-  
+
   return (
     <>
       <title>{fullTitle}</title>

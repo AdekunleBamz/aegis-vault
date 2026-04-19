@@ -2,7 +2,7 @@
 
 /**
  * @file Transactions hook for Aegis Vault
- * 
+ *
  * Provides a reusable hook for fetching and managing transaction history
  * for a given wallet address, filtered for Aegis protocol interactions.
  */
@@ -27,7 +27,7 @@ export interface UseTransactionsReturn {
 /**
  * Hook for fetching a user's transaction history.
  * Automatically filters for Aegis protocol-related transactions.
- * 
+ *
  * @param address - The Stacks address to fetch transactions for
  * @param limit - Maximum number of transactions to fetch (default: 20)
  * @returns Object containing transactions, loading state, error, and refetch function

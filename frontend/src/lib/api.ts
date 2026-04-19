@@ -1,9 +1,9 @@
 /**
  * @file API utilities for Aegis Vault
- * 
+ *
  * Provides functions for interacting with the Stacks blockchain API,
  * including account balances, transactions, and contract reads.
- * 
+ *
  * @author Aegis Vault Team
  */
 
@@ -52,7 +52,7 @@ export interface ContractReadResult {
 
 /**
  * Fetches the current balance for a Stacks account.
- * 
+ *
  * @param address - The Stacks address to query.
  * @returns Promise containing STX and fungible token balances.
  */
@@ -61,17 +61,17 @@ export async function getAccountBalance(address: string): Promise<AccountBalance
   const response = await fetch(`${API.STACKS_API}/v2/accounts/${address}`, {
     next: { revalidate: 30 },
   });
-  
+
   if (!response.ok) {
     throw new Error('Failed to fetch account balance');
   }
-  
+
   return response.json();
 }
 
 /**
  * Fetches transaction history for a Stacks address.
- * 
+ *
  * @param address - The Stacks address to query.
  * @param limit - Maximum number of transactions to return (default: 20).
  * @returns Array of transaction records.
@@ -84,18 +84,18 @@ export async function getAccountTransactions(
     `${API.STACKS_API}/extended/v1/address/${address}/transactions?limit=${limit}`,
     { next: { revalidate: 30 } }
   );
-  
+
   if (!response.ok) {
     throw new Error('Failed to fetch transactions');
   }
-  
+
   const data = await response.json();
   return data.results;
 }
 
 /**
  * Calls a read-only function on a Clarity smart contract.
- * 
+ *
  * @param contractAddress - The contract's Stacks address.
  * @param contractName - The contract name.
  * @param functionName - The function to call.
@@ -119,28 +119,28 @@ export async function callReadOnlyFunction(
       }),
     }
   );
-  
+
   if (!response.ok) {
     throw new Error('Failed to call contract function');
   }
-  
+
   return response.json();
 }
 
 /**
  * Fetches the current Stacks blockchain tip height.
- * 
+ *
  * @returns The current block height.
  */
 export async function getCurrentBlockHeight(): Promise<number> {
   const response = await fetch(`${API.STACKS_API}/v2/info`, {
     next: { revalidate: 10 },
   });
-  
+
   if (!response.ok) {
     throw new Error('Failed to fetch block height');
   }
-  
+
   const data = await response.json();
   return data.stacks_tip_height;
 }

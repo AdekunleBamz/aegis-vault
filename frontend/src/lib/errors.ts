@@ -1,9 +1,9 @@
 /**
  * @file Error handling utilities for Aegis Vault
- * 
+ *
  * Provides comprehensive error types, error classes, error messages,
  * and helper functions for consistent error handling throughout the application.
- * 
+ *
  * @author Aegis Vault Team
  */
 
@@ -85,11 +85,11 @@ export class AegisError extends Error {
 
   static fromError(error: unknown, defaultCode: ErrorCode = 'UNKNOWN_ERROR'): AegisError {
     if (error instanceof AegisError) return error;
-    
+
     if (error instanceof Error) {
       return new AegisError(defaultCode, error.message, { originalError: error.name });
     }
-    
+
     return new AegisError(defaultCode, String(error));
   }
 }
@@ -196,7 +196,7 @@ export interface ErrorFallbackProps {
 // RESULT TYPE (FOR ERROR HANDLING WITHOUT EXCEPTIONS)
 // ============================================================================
 
-export type Result<T, E = AegisError> = 
+export type Result<T, E = AegisError> =
   | { ok: true; value: T }
   | { ok: false; error: E };
 
@@ -281,8 +281,8 @@ const errorReports: ErrorReport[] = [];
  * Reports an error for analytics/debugging
  */
 export function reportError(error: unknown, wallet?: string): void {
-  const appError = error instanceof AegisError 
-    ? error.toJSON() 
+  const appError = error instanceof AegisError
+    ? error.toJSON()
     : AegisError.fromError(error).toJSON();
 
   const report: ErrorReport = {
