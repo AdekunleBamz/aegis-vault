@@ -8,7 +8,7 @@
  * window size tracking, and clipboard operations.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 /**
  * Return type for the useLocalStorage hook.
@@ -208,14 +208,18 @@ export function useToggle(initialValue = false): UseToggleReturn {
  * @param delay - The interval duration in milliseconds, or null to pause
  */
 export function useInterval(callback: () => void, delay: number | null): void {
-  const savedCallback = useCallback(callback, [callback]);
+  const savedCallback = useRef(callback);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
 
   useEffect(() => {
     if (delay === null) return;
 
-    const id = setInterval(() => savedCallback(), delay);
+    const id = setInterval(() => savedCallback.current(), delay);
     return () => clearInterval(id);
-  }, [delay, savedCallback]);
+  }, [delay]);
 }
 
 /**
