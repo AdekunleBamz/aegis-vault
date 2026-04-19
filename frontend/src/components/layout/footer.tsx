@@ -12,39 +12,40 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const SOCIAL_LINKS = [
+  { icon: Github, href: 'https://github.com/AdekunleBamz/aegis-vault', label: 'View source code on GitHub' },
+  { icon: Twitter, href: '', label: 'Follow us on Twitter' },
+  { icon: Discord, href: '', label: 'Join our Discord community' },
+];
+
+const FOOTER_LINKS = {
+  protocol: [
+    { label: 'Dashboard', href: '/dashboard' },
+    { label: 'Stake STX', href: '/stake' },
+    { label: 'Account History', href: '/history' },
+    { label: 'Transparency', href: '/security' },
+    { label: 'Yield Strategies', href: '/strategies' },
+    { label: 'Ecosystem', href: '/ecosystem' },
+    { label: 'Analytics', href: '/analytics' },
+    { label: 'Vault Stats', href: '/stats' },
+  ],
+  resources: [
+    { label: 'Documentation', href: 'https://github.com/AdekunleBamz/aegis-vault#readme', external: true },
+    { label: 'Analytics Hub', href: '/analytics' },
+    { label: 'Security Portal', href: '/security' },
+    { label: 'Governance', href: '/governance' },
+    { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
+  ],
+};
+
+const LEGAL_LINKS = [
+  { label: 'Terms', href: '' },
+  { label: 'Privacy', href: '' },
+  { label: 'Security', href: '/security' },
+];
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const socialLinks = [
-    { icon: Github, href: 'https://github.com/AdekunleBamz/aegis-vault', label: 'View source code on GitHub' },
-    { icon: Twitter, href: '', label: 'Follow us on Twitter' },
-    { icon: Discord, href: '', label: 'Join our Discord community' },
-  ];
-
-  const footerLinks = {
-    protocol: [
-      { label: 'Dashboard', href: '/dashboard' },
-      { label: 'Stake STX', href: '/stake' },
-      { label: 'Account History', href: '/history' },
-      { label: 'Transparency', href: '/security' },
-      { label: 'Yield Strategies', href: '/strategies' },
-      { label: 'Ecosystem', href: '/ecosystem' },
-      { label: 'Analytics', href: '/analytics' },
-      { label: 'Vault Stats', href: '/stats' },
-    ],
-    resources: [
-      { label: 'Documentation', href: 'https://github.com/AdekunleBamz/aegis-vault#readme', external: true },
-      { label: 'Analytics Hub', href: '/analytics' },
-      { label: 'Security Portal', href: '/security' },
-      { label: 'Governance', href: '/governance' },
-      { label: 'Stacks Explorer', href: 'https://explorer.stacks.co', external: true },
-    ],
-  };
-
-  const legalLinks = [
-    { label: 'Terms', href: '' },
-    { label: 'Privacy', href: '' },
-    { label: 'Security', href: '/security' },
-  ];
 
   return (
     <footer className="border-t border-border bg-muted/30 backdrop-blur-sm mt-auto">
@@ -64,7 +65,7 @@ export function Footer() {
               The next-generation staking protocol for the Stacks ecosystem. Secure your assets and earn maximized rewards with institutional-grade technology.
             </p>
             <div className="flex items-center gap-3">
-              {socialLinks.map((social) => (
+              {SOCIAL_LINKS.map((social) => (
                 social.href ? (
                   <a
                     key={social.label}
@@ -94,7 +95,7 @@ export function Footer() {
           <div className="sm:col-span-4 md:col-span-2 lg:col-span-2">
             <h4 className="text-foreground font-semibold mb-6 text-sm uppercase tracking-wider">Protocol</h4>
             <ul className="space-y-4" aria-label="Protocol links">
-              {footerLinks.protocol.map((link) => (
+              {FOOTER_LINKS.protocol.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -111,7 +112,7 @@ export function Footer() {
           <div className="sm:col-span-4 md:col-span-3 lg:col-span-2">
             <h4 className="text-foreground font-semibold mb-6 text-sm uppercase tracking-wider">Resources</h4>
             <ul className="space-y-4" aria-label="Resource links">
-              {footerLinks.resources.map((link) => (
+              {FOOTER_LINKS.resources.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -156,7 +157,7 @@ export function Footer() {
             &copy; {currentYear} Aegis Vault Protocol. All rights reserved.
           </p>
           <div className="flex items-center gap-8">
-            {legalLinks.map((item) => (
+            {LEGAL_LINKS.map((item) => (
               item.href ? (
                 <Link
                   key={item.label}
