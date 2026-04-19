@@ -8,8 +8,7 @@
  * @see {@link https://github.com/AdekunleBamz/aegis-vault}
  */
 
-import { AVG_BLOCK_TIME_MINUTES } from './constants';
-import { STX_DECIMALS, AGS_DECIMALS } from './constants';
+import { AVG_BLOCK_TIME_MINUTES, STX_DECIMALS, AGS_DECIMALS } from './constants';
 
 /**
  * Format microSTX to STX with proper decimals.
