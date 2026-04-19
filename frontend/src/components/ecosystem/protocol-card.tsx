@@ -6,13 +6,21 @@ import { ExternalLink, Globe, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
+type IntegrationStatus = 'Native' | 'Partner' | 'External';
+
+const INTEGRATION_STATUS_CLASS: Record<IntegrationStatus, string> = {
+    Native: 'text-aegis-blue bg-aegis-blue/10 border-aegis-blue/20',
+    Partner: 'text-aegis-purple bg-aegis-purple/10 border-aegis-purple/20',
+    External: 'text-muted-foreground bg-muted border-border',
+};
+
 interface ProtocolCardProps {
     name: string;
     description: string;
     category: string;
     logo: string;
     url: string;
-    integrationStatus: 'Native' | 'Partner' | 'External';
+    integrationStatus: IntegrationStatus;
     isLive?: boolean;
 }
 
@@ -46,9 +54,7 @@ export function ProtocolCard({
                 <div className="flex flex-col items-end gap-2">
                     <div className={cn(
                         "px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border",
-                        integrationStatus === 'Native' ? "text-aegis-blue bg-aegis-blue/10 border-aegis-blue/20" :
-                            integrationStatus === 'Partner' ? "text-aegis-purple bg-aegis-purple/10 border-aegis-purple/20" :
-                                "text-muted-foreground bg-muted border-border"
+                        INTEGRATION_STATUS_CLASS[integrationStatus]
                     )}>
                         {integrationStatus}
                     </div>
