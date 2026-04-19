@@ -45,6 +45,9 @@ const userSession = new UserSession({ appConfig });
 // Default to mainnet, but can be configured
 const defaultNetwork = STACKS_MAINNET;
 
+// How often to poll the Stacks user session for sign-in / sign-out changes
+const SESSION_POLL_INTERVAL_MS = 1000;
+
 interface WalletProviderProps {
   children: ReactNode;
 }
@@ -100,7 +103,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
     };
 
     checkUserSession();
-    const interval = setInterval(checkUserSession, 1000);
+    const interval = setInterval(checkUserSession, SESSION_POLL_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
