@@ -37,7 +37,7 @@
 
 ;; Bonus multipliers (in basis points, 10000 = 1x)
 (define-constant BONUS-3-DAYS u10000)        ;; 1.0x multiplier
-(define-constant BONUS-7-DAYS u12000)        ;; 1.2x multiplier  
+(define-constant BONUS-7-DAYS u12000)        ;; 1.2x multiplier
 (define-constant BONUS-30-DAYS u15000)       ;; 1.5x multiplier
 
 ;; ============================================
@@ -56,7 +56,7 @@
 ;; ============================================
 
 ;; Individual stake positions
-(define-map stakes 
+(define-map stakes
   { staker: principal, stake-id: uint }
   {
     amount: uint,
@@ -155,10 +155,10 @@
     (asserts! (>= amount MIN-STAKE) ERR-INVALID-AMOUNT)
     (asserts! (> lock-blocks u0) ERR-INVALID-LOCK-PERIOD)
     (asserts! (>= (stx-get-balance staker) amount) ERR-INSUFFICIENT-BALANCE)
-    
+
     ;; Transfer STX to vault
     (try! (stx-transfer? amount staker (as-contract tx-sender)))
-    
+
     ;; Create stake position
     (map-set stakes
       { staker: staker, stake-id: new-stake-id }
@@ -171,18 +171,18 @@
         is-active: true
       }
     )
-    
+
     ;; Update user tracking
     (add-stake-id-to-user staker new-stake-id)
-    (map-set user-total-staked staker 
+    (map-set user-total-staked staker
       (+ (default-to u0 (map-get? user-total-staked staker)) amount))
-    
+
     ;; Update global stats
     (var-set stake-counter new-stake-id)
     (var-set total-staked (+ (var-get total-staked) amount))
     (var-set total-stakers (+ (var-get total-stakers) u1))
-    
-    (print { 
+
+    (print {
       event: "stake-created",
       staker: staker,
       stake-id: new-stake-id,
@@ -191,7 +191,7 @@
       lock-blocks: lock-blocks,
       unlock-block: (+ block-height lock-blocks)
     })
-    
+
     (ok new-stake-id)
   )
 )
@@ -212,27 +212,27 @@
     (asserts! (not (var-get contract-paused)) ERR-CONTRACT-PAUSED)
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     (asserts! (> rewards u0) ERR-ZERO-REWARDS)
-    
+
     ;; Mint reward tokens to staker
     (try! (contract-call? .aegis-token-v2 mint rewards staker))
-    
+
     ;; Update last claim block
     (map-set stakes
       { staker: staker, stake-id: stake-id }
       (merge stake-data { last-claim-block: block-height })
     )
-    
+
     ;; Update global stats
     (var-set total-rewards-distributed (+ (var-get total-rewards-distributed) rewards))
-    
-    (print { 
+
+    (print {
       event: "rewards-claimed",
       staker: staker,
       stake-id: stake-id,
       rewards: rewards,
       blocks-elapsed: blocks-elapsed
     })
-    
+
     (ok rewards)
   )
 )
@@ -256,41 +256,41 @@
     (asserts! (not (var-get contract-paused)) ERR-CONTRACT-PAUSED)
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     (asserts! (>= block-height unlock-block) ERR-STAKE-STILL-LOCKED)
-    
+
     ;; Claim any pending rewards first
     (if (> pending-rewards u0)
       (try! (contract-call? .aegis-token-v2 mint pending-rewards staker))
       true
     )
-    
+
     ;; Return full staked amount
     (try! (as-contract (stx-transfer? stake-amount tx-sender staker)))
-    
+
     ;; Deactivate stake
     (map-set stakes
       { staker: staker, stake-id: stake-id }
       (merge stake-data { is-active: false })
     )
-    
+
     ;; Update user tracking
-    (map-set user-total-staked staker 
+    (map-set user-total-staked staker
       (- (default-to u0 (map-get? user-total-staked staker)) stake-amount))
-    
+
     ;; Update global stats
     (var-set total-staked (- (var-get total-staked) stake-amount))
     (if (> pending-rewards u0)
       (var-set total-rewards-distributed (+ (var-get total-rewards-distributed) pending-rewards))
       true
     )
-    
-    (print { 
+
+    (print {
       event: "withdrawal",
       staker: staker,
       stake-id: stake-id,
       amount: stake-amount,
       rewards: pending-rewards
     })
-    
+
     (ok { amount: stake-amount, rewards: pending-rewards })
   )
 )
@@ -308,28 +308,28 @@
     ;; Validations
     (asserts! (not (var-get contract-paused)) ERR-CONTRACT-PAUSED)
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
-    
+
     ;; Return 98% to staker
     (try! (as-contract (stx-transfer? return-amount tx-sender staker)))
-    
+
     ;; Send 2% penalty to treasury (owner is same as deployer)
     (try! (as-contract (stx-transfer? penalty tx-sender CONTRACT-OWNER)))
-    
+
     ;; Deactivate stake
     (map-set stakes
       { staker: staker, stake-id: stake-id }
       (merge stake-data { is-active: false })
     )
-    
+
     ;; Update user tracking
-    (map-set user-total-staked staker 
+    (map-set user-total-staked staker
       (- (default-to u0 (map-get? user-total-staked staker)) stake-amount))
-    
+
     ;; Update global stats
     (var-set total-staked (- (var-get total-staked) stake-amount))
     (var-set total-penalties-collected (+ (var-get total-penalties-collected) penalty))
-    
-    (print { 
+
+    (print {
       event: "emergency-withdrawal",
       staker: staker,
       stake-id: stake-id,
@@ -337,7 +337,7 @@
       penalty: penalty,
       returned: return-amount
     })
-    
+
     (ok { returned: return-amount, penalty: penalty })
   )
 )

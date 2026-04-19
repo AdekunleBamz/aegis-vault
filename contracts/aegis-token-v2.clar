@@ -59,17 +59,17 @@
     (asserts! (> amount u0) ERR-INVALID-AMOUNT)
     ;; Check balance
     (asserts! (>= (get-balance-of sender) amount) ERR-INSUFFICIENT-BALANCE)
-    
+
     ;; Update balances
     (map-set balances sender (- (get-balance-of sender) amount))
     (map-set balances recipient (+ (get-balance-of recipient) amount))
-    
+
     ;; Print memo if provided
     (match memo
       memo-value (begin (print memo-value) true)
       true
     )
-    
+
     (ok true)
   )
 )
@@ -135,11 +135,11 @@
     (asserts! (is-authorized-minter contract-caller) ERR-MINTER-ONLY)
     ;; Validate amount
     (asserts! (> amount u0) ERR-INVALID-AMOUNT)
-    
+
     ;; Update balance and supply
     (map-set balances recipient (+ (get-balance-of recipient) amount))
     (var-set total-supply (+ (var-get total-supply) amount))
-    
+
     (print { event: "mint", amount: amount, recipient: recipient })
     (ok true)
   )
@@ -204,11 +204,11 @@
     (asserts! (> amount u0) ERR-INVALID-AMOUNT)
     ;; Check balance
     (asserts! (>= sender-balance amount) ERR-INSUFFICIENT-BALANCE)
-    
+
     ;; Update balance and supply
     (map-set balances sender (- sender-balance amount))
     (var-set total-supply (- (var-get total-supply) amount))
-    
+
     (print { event: "burn", amount: amount, burner: sender })
     (ok true)
   )
