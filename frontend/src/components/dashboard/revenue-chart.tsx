@@ -5,9 +5,10 @@ import { motion } from 'framer-motion';
 import { TrendingUp, ArrowUpRight, DollarSign, Activity, PieChart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const REVENUE_DATA = [12, 18, 15, 24, 21, 32, 28, 45, 42, 58, 54, 72];
+const REVENUE_MAX = Math.max(...REVENUE_DATA);
+
 export function RevenueChart() {
-    const data = [12, 18, 15, 24, 21, 32, 28, 45, 42, 58, 54, 72];
-    const max = Math.max(...data);
 
     return (
         <div className="p-10 rounded-[48px] bg-background border border-border shadow-sm group hover:shadow-2xl transition-all duration-700 relative overflow-hidden h-full flex flex-col">
@@ -48,7 +49,7 @@ export function RevenueChart() {
 
                         <motion.div
                             initial={{ height: 0 }}
-                            animate={{ height: `${(h / max) * 100}%` }}
+                            animate={{ height: `${(h / REVENUE_MAX) * 100}%` }}
                             transition={{ delay: i * 0.05, duration: 1, ease: 'circOut' }}
                             className={cn(
                                 "w-full rounded-t-2xl transition-all duration-300 relative overflow-hidden",
