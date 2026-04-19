@@ -11,6 +11,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { getCurrentBlockHeight } from '@/lib/api';
 import { network } from '@/lib/stacks';
 
+const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
+  network.chainId === 2147483648
+    ? 'testnet'
+    : network.chainId === 1
+      ? 'mainnet'
+      : 'devnet';
+
 /**
  * Return type for the useNetwork hook.
  */
@@ -37,14 +44,6 @@ export function useNetwork(): UseNetworkReturn {
   const [blockHeight, setBlockHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // Determine network type from the imported network object
-  const networkType =
-    network.chainId === 2147483648
-      ? 'testnet'
-      : network.chainId === 1
-        ? 'mainnet'
-        : 'devnet';
 
   const fetchNetworkInfo = useCallback(async () => {
     setIsLoading(true);
@@ -73,5 +72,5 @@ export function useNetwork(): UseNetworkReturn {
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 
-  return { blockHeight, isLoading, error, networkType, refetch: fetchNetworkInfo };
+  return { blockHeight, isLoading, error, networkType: NETWORK_TYPE, refetch: fetchNetworkInfo };
 }
