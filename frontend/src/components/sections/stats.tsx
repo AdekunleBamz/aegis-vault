@@ -22,6 +22,13 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+const STAT_HIGHLIGHTS = [
+  'Capital depth',
+  'User participation',
+  'Rewards throughput',
+  'Chain sync status'
+];
+
 /**
  * Stats section displays real-time protocol metrics.
  * Shows TVL, user participation, rewards distributed, and block height.
@@ -69,13 +76,6 @@ export function Stats() {
     },
   ];
 
-  const highlights = [
-    'Capital depth',
-    'User participation',
-    'Rewards throughput',
-    'Chain sync status'
-  ];
-
   return (
     <section
       className="py-24 relative overflow-hidden bg-muted/20"
@@ -109,7 +109,7 @@ export function Stats() {
               Use these numbers to sanity-check vault health before staking. The cards below separate capital, participation, rewards, and chain sync so the protocol state is easier to scan.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {highlights.map((highlight) => (
+              {STAT_HIGHLIGHTS.map((highlight) => (
                 <span
                   key={highlight}
                   className="rounded-full border border-border/50 bg-muted/30 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground"
