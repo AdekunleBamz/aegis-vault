@@ -27,6 +27,19 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { NetworkBadge } from '@/components/ui/network-badge';
 
+const NAV_LINKS = [
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/stake', label: 'Stake', icon: Layers },
+  { href: '/strategies', label: 'Strategies', icon: Cpu },
+  { href: '/analytics', label: 'Analytics', icon: PieChart },
+  { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
+  { href: '/positions', label: 'Positions', icon: History },
+  { href: '/governance', label: 'Governance', icon: Vote },
+  { href: '/security', label: 'Transparency', icon: ShieldCheck },
+  { href: '/stats', label: 'Protocol Stats', icon: BarChart3 },
+  { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
+];
+
 export function Header() {
   const { address, isConnected, isConnecting, connect, disconnect } = useWallet();
   const { stxBalance } = useBalances(address || '');
@@ -122,19 +135,6 @@ export function Header() {
     };
   }, []);
 
-  const navLinks = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/stake', label: 'Stake', icon: Layers },
-    { href: '/strategies', label: 'Strategies', icon: Cpu },
-    { href: '/analytics', label: 'Analytics', icon: PieChart },
-    { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
-    { href: '/positions', label: 'Positions', icon: History },
-    { href: '/governance', label: 'Governance', icon: Vote },
-    { href: '/security', label: 'Transparency', icon: ShieldCheck },
-    { href: '/stats', label: 'Protocol Stats', icon: BarChart3 },
-    { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
-  ];
-
   const isActiveRoute = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
@@ -181,7 +181,7 @@ export function Header() {
 
         {/* Center: Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1 max-w-[58vw] overflow-x-auto no-scrollbar bg-muted/50 p-1 rounded-full border border-border/50 backdrop-blur-sm">
-          {navLinks.map((link) => {
+          {NAV_LINKS.map((link) => {
             const isActive = isActiveRoute(link.href);
             return (
               <Link
@@ -339,7 +339,7 @@ export function Header() {
             aria-label="Mobile navigation menu"
           >
             <nav className="container py-6 flex flex-col gap-2">
-              {navLinks.map((link) => {
+              {NAV_LINKS.map((link) => {
                 const isActive = isActiveRoute(link.href);
                 return (
                   <Link
