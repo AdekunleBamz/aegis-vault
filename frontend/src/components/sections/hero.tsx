@@ -17,27 +17,27 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+const HERO_STATS = [
+  { value: '12%', label: 'Base APY', icon: TrendingUp, color: 'text-aegis-blue' },
+  { value: '24%', label: 'Max APY', icon: Zap, color: 'text-aegis-purple' },
+  { value: '3-30', label: 'Days Lockup', icon: Clock, color: 'text-aegis-indigo' },
+  { value: '4', label: 'Reward Tiers', icon: LayoutGrid, color: 'text-aegis-cyan' },
+];
+
+const PROOF_POINTS = [
+  'Non-custodial vault access',
+  'Tiered rewards with clear lock windows',
+  'Mainnet-ready analytics and transparency'
+];
+
+const OPERATING_SIGNALS = [
+  { label: 'Security posture', value: 'Audited controls' },
+  { label: 'Withdrawal model', value: 'Flexible lock windows' },
+  { label: 'Rewards cadence', value: 'Live accrual tracking' }
+];
+
 export function Hero() {
   const { isConnected, connect } = useWallet();
-
-  const stats = [
-    { value: '12%', label: 'Base APY', icon: TrendingUp, color: 'text-aegis-blue' },
-    { value: '24%', label: 'Max APY', icon: Zap, color: 'text-aegis-purple' },
-    { value: '3-30', label: 'Days Lockup', icon: Clock, color: 'text-aegis-indigo' },
-    { value: '4', label: 'Reward Tiers', icon: LayoutGrid, color: 'text-aegis-cyan' },
-  ];
-
-  const proofPoints = [
-    'Non-custodial vault access',
-    'Tiered rewards with clear lock windows',
-    'Mainnet-ready analytics and transparency'
-  ];
-
-  const operatingSignals = [
-    { label: 'Security posture', value: 'Audited controls' },
-    { label: 'Withdrawal model', value: 'Flexible lock windows' },
-    { label: 'Rewards cadence', value: 'Live accrual tracking' }
-  ];
 
   return (
     <section
@@ -137,7 +137,7 @@ export function Hero() {
             transition={{ delay: 0.35 }}
             className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
           >
-            {proofPoints.map((point) => (
+            {PROOF_POINTS.map((point) => (
               <div
                 key={point}
                 className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-2 text-sm text-muted-foreground backdrop-blur-sm"
@@ -150,7 +150,7 @@ export function Hero() {
 
           {/* Stats Grid */}
           <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-            {stats.map((stat, i) => (
+            {HERO_STATS.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -214,7 +214,7 @@ export function Hero() {
               </div>
 
               <div className="space-y-4">
-                {operatingSignals.map((signal) => (
+                {OPERATING_SIGNALS.map((signal) => (
                   <div
                     key={signal.label}
                     className="flex items-center justify-between rounded-[24px] border border-border/60 bg-muted/30 px-4 py-4"
