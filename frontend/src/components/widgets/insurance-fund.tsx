@@ -6,16 +6,17 @@ import { ShieldCheck, Coins, TrendingUp, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { RewardChart } from '@/components/dashboard/reward-chart';
 
+const FUND_TREND_DATA = [
+    { day: 1, amount: 450000 },
+    { day: 5, amount: 465000 },
+    { day: 10, amount: 480000 },
+    { day: 15, amount: 500000 },
+    { day: 20, amount: 525000 },
+    { day: 25, amount: 540000 },
+    { day: 30, amount: 550000 },
+];
+
 export function InsuranceFund() {
-    const fundData = [
-        { day: 1, amount: 450000 },
-        { day: 5, amount: 465000 },
-        { day: 10, amount: 480000 },
-        { day: 15, amount: 500000 },
-        { day: 20, amount: 525000 },
-        { day: 25, amount: 540000 },
-        { day: 30, amount: 550000 },
-    ];
 
     return (
         <div className="p-8 rounded-[40px] bg-background border border-border shadow-sm group hover:shadow-xl transition-all duration-500">
@@ -47,7 +48,7 @@ export function InsuranceFund() {
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Balance Trend</span>
                     <span className="text-[10px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded-full">+22.2% Monthly</span>
                 </div>
-                <RewardChart data={fundData} height={120} color="hsl(var(--aegis-blue))" />
+                <RewardChart data={FUND_TREND_DATA} height={120} color="hsl(var(--aegis-blue))" />
             </div>
 
             <div className="p-6 rounded-[32px] bg-aegis-blue/5 border border-aegis-blue/20 flex items-start gap-4">
