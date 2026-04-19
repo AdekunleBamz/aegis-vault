@@ -10,10 +10,10 @@ export interface TooltipProps {
   className?: string;
 }
 
-export function Tooltip({ 
-  content, 
-  children, 
-  position = 'top', 
+export function Tooltip({
+  content,
+  children,
+  position = 'top',
   delay = 200,
   className = ''
 }: TooltipProps) {
@@ -43,7 +43,7 @@ export function Tooltip({
 
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const tooltipRect = tooltipRef.current.getBoundingClientRect();
-    
+
     let x = 0;
     let y = 0;
     const gap = 8;
@@ -128,7 +128,7 @@ export function Tooltip({
       >
         {children}
       </div>
-      
+
       {isVisible && (
         <div
           ref={tooltipRef}
@@ -147,7 +147,7 @@ export function Tooltip({
           }}
         >
           {content}
-          <span 
+          <span
             className={`absolute w-0 h-0 border-4 ${arrowClasses[position]}`}
           />
         </div>
@@ -166,7 +166,7 @@ export interface InfoTooltipProps {
 export function InfoTooltip({ content, position = 'top', iconClassName = '' }: InfoTooltipProps) {
   return (
     <Tooltip content={content} position={position}>
-      <button 
+      <button
         type="button"
         className={`text-gray-400 hover:text-gray-300 transition-colors focus:outline-none ${iconClassName}`}
         aria-label="More information"
@@ -183,7 +183,7 @@ export function InfoTooltip({ content, position = 'top', iconClassName = '' }: I
 export function HelpTooltip({ content, position = 'top', iconClassName = '' }: InfoTooltipProps) {
   return (
     <Tooltip content={content} position={position}>
-      <button 
+      <button
         type="button"
         className={`text-gray-400 hover:text-gray-300 transition-colors focus:outline-none ${iconClassName}`}
         aria-label="Help"

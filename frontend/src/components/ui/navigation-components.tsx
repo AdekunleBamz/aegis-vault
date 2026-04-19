@@ -17,7 +17,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   children,
 }) => {
   const positionClass = position === 'right' ? 'right-0' : 'left-0';
-  const translateClass = position === 'right' ? 
+  const translateClass = position === 'right' ?
     `${isOpen ? 'translate-x-0' : 'translate-x-full'}` :
     `${isOpen ? 'translate-x-0' : '-translate-x-full'}`;
 

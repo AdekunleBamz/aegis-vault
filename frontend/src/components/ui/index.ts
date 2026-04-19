@@ -1,6 +1,6 @@
 /**
  * @file UI component library for Aegis Vault
- * 
+ *
  * This module exports all reusable UI components organized by category:
  * loading states, modals, forms, data display, navigation, and accessibility.
  */
@@ -98,7 +98,7 @@ export { ScrollToTop, ScrollProgress, InfiniteScrollTrigger, PullToRefresh, Virt
 // Animation Components
 export { AnimatedCounter, FlipCounter, TypingAnimation, FadeInView, StaggerChildren, Pulse, Shimmer, Confetti } from './animations';
 
-// State Components  
+// State Components
 export { EmptyState as ContentEmptyState, NoData, LoadingState, ErrorState, SuccessState, ConnectionState } from './states';
 
 // Accessibility Components

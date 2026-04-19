@@ -30,10 +30,10 @@ export function NumberTicker({
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       // Easing function (ease-out cubic)
       const eased = 1 - Math.pow(1 - progress, 3);
-      
+
       const current = startValue + (value - startValue) * eased;
       setDisplayValue(current);
 
@@ -176,7 +176,7 @@ export function TokenAmount({
   className = '',
   size = 'md',
 }: TokenAmountProps) {
-  const numAmount = typeof amount === 'bigint' 
+  const numAmount = typeof amount === 'bigint'
     ? Number(amount) / Math.pow(10, decimals)
     : typeof amount === 'string'
       ? parseFloat(amount)
@@ -215,10 +215,10 @@ export function PercentageChange({
   return (
     <span className={`inline-flex items-center gap-1 ${color} ${className}`}>
       {showIcon && (
-        <svg 
-          className={`w-4 h-4 ${!isPositive ? 'rotate-180' : ''}`} 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className={`w-4 h-4 ${!isPositive ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />

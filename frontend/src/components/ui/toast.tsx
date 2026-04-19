@@ -156,7 +156,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
 
   return (
     <div
-      className={`${style.bg} ${style.border} border text-white rounded-xl shadow-2xl 
+      className={`${style.bg} ${style.border} border text-white rounded-xl shadow-2xl
         min-w-[320px] overflow-hidden backdrop-blur-sm
         transform transition-all duration-200 ease-out
         ${isExiting ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100 animate-slide-in'}`}
@@ -182,8 +182,8 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
             </button>
           )}
         </div>
-        <button 
-          onClick={handleClose} 
+        <button
+          onClick={handleClose}
           className="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1 rounded hover:bg-white/10"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,7 +193,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
       </div>
       {/* Progress bar */}
       <div className="h-1 bg-black/20">
-        <div 
+        <div
           className="h-full bg-white/30 transition-all duration-100 ease-linear"
           style={{ width: `${progress}%` }}
         />

@@ -22,11 +22,11 @@ const colorClasses = {
   purple: 'border-purple-500',
 };
 
-export function Loading({ 
-  size = 'md', 
+export function Loading({
+  size = 'md',
   variant = 'spinner',
   color = 'blue',
-  className = '' 
+  className = ''
 }: LoadingProps) {
   if (variant === 'dots') {
     return (
@@ -34,7 +34,7 @@ export function Loading({
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className={`${size === 'lg' ? 'w-3 h-3' : size === 'sm' ? 'w-1.5 h-1.5' : 'w-2 h-2'} 
+            className={`${size === 'lg' ? 'w-3 h-3' : size === 'sm' ? 'w-1.5 h-1.5' : 'w-2 h-2'}
               rounded-full bg-${color === 'blue' ? 'blue-500' : color === 'white' ? 'white' : color === 'green' ? 'green-500' : 'purple-500'}
               animate-bounce`}
             style={{ animationDelay: `${i * 0.15}s` }}
@@ -61,9 +61,9 @@ export function Loading({
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
-            className={`w-1 bg-${color === 'blue' ? 'blue-500' : color === 'white' ? 'white' : color === 'green' ? 'green-500' : 'purple-500'} 
+            className={`w-1 bg-${color === 'blue' ? 'blue-500' : color === 'white' ? 'white' : color === 'green' ? 'green-500' : 'purple-500'}
               rounded-full animate-pulse`}
-            style={{ 
+            style={{
               height: '100%',
               animationDelay: `${i * 0.15}s`,
               animationDuration: '0.8s'
@@ -90,8 +90,8 @@ interface LoadingOverlayProps {
   progress?: number;
 }
 
-export function LoadingOverlay({ 
-  message = 'Processing...', 
+export function LoadingOverlay({
+  message = 'Processing...',
   submessage,
   showProgress = false,
   progress = 0,
@@ -112,7 +112,7 @@ export function LoadingOverlay({
         {showProgress && (
           <div className="w-full">
             <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
@@ -133,8 +133,8 @@ interface SkeletonProps {
   height?: string | number;
 }
 
-export function LoadingSkeleton({ 
-  className = '', 
+export function LoadingSkeleton({
+  className = '',
   variant = 'rectangular',
   animation = 'pulse',
   width,
@@ -189,11 +189,11 @@ export function TableRowSkeleton({ columns = 4 }: { columns?: number }) {
   return (
     <div className="flex items-center gap-4 py-4 border-b border-gray-700/50">
       {Array.from({ length: columns }).map((_, i) => (
-        <LoadingSkeleton 
-          key={i} 
-          variant="text" 
-          className="flex-1" 
-          width={i === 0 ? '30%' : '20%'} 
+        <LoadingSkeleton
+          key={i}
+          variant="text"
+          className="flex-1"
+          width={i === 0 ? '30%' : '20%'}
         />
       ))}
     </div>

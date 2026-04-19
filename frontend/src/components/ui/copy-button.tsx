@@ -9,11 +9,11 @@ export interface CopyButtonProps {
   children?: React.ReactNode;
 }
 
-export function CopyButton({ 
-  text, 
-  onCopy, 
+export function CopyButton({
+  text,
+  onCopy,
   className = '',
-  children 
+  children
 }: CopyButtonProps) {
   const [copied, setCopied] = React.useState(false);
 
@@ -32,9 +32,9 @@ export function CopyButton({
     <button
       onClick={handleCopy}
       className={`
-        inline-flex items-center gap-2 px-3 py-1.5 
+        inline-flex items-center gap-2 px-3 py-1.5
         text-sm text-gray-400 hover:text-white
-        bg-gray-800 hover:bg-gray-700 
+        bg-gray-800 hover:bg-gray-700
         rounded-lg transition-all
         ${className}
       `}
@@ -72,8 +72,8 @@ export function AddressDisplay({
   showCopy = true,
   className = '',
 }: AddressDisplayProps) {
-  const displayAddress = truncate 
-    ? `${address.slice(0, 6)}...${address.slice(-4)}` 
+  const displayAddress = truncate
+    ? `${address.slice(0, 6)}...${address.slice(-4)}`
     : address;
 
   return (

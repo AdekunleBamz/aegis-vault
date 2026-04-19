@@ -67,7 +67,7 @@ export function RichTable<T>({
   const handleSort = (column: TableColumn<T>) => {
     if (!column.sortable || !onSort) return
 
-    const newDirection = 
+    const newDirection =
       sortColumn === column.key && sortDirection === 'asc' ? 'desc' : 'asc'
     onSort(column.key, newDirection)
   }
@@ -81,7 +81,7 @@ export function RichTable<T>({
   const cellPadding = compact ? 'px-3 py-2' : 'px-4 py-3'
 
   return (
-    <div 
+    <div
       className={`
         bg-white dark:bg-gray-800 rounded-xl
         border border-gray-200 dark:border-gray-700
@@ -92,7 +92,7 @@ export function RichTable<T>({
       <div className="overflow-x-auto">
         <table className="w-full">
           {/* Header */}
-          <thead 
+          <thead
             className={`
               bg-gray-50 dark:bg-gray-700/50
               border-b border-gray-200 dark:border-gray-700
@@ -164,7 +164,7 @@ export function RichTable<T>({
             ) : data.length === 0 ? (
               // Empty State
               <tr>
-                <td 
+                <td
                   colSpan={columns.length + (selectable ? 1 : 0)}
                   className="px-4 py-12 text-center"
                 >
@@ -198,7 +198,7 @@ export function RichTable<T>({
                   >
                     {/* Row Checkbox */}
                     {selectable && (
-                      <td 
+                      <td
                         className={cellPadding}
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -237,18 +237,18 @@ export function RichTable<T>({
 }
 
 // Sort Icon Component
-function TableSortIcon({ 
-  active, 
-  direction 
-}: { 
+function TableSortIcon({
+  active,
+  direction
+}: {
   active: boolean
-  direction?: 'asc' | 'desc' 
+  direction?: 'asc' | 'desc'
 }) {
   return (
-    <svg 
+    <svg
       className={`w-4 h-4 ${active ? 'text-purple-500' : 'text-gray-400'}`}
-      fill="none" 
-      stroke="currentColor" 
+      fill="none"
+      stroke="currentColor"
       viewBox="0 0 24 24"
     >
       {!active || direction === 'asc' ? (
@@ -289,7 +289,7 @@ export function TablePagination({
 }: TablePaginationProps) {
   const getVisiblePages = () => {
     const pages: (number | 'ellipsis')[] = []
-    
+
     if (totalPages <= maxVisiblePages) {
       return Array.from({ length: totalPages }, (_, i) => i + 1)
     }

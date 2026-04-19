@@ -2,7 +2,7 @@
 
 /**
  * @file Alert components for Aegis Vault
- * 
+ *
  * Provides Alert and BannerAlert components for displaying
  * contextual feedback messages to users.
  */
@@ -66,7 +66,7 @@ const variantStyles = {
 
 /**
  * Alert component for displaying contextual feedback messages.
- * 
+ *
  * @param props - Component props
  * @returns A styled alert message container
  */
@@ -93,7 +93,7 @@ export function Alert({
       <span className={`flex-shrink-0 ${styles.icon}`}>
         {icon || styles.defaultIcon}
       </span>
-      
+
       <div className="flex-1 min-w-0">
         {title && (
           <h4 className="font-medium mb-1">{title}</h4>
@@ -128,7 +128,7 @@ export interface BannerAlertProps extends Omit<AlertProps, 'dismissible'> {
 
 /**
  * Full-width banner alert, typically displayed at the top of a page.
- * 
+ *
  * @param props - Component props
  * @returns A full-width banner alert message
  */

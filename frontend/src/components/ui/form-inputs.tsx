@@ -67,7 +67,7 @@ export function SearchInput({
           </button>
         )}
       </div>
-      
+
       {showSuggestions && suggestions.length > 0 && value && (
         <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg overflow-hidden">
           {suggestions.map((suggestion, index) => (

@@ -27,9 +27,9 @@ const sizeClasses = {
   lg: 'text-base py-3 px-5',
 };
 
-export function Tabs({ 
-  tabs, 
-  defaultTab, 
+export function Tabs({
+  tabs,
+  defaultTab,
   variant = 'line',
   size = 'md',
   fullWidth = false,
@@ -111,7 +111,7 @@ export function Tabs({
 
   const getTabStyles = (isActive: boolean, isDisabled: boolean) => {
     const base = `font-medium transition-all duration-200 ${sizeClasses[size]}`;
-    
+
     if (isDisabled) {
       return `${base} text-gray-600 cursor-not-allowed`;
     }
@@ -119,20 +119,20 @@ export function Tabs({
     switch (variant) {
       case 'pills':
         return `${base} rounded-lg ${
-          isActive 
-            ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/25' 
+          isActive
+            ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/25'
             : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
         }`;
       case 'enclosed':
         return `${base} border-b-2 ${
-          isActive 
-            ? 'border-blue-500 bg-gray-800 text-white rounded-t-lg' 
+          isActive
+            ? 'border-blue-500 bg-gray-800 text-white rounded-t-lg'
             : 'border-transparent text-gray-400 hover:text-white'
         }`;
       case 'soft':
         return `${base} rounded-lg ${
-          isActive 
-            ? 'bg-blue-500/15 text-blue-400' 
+          isActive
+            ? 'bg-blue-500/15 text-blue-400'
             : 'text-gray-400 hover:text-white hover:bg-gray-700/30'
         }`;
       default: // line
@@ -142,10 +142,10 @@ export function Tabs({
 
   return (
     <div className={className}>
-      <div 
+      <div
         ref={tabsRef}
         className={`relative flex ${fullWidth ? '' : 'inline-flex'} ${
-          variant === 'line' ? 'border-b border-gray-700' : 
+          variant === 'line' ? 'border-b border-gray-700' :
           variant === 'pills' ? 'bg-gray-800/50 rounded-lg p-1 gap-1' :
           variant === 'enclosed' ? 'border-b border-gray-700' :
           'gap-1'
@@ -162,7 +162,7 @@ export function Tabs({
             onClick={() => handleTabChange(tab.id)}
             onKeyDown={(event) => handleTabKeyDown(event, index)}
             disabled={tab.disabled}
-            className={`${getTabStyles(activeTab === tab.id, !!tab.disabled)} 
+            className={`${getTabStyles(activeTab === tab.id, !!tab.disabled)}
               ${fullWidth ? 'flex-1' : ''} flex items-center justify-center gap-2`}
             role="tab"
             id={`tab-${tab.id}`}
@@ -174,8 +174,8 @@ export function Tabs({
             {tab.label}
             {tab.badge !== undefined && (
               <span className={`ml-1.5 px-1.5 py-0.5 text-xs rounded-full font-medium ${
-                activeTab === tab.id 
-                  ? 'bg-white/20 text-white' 
+                activeTab === tab.id
+                  ? 'bg-white/20 text-white'
                   : 'bg-gray-700 text-gray-400'
               }`}>
                 {tab.badge}
@@ -183,7 +183,7 @@ export function Tabs({
             )}
           </button>
         ))}
-        
+
         {/* Animated indicator for line variant */}
         {variant === 'line' && (
           <div
@@ -192,7 +192,7 @@ export function Tabs({
           />
         )}
       </div>
-      
+
       {/* Tab panels */}
       <div className="py-4">
         {tabs.map((tab) => (
@@ -237,9 +237,9 @@ export function VerticalTabs({ tabs, defaultTab, onChange }: VerticalTabsProps) 
             onClick={() => handleTabChange(tab.id)}
             disabled={tab.disabled}
             className={`text-left px-4 py-3 rounded-lg text-sm font-medium transition-all
-              ${activeTab === tab.id 
-                ? 'bg-blue-500/15 text-blue-400 border-l-2 border-blue-500' 
-                : tab.disabled 
+              ${activeTab === tab.id
+                ? 'bg-blue-500/15 text-blue-400 border-l-2 border-blue-500'
+                : tab.disabled
                   ? 'text-gray-600 cursor-not-allowed'
                   : 'text-gray-400 hover:text-white hover:bg-gray-700/30'}`}
           >

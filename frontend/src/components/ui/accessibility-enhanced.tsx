@@ -93,7 +93,7 @@ export const contrastClasses = {
     low: 'text-gray-300', // Lower contrast (use for secondary text)
   },
   bg: {
-    dark: 'bg-gray-950', // Darkest background  
+    dark: 'bg-gray-950', // Darkest background
     darker: 'bg-gray-900', // Dark background
   },
 };
