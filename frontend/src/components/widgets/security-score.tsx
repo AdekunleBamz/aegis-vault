@@ -5,15 +5,16 @@ import { motion } from 'framer-motion';
 import { ShieldCheck, AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export function SecurityScore() {
-    const score = 94; // Out of 100
+const SECURITY_SCORE = 94; // Out of 100
 
-    const riskFactors = [
-        { label: 'Smart Contract Audit', status: 'secure', value: 'Verified' },
-        { label: 'Liquidity Depth', status: 'secure', value: 'High' },
-        { label: 'Centralization Risk', status: 'warning', value: 'Low' },
-        { label: 'Market Volatility', status: 'warning', value: 'Moderate' },
-    ];
+const RISK_FACTORS = [
+    { label: 'Smart Contract Audit', status: 'secure', value: 'Verified' },
+    { label: 'Liquidity Depth', status: 'secure', value: 'High' },
+    { label: 'Centralization Risk', status: 'warning', value: 'Low' },
+    { label: 'Market Volatility', status: 'warning', value: 'Moderate' },
+];
+
+export function SecurityScore() {
 
     return (
         <div className="p-8 rounded-[40px] bg-background border border-border shadow-sm group hover:shadow-xl transition-all duration-500 overflow-hidden relative">
@@ -21,7 +22,7 @@ export function SecurityScore() {
 
             <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
                 {/* Radial Score */}
-                <div className="relative w-48 h-48 flex items-center justify-center" aria-label={`Protocol safety score: ${score} out of 100`}>
+                <div className="relative w-48 h-48 flex items-center justify-center" aria-label={`Protocol safety score: ${SECURITY_SCORE} out of 100`}>
                     <svg className="w-full h-full transform -rotate-90" aria-hidden="true">
                         <circle
                             cx="96"
@@ -41,7 +42,7 @@ export function SecurityScore() {
                             fill="transparent"
                             strokeDasharray={502.6}
                             initial={{ strokeDashoffset: 502.6 }}
-                            animate={{ strokeDashoffset: 502.6 * (1 - score / 100) }}
+                            animate={{ strokeDashoffset: 502.6 * (1 - SECURITY_SCORE / 100) }}
                             transition={{ duration: 2, ease: "easeOut" }}
                             className="text-emerald-500"
                             strokeLinecap="round"
@@ -54,7 +55,7 @@ export function SecurityScore() {
                             transition={{ delay: 0.5 }}
                             className="text-5xl font-black tracking-tight"
                         >
-                            {score}
+                            {SECURITY_SCORE}
                         </motion.span>
                         <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Safety Score</span>
                     </div>
@@ -62,7 +63,7 @@ export function SecurityScore() {
 
                 {/* Risk Grid */}
                 <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {riskFactors.map((factor, i) => (
+                    {RISK_FACTORS.map((factor, i) => (
                         <motion.div
                             key={factor.label}
                             initial={{ opacity: 0, x: 20 }}
