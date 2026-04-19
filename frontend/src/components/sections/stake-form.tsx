@@ -24,32 +24,14 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+function formatAmount(value: number): string {
+  if (!Number.isFinite(value) || value <= 0) {
+    return '';
+  }
+  return value.toFixed(2).replace(/\.00$/, '');
+}
+
 export function StakeForm() {
-  const { address, isConnected, connect } = useWallet();
-  const { stxBalance } = useBalances(address || '');
-  const { stake, isLoading, error } = useStaking(address || '');
-  const [amount, setAmount] = useState('');
-  const [success, setSuccess] = useState<string | null>(null);
-  const [validationError, setValidationError] = useState<string | null>(null);
-
-  const numAmount = parseFloat(amount) || 0;
-  const balanceSTX = Number(stxBalance) / 1e6;
-
-  const hasError = useMemo(() => {
-    if (!amount) return null;
-    if (numAmount <= 0) return 'Amount must be greater than 0';
-    if (numAmount > balanceSTX) return 'Insufficient STX balance';
-    if (numAmount < 0.000001) return 'Amount is too small for protocol';
-    return null;
-  }, [amount, numAmount, balanceSTX]);
-
-  const formatAmount = (value: number) => {
-    if (!Number.isFinite(value) || value <= 0) {
-      return '';
-    }
-
-    return value.toFixed(2).replace(/\.00$/, '');
-  };
 
   const setSuggestedAmount = (value: number) => {
     setAmount(formatAmount(Math.min(value, balanceSTX)));
