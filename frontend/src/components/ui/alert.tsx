@@ -103,9 +103,10 @@ export function Alert({
 
       {dismissible && onDismiss && (
         <button
+          type="button"
           onClick={onDismiss}
           className="flex-shrink-0 p-1 hover:opacity-70 transition-opacity"
-          aria-label="Dismiss"
+          aria-label="Dismiss alert"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
