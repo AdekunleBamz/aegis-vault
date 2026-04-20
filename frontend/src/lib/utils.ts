@@ -112,3 +112,16 @@ export function isValidAmount(amount: unknown): boolean {
   const n = Number(amount);
   return Number.isFinite(n) && n > 0;
 }
+
+/**
+ * Clamps a numeric value to within [min, max].
+ *
+ * @param value - The value to clamp
+ * @param min - Minimum allowed value
+ * @param max - Maximum allowed value
+ * @returns The clamped value
+ */
+export function clamp(value: number, min: number, max: number): number {
+  if (!Number.isFinite(value)) return min;
+  return Math.min(Math.max(value, min), max);
+}
