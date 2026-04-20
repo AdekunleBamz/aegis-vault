@@ -447,4 +447,14 @@ export function isValidStakeAmountSTX(amount: number, minStx = 0.01): boolean {
   return Number.isFinite(amount) && amount >= minStx;
 }
 
+/**
+ * Returns true if the value is a non-empty string after trimming.
+ *
+ * @param value - The value to test
+ * @returns True if `value` is a non-empty string
+ */
+export function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
 export default validation
