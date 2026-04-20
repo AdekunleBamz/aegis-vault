@@ -125,3 +125,19 @@ export function clamp(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.min(Math.max(value, min), max);
 }
+
+/**
+ * Returns a debounced version of a function that delays invoking `fn`
+ * until after `delay` ms have elapsed since the last invocation.
+ *
+ * @param fn - The function to debounce
+ * @param delay - Delay in milliseconds
+ * @returns Debounced function
+ */
+export function debounce<T extends (...args: unknown[]) => void>(fn: T, delay: number): (...args: Parameters<T>) => void {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
