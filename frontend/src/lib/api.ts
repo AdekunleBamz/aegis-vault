@@ -144,3 +144,24 @@ export async function getCurrentBlockHeight(): Promise<number> {
   const data = await response.json();
   return data.stacks_tip_height;
 }
+
+/**
+ * Fetches the STX price in USD from the Stacks API.
+ *
+ * @returns STX price in USD, or null if unavailable.
+ */
+export async function getSTXPrice(): Promise<number | null> {
+  try {
+    const response = await fetch(`${API.STACKS_API}/extended/v1/market/tokens/ft/stx/prices`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const priceUsd = Number(data?.price_usd);
+    return Number.isFinite(priceUsd) && priceUsd > 0 ? priceUsd : null;
+  } catch {
+    return null;
+  }
+}
