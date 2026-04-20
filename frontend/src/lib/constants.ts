@@ -131,3 +131,8 @@ export const BLOCKS_PER_QUARTER = 13104;
  * Cooldown period in blocks required between unstake request and withdrawal.
  */
 export const UNSTAKE_COOLDOWN_BLOCKS = 288;
+
+/**
+ * Maximum number of reward entries shown in the rewards history display.
+ */
+export const MAX_DISPLAY_REWARDS = 50;
