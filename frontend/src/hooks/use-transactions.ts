@@ -36,6 +36,7 @@ export function useTransactions(
   address: string,
   limit = 20
 ): UseTransactionsReturn {
+  const safeLimit = Number.isInteger(limit) && limit > 0 ? limit : 20;
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(!!address);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +48,7 @@ export function useTransactions(
     setError(null);
 
     try {
-      const txs = await getAccountTransactions(address, limit);
+      const txs = await getAccountTransactions(address, safeLimit);
       // Filter for Aegis-related transactions
       const aegisTxs = txs.filter(
         (tx) => tx.contract_call?.contract_id.includes('aegis-')
@@ -59,7 +60,7 @@ export function useTransactions(
     } finally {
       setIsLoading(false);
     }
-  }, [address, limit]);
+  }, [address, safeLimit]);
 
   useEffect(() => {
     fetchTransactions();
