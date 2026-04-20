@@ -67,5 +67,7 @@ export function useToast(): UseToastReturn {
         clearAll,
         toastSuccess,
         toastError,
+        toastCount: toasts.length,
+        hasToasts: toasts.length > 0,
     };
 }
