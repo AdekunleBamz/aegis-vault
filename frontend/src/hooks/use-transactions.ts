@@ -74,6 +74,7 @@ export function useTransactions(
     transactions,
     isLoading,
     error,
+    hasError: error !== null,
     count: transactions.length,
     hasTransactions: transactions.length > 0,
     refetch: fetchTransactions,
