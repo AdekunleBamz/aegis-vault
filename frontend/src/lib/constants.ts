@@ -136,3 +136,8 @@ export const UNSTAKE_COOLDOWN_BLOCKS = 288;
  * Maximum number of reward entries shown in the rewards history display.
  */
 export const MAX_DISPLAY_REWARDS = 50;
+
+/**
+ * Default number of items per paginated results page.
+ */
+export const DEFAULT_PAGE_SIZE = 20;
