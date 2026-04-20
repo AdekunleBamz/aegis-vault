@@ -167,3 +167,15 @@ export function toTitleCase(str: string): string {
     .replace(/^./, (c) => c.toUpperCase())
     .trim();
 }
+
+/**
+ * Sleeps for the given number of milliseconds.
+ * Useful for intentional delays in async flows during testing/dev.
+ *
+ * @param ms - Milliseconds to wait
+ * @returns Promise that resolves after the delay
+ */
+export function sleep(ms: number): Promise<void> {
+  const safeMs = Number.isFinite(ms) && ms >= 0 ? ms : 0;
+  return new Promise((resolve) => setTimeout(resolve, safeMs));
+}
