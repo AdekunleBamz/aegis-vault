@@ -65,4 +65,8 @@ describe('validation utils', () => {
   it('accepts trimmed valid STX amount strings', () => {
     expect(isValidStxAmount(' 12.123456 ')).toBe(true)
   })
+
+  it('rejects STX amount strings with more than 6 decimals', () => {
+    expect(isValidStxAmount('1.1234567')).toBe(false)
+  })
 })
