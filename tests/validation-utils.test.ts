@@ -105,4 +105,8 @@ describe('validation utils', () => {
   it('converts decimal STX numeric input to micro-STX', () => {
     expect(stxToMicroStx(0.25)).toBe(250_000)
   })
+
+  it('rejects empty stacks address helper input', () => {
+    expect(isValidStacksAddress('')).toBe(false)
+  })
 })
