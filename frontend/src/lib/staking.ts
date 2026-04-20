@@ -147,3 +147,23 @@ export function getTierByName(name: string): (typeof TIERS)[number] {
 export function stakeAmountToSTX(microStx: bigint): number {
   return Number(microStx) / 1e6;
 }
+
+/**
+ * Returns true if the staker has an active stake (amount > 0).
+ *
+ * @param info - StakerInfo from getStakerInfo
+ * @returns True when the staker currently has funds staked
+ */
+export function isActiveStaker(info: StakerInfo | null): boolean {
+  return info !== null && info.amountStaked > 0n;
+}
+
+/**
+ * Returns true if the staker has pending rewards to claim.
+ *
+ * @param info - StakerInfo from getStakerInfo
+ * @returns True when pendingRewards is greater than zero
+ */
+export function hasClaimableRewards(info: StakerInfo | null): boolean {
+  return info !== null && info.pendingRewards > 0n;
+}
