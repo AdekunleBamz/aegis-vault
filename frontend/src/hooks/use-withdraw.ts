@@ -22,7 +22,11 @@ export interface UseWithdrawReturn {
   requestWithdraw: (amount: number) => Promise<TransactionResult>;
   completeWithdraw: () => Promise<TransactionResult>;
   isLoading: boolean;
+  /** True when not loading and no error — ready for next action */
+  isIdle: boolean;
   error: string | null;
+  /** Timestamp (ms) of the most recent completed withdrawal, or null */
+  completedAt: number | null;
   reset: () => void;
 }
 
@@ -37,6 +41,7 @@ export interface UseWithdrawReturn {
 export function useWithdraw(): UseWithdrawReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [completedAt, setCompletedAt] = useState<number | null>(null);
 
   const requestWithdraw = useCallback(
     async (amount: number): Promise<TransactionResult> => {
@@ -83,5 +88,13 @@ export function useWithdraw(): UseWithdrawReturn {
     setIsLoading(false);
   }, []);
 
-  return { requestWithdraw, completeWithdraw, isLoading, error, reset };
+  return {
+    requestWithdraw,
+    completeWithdraw,
+    isLoading,
+    isIdle: !isLoading && error === null,
+    error,
+    completedAt,
+    reset,
+  };
 }
