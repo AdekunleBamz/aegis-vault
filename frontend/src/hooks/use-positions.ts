@@ -36,7 +36,8 @@ export function usePositions(address: string): UsePositionsReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchPositions = useCallback(async () => {
-    if (!address) {
+    const trimmedAddress = typeof address === 'string' ? address.trim() : '';
+    if (!trimmedAddress) {
       setPosition(null);
       setError(null);
       setIsLoading(false);
@@ -47,7 +48,7 @@ export function usePositions(address: string): UsePositionsReturn {
     setError(null);
 
     try {
-      const stakerInfo = await getStakerInfo(address);
+      const stakerInfo = await getStakerInfo(trimmedAddress);
       setPosition(stakerInfo);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to fetch positions';
