@@ -414,6 +414,7 @@ export function useAutosave<T>(
   saveFn: (data: T) => Promise<void>,
   delay: number = 2000
 ): UseAutosaveReturn {
+  const safeDelay = typeof delay === 'number' && delay >= 0 ? delay : 2000;
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -442,14 +443,14 @@ export function useAutosave<T>(
       } finally {
         setIsSaving(false);
       }
-    }, delay);
+    }, safeDelay);
 
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [data, saveFn, delay]);
+  }, [data, saveFn, safeDelay]);
 
   return { isSaving, lastSaved, error };
 }
