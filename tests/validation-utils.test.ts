@@ -52,4 +52,8 @@ describe('validation utils', () => {
   it('accepts uppercase hex transaction hashes', () => {
     expect(isValidTxId(`0x${'A'.repeat(64)}`)).toBe(true)
   })
+
+  it('rejects transaction hashes with uppercase 0X prefix', () => {
+    expect(isValidTxId(`0X${'a'.repeat(64)}`)).toBe(false)
+  })
 })
