@@ -81,4 +81,8 @@ describe('validation utils', () => {
   it('rejects negative STX amount strings in validator helper', () => {
     expect(isValidStxAmount('-1')).toBe(false)
   })
+
+  it('rejects tx ids that are missing the 0x prefix', () => {
+    expect(isValidTxId('a'.repeat(64))).toBe(false)
+  })
 })
