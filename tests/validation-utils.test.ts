@@ -32,6 +32,10 @@ describe('validation utils', () => {
     expect(stxToMicroStx(0)).toBe(0)
   })
 
+  it('rejects non-finite STX values', () => {
+    expect(() => stxToMicroStx(Number.POSITIVE_INFINITY)).toThrow('Invalid STX amount')
+  })
+
   it('validates stacks addresses and tx ids', () => {
     expect(isValidStacksAddress('SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT')).toBe(true)
     expect(isValidStacksAddress(' SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT ')).toBe(true)
