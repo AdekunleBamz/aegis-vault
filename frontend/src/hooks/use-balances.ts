@@ -34,7 +34,8 @@ export function useBalances(address: string): UseBalancesReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchBalances = useCallback(async () => {
-    if (!address) {
+    const trimmedAddress = typeof address === 'string' ? address.trim() : '';
+    if (!trimmedAddress) {
       setStxBalance(0n);
       setAgsBalance(0n);
       setError(null);
@@ -45,7 +46,7 @@ export function useBalances(address: string): UseBalancesReturn {
     setError(null);
 
     try {
-      const balance = await getAccountBalance(address);
+      const balance = await getAccountBalance(trimmedAddress);
       setStxBalance(BigInt(balance.stx.balance));
 
       // Find AGS token balance
