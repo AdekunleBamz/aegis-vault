@@ -69,4 +69,8 @@ describe('validation utils', () => {
   it('rejects STX amount strings with more than 6 decimals', () => {
     expect(isValidStxAmount('1.1234567')).toBe(false)
   })
+
+  it('rejects STX amount strings with non-numeric suffixes', () => {
+    expect(isValidStxAmount('2.5stx')).toBe(false)
+  })
 })
