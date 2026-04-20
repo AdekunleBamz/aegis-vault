@@ -24,6 +24,10 @@ describe('validation utils', () => {
     expect(() => stxToMicroStx('')).toThrow('Invalid STX amount')
   })
 
+  it('trims valid STX amount strings before conversion', () => {
+    expect(stxToMicroStx(' 2.5 ')).toBe(2_500_000)
+  })
+
   it('validates stacks addresses and tx ids', () => {
     expect(isValidStacksAddress('SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT')).toBe(true)
     expect(isValidStacksAddress(' SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT ')).toBe(true)
