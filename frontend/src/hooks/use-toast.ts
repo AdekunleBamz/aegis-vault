@@ -32,9 +32,10 @@ export function useToast(): UseToastReturn {
         setToasts((prev) => [...prev, newToast]);
 
         if (toast.duration !== 0) {
+            const delay = typeof toast.duration === 'number' && toast.duration > 0 ? toast.duration : 5000;
             setTimeout(() => {
                 removeToast(id);
-            }, toast.duration || 5000);
+            }, delay);
         }
 
         return id;
