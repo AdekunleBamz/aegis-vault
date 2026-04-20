@@ -18,6 +18,7 @@ export function Tooltip({
   className = ''
 }: TooltipProps) {
   const tooltipId = useId();
+  const safeDelay = typeof delay === 'number' && delay >= 0 ? delay : 200;
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -28,7 +29,7 @@ export function Tooltip({
     timeoutRef.current = setTimeout(() => {
       setIsVisible(true);
       updatePosition();
-    }, delay);
+    }, safeDelay);
   };
 
   const hideTooltip = () => {
