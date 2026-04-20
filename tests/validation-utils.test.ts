@@ -85,4 +85,8 @@ describe('validation utils', () => {
   it('rejects tx ids that are missing the 0x prefix', () => {
     expect(isValidTxId('a'.repeat(64))).toBe(false)
   })
+
+  it('rejects tx ids with non-hex characters', () => {
+    expect(isValidTxId(`0x${'g'.repeat(64)}`)).toBe(false)
+  })
 })
