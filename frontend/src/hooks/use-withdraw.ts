@@ -94,6 +94,8 @@ export function useWithdraw(): UseWithdrawReturn {
     isLoading,
     isIdle: !isLoading && error === null,
     error,
+    hasError: error !== null,
+    hasCompleted: completedAt !== null,
     completedAt,
     reset,
   };
