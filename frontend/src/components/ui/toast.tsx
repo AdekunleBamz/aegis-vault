@@ -34,7 +34,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     const newToast = { ...toast, id };
     setToasts((prev) => [...prev, newToast]);
 
-    const duration = toast.duration ?? 5000;
+    const duration = typeof toast.duration === 'number' && toast.duration > 0 ? toast.duration : 5000;
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, duration);
