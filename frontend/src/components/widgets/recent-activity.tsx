@@ -21,6 +21,11 @@ import {
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
+const STACKS_NETWORK =
+  String(process.env.NEXT_PUBLIC_NETWORK || 'mainnet').trim().toLowerCase() === 'testnet'
+    ? 'testnet'
+    : 'mainnet';
+
 export function RecentActivity() {
   const { address, isConnected } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 10);
@@ -105,7 +110,7 @@ export function RecentActivity() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=mainnet`}
+                    href={`https://explorer.stacks.co/txid/${tx.tx_id}?chain=${STACKS_NETWORK}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`View transaction ${info.label} ${tx.tx_status} from ${formatRelativeTime(tx.burn_block_time)} on Stacks Explorer`}
