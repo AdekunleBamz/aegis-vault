@@ -4,6 +4,7 @@ import {
   stxToMicroStx,
   isValidStacksAddress,
   isValidTxId,
+  isValidStxAmount,
 } from '../frontend/src/lib/validation'
 
 describe('validation utils', () => {
@@ -59,5 +60,9 @@ describe('validation utils', () => {
 
   it('rejects lowercase stacks addresses that do not match format', () => {
     expect(isValidStacksAddress('sp5k2rhmsbh4pap4pgx77mcvnk1zeed07cwx9tjt')).toBe(false)
+  })
+
+  it('accepts trimmed valid STX amount strings', () => {
+    expect(isValidStxAmount(' 12.123456 ')).toBe(true)
   })
 })
