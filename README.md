@@ -107,6 +107,7 @@ npm run check:fast
 ```bash
 # Check contracts
 clarinet check
+npm run contracts:check
 
 # Equivalent root script
 npm run contracts:check
