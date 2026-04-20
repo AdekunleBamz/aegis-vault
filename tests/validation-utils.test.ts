@@ -121,4 +121,8 @@ describe('validation utils', () => {
   it('rejects scientific notation STX strings in conversion helper', () => {
     expect(() => stxToMicroStx('1e3')).toThrow('Invalid STX amount')
   })
+
+  it('converts six-decimal minimum STX strings correctly', () => {
+    expect(stxToMicroStx('0.000001')).toBe(1)
+  })
 })
