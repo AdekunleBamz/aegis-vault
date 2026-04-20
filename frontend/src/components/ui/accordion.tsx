@@ -43,6 +43,7 @@ export function AccordionItem({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between px-4 py-3 bg-gray-800 hover:bg-gray-750 transition-colors"
+        aria-expanded={isOpen}
       >
         <span className="font-medium text-white">{title}</span>
         <svg
