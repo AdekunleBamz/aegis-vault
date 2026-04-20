@@ -4,3 +4,4 @@
 - Install dependencies with npm ci at root and frontend.
 - Confirm Clarinet is installed and available in PATH.
 - Keep one funded wallet for staking smoke tests.
+- Copy `.env.example` values before running frontend smoke checks.
