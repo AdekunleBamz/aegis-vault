@@ -11,3 +11,4 @@
 - Prevents silent precision loss when users submit values with too many decimal places.
 - Keeps transaction amount handling aligned with micro-STX precision expectations.
 - Improves confidence in form/input handling before contract calls.
+- Reduces support churn by returning clearer validation feedback before wallet confirmation.
