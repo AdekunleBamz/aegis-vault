@@ -19,6 +19,9 @@ export function CopyButton({
 
   const handleCopy = async () => {
     try {
+      if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+        throw new Error('Clipboard API unavailable');
+      }
       await navigator.clipboard.writeText(text);
       setCopied(true);
       onCopy?.();
