@@ -426,4 +426,14 @@ export function getFieldError(error: import('zod').ZodError, field: string): str
   return error.issues.find((issue) => issue.path.join('.') === field)?.message;
 }
 
+/**
+ * Returns true if the lock period (in days) is within the allowed range [3, 30].
+ *
+ * @param days - The lock period to validate
+ * @returns True if within bounds
+ */
+export function isValidLockPeriod(days: number): boolean {
+  return Number.isInteger(days) && days >= 3 && days <= 30;
+}
+
 export default validation
