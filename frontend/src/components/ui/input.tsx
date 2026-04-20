@@ -103,7 +103,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <p id={helpTextId} className="text-gray-500 text-sm">{helperText}</p>
           ) : <span />}
           {showCharCount && maxLength && (
-            <span className={`text-xs ${charCount >= maxLength ? 'text-red-400' : 'text-gray-500'}`}>
+            <span
+              className={`text-xs ${charCount >= maxLength ? 'text-red-400' : 'text-gray-500'}`}
+              aria-live='polite'
+              aria-atomic='true'
+            >
               {charCount}/{maxLength}
             </span>
           )}
