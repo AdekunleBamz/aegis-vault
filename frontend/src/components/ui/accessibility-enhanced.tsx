@@ -19,7 +19,7 @@ export const AccessibleField: React.FC<AccessibleFieldProps> = ({
   children,
   required = false,
 }) => {
-  const id = `field-${Math.random().toString(36).substr(2, 9)}`;
+  const id = `field-${Math.random().toString(36).slice(2, 11)}`;
   const describedBy = [description && `${id}-desc`, error && `${id}-error`]
     .filter(Boolean)
     .join(' ');
