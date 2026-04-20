@@ -42,8 +42,8 @@ describe('validation utils', () => {
   })
 
   it('validates stacks addresses and tx ids', () => {
-    expect(isValidStacksAddress('SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT')).toBe(true)
-    expect(isValidStacksAddress(' SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT ')).toBe(true)
+    expect(isValidStacksAddress('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')).toBe(true)
+    expect(isValidStacksAddress(' ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 ')).toBe(true)
     expect(isValidStacksAddress('SP5K2RHMSB')).toBe(false)
     expect(isValidTxId(`0x${'a'.repeat(64)}`)).toBe(true)
     expect(isValidTxId(` 0x${'a'.repeat(64)} `)).toBe(true)
