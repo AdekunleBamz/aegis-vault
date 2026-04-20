@@ -91,6 +91,7 @@ export function useNetwork(): UseNetworkReturn {
     isTestnet: NETWORK_TYPE === 'testnet',
     isDevnet: NETWORK_TYPE === 'devnet',
     lastFetched,
+    hasError: error !== null,
     refetch: fetchNetworkInfo,
   };
 }
