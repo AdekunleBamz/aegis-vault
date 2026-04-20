@@ -15,7 +15,7 @@ describe('validation utils', () => {
   })
 
   it('rejects STX values with more than 6 decimal places', () => {
-    expect(() => stxToMicroStx('0.0000001')).toThrow('STX amount cannot have more than 6 decimal places')
+    expect(() => stxToMicroStx('0.0000001')).toThrow('Invalid STX amount')
     expect(() => stxToMicroStx(1.0000007)).toThrow('STX amount cannot have more than 6 decimal places')
   })
 
