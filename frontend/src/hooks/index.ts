@@ -83,3 +83,8 @@ export {
   useFormSubmit,
   useAutosave
 } from './use-form';
+
+/**
+ * Cancelable debounce - hook that exposes a cancel function alongside the debounced value.
+ */
+export { useCancelableDebounce } from './use-debounce';
