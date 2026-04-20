@@ -173,11 +173,14 @@ export function Tabs({
             {tab.icon && <span className="flex-shrink-0">{tab.icon}</span>}
             {tab.label}
             {tab.badge !== undefined && (
-              <span className={`ml-1.5 px-1.5 py-0.5 text-xs rounded-full font-medium ${
-                activeTab === tab.id
-                  ? 'bg-white/20 text-white'
-                  : 'bg-gray-700 text-gray-400'
-              }`}>
+              <span
+                className={`ml-1.5 px-1.5 py-0.5 text-xs rounded-full font-medium ${
+                  activeTab === tab.id
+                    ? 'bg-white/20 text-white'
+                    : 'bg-gray-700 text-gray-400'
+                }`}
+                aria-label={`${tab.badge} items`}
+              >
                 {tab.badge}
               </span>
             )}
