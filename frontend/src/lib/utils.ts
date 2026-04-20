@@ -76,3 +76,39 @@ export function isDevnetAddress(address: string): boolean {
   const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
   return normalized.startsWith('SN');
 }
+
+/**
+ * Returns true if the address is a valid Stacks address on any network.
+ *
+ * @param address - The Stacks address to check
+ * @returns True for mainnet (SP), testnet (ST), or devnet (SN) addresses
+ */
+export function isStacksAddress(address: string): boolean {
+  return isMainnetAddress(address) || isTestnetAddress(address) || isDevnetAddress(address);
+}
+
+/**
+ * Truncates a Stacks address for display, keeping leading and trailing chars.
+ *
+ * @param address - The address to truncate
+ * @param startChars - Characters to keep at the start (default 6)
+ * @param endChars - Characters to keep at the end (default 4)
+ * @returns Truncated address string, e.g. "SP1234…5678"
+ */
+export function truncateAddress(address: string, startChars = 6, endChars = 4): string {
+  if (typeof address !== 'string') return '';
+  const trimmed = address.trim();
+  if (trimmed.length <= startChars + endChars) return trimmed;
+  return `${trimmed.slice(0, startChars)}…${trimmed.slice(-endChars)}`;
+}
+
+/**
+ * Returns true if the value is a finite positive number (or numeric string).
+ *
+ * @param amount - The value to check
+ * @returns True if the value represents a valid positive amount
+ */
+export function isValidAmount(amount: unknown): boolean {
+  const n = Number(amount);
+  return Number.isFinite(n) && n > 0;
+}
