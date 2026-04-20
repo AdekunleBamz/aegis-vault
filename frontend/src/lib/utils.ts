@@ -153,3 +153,17 @@ export function debounce<T extends (...args: unknown[]) => void>(fn: T, delay: n
 export function pluralize(count: number, singular: string, plural = `${singular}s`): string {
   return `${count} ${count === 1 ? singular : plural}`;
 }
+
+/**
+ * Converts a camelCase or PascalCase string to Title Case with spaces.
+ *
+ * @param str - The camelCase or PascalCase string to convert
+ * @returns Title-cased string, e.g. "stakingReward" → "Staking Reward"
+ */
+export function toTitleCase(str: string): string {
+  if (!str || typeof str !== 'string') return '';
+  return str
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (c) => c.toUpperCase())
+    .trim();
+}
