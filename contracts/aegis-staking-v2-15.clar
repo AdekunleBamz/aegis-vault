@@ -16,9 +16,9 @@
 (define-constant ERR-MAX-STAKES-REACHED (err u4005))
 
 ;; Staking parameters
-(define-constant MIN-STAKE u10000)           ;; 0.01 STX minimum
-(define-constant MAX-STAKES-PER-USER u20)    ;; Max 20 concurrent stakes
-(define-constant BLOCKS-PER-DAY u144)        ;; ~144 blocks per day
+(define-constant MIN-STAKE u10000)           ;; 0.01 STX minimum stake to participate
+(define-constant MAX-STAKES-PER-USER u20)    ;; Max 20 concurrent stakes per wallet
+(define-constant BLOCKS-PER-DAY u144)        ;; ~144 blocks per day on Stacks
 
 ;; Lock periods (in days, converted to blocks on-chain)
 (define-constant LOCK-3-DAYS u3)
