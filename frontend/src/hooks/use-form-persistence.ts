@@ -12,6 +12,8 @@ export interface UseFormPersistenceReturn {
   clearForm: () => void;
   restoreForm: () => void;
   setValues: React.Dispatch<React.SetStateAction<FormState>>;
+  /** True when the in-memory state has diverged from localStorage (i.e. unsaved changes) */
+  isDirty: boolean;
 }
 
 export function useFormPersistence(
@@ -24,25 +26,35 @@ export function useFormPersistence(
     return saved ? JSON.parse(saved) : initialState;
   });
 
+  const [savedValues, setSavedValues] = React.useState<FormState>(values);
+
   const updateField = React.useCallback((fieldName: string, value: unknown): void => {
     setValues((prev) => {
       const updated = { ...prev, [fieldName]: value };
       localStorage.setItem(`form_${formKey}`, JSON.stringify(updated));
+      setSavedValues(updated);
       return updated;
     });
   }, [formKey]);
 
   const clearForm = React.useCallback((): void => {
     setValues(initialState);
+    setSavedValues(initialState);
     localStorage.removeItem(`form_${formKey}`);
   }, [formKey, initialState]);
 
   const restoreForm = React.useCallback((): void => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(`form_${formKey}`);
-      if (saved) setValues(JSON.parse(saved));
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setValues(parsed);
+        setSavedValues(parsed);
+      }
     }
   }, [formKey]);
 
-  return { values, updateField, clearForm, restoreForm, setValues };
+  const isDirty = JSON.stringify(values) !== JSON.stringify(savedValues);
+
+  return { values, updateField, clearForm, restoreForm, setValues, isDirty };
 }
