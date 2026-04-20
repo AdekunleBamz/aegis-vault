@@ -415,4 +415,15 @@ const validation = {
   stxToMicroStx,
 }
 
+/**
+ * Returns the first ZodIssue message for the given field path, or undefined.
+ *
+ * @param error - A ZodError instance
+ * @param field - The field path to look up (e.g. "amount")
+ * @returns The first error message for that field, or undefined
+ */
+export function getFieldError(error: import('zod').ZodError, field: string): string | undefined {
+  return error.issues.find((issue) => issue.path.join('.') === field)?.message;
+}
+
 export default validation
