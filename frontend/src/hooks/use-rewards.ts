@@ -37,7 +37,7 @@ export function useRewards(): UseRewardsReturn {
       const result = await executeClaimRewards();
       return result;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Claim rewards failed';
+      const message = err instanceof Error ? err.message : 'Failed to claim rewards';
       setError(message);
       throw err;
     } finally {
