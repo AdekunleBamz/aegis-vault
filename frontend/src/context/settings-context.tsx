@@ -65,6 +65,10 @@ interface SettingsContextType {
   resetSettings: () => void;
   exportSettings: () => string;
   importSettings: (json: string) => boolean;
+  /** True when expertMode is enabled in the active settings */
+  isExpertMode: boolean;
+  /** True when balances should be hidden */
+  isBalanceHidden: boolean;
 }
 
 const SettingsContext = createContext<SettingsContextType | null>(null);
@@ -172,6 +176,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
     resetSettings,
     exportSettings,
     importSettings,
+    isExpertMode: settings.expertMode,
+    isBalanceHidden: settings.hideBalances,
   };
 
   return (
