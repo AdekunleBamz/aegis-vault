@@ -32,13 +32,15 @@ export function useFetch<T>(
     dedupingInterval = 2000,
   } = options || {};
 
+  const safeDedup = typeof dedupingInterval === 'number' && dedupingInterval >= 0 ? dedupingInterval : 2000;
+
   const lastFetchTime = useRef<number>(0);
 
   const fetchData = useCallback(async () => {
     if (!url) return;
 
     const now = Date.now();
-    if (now - lastFetchTime.current < dedupingInterval) {
+    if (now - lastFetchTime.current < safeDedup) {
       return;
     }
     lastFetchTime.current = now;
@@ -65,7 +67,7 @@ export function useFetch<T>(
         isValidating: false,
       }));
     }
-  }, [url, dedupingInterval]);
+  }, [url, safeDedup]);
 
   // Initial fetch
   useEffect(() => {
