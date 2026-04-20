@@ -15,6 +15,10 @@ interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
   setTheme: (theme: Theme) => void;
+  /** True when the active theme is dark */
+  isDark: boolean;
+  /** True when the active theme is light */
+  isLight: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -61,7 +65,7 @@ export function ThemeProvider({
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme, isDark: theme === 'dark', isLight: theme === 'light' }}>
       {children}
     </ThemeContext.Provider>
   );
