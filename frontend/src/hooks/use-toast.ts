@@ -16,6 +16,9 @@ interface UseToastReturn {
     toasts: Toast[];
     addToast: (toast: Omit<Toast, 'id'>) => string;
     removeToast: (id: string) => void;
+    clearAll: () => void;
+    toastSuccess: (message: string, description?: string) => string;
+    toastError: (message: string, description?: string) => string;
 }
 
 export function useToast(): UseToastReturn {
@@ -41,9 +44,28 @@ export function useToast(): UseToastReturn {
         return id;
     }, [removeToast]);
 
+    const clearAll = useCallback(() => {
+        setToasts([]);
+    }, []);
+
+    const toastSuccess = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'success', message, description }),
+        [addToast]
+    );
+
+    const toastError = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'error', message, description }),
+        [addToast]
+    );
+
     return {
         toasts,
         addToast,
         removeToast,
+        clearAll,
+        toastSuccess,
+        toastError,
     };
 }
