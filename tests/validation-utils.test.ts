@@ -109,4 +109,8 @@ describe('validation utils', () => {
   it('rejects empty stacks address helper input', () => {
     expect(isValidStacksAddress('')).toBe(false)
   })
+
+  it('rejects whitespace-only tx id helper input', () => {
+    expect(isValidTxId('   ')).toBe(false)
+  })
 })
