@@ -28,6 +28,10 @@ describe('validation utils', () => {
     expect(stxToMicroStx(' 2.5 ')).toBe(2_500_000)
   })
 
+  it('converts zero STX to zero micro-STX', () => {
+    expect(stxToMicroStx(0)).toBe(0)
+  })
+
   it('validates stacks addresses and tx ids', () => {
     expect(isValidStacksAddress('SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT')).toBe(true)
     expect(isValidStacksAddress(' SP5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT ')).toBe(true)
