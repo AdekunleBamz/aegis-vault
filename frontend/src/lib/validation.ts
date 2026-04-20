@@ -436,4 +436,15 @@ export function isValidLockPeriod(days: number): boolean {
   return Number.isInteger(days) && days >= 3 && days <= 30;
 }
 
+/**
+ * Returns true if the STX amount (in whole STX) meets the minimum stake threshold.
+ *
+ * @param amount - The amount to check in whole STX (not microSTX)
+ * @param minStx - Minimum valid amount in STX (default 0.01)
+ * @returns True if the amount is a finite positive number at or above the minimum
+ */
+export function isValidStakeAmountSTX(amount: number, minStx = 0.01): boolean {
+  return Number.isFinite(amount) && amount >= minStx;
+}
+
 export default validation
