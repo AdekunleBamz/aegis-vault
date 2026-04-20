@@ -60,6 +60,18 @@ export function useToast(): UseToastReturn {
         [addToast]
     );
 
+    const toastInfo = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'info', message, description }),
+        [addToast]
+    );
+
+    const toastWarning = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'warning', message, description }),
+        [addToast]
+    );
+
     return {
         toasts,
         addToast,
@@ -67,6 +79,8 @@ export function useToast(): UseToastReturn {
         clearAll,
         toastSuccess,
         toastError,
+        toastInfo,
+        toastWarning,
         toastCount: toasts.length,
         hasToasts: toasts.length > 0,
     };
