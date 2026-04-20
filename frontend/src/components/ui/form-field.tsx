@@ -27,7 +27,7 @@ export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
     },
     ref
   ) => {
-    const inputId = props.id || `input-${Math.random().toString(36).substr(2, 9)}`;
+    const inputId = props.id || `input-${Math.random().toString(36).slice(2, 11)}`;
 
     return (
       <div className="w-full">
