@@ -151,3 +151,8 @@ export const VAULT_TX_STATUS = Object.freeze({
   FAILED: 'failed',
   DROPPED: 'dropped',
 } as const);
+
+/**
+ * Minimum AGS token balance required to participate in governance votes.
+ */
+export const MIN_GOVERNANCE_AGS = 100;
