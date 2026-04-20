@@ -33,7 +33,7 @@ export function useStaking(senderAddress: string): UseStakingReturn {
 
   const stake = useCallback(
     async (amount: number): Promise<TransactionResult> => {
-      if (!senderAddress) {
+      if (!senderAddress || typeof senderAddress !== 'string' || !senderAddress.trim()) {
         throw new Error('Wallet not connected');
       }
 
