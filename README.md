@@ -94,7 +94,7 @@ cd aegis-vault
 npm ci
 
 # Install frontend dependencies
-npm --prefix frontend ci
+npm run frontend:install
 
 # Verify installation
 npm run check:fast
