@@ -77,4 +77,8 @@ describe('validation utils', () => {
   it('accepts whole-number STX amount strings', () => {
     expect(isValidStxAmount('25')).toBe(true)
   })
+
+  it('rejects negative STX amount strings in validator helper', () => {
+    expect(isValidStxAmount('-1')).toBe(false)
+  })
 })
