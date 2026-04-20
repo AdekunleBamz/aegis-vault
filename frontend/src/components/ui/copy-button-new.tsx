@@ -16,6 +16,9 @@ export const CopyButton = React.forwardRef<HTMLButtonElement, CopyButtonProps>(
 
     const handleCopy = async () => {
       try {
+        if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+          throw new Error('Clipboard not available');
+        }
         await navigator.clipboard.writeText(text);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
