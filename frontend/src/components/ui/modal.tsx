@@ -133,6 +133,7 @@ export function Modal({
             </div>
             {showCloseButton && (
               <button
+                type="button"
                 onClick={onClose}
                 className="flex-shrink-0 p-2 text-gray-400 hover:text-white hover:bg-gray-700/50
                   rounded-lg transition-all duration-150"
