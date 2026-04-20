@@ -30,6 +30,7 @@ export function CopyButton({
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
       className={`
         inline-flex items-center gap-2 px-3 py-1.5
@@ -38,6 +39,7 @@ export function CopyButton({
         rounded-lg transition-all
         ${className}
       `}
+      aria-label={copied ? 'Copied to clipboard' : 'Copy to clipboard'}
       title={copied ? 'Copied!' : 'Copy to clipboard'}
     >
       {children || (
