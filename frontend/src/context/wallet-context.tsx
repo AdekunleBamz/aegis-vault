@@ -35,6 +35,8 @@ interface WalletState {
 interface WalletContextValue extends WalletState {
   connect: () => void;
   disconnect: () => void;
+  /** Alias for isConnected — true when a wallet is active */
+  isWalletReady: boolean;
 }
 
 const WalletContext = createContext<WalletContextValue | undefined>(undefined);
@@ -144,7 +146,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
   }, []);
 
   return (
-    <WalletContext.Provider value={{ ...state, connect, disconnect }}>
+    <WalletContext.Provider value={{ ...state, connect, disconnect, isWalletReady: state.isConnected }}>
       {children}
     </WalletContext.Provider>
   );
