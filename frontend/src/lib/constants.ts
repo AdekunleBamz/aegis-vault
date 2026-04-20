@@ -141,3 +141,13 @@ export const MAX_DISPLAY_REWARDS = 50;
  * Default number of items per paginated results page.
  */
 export const DEFAULT_PAGE_SIZE = 20;
+
+/**
+ * Frozen enum of on-chain transaction lifecycle states.
+ */
+export const VAULT_TX_STATUS = Object.freeze({
+  PENDING: 'pending',
+  SUCCESS: 'success',
+  FAILED: 'failed',
+  DROPPED: 'dropped',
+} as const);
