@@ -97,4 +97,8 @@ describe('validation utils', () => {
   it('converts one micro-STX to minimal STX value', () => {
     expect(microStxToStx(1)).toBe(0.000001)
   })
+
+  it('converts whole-number STX numeric input to micro-STX', () => {
+    expect(stxToMicroStx(3)).toBe(3_000_000)
+  })
 })
