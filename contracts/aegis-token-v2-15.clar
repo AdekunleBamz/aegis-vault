@@ -17,7 +17,7 @@
 (define-constant TOKEN-URI (some u"https://aegis.finance/token-metadata.json"))
 
 ;; Supply limits
-(define-constant MAX-SUPPLY u1000000000000000) ;; 1 billion tokens with 6 decimals
+(define-constant MAX-SUPPLY u1000000000000000) ;; 1 billion AGS tokens (u1000000 micro-units per token)
 
 ;; Error codes
 (define-constant ERR-NOT-AUTHORIZED (err u7001))
