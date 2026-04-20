@@ -126,3 +126,8 @@ export const STALE_AFTER_MS = 60000;
  * Number of blocks in an approximate calendar quarter (144 blocks/day × 91 days).
  */
 export const BLOCKS_PER_QUARTER = 13104;
+
+/**
+ * Cooldown period in blocks required between unstake request and withdrawal.
+ */
+export const UNSTAKE_COOLDOWN_BLOCKS = 288;
