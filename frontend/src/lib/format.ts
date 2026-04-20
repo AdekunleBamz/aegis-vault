@@ -278,3 +278,16 @@ export function formatAGSRaw(microAgs: string | number | bigint): string {
   const ags = Number(BigInt(microAgs)) / Math.pow(10, AGS_DECIMALS);
   return ags.toFixed(6).replace(/\.?0+$/, '') || '0';
 }
+
+/**
+ * Format an APY (Annual Percentage Yield) value for display.
+ *
+ * @param apy - The APY as a plain percentage number (e.g. 15.5 for 15.5%)
+ * @param decimals - Decimal places to show (default 2)
+ * @returns Formatted string such as "15.50% APY"
+ */
+export function formatAPY(apy: number, decimals = 2): string {
+  if (!Number.isFinite(apy) || apy < 0) return '0.00% APY';
+  const safeDec = Number.isInteger(decimals) && decimals >= 0 ? decimals : 2;
+  return `${apy.toFixed(safeDec)}% APY`;
+}
