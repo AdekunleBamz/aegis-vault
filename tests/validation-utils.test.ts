@@ -56,4 +56,8 @@ describe('validation utils', () => {
   it('rejects transaction hashes with uppercase 0X prefix', () => {
     expect(isValidTxId(`0X${'a'.repeat(64)}`)).toBe(false)
   })
+
+  it('rejects lowercase stacks addresses that do not match format', () => {
+    expect(isValidStacksAddress('sp5k2rhmsbh4pap4pgx77mcvnk1zeed07cwx9tjt')).toBe(false)
+  })
 })
