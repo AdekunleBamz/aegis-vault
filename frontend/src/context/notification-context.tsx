@@ -30,6 +30,10 @@ interface NotificationContextType {
   markAllAsRead: () => void;
   clearAll: () => void;
   clearOld: (maxAge?: number) => void;
+  /** Total number of notifications in the list */
+  totalCount: number;
+  /** True when there are unread notifications */
+  hasUnread: boolean;
 }
 
 const NotificationContext = createContext<NotificationContextType | null>(null);
@@ -153,6 +157,8 @@ export function NotificationProvider({
     markAllAsRead,
     clearAll,
     clearOld,
+    totalCount: notifications.length,
+    hasUnread: unreadCount > 0,
   };
 
   return (
