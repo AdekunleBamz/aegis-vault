@@ -89,4 +89,8 @@ describe('validation utils', () => {
   it('rejects tx ids with non-hex characters', () => {
     expect(isValidTxId(`0x${'g'.repeat(64)}`)).toBe(false)
   })
+
+  it('converts zero micro-STX to zero STX', () => {
+    expect(microStxToStx(0)).toBe(0)
+  })
 })
