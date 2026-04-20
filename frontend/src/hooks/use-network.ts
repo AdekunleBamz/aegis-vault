@@ -67,8 +67,8 @@ export function useNetwork(): UseNetworkReturn {
   useEffect(() => {
     fetchNetworkInfo();
 
-    // Refresh every 30 seconds
-    const interval = setInterval(fetchNetworkInfo, 30000);
+    // Refresh every 25 seconds
+    const interval = setInterval(fetchNetworkInfo, 25000);
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 
