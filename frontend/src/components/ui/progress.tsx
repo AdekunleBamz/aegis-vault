@@ -39,7 +39,9 @@ export function Progress({
   striped = false,
   className = '',
 }: ProgressProps) {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+  const safeValue = typeof value === 'number' && Number.isFinite(value) ? value : 0;
+  const safeMax = typeof max === 'number' && Number.isFinite(max) && max > 0 ? max : 100;
+  const percentage = Math.min(Math.max((safeValue / safeMax) * 100, 0), 100);
 
   return (
     <div className={className}>
@@ -56,9 +58,9 @@ export function Progress({
             ${animated ? 'animate-pulse' : ''}`}
           style={{ width: `${percentage}%` }}
           role="progressbar"
-          aria-valuenow={value}
+          aria-valuenow={safeValue}
           aria-valuemin={0}
-          aria-valuemax={max}
+          aria-valuemax={safeMax}
         />
       </div>
     </div>
