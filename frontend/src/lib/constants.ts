@@ -156,3 +156,13 @@ export const VAULT_TX_STATUS = Object.freeze({
  * Minimum AGS token balance required to participate in governance votes.
  */
 export const MIN_GOVERNANCE_AGS = 100;
+
+/**
+ * Display labels for staking lock period options shown in the UI.
+ */
+export const LOCK_PERIOD_LABELS: Record<number, string> = {
+  3: '3 days',
+  7: '1 week',
+  14: '2 weeks',
+  30: '1 month',
+};
