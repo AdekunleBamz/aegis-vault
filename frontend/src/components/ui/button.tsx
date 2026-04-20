@@ -15,7 +15,7 @@ export function Button({
   variant = 'primary',
   size = 'md',
   isLoading = false,
-  loadingText = 'Loading...',
+  loadingText = 'Processing...',
   leftIcon,
   rightIcon,
   fullWidth = false,
