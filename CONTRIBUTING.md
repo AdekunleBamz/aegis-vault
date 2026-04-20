@@ -22,8 +22,7 @@ First off, thanks for taking the time to contribute!
 
 1. Clone the repo: `git clone https://github.com/AdekunleBamz/aegis-vault.git`
 2. Install dependencies: `npm install && npm --prefix frontend install`
-3. Run tests: `clarinet test`
-4. Run a quick validation pass: `npm run check:fast`
+3. Run tests: `npm run contracts:test`
 
 ## Style Guidelines
 - Use 2 spaces for indentation.
