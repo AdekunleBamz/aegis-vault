@@ -117,4 +117,8 @@ describe('validation utils', () => {
   it('rejects whitespace-only STX amount helper input', () => {
     expect(isValidStxAmount('   ')).toBe(false)
   })
+
+  it('rejects scientific notation STX strings in conversion helper', () => {
+    expect(() => stxToMicroStx('1e3')).toThrow('Invalid STX amount')
+  })
 })
