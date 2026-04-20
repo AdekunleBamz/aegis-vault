@@ -20,6 +20,10 @@ export interface UseTransactionsReturn {
   isLoading: boolean;
   /** Error message if the fetch failed, or null */
   error: string | null;
+  /** Total number of fetched transactions */
+  count: number;
+  /** True if there is at least one transaction */
+  hasTransactions: boolean;
   /** Function to manually refetch the transactions */
   refetch: () => Promise<void>;
 }
@@ -66,5 +70,12 @@ export function useTransactions(
     fetchTransactions();
   }, [fetchTransactions]);
 
-  return { transactions, isLoading, error, refetch: fetchTransactions };
+  return {
+    transactions,
+    isLoading,
+    error,
+    count: transactions.length,
+    hasTransactions: transactions.length > 0,
+    refetch: fetchTransactions,
+  };
 }
