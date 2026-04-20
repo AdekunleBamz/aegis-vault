@@ -21,8 +21,8 @@
 
 ;; Reward parameters
 (define-constant BLOCKS-PER-DAY u144)
-(define-constant BASE-REWARD-PER-DAY u5000000)  ;; 5 AGS tokens (6 decimals)
-(define-constant CLAIM-VALIDITY-BLOCKS u1008)   ;; Claims valid for ~7 days
+(define-constant BASE-REWARD-PER-DAY u5000000)  ;; 5 AGS tokens per day (6 decimals: 1 AGS = u1000000)
+(define-constant CLAIM-VALIDITY-BLOCKS u1008)   ;; Claims valid for ~7 days (7 * 144 blocks)
 
 ;; ============================================
 ;; DATA VARIABLES
