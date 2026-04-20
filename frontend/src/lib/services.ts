@@ -162,6 +162,13 @@ export const cache = {
   },
 
   /**
+   * Returns the number of entries currently in the cache.
+   */
+  size(): number {
+    return memoryCache.size;
+  },
+
+  /**
    * Gets or fetches with caching
    */
   async getOrFetch<T>(
