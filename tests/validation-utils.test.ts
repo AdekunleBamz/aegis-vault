@@ -125,4 +125,8 @@ describe('validation utils', () => {
   it('converts six-decimal minimum STX strings correctly', () => {
     expect(stxToMicroStx('0.000001')).toBe(1)
   })
+
+  it('rejects tx ids that are longer than 64 hex characters', () => {
+    expect(isValidTxId(`0x${'a'.repeat(65)}`)).toBe(false)
+  })
 })
