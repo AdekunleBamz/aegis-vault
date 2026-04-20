@@ -93,6 +93,26 @@ export const MIN_LOCK_PERIOD_DAYS = 3;
 export const MAX_LOCK_PERIOD_DAYS = 30;
 
 /**
+ * Number of blocks in an approximate calendar month (144 blocks/day × 30 days).
+ */
+export const BLOCKS_PER_MONTH = 4320;
+
+/**
+ * Default duration in milliseconds for toast notifications.
+ */
+export const DEFAULT_TOAST_DURATION_MS = 5000;
+
+/**
+ * Maximum number of retry attempts for recoverable API errors.
+ */
+export const MAX_RETRY_ATTEMPTS = 3;
+
+/**
+ * Interval in milliseconds for polling network block height.
+ */
+export const NETWORK_REFRESH_INTERVAL_MS = 25000;
+
+/**
  * Interval in milliseconds for polling on-chain data in the UI.
  */
 export const REFRESH_INTERVAL_MS = 30000;
