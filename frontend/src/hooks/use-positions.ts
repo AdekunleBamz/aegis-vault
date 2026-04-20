@@ -20,6 +20,8 @@ export interface UsePositionsReturn {
   isLoading: boolean;
   /** Error message if the fetch failed, or null */
   error: string | null;
+  /** True if a position has been loaded and is non-null */
+  hasPosition: boolean;
   /** Function to manually refetch the position data */
   refetch: () => Promise<void>;
 }
@@ -62,5 +64,11 @@ export function usePositions(address: string): UsePositionsReturn {
     fetchPositions();
   }, [fetchPositions]);
 
-  return { position, isLoading, error, refetch: fetchPositions };
+  return {
+    position,
+    isLoading,
+    error,
+    hasPosition: position !== null,
+    refetch: fetchPositions,
+  };
 }
