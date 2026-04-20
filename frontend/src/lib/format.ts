@@ -242,3 +242,16 @@ export function formatBlocksAsDays(blocks: number): string {
   const days = Math.round(blocks / 144);
   return days === 1 ? '1 day' : `${days} days`;
 }
+
+/**
+ * Format a ratio as a percentage string.
+ *
+ * @param value - Decimal ratio between 0 and 1 (e.g. 0.152 → "15.20%")
+ * @param decimals - Number of decimal places to show (default 2)
+ * @returns Formatted percentage string
+ */
+export function formatPercentage(value: number, decimals = 2): string {
+  if (!Number.isFinite(value)) return '0.00%';
+  const safeDec = Number.isInteger(decimals) && decimals >= 0 ? decimals : 2;
+  return `${(value * 100).toFixed(safeDec)}%`;
+}
