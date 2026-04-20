@@ -30,6 +30,9 @@ export function Skeleton({
 
   return (
     <div
+      role="status"
+      aria-label="Loading"
+      aria-busy="true"
       className={`bg-gray-700 animate-pulse ${roundedClasses[rounded]} ${className}`}
       style={style}
     />
