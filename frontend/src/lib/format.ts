@@ -267,3 +267,14 @@ export function formatSTXRaw(microStx: string | number | bigint): string {
   const stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
   return stx.toFixed(6).replace(/\.?0+$/, '') || '0';
 }
+
+/**
+ * Format a microAGS amount as a plain AGS number without locale separators.
+ *
+ * @param microAgs - Amount in microAGS
+ * @returns Plain AGS value such as "2.5"
+ */
+export function formatAGSRaw(microAgs: string | number | bigint): string {
+  const ags = Number(BigInt(microAgs)) / Math.pow(10, AGS_DECIMALS);
+  return ags.toFixed(6).replace(/\.?0+$/, '') || '0';
+}
