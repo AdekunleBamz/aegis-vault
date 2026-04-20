@@ -37,6 +37,7 @@ export {
     isErrorCode,
     getErrorMessage,
     parseTransactionError,
+    isAegisError,
     ok,
     err,
     isOk,
@@ -89,6 +90,8 @@ export {
     safeValidate,
     isValidTxId,
     isValidStxAmount,
+    isValidStacksAddress,
+    getFieldError,
     microStxToStx,
     stxToMicroStx,
     ValidationError as ZodValidationError,
@@ -108,5 +111,7 @@ export {
     toMicroSTX,
     formatPercent,
     formatBlockHeight,
-    blocksToTime
+    blocksToTime,
+    formatCompactSTX,
+    formatDuration
 } from './format';
