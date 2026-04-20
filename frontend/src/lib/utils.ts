@@ -141,3 +141,15 @@ export function debounce<T extends (...args: unknown[]) => void>(fn: T, delay: n
     timer = setTimeout(() => fn(...args), delay);
   };
 }
+
+/**
+ * Pluralizes a word based on a count.
+ *
+ * @param count - The numeric count
+ * @param singular - Singular form of the word
+ * @param plural - Plural form (defaults to singular + "s")
+ * @returns Formatted string such as "1 item" or "3 items"
+ */
+export function pluralize(count: number, singular: string, plural = `${singular}s`): string {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
