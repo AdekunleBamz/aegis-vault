@@ -101,4 +101,8 @@ describe('validation utils', () => {
   it('converts whole-number STX numeric input to micro-STX', () => {
     expect(stxToMicroStx(3)).toBe(3_000_000)
   })
+
+  it('converts decimal STX numeric input to micro-STX', () => {
+    expect(stxToMicroStx(0.25)).toBe(250_000)
+  })
 })
