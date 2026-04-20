@@ -113,4 +113,8 @@ describe('validation utils', () => {
   it('rejects whitespace-only tx id helper input', () => {
     expect(isValidTxId('   ')).toBe(false)
   })
+
+  it('rejects whitespace-only STX amount helper input', () => {
+    expect(isValidStxAmount('   ')).toBe(false)
+  })
 })
