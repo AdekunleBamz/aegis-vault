@@ -129,4 +129,8 @@ describe('validation utils', () => {
   it('rejects tx ids that are longer than 64 hex characters', () => {
     expect(isValidTxId(`0x${'a'.repeat(65)}`)).toBe(false)
   })
+
+  it('rejects unsupported stacks address prefixes', () => {
+    expect(isValidStacksAddress('SM5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT')).toBe(false)
+  })
 })
