@@ -16,7 +16,15 @@ import { executeClaimRewards, TransactionResult } from '@/lib/stacks';
 export interface UseRewardsReturn {
   claimRewards: () => Promise<TransactionResult>;
   isLoading: boolean;
+  /** Alias for isLoading — true while claim transaction is pending */
+  isClaiming: boolean;
   error: string | null;
+  /** True if error is not null */
+  hasError: boolean;
+  /** Number of successful claim calls in this session */
+  claimCount: number;
+  /** Timestamp (ms) of the most recent successful claim, or null */
+  lastClaimedAt: number | null;
   reset: () => void;
 }
 
@@ -28,6 +36,8 @@ export interface UseRewardsReturn {
 export function useRewards(): UseRewardsReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [claimCount, setClaimCount] = useState(0);
+  const [lastClaimedAt, setLastClaimedAt] = useState<number | null>(null);
 
   const claimRewards = useCallback(async (): Promise<TransactionResult> => {
     setIsLoading(true);
@@ -35,6 +45,8 @@ export function useRewards(): UseRewardsReturn {
 
     try {
       const result = await executeClaimRewards();
+      setClaimCount((c) => c + 1);
+      setLastClaimedAt(Date.now());
       return result;
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to claim rewards';
@@ -50,5 +62,14 @@ export function useRewards(): UseRewardsReturn {
     setIsLoading(false);
   }, []);
 
-  return { claimRewards, isLoading, error, reset };
+  return {
+    claimRewards,
+    isLoading,
+    isClaiming: isLoading,
+    error,
+    hasError: error !== null,
+    claimCount,
+    lastClaimedAt,
+    reset,
+  };
 }
