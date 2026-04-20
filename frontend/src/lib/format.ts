@@ -255,3 +255,15 @@ export function formatPercentage(value: number, decimals = 2): string {
   const safeDec = Number.isInteger(decimals) && decimals >= 0 ? decimals : 2;
   return `${(value * 100).toFixed(safeDec)}%`;
 }
+
+/**
+ * Format a microSTX amount as a plain STX number without locale separators.
+ * Useful when the value will be used inside a larger formatted string.
+ *
+ * @param microStx - Amount in microSTX
+ * @returns Plain STX value such as "1.234567"
+ */
+export function formatSTXRaw(microStx: string | number | bigint): string {
+  const stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  return stx.toFixed(6).replace(/\.?0+$/, '') || '0';
+}
