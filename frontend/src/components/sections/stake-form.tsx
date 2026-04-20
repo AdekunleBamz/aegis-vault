@@ -34,7 +34,8 @@ function formatAmount(value: number): string {
 export function StakeForm() {
 
   const setSuggestedAmount = (value: number) => {
-    setAmount(formatAmount(Math.min(value, balanceSTX)));
+    const safeBalance = Number.isFinite(balanceSTX) && balanceSTX >= 0 ? balanceSTX : 0;
+    setAmount(formatAmount(Math.min(value, safeBalance)));
     setValidationError(null);
   };
 
