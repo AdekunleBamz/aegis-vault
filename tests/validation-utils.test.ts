@@ -48,4 +48,8 @@ describe('validation utils', () => {
     expect(isValidTxId(` 0x${'a'.repeat(64)} `)).toBe(true)
     expect(isValidTxId('0x123')).toBe(false)
   })
+
+  it('accepts uppercase hex transaction hashes', () => {
+    expect(isValidTxId(`0x${'A'.repeat(64)}`)).toBe(true)
+  })
 })
