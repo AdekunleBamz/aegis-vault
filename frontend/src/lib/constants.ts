@@ -121,3 +121,8 @@ export const REFRESH_INTERVAL_MS = 30000;
  * Time in milliseconds after which cached data is considered stale.
  */
 export const STALE_AFTER_MS = 60000;
+
+/**
+ * Number of blocks in an approximate calendar quarter (144 blocks/day × 91 days).
+ */
+export const BLOCKS_PER_QUARTER = 13104;
