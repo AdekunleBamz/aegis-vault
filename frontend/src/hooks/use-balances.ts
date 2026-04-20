@@ -16,6 +16,10 @@ import { getAccountBalance, AccountBalance } from '@/lib/api';
 export interface UseBalancesReturn {
   stxBalance: bigint;
   agsBalance: bigint;
+  /** True if the STX balance is greater than zero */
+  hasStxBalance: boolean;
+  /** True if the AGS balance is greater than zero */
+  hasAgsBalance: boolean;
   isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
@@ -71,5 +75,13 @@ export function useBalances(address: string): UseBalancesReturn {
     fetchBalances();
   }, [fetchBalances]);
 
-  return { stxBalance, agsBalance, isLoading, error, refetch: fetchBalances };
+  return {
+    stxBalance,
+    agsBalance,
+    hasStxBalance: stxBalance > 0n,
+    hasAgsBalance: agsBalance > 0n,
+    isLoading,
+    error,
+    refetch: fetchBalances,
+  };
 }
