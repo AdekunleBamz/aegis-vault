@@ -195,3 +195,38 @@ export function formatRelativeTime(timestamp: number): string {
 
   return new Date(timestamp * 1000).toLocaleDateString();
 }
+
+/**
+ * Format microSTX as a compact string with K or M suffix.
+ *
+ * Useful for displaying large amounts in space-constrained UI components.
+ *
+ * @param microStx - Amount in microSTX
+ * @returns Compact string such as "1.23K", "4.56M", or "0.50"
+ * @example formatCompactSTX(1234000000n) // "1.23K"
+ * @example formatCompactSTX(500000n)     // "0.50"
+ */
+export function formatCompactSTX(microStx: string | number | bigint): string {
+  const stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  if (stx >= 1_000_000) return `${(stx / 1_000_000).toFixed(2)}M`;
+  if (stx >= 1_000) return `${(stx / 1_000).toFixed(2)}K`;
+  return stx.toFixed(2);
+}
+
+/**
+ * Format a millisecond duration as a human-readable string.
+ *
+ * @param ms - Duration in milliseconds
+ * @returns Human-readable duration, e.g. "2h 30m", "45s"
+ */
+export function formatDuration(ms: number): string {
+  if (!Number.isFinite(ms) || ms < 0) return '0s';
+  const totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  if (minutes > 0) return `${minutes}m ${seconds}s`;
+  return `${seconds}s`;
+}
