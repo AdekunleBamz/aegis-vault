@@ -93,4 +93,8 @@ describe('validation utils', () => {
   it('converts zero micro-STX to zero STX', () => {
     expect(microStxToStx(0)).toBe(0)
   })
+
+  it('converts one micro-STX to minimal STX value', () => {
+    expect(microStxToStx(1)).toBe(0.000001)
+  })
 })
