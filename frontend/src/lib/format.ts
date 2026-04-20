@@ -230,3 +230,15 @@ export function formatDuration(ms: number): string {
   if (minutes > 0) return `${minutes}m ${seconds}s`;
   return `${seconds}s`;
 }
+
+/**
+ * Format a block count as an approximate number of days.
+ *
+ * @param blocks - Number of Stacks blocks
+ * @returns Human-readable string such as "1 day" or "14 days"
+ */
+export function formatBlocksAsDays(blocks: number): string {
+  if (!Number.isFinite(blocks) || blocks < 0) return '0 days';
+  const days = Math.round(blocks / 144);
+  return days === 1 ? '1 day' : `${days} days`;
+}
