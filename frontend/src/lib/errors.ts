@@ -29,6 +29,8 @@ export type ErrorCode =
   | 'RATE_LIMITED'
   | 'NOT_FOUND'
   | 'UNAUTHORIZED'
+  | 'LOCK_PERIOD_NOT_ENDED'
+  | 'STAKING_CAP_REACHED'
   | 'UNKNOWN_ERROR';
 
 /**
@@ -112,6 +114,8 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   RATE_LIMITED: 'Too many requests. Please wait a moment.',
   NOT_FOUND: 'The requested resource was not found.',
   UNAUTHORIZED: 'You are not authorized to perform this action.',
+  LOCK_PERIOD_NOT_ENDED: 'The lock period has not ended yet. Use emergency withdraw if needed.',
+  STAKING_CAP_REACHED: 'The protocol staking cap has been reached. Please try again later.',
   UNKNOWN_ERROR: 'An unexpected error occurred. Please try again.',
 };
 
@@ -322,4 +326,14 @@ export function getErrorReports(): ErrorReport[] {
  */
 export function clearErrorReports(): void {
   errorReports.length = 0;
+}
+
+/**
+ * Type guard that checks whether an unknown value is an AegisError.
+ *
+ * @param error - The value to check
+ * @returns True if the value is an AegisError instance
+ */
+export function isAegisError(error: unknown): error is AegisError {
+  return error instanceof AegisError;
 }
