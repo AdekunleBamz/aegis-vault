@@ -30,6 +30,14 @@ export interface UseNetworkReturn {
   error: string | null;
   /** The current network type (mainnet, testnet, or devnet) */
   networkType: 'mainnet' | 'testnet' | 'devnet';
+  /** True when connected to mainnet */
+  isMainnet: boolean;
+  /** True when connected to testnet */
+  isTestnet: boolean;
+  /** True when connected to devnet/mocknet */
+  isDevnet: boolean;
+  /** Timestamp (ms) of the last successful block height fetch, or null */
+  lastFetched: number | null;
   /** Function to manually refetch the network info */
   refetch: () => Promise<void>;
 }
@@ -44,6 +52,7 @@ export function useNetwork(): UseNetworkReturn {
   const [blockHeight, setBlockHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastFetched, setLastFetched] = useState<number | null>(null);
 
   const fetchNetworkInfo = useCallback(async () => {
     setIsLoading(true);
@@ -56,6 +65,7 @@ export function useNetwork(): UseNetworkReturn {
         throw new Error('Received an invalid block height');
       }
       setBlockHeight(Math.floor(parsedHeight));
+      setLastFetched(Date.now());
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to fetch network info';
       setError(message);
@@ -72,5 +82,15 @@ export function useNetwork(): UseNetworkReturn {
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 
-  return { blockHeight, isLoading, error, networkType: NETWORK_TYPE, refetch: fetchNetworkInfo };
+  return {
+    blockHeight,
+    isLoading,
+    error,
+    networkType: NETWORK_TYPE,
+    isMainnet: NETWORK_TYPE === 'mainnet',
+    isTestnet: NETWORK_TYPE === 'testnet',
+    isDevnet: NETWORK_TYPE === 'devnet',
+    lastFetched,
+    refetch: fetchNetworkInfo,
+  };
 }
