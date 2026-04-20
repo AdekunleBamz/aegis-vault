@@ -13,7 +13,7 @@ Currently, only the latest version of Aegis Vault is supported for security upda
 
 We take the security of Aegis Vault seriously. If you believe you've found a security vulnerability, please do NOT create a public issue. Instead, report it by following these steps:
 
-1. Send an email to security@aegisprotocol.finance (Placeholder)
+1. Send an email to [security@aegisprotocol.finance](mailto:security@aegisprotocol.finance) (Placeholder)
 2. Include a detailed description of the vulnerability and steps to reproduce.
 3. We will acknowledge your report within 48 hours and provide a timeline for a fix.
 
