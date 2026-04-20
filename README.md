@@ -119,7 +119,7 @@ clarinet test
 npm run contracts:test
 
 # Run JavaScript/TypeScript tests with Vitest
-npm test
+npm run test
 
 # Run focused validation utility tests
 npm run test:validation
