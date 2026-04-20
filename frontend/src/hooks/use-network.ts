@@ -92,6 +92,7 @@ export function useNetwork(): UseNetworkReturn {
     isDevnet: NETWORK_TYPE === 'devnet',
     lastFetched,
     hasError: error !== null,
+    isStale: lastFetched !== null ? Date.now() - lastFetched > 60_000 : false,
     refetch: fetchNetworkInfo,
   };
 }
