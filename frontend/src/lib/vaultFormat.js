@@ -10,3 +10,5 @@ export const formatPositionValue = (v) => (v / 1e6).toFixed(6) + " STX";
 export const formatRewardAmount = (v) => (v / 1e6).toFixed(6) + " AGS";
 
 export const formatWithdrawalFee = (bps) => (bps / 100).toFixed(2) + "% fee";
+
+export const formatEarlyExitPenalty = (bps) => (bps / 100).toFixed(2) + "% penalty";
