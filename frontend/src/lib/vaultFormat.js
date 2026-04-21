@@ -20,3 +20,5 @@ export const formatVaultTVL = (v) => (v / 1e6).toFixed(2) + " STX";
 export const formatStakerCount = (n) => n + " stakers";
 
 export const formatBlocksRemaining = (n) => n + " blocks";
+
+export const formatUnlockDate = (ts) => new Date(ts).toLocaleDateString();
