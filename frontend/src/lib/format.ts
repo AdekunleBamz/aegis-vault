@@ -191,6 +191,7 @@ export function blocksToTime(blocks: number): string {
  * @example formatRelativeTime(Date.now() / 1000 - 30) // "Just now"
  */
 export function formatRelativeTime(timestamp: number): string {
+  if (!Number.isFinite(timestamp) || timestamp <= 0) return 'Just now';
   const now = Date.now() / 1000;
   const diff = now - timestamp;
 
