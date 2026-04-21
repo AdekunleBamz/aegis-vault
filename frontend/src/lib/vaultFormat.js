@@ -14,3 +14,5 @@ export const formatWithdrawalFee = (bps) => (bps / 100).toFixed(2) + "% fee";
 export const formatEarlyExitPenalty = (bps) => (bps / 100).toFixed(2) + "% penalty";
 
 export const formatGovernanceVotes = (n) => n + " votes";
+
+export const formatVaultTVL = (v) => (v / 1e6).toFixed(2) + " STX";
