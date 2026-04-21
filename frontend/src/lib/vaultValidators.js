@@ -22,3 +22,5 @@ export const isValidTxId = (v) => typeof v === "string" && /^0x[0-9a-f]{64}$/.te
 export const isValidBlockHeight = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;
 
 export const isValidFeeAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
+
+export const isValidAPYBps = (v) => Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) <= 10000;
