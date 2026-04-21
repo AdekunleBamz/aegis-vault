@@ -14,3 +14,5 @@ export const isValidVoteOption = (v) => ["for","against","abstain"].includes(v);
 export const isValidGovernanceAmount = (v) => !isNaN(Number(v)) && Number(v) >= 1;
 
 export const isValidAGSAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
+
+export const isValidAddress = (v) => typeof v === "string" && v.startsWith("SP") && v.length >= 30;
