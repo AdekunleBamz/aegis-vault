@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { formatCompactSTX, toMicroAGS, toMicroSTX, truncateAddress } from '../frontend/src/lib/format'
 import { formatAGSRaw, formatSTXRaw } from '../frontend/src/lib/format'
+import { blocksToTime } from '../frontend/src/lib/format'
 
 describe('format utils', () => {
   it('trims surrounding spaces before truncating addresses', () => {
@@ -27,5 +28,9 @@ describe('format utils', () => {
 
   it('falls back to 0 for malformed raw AGS inputs', () => {
     expect(formatAGSRaw('1.2')).toBe('0')
+  })
+
+  it('floors fractional block counts before converting to time', () => {
+    expect(blocksToTime(1.9)).toBe('10 min')
   })
 })

@@ -163,7 +163,8 @@ export function formatBlockHeight(height: number): string {
  */
 export function blocksToTime(blocks: number): string {
   if (!Number.isFinite(blocks) || blocks <= 0) return '0 min';
-  const minutes = blocks * AVG_BLOCK_TIME_MINUTES;
+  const normalizedBlocks = Math.floor(blocks);
+  const minutes = normalizedBlocks * AVG_BLOCK_TIME_MINUTES;
 
   if (minutes < 60) {
     return `${minutes} min`;
