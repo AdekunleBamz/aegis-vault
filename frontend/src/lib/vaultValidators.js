@@ -8,3 +8,5 @@ export const isValidWithdrawalAmount = (v) => !isNaN(Number(v)) && Number(v) > 0
 export const isValidPositionId = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;
 
 export const isValidProposalId = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;
+
+export const isValidVoteOption = (v) => ["for","against","abstain"].includes(v);
