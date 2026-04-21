@@ -10,3 +10,5 @@ export const MIN_DEPOSIT_USTX = 1000000
 export const MAX_DEPOSIT_USTX = 100000000000
 
 export const BASE_APY_BPS = 800
+
+export const LOCK_PERIOD_7D = 7 * 144
