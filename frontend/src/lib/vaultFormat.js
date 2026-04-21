@@ -16,3 +16,5 @@ export const formatEarlyExitPenalty = (bps) => (bps / 100).toFixed(2) + "% penal
 export const formatGovernanceVotes = (n) => n + " votes";
 
 export const formatVaultTVL = (v) => (v / 1e6).toFixed(2) + " STX";
+
+export const formatStakerCount = (n) => n + " stakers";
