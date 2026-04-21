@@ -86,6 +86,7 @@ export function safeFormatSTX(value: string | number | bigint | null | undefined
  * @example toMicroSTX(0.5) // 500000n
  */
 export function toMicroSTX(stx: number): bigint {
+  if (!Number.isFinite(stx) || stx <= 0) return 0n;
   return BigInt(Math.floor(stx * Math.pow(10, STX_DECIMALS)));
 }
 
