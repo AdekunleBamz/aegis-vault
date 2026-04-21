@@ -49,7 +49,7 @@ export interface UseNetworkReturn {
 
 /**
  * Hook for fetching current network state.
- * Automatically refreshes every 30 seconds.
+ * Automatically refreshes every 25 seconds.
  *
  * @returns Object containing block height, loading state, error, network type, and refetch function
  */
