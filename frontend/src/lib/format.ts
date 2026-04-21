@@ -290,7 +290,12 @@ export function formatSTXRaw(microStx: string | number | bigint): string {
  * @returns Plain AGS value such as "2.5"
  */
 export function formatAGSRaw(microAgs: string | number | bigint): string {
-  const ags = Number(BigInt(microAgs)) / Math.pow(10, AGS_DECIMALS);
+  let ags = 0;
+  try {
+    ags = Number(BigInt(microAgs)) / Math.pow(10, AGS_DECIMALS);
+  } catch {
+    return '0';
+  }
   return ags.toFixed(6).replace(/\.?0+$/, '') || '0';
 }
 
