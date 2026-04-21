@@ -32,3 +32,5 @@ export const GOVERNANCE_VOTE_DURATION = 1440
 export const STACKS_BLOCKS_PER_DAY = 144
 
 export const VAULT_VERSION = "1.0.0"
+
+export const SUPPORTED_LOCK_PERIODS = [7, 30, 90, 180]
