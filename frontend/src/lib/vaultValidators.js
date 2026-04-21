@@ -34,3 +34,5 @@ export const isValidSlippage = (v) => !isNaN(Number(v)) && Number(v) >= 0 && Num
 export const isValidMinDeposit = (v) => !isNaN(Number(v)) && Number(v) >= 1000000;
 
 export const isValidMaxDeposit = (v) => !isNaN(Number(v)) && Number(v) <= 1000000000000;
+
+export const isValidLockDays = (v) => [7, 30, 90, 180].includes(Number(v));
