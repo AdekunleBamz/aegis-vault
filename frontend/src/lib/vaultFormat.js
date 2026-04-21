@@ -28,3 +28,5 @@ export const formatPositionId = (id) => "POS-" + id;
 export const formatProposalStatus = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export const formatVoteWeight = (v) => (v / 1e6).toFixed(2) + " AGS";
+
+export const formatTxStatus = (s) => s.charAt(0).toUpperCase() + s.slice(1);
