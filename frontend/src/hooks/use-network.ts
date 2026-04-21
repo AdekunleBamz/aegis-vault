@@ -82,6 +82,9 @@ export function useNetwork(): UseNetworkReturn {
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 
+  const hasError = error !== null;
+  const isStale = lastFetched !== null ? Date.now() - lastFetched > 60_000 : false;
+
   return {
     blockHeight,
     isLoading,
@@ -91,8 +94,8 @@ export function useNetwork(): UseNetworkReturn {
     isTestnet: NETWORK_TYPE === 'testnet',
     isDevnet: NETWORK_TYPE === 'devnet',
     lastFetched,
-    hasError: error !== null,
-    isStale: lastFetched !== null ? Date.now() - lastFetched > 60_000 : false,
+    hasError,
+    isStale,
     refetch: fetchNetworkInfo,
   };
 }
