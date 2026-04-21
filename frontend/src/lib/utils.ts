@@ -51,7 +51,7 @@ export function splitContractId(contractId: string): [string, string] {
  */
 export function isTestnetAddress(address: string): boolean {
   const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
-  return normalized.startsWith('ST');
+  return /^ST[0-9A-Z]{30,}$/.test(normalized);
 }
 
 /**
