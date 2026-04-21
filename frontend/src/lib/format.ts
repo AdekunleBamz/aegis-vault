@@ -98,6 +98,7 @@ export function toMicroSTX(stx: number): bigint {
  * @example toMicroAGS(1) // 1000000n
  */
 export function toMicroAGS(ags: number): bigint {
+  if (!Number.isFinite(ags) || ags <= 0) return 0n;
   return BigInt(Math.floor(ags * Math.pow(10, AGS_DECIMALS)));
 }
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { toMicroSTX, truncateAddress } from '../frontend/src/lib/format'
+import { toMicroAGS, toMicroSTX, truncateAddress } from '../frontend/src/lib/format'
 
 describe('format utils', () => {
   it('trims surrounding spaces before truncating addresses', () => {
@@ -9,5 +9,10 @@ describe('format utils', () => {
   it('returns zero microSTX for non-finite STX inputs', () => {
     expect(toMicroSTX(Number.NaN)).toBe(0n)
     expect(toMicroSTX(Number.POSITIVE_INFINITY)).toBe(0n)
+  })
+
+  it('returns zero microAGS for invalid AGS inputs', () => {
+    expect(toMicroAGS(Number.NaN)).toBe(0n)
+    expect(toMicroAGS(-1)).toBe(0n)
   })
 })
