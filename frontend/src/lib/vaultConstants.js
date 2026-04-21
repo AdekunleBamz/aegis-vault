@@ -30,3 +30,5 @@ export const GOVERNANCE_VOTE_DELAY = 144
 export const GOVERNANCE_VOTE_DURATION = 1440
 
 export const STACKS_BLOCKS_PER_DAY = 144
+
+export const VAULT_VERSION = "1.0.0"
