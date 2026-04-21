@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { formatCompactSTX, toMicroAGS, toMicroSTX, truncateAddress } from '../frontend/src/lib/format'
+import { formatSTXRaw } from '../frontend/src/lib/format'
 
 describe('format utils', () => {
   it('trims surrounding spaces before truncating addresses', () => {
@@ -18,5 +19,9 @@ describe('format utils', () => {
 
   it('falls back to 0.00 for malformed compact STX inputs', () => {
     expect(formatCompactSTX('1.2')).toBe('0.00')
+  })
+
+  it('falls back to 0 for malformed raw STX inputs', () => {
+    expect(formatSTXRaw('1.2')).toBe('0')
   })
 })

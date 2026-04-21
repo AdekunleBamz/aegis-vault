@@ -274,7 +274,12 @@ export function formatPercentage(value: number, decimals = 2): string {
  * @returns Plain STX value such as "1.234567"
  */
 export function formatSTXRaw(microStx: string | number | bigint): string {
-  const stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  let stx = 0;
+  try {
+    stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  } catch {
+    return '0';
+  }
   return stx.toFixed(6).replace(/\.?0+$/, '') || '0';
 }
 
