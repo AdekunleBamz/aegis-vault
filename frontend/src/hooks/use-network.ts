@@ -17,6 +17,7 @@ const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
     : network.chainId === 1
       ? 'mainnet'
       : 'devnet';
+const NETWORK_STALE_THRESHOLD_MS = 60_000;
 
 /**
  * Return type for the useNetwork hook.
@@ -92,7 +93,7 @@ export function useNetwork(): UseNetworkReturn {
     isDevnet: NETWORK_TYPE === 'devnet',
     lastFetched,
     hasError: error !== null,
-    isStale: lastFetched !== null ? Date.now() - lastFetched > 60_000 : false,
+    isStale: lastFetched !== null ? Date.now() - lastFetched > NETWORK_STALE_THRESHOLD_MS : false,
     refetch: fetchNetworkInfo,
   };
 }
