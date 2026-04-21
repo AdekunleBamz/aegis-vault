@@ -26,3 +26,5 @@ export const isValidFeeAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
 export const isValidAPYBps = (v) => Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) <= 10000;
 
 export const isValidMaxPositions = (v) => Number.isInteger(Number(v)) && Number(v) >= 1;
+
+export const isValidRewardAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
