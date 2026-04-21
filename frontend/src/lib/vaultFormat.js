@@ -22,3 +22,5 @@ export const formatStakerCount = (n) => n + " stakers";
 export const formatBlocksRemaining = (n) => n + " blocks";
 
 export const formatUnlockDate = (ts) => new Date(ts).toLocaleDateString();
+
+export const formatPositionId = (id) => "POS-" + id;
