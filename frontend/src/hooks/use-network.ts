@@ -23,7 +23,7 @@ const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
  */
 export interface UseNetworkReturn {
   /** Current Stacks blockchain block height */
-  blockHeight: number;
+  blockHeight: number | null;
   /** Whether the network info is currently being fetched */
   isLoading: boolean;
   /** Error message if the fetch failed, or null */
@@ -49,7 +49,7 @@ export interface UseNetworkReturn {
  * @returns Object containing block height, loading state, error, network type, and refetch function
  */
 export function useNetwork(): UseNetworkReturn {
-  const [blockHeight, setBlockHeight] = useState(0);
+  const [blockHeight, setBlockHeight] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastFetched, setLastFetched] = useState<number | null>(null);
