@@ -20,3 +20,5 @@ export const isValidAddress = (v) => typeof v === "string" && v.startsWith("SP")
 export const isValidTxId = (v) => typeof v === "string" && /^0x[0-9a-f]{64}$/.test(v);
 
 export const isValidBlockHeight = (v) => Number.isInteger(Number(v)) && Number(v) >= 0;
+
+export const isValidFeeAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
