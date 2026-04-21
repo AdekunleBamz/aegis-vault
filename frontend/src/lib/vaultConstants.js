@@ -18,3 +18,5 @@ export const LOCK_PERIOD_30D = 30 * 144
 export const LOCK_PERIOD_90D = 90 * 144
 
 export const LOCK_PERIOD_180D = 180 * 144
+
+export const WITHDRAWAL_FEE_BPS = 50
