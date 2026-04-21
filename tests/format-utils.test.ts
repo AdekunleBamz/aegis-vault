@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { formatCompactSTX, toMicroAGS, toMicroSTX, truncateAddress } from '../frontend/src/lib/format'
 import { formatAGSRaw, formatSTXRaw } from '../frontend/src/lib/format'
 import { blocksToTime } from '../frontend/src/lib/format'
+import { formatBlockHeight } from '../frontend/src/lib/format'
 
 describe('format utils', () => {
   it('trims surrounding spaces before truncating addresses', () => {
@@ -32,5 +33,9 @@ describe('format utils', () => {
 
   it('floors fractional block counts before converting to time', () => {
     expect(blocksToTime(1.9)).toBe('10 min')
+  })
+
+  it('floors decimal block heights before formatting', () => {
+    expect(formatBlockHeight(1234.9)).toBe('1,234')
   })
 })

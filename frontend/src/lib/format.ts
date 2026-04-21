@@ -148,7 +148,7 @@ export function formatPercent(value: number): string {
  */
 export function formatBlockHeight(height: number): string {
   if (!Number.isFinite(height)) return '0';
-  return height.toLocaleString('en-US');
+  return Math.floor(height).toLocaleString('en-US');
 }
 
 /**
