@@ -27,7 +27,7 @@ export function cn(...inputs: ClassValue[]): string {
  */
 export function isMainnetAddress(address: string): boolean {
   const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
-  return normalized.startsWith('SP');
+  return /^SP[0-9A-Z]{30,}$/.test(normalized);
 }
 
 /**
