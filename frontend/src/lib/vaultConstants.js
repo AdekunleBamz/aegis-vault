@@ -14,3 +14,5 @@ export const BASE_APY_BPS = 800
 export const LOCK_PERIOD_7D = 7 * 144
 
 export const LOCK_PERIOD_30D = 30 * 144
+
+export const LOCK_PERIOD_90D = 90 * 144
