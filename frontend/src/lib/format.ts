@@ -112,9 +112,12 @@ export function toMicroAGS(ags: number): bigint {
  * @example truncateAddress("SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N") // "SP3F...CGG6N"
  */
 export function truncateAddress(address: string, chars = 4): string {
-  if (!address) return '';
-  if (address.length <= (chars * 2) + 2) return address;
-  return `${address.slice(0, chars + 2)}...${address.slice(-chars)}`;
+  if (typeof address !== 'string') return '';
+  const normalizedAddress = address.trim();
+  const safeChars = Number.isInteger(chars) && chars >= 0 ? chars : 4;
+  if (!normalizedAddress) return '';
+  if (normalizedAddress.length <= (safeChars * 2) + 2) return normalizedAddress;
+  return `${normalizedAddress.slice(0, safeChars + 2)}...${normalizedAddress.slice(-safeChars)}`;
 }
 
 /**
