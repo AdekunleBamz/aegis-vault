@@ -24,3 +24,5 @@ export const WITHDRAWAL_FEE_BPS = 50
 export const EARLY_EXIT_PENALTY_BPS = 300
 
 export const GOVERNANCE_QUORUM_BPS = 1000
+
+export const GOVERNANCE_VOTE_DELAY = 144
