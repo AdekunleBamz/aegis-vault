@@ -222,7 +222,7 @@ Aegis Vault prioritizes security at every layer of the stack:
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).
 
 ## Links
 
