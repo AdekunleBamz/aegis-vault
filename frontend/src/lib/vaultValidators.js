@@ -36,3 +36,5 @@ export const isValidMinDeposit = (v) => !isNaN(Number(v)) && Number(v) >= 100000
 export const isValidMaxDeposit = (v) => !isNaN(Number(v)) && Number(v) <= 1000000000000;
 
 export const isValidLockDays = (v) => [7, 30, 90, 180].includes(Number(v));
+
+export const isValidVaultVersion = (v) => typeof v === "string" && /^\d+\.\d+\.\d+$/.test(v);
