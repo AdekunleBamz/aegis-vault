@@ -24,3 +24,5 @@ export const formatBlocksRemaining = (n) => n + " blocks";
 export const formatUnlockDate = (ts) => new Date(ts).toLocaleDateString();
 
 export const formatPositionId = (id) => "POS-" + id;
+
+export const formatProposalStatus = (s) => s.charAt(0).toUpperCase() + s.slice(1);
