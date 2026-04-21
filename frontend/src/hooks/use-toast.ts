@@ -19,6 +19,7 @@ interface UseToastReturn {
     clearAll: () => void;
     toastSuccess: (message: string, description?: string) => string;
     toastError: (message: string, description?: string) => string;
+    hasToasts: boolean;
 }
 
 export function useToast(): UseToastReturn {
