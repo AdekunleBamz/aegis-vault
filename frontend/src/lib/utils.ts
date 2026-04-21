@@ -61,7 +61,9 @@ export function isTestnetAddress(address: string): boolean {
  */
 export function isValidContractId(contractId: string): boolean {
   if (typeof contractId !== 'string') return false;
-  const parts = contractId.split('.');
+  const normalizedContractId = contractId.trim();
+  if (!normalizedContractId) return false;
+  const parts = normalizedContractId.split('.');
   return parts.length === 2 && parts[0].length > 0 && parts[1].length > 0;
 }
 
