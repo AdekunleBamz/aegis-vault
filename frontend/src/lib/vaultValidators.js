@@ -28,3 +28,5 @@ export const isValidAPYBps = (v) => Number.isInteger(Number(v)) && Number(v) >= 
 export const isValidMaxPositions = (v) => Number.isInteger(Number(v)) && Number(v) >= 1;
 
 export const isValidRewardAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
+
+export const isValidSlippage = (v) => !isNaN(Number(v)) && Number(v) >= 0 && Number(v) <= 100;
