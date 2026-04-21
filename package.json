@@ -28,6 +28,7 @@
     "defi"
   ],
   "author": "",
+  "homepage": "https://github.com/AdekunleBamz/aegis-vault#readme",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
