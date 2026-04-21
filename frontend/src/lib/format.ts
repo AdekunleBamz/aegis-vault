@@ -212,7 +212,12 @@ export function formatRelativeTime(timestamp: number): string {
  * @example formatCompactSTX(500000n)     // "0.50"
  */
 export function formatCompactSTX(microStx: string | number | bigint): string {
-  const stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  let stx = 0;
+  try {
+    stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  } catch {
+    return '0.00';
+  }
   if (stx >= 1_000_000) return `${(stx / 1_000_000).toFixed(2)}M`;
   if (stx >= 1_000) return `${(stx / 1_000).toFixed(2)}K`;
   return stx.toFixed(2);
