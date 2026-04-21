@@ -77,7 +77,7 @@ export function isValidContractId(contractId: string): boolean {
  */
 export function isDevnetAddress(address: string): boolean {
   const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
-  return normalized.startsWith('SN');
+  return /^SN[0-9A-Z]{30,}$/.test(normalized);
 }
 
 /**

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isMainnetAddress, isTestnetAddress, isValidContractId, splitContractId } from '../frontend/src/lib/utils'
+import { isDevnetAddress, isMainnetAddress, isTestnetAddress, isValidContractId, splitContractId } from '../frontend/src/lib/utils'
 
 describe('lib utils', () => {
   it('accepts trimmed contract identifiers', () => {
@@ -16,5 +16,9 @@ describe('lib utils', () => {
 
   it('rejects abbreviated testnet prefixes that are not full addresses', () => {
     expect(isTestnetAddress('ST')).toBe(false)
+  })
+
+  it('rejects abbreviated devnet prefixes that are not full addresses', () => {
+    expect(isDevnetAddress('SN')).toBe(false)
   })
 })
