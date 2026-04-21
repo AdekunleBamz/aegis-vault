@@ -32,3 +32,5 @@ export const isValidRewardAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
 export const isValidSlippage = (v) => !isNaN(Number(v)) && Number(v) >= 0 && Number(v) <= 100;
 
 export const isValidMinDeposit = (v) => !isNaN(Number(v)) && Number(v) >= 1000000;
+
+export const isValidMaxDeposit = (v) => !isNaN(Number(v)) && Number(v) <= 1000000000000;
