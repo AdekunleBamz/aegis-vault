@@ -16,3 +16,5 @@ export const isValidGovernanceAmount = (v) => !isNaN(Number(v)) && Number(v) >= 
 export const isValidAGSAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
 
 export const isValidAddress = (v) => typeof v === "string" && v.startsWith("SP") && v.length >= 30;
+
+export const isValidTxId = (v) => typeof v === "string" && /^0x[0-9a-f]{64}$/.test(v);
