@@ -210,4 +210,8 @@ describe('format utils', () => {
   it('formats ratio percentages with default decimals', () => {
     expect(formatPercentage(0.1234)).toBe('12.34%')
   })
+
+  it('formats ratio percentages with custom decimals', () => {
+    expect(formatPercentage(0.1234, 1)).toBe('12.3%')
+  })
 })
