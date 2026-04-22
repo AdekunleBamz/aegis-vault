@@ -45,6 +45,10 @@ describe('validation utils', () => {
     expect(validate(unstakeRequestSchema, { positionId: 0 })).toEqual({ positionId: 0 })
   })
 
+  it('validates positive block heights', () => {
+    expect(blockHeightSchema.parse(1)).toBe(1)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
