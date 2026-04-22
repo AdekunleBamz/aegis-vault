@@ -74,4 +74,8 @@ describe('lib utils', () => {
   it('formats singular pluralized labels', () => {
     expect(pluralize(1, 'position')).toBe('1 position')
   })
+
+  it('formats custom plural labels', () => {
+    expect(pluralize(2, 'entry', 'entries')).toBe('2 entries')
+  })
 })
