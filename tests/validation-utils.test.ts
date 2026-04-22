@@ -49,6 +49,10 @@ describe('validation utils', () => {
     expect(blockHeightSchema.parse(1)).toBe(1)
   })
 
+  it('rejects zero for positive integer schema', () => {
+    expect(positiveIntSchema.safeParse(0).success).toBe(false)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
