@@ -54,4 +54,8 @@ describe('lib utils', () => {
   it('accepts positive numeric string amounts', () => {
     expect(isValidAmount('12.5')).toBe(true)
   })
+
+  it('rejects zero-value amounts', () => {
+    expect(isValidAmount(0)).toBe(false)
+  })
 })
