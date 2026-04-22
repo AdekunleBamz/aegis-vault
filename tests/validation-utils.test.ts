@@ -148,6 +148,10 @@ describe('validation utils', () => {
     }).success).toBe(false)
   })
 
+  it('accepts the minimum lock period boundary', () => {
+    expect(isValidLockPeriod(3)).toBe(true)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
