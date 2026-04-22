@@ -58,4 +58,8 @@ describe('lib utils', () => {
   it('rejects zero-value amounts', () => {
     expect(isValidAmount(0)).toBe(false)
   })
+
+  it('clamps values below the lower bound', () => {
+    expect(clamp(-5, 0, 10)).toBe(0)
+  })
 })
