@@ -66,4 +66,8 @@ describe('lib utils', () => {
   it('clamps values above the upper bound', () => {
     expect(clamp(15, 0, 10)).toBe(10)
   })
+
+  it('uses the lower bound for non-finite clamp values', () => {
+    expect(clamp(Number.NaN, 2, 10)).toBe(2)
+  })
 })
