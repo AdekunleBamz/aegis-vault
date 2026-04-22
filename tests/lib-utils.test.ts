@@ -62,4 +62,8 @@ describe('lib utils', () => {
   it('clamps values below the lower bound', () => {
     expect(clamp(-5, 0, 10)).toBe(0)
   })
+
+  it('clamps values above the upper bound', () => {
+    expect(clamp(15, 0, 10)).toBe(10)
+  })
 })
