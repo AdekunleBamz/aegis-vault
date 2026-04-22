@@ -182,4 +182,8 @@ describe('format utils', () => {
   it('formats sub-minute durations in seconds', () => {
     expect(formatDuration(45_000)).toBe('45s')
   })
+
+  it('formats minute durations with remaining seconds', () => {
+    expect(formatDuration(125_000)).toBe('2m 5s')
+  })
 })
