@@ -78,4 +78,8 @@ describe('lib utils', () => {
   it('formats custom plural labels', () => {
     expect(pluralize(2, 'entry', 'entries')).toBe('2 entries')
   })
+
+  it('formats camel case labels as title case', () => {
+    expect(toTitleCase('stakingReward')).toBe('Staking Reward')
+  })
 })
