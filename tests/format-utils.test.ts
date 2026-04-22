@@ -190,4 +190,8 @@ describe('format utils', () => {
   it('formats hour durations with remaining minutes', () => {
     expect(formatDuration(3_660_000)).toBe('1h 1m')
   })
+
+  it('falls back for negative durations', () => {
+    expect(formatDuration(-1)).toBe('0s')
+  })
 })
