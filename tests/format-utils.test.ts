@@ -29,6 +29,10 @@ describe('format utils', () => {
     expect(formatSTX(1_234_567n)).toBe('1.234567')
   })
 
+  it('formats microAGS with fixed decimals', () => {
+    expect(formatAGS(1_000_000n)).toBe('1.00')
+  })
+
   it('trims surrounding spaces before truncating addresses', () => {
     expect(truncateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ')).toBe('SP3FKN...GG6N')
   })
