@@ -198,4 +198,8 @@ describe('format utils', () => {
   it('formats zero blocks as zero days', () => {
     expect(formatBlocksAsDays(0)).toBe('0 days')
   })
+
+  it('formats one day of blocks with singular copy', () => {
+    expect(formatBlocksAsDays(144)).toBe('1 day')
+  })
 })
