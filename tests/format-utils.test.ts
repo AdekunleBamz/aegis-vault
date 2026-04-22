@@ -33,6 +33,10 @@ describe('format utils', () => {
     expect(formatAGS(1_000_000n)).toBe('1.00')
   })
 
+  it('formats fractional AGS values up to six decimals', () => {
+    expect(formatAGS(2_500_001n)).toBe('2.500001')
+  })
+
   it('trims surrounding spaces before truncating addresses', () => {
     expect(truncateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ')).toBe('SP3FKN...GG6N')
   })
