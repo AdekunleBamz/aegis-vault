@@ -107,6 +107,10 @@ describe('format utils', () => {
     expect(formatSTXRaw('1.2')).toBe('0')
   })
 
+  it('formats raw STX without trailing zeros', () => {
+    expect(formatSTXRaw(1_500_000n)).toBe('1.5')
+  })
+
   it('falls back to 0 for malformed raw AGS inputs', () => {
     expect(formatAGSRaw('1.2')).toBe('0')
   })
