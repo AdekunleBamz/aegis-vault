@@ -42,4 +42,8 @@ describe('lib utils', () => {
   it('accepts mainnet addresses through the combined address helper', () => {
     expect(isStacksAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N')).toBe(true)
   })
+
+  it('accepts testnet addresses through the combined address helper', () => {
+    expect(isStacksAddress('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')).toBe(true)
+  })
 })
