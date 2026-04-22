@@ -176,6 +176,14 @@ describe('validation utils', () => {
     expect(isNonEmptyString('   ')).toBe(false)
   })
 
+  it('reads field-specific validation errors', () => {
+    const result = safeValidate(stakeRequestSchema, { amount: '', lockPeriod: 7 })
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      expect(getFieldError(result.error, 'amount')).toBe('Invalid STX amount format')
+    }
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
