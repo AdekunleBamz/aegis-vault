@@ -222,4 +222,8 @@ describe('format utils', () => {
   it('formats APY values with a suffix', () => {
     expect(formatAPY(15.5)).toBe('15.50% APY')
   })
+
+  it('formats APY values with custom decimals', () => {
+    expect(formatAPY(15.567, 1)).toBe('15.6% APY')
+  })
 })
