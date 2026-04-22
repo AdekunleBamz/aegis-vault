@@ -317,4 +317,8 @@ describe('validation utils', () => {
   it('rejects non-string stacks address helper inputs', () => {
     expect(isValidStacksAddress(123 as unknown as string)).toBe(false)
   })
+
+  it('rejects non-string tx id helper inputs', () => {
+    expect(isValidTxId(123 as unknown as string)).toBe(false)
+  })
 })
