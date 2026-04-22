@@ -38,4 +38,8 @@ describe('lib utils', () => {
   it('rejects abbreviated devnet prefixes that are not full addresses', () => {
     expect(isDevnetAddress('SN')).toBe(false)
   })
+
+  it('accepts mainnet addresses through the combined address helper', () => {
+    expect(isStacksAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N')).toBe(true)
+  })
 })
