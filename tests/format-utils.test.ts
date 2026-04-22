@@ -61,6 +61,10 @@ describe('format utils', () => {
     expect(truncateAddress(123 as unknown as string)).toBe('')
   })
 
+  it('leaves short addresses untruncated', () => {
+    expect(truncateAddress('SP123', 4)).toBe('SP123')
+  })
+
   it('returns zero microSTX for non-finite STX inputs', () => {
     expect(toMicroSTX(Number.NaN)).toBe(0n)
     expect(toMicroSTX(Number.POSITIVE_INFINITY)).toBe(0n)
