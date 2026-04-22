@@ -53,6 +53,10 @@ describe('validation utils', () => {
     expect(positiveIntSchema.safeParse(0).success).toBe(false)
   })
 
+  it('accepts supported transaction status values', () => {
+    expect(transactionStatusSchema.parse('pending')).toBe('pending')
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
