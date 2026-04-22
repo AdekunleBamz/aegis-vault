@@ -99,6 +99,10 @@ describe('format utils', () => {
     expect(formatAGSRaw('1.2')).toBe('0')
   })
 
+  it('formats percentage values with two decimals', () => {
+    expect(formatPercent(12.345)).toBe('12.35%')
+  })
+
   it('floors fractional block counts before converting to time', () => {
     expect(blocksToTime(1.9)).toBe('10 min')
   })
