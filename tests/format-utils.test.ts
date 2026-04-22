@@ -142,4 +142,8 @@ describe('format utils', () => {
   it('formats hour-relative timestamps', () => {
     expect(formatRelativeTime(Date.now() / 1000 - 7200)).toBe('2h ago')
   })
+
+  it('formats day-relative timestamps', () => {
+    expect(formatRelativeTime(Date.now() / 1000 - 172800)).toBe('2d ago')
+  })
 })
