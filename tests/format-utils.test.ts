@@ -194,4 +194,8 @@ describe('format utils', () => {
   it('falls back for negative durations', () => {
     expect(formatDuration(-1)).toBe('0s')
   })
+
+  it('formats zero blocks as zero days', () => {
+    expect(formatBlocksAsDays(0)).toBe('0 days')
+  })
 })
