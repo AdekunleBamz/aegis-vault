@@ -321,4 +321,8 @@ describe('validation utils', () => {
   it('rejects non-string tx id helper inputs', () => {
     expect(isValidTxId(123 as unknown as string)).toBe(false)
   })
+
+  it('rejects non-string STX amount helper inputs', () => {
+    expect(isValidStxAmount(123 as unknown as string)).toBe(false)
+  })
 })
