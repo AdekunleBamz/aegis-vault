@@ -70,4 +70,8 @@ describe('lib utils', () => {
   it('uses the lower bound for non-finite clamp values', () => {
     expect(clamp(Number.NaN, 2, 10)).toBe(2)
   })
+
+  it('formats singular pluralized labels', () => {
+    expect(pluralize(1, 'position')).toBe('1 position')
+  })
 })
