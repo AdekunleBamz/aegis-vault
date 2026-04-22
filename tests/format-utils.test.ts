@@ -57,6 +57,10 @@ describe('format utils', () => {
     expect(truncateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ')).toBe('SP3FKN...GG6N')
   })
 
+  it('returns an empty address label for non-string addresses', () => {
+    expect(truncateAddress(123 as unknown as string)).toBe('')
+  })
+
   it('returns zero microSTX for non-finite STX inputs', () => {
     expect(toMicroSTX(Number.NaN)).toBe(0n)
     expect(toMicroSTX(Number.POSITIVE_INFINITY)).toBe(0n)
