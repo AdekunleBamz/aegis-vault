@@ -178,4 +178,8 @@ describe('format utils', () => {
   it('keeps future relative timestamps as just now', () => {
     expect(formatRelativeTime(Date.now() / 1000 + 120)).toBe('Just now')
   })
+
+  it('formats sub-minute durations in seconds', () => {
+    expect(formatDuration(45_000)).toBe('45s')
+  })
 })
