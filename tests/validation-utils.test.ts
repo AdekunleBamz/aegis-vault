@@ -79,6 +79,18 @@ describe('validation utils', () => {
     expect(paginationSchema.safeParse({ page: 1, limit: 101 }).success).toBe(false)
   })
 
+  it('validates protocol stats payloads', () => {
+    expect(protocolStatsSchema.parse({
+      totalStaked: 0,
+      totalStakers: 0,
+      totalRewardsDistributed: 0,
+      currentAPR: 0,
+      tvl: 0,
+      treasuryBalance: 0,
+      activePositions: 0,
+    }).activePositions).toBe(0)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
