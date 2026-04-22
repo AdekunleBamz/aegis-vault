@@ -119,6 +119,10 @@ describe('format utils', () => {
     expect(formatAGSRaw('1.2')).toBe('0')
   })
 
+  it('formats raw AGS without trailing zeros', () => {
+    expect(formatAGSRaw(2_500_000n)).toBe('2.5')
+  })
+
   it('formats percentage values with two decimals', () => {
     expect(formatPercent(12.345)).toBe('12.35%')
   })
