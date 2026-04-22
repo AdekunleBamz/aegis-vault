@@ -1,13 +1,37 @@
 import { describe, expect, it } from 'vitest'
 import {
+  ValidationError,
+  apiResponseSchema,
+  blockHeightSchema,
+  getFieldError,
+  isNonEmptyString,
+  isValidLockPeriod,
   microStxToStx,
+  paginationSchema,
+  positiveIntSchema,
+  protocolStatsSchema,
+  safeValidate,
+  stakeRequestSchema,
   stxToMicroStx,
+  transactionRecordSchema,
+  transactionStatusSchema,
+  unstakeRequestSchema,
+  userStatsSchema,
+  validate,
   isValidStacksAddress,
+  isValidStakeAmountSTX,
   isValidTxId,
   isValidStxAmount,
 } from '../frontend/src/lib/validation'
 
 describe('validation utils', () => {
+  it('validates stake request payloads', () => {
+    expect(validate(stakeRequestSchema, { amount: '1.5', lockPeriod: 7 })).toEqual({
+      amount: '1.5',
+      lockPeriod: 7,
+    })
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
