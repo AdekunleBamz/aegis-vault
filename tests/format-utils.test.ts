@@ -115,6 +115,10 @@ describe('format utils', () => {
     expect(formatBlockHeight(1234.9)).toBe('1,234')
   })
 
+  it('formats large block heights with separators', () => {
+    expect(formatBlockHeight(1234567)).toBe('1,234,567')
+  })
+
   it('returns Just now for invalid relative-time inputs', () => {
     expect(formatRelativeTime(Number.NaN)).toBe('Just now')
   })
