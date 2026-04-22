@@ -95,6 +95,10 @@ describe('format utils', () => {
     expect(formatCompactSTX(500_000n)).toBe('0.50')
   })
 
+  it('formats thousand-scale compact STX values', () => {
+    expect(formatCompactSTX(1_234_000_000n)).toBe('1.23K')
+  })
+
   it('falls back to 0 for malformed raw STX inputs', () => {
     expect(formatSTXRaw('1.2')).toBe('0')
   })
