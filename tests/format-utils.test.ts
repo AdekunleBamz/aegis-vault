@@ -134,4 +134,8 @@ describe('format utils', () => {
   it('returns Just now for invalid relative-time inputs', () => {
     expect(formatRelativeTime(Number.NaN)).toBe('Just now')
   })
+
+  it('formats recent minute-relative timestamps', () => {
+    expect(formatRelativeTime(Date.now() / 1000 - 120)).toBe('2m ago')
+  })
 })
