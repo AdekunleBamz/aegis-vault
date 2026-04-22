@@ -62,6 +62,10 @@ describe('format utils', () => {
     expect(toMicroSTX(Number.POSITIVE_INFINITY)).toBe(0n)
   })
 
+  it('converts decimal STX amounts to microSTX', () => {
+    expect(toMicroSTX(1.25)).toBe(1_250_000n)
+  })
+
   it('returns zero microAGS for invalid AGS inputs', () => {
     expect(toMicroAGS(Number.NaN)).toBe(0n)
     expect(toMicroAGS(-1)).toBe(0n)
