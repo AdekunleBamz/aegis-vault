@@ -66,6 +66,11 @@ describe('validation utils', () => {
     expect(schema.parse({ success: true, data: { amount: '1', lockPeriod: 7 }, timestamp: 1 }).success).toBe(true)
   })
 
+  it('validates error API response wrappers', () => {
+    const schema = apiResponseSchema(stakeRequestSchema)
+    expect(schema.parse({ success: false, error: { code: 'BAD', message: 'Nope' }, timestamp: 1 }).error?.code).toBe('BAD')
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
