@@ -119,6 +119,10 @@ describe('format utils', () => {
     expect(blocksToTime(144)).toBe('1 day')
   })
 
+  it('formats zero block durations as zero minutes', () => {
+    expect(blocksToTime(0)).toBe('0 min')
+  })
+
   it('floors decimal block heights before formatting', () => {
     expect(formatBlockHeight(1234.9)).toBe('1,234')
   })
