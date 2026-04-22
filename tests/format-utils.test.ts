@@ -146,4 +146,8 @@ describe('format utils', () => {
   it('formats day-relative timestamps', () => {
     expect(formatRelativeTime(Date.now() / 1000 - 172800)).toBe('2d ago')
   })
+
+  it('keeps future relative timestamps as just now', () => {
+    expect(formatRelativeTime(Date.now() / 1000 + 120)).toBe('Just now')
+  })
 })
