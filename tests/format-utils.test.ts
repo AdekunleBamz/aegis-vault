@@ -123,6 +123,10 @@ describe('format utils', () => {
     expect(formatAGSRaw(2_500_000n)).toBe('2.5')
   })
 
+  it('formats zero raw AGS as zero', () => {
+    expect(formatAGSRaw(0n)).toBe('0')
+  })
+
   it('formats percentage values with two decimals', () => {
     expect(formatPercent(12.345)).toBe('12.35%')
   })
