@@ -27,6 +27,10 @@ describe('lib utils', () => {
     expect(splitContractId(' SP123.contract-name ')).toEqual(['SP123', 'contract-name'])
   })
 
+  it('keeps dotted contract name suffixes together', () => {
+    expect(splitContractId('SP123.vault.v3')).toEqual(['SP123', 'vault.v3'])
+  })
+
   it('rejects abbreviated mainnet prefixes that are not full addresses', () => {
     expect(isMainnetAddress('SP')).toBe(false)
   })
