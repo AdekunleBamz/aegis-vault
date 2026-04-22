@@ -82,4 +82,8 @@ describe('lib utils', () => {
   it('formats camel case labels as title case', () => {
     expect(toTitleCase('stakingReward')).toBe('Staking Reward')
   })
+
+  it('returns empty title case labels for non-string values', () => {
+    expect(toTitleCase(12 as unknown as string)).toBe('')
+  })
 })
