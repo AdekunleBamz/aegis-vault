@@ -1,11 +1,30 @@
 import { describe, expect, it } from 'vitest'
-import { formatCompactSTX, toMicroAGS, toMicroSTX, truncateAddress } from '../frontend/src/lib/format'
-import { formatAGSRaw, formatSTXRaw } from '../frontend/src/lib/format'
-import { blocksToTime } from '../frontend/src/lib/format'
-import { formatBlockHeight } from '../frontend/src/lib/format'
-import { formatRelativeTime } from '../frontend/src/lib/format'
+import {
+  blocksToTime,
+  formatAGS,
+  formatAGSRaw,
+  formatAPY,
+  formatBlockHeight,
+  formatBlocksAsDays,
+  formatCompactSTX,
+  formatDuration,
+  formatPercent,
+  formatPercentage,
+  formatRelativeTime,
+  formatSTX,
+  formatSTXRaw,
+  safeFormatAGS,
+  safeFormatSTX,
+  toMicroAGS,
+  toMicroSTX,
+  truncateAddress,
+} from '../frontend/src/lib/format'
 
 describe('format utils', () => {
+  it('formats microSTX with fixed decimals', () => {
+    expect(formatSTX(1_000_000n)).toBe('1.00')
+  })
+
   it('trims surrounding spaces before truncating addresses', () => {
     expect(truncateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ')).toBe('SP3FKN...GG6N')
   })
