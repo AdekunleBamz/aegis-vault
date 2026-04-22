@@ -164,6 +164,10 @@ describe('validation utils', () => {
     expect(isValidStakeAmountSTX(0.01)).toBe(true)
   })
 
+  it('rejects stake amounts below a custom minimum', () => {
+    expect(isValidStakeAmountSTX(0.5, 1)).toBe(false)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
