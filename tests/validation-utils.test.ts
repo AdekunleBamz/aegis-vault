@@ -41,6 +41,10 @@ describe('validation utils', () => {
     expect(() => validate(stakeRequestSchema, { amount: '1', lockPeriod: 0 })).toThrow(ValidationError)
   })
 
+  it('validates unstake request position ids', () => {
+    expect(validate(unstakeRequestSchema, { positionId: 0 })).toEqual({ positionId: 0 })
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
