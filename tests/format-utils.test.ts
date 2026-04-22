@@ -103,6 +103,10 @@ describe('format utils', () => {
     expect(formatPercent(12.345)).toBe('12.35%')
   })
 
+  it('falls back for non-finite percentage values', () => {
+    expect(formatPercent(Number.POSITIVE_INFINITY)).toBe('0.00%')
+  })
+
   it('floors fractional block counts before converting to time', () => {
     expect(blocksToTime(1.9)).toBe('10 min')
   })
