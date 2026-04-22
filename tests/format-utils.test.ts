@@ -111,6 +111,10 @@ describe('format utils', () => {
     expect(blocksToTime(1.9)).toBe('10 min')
   })
 
+  it('formats block counts that span hours', () => {
+    expect(blocksToTime(12)).toBe('2 hrs')
+  })
+
   it('floors decimal block heights before formatting', () => {
     expect(formatBlockHeight(1234.9)).toBe('1,234')
   })
