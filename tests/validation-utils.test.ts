@@ -91,6 +91,18 @@ describe('validation utils', () => {
     }).activePositions).toBe(0)
   })
 
+  it('rejects protocol stats with APR above the cap', () => {
+    expect(protocolStatsSchema.safeParse({
+      totalStaked: 0,
+      totalStakers: 0,
+      totalRewardsDistributed: 0,
+      currentAPR: 101,
+      tvl: 0,
+      treasuryBalance: 0,
+      activePositions: 0,
+    }).success).toBe(false)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
