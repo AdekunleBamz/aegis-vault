@@ -230,4 +230,8 @@ describe('format utils', () => {
   it('falls back for negative APY values', () => {
     expect(formatAPY(-1)).toBe('0.00% APY')
   })
+
+  it('falls back for invalid APY decimal settings', () => {
+    expect(formatAPY(12.345, -1)).toBe('12.35% APY')
+  })
 })
