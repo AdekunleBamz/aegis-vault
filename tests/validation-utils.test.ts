@@ -168,6 +168,10 @@ describe('validation utils', () => {
     expect(isValidStakeAmountSTX(0.5, 1)).toBe(false)
   })
 
+  it('detects non-empty strings after trimming', () => {
+    expect(isNonEmptyString(' vault ')).toBe(true)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
