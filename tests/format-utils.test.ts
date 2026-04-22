@@ -45,6 +45,10 @@ describe('format utils', () => {
     expect(safeFormatSTX('1.5')).toBe('0.00')
   })
 
+  it('safely formats undefined AGS values', () => {
+    expect(safeFormatAGS(undefined)).toBe('0.00')
+  })
+
   it('trims surrounding spaces before truncating addresses', () => {
     expect(truncateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ')).toBe('SP3FKN...GG6N')
   })
