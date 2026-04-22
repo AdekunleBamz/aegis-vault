@@ -37,6 +37,10 @@ describe('format utils', () => {
     expect(formatAGS(2_500_001n)).toBe('2.500001')
   })
 
+  it('safely formats null STX values', () => {
+    expect(safeFormatSTX(null)).toBe('0.00')
+  })
+
   it('trims surrounding spaces before truncating addresses', () => {
     expect(truncateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ')).toBe('SP3FKN...GG6N')
   })
