@@ -206,4 +206,8 @@ describe('format utils', () => {
   it('formats multiple days of blocks with plural copy', () => {
     expect(formatBlocksAsDays(288)).toBe('2 days')
   })
+
+  it('formats ratio percentages with default decimals', () => {
+    expect(formatPercentage(0.1234)).toBe('12.34%')
+  })
 })
