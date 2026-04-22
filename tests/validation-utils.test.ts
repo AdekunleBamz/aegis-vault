@@ -32,6 +32,11 @@ describe('validation utils', () => {
     })
   })
 
+  it('returns safe validation errors without throwing', () => {
+    const result = safeValidate(stakeRequestSchema, { amount: '1', lockPeriod: 0 })
+    expect(result.success).toBe(false)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
