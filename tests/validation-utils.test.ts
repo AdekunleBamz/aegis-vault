@@ -116,6 +116,19 @@ describe('validation utils', () => {
     }).tier).toBe(0)
   })
 
+  it('rejects user stats tiers above the maximum', () => {
+    expect(userStatsSchema.safeParse({
+      address: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      stakedBalance: 0,
+      availableBalance: 0,
+      pendingRewards: 0,
+      totalRewardsClaimed: 0,
+      positionCount: 0,
+      tier: 6,
+      stakingPower: 0,
+    }).success).toBe(false)
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
