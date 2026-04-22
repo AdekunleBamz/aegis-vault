@@ -71,6 +71,10 @@ describe('validation utils', () => {
     expect(schema.parse({ success: false, error: { code: 'BAD', message: 'Nope' }, timestamp: 1 }).error?.code).toBe('BAD')
   })
 
+  it('applies pagination defaults', () => {
+    expect(paginationSchema.parse({})).toMatchObject({ page: 1, limit: 20 })
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
