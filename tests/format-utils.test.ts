@@ -202,4 +202,8 @@ describe('format utils', () => {
   it('formats one day of blocks with singular copy', () => {
     expect(formatBlocksAsDays(144)).toBe('1 day')
   })
+
+  it('formats multiple days of blocks with plural copy', () => {
+    expect(formatBlocksAsDays(288)).toBe('2 days')
+  })
 })
