@@ -214,4 +214,8 @@ describe('format utils', () => {
   it('formats ratio percentages with custom decimals', () => {
     expect(formatPercentage(0.1234, 1)).toBe('12.3%')
   })
+
+  it('falls back for invalid ratio percentage decimals', () => {
+    expect(formatPercentage(0.1234, -1)).toBe('12.34%')
+  })
 })
