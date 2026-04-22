@@ -86,4 +86,8 @@ describe('lib utils', () => {
   it('returns empty title case labels for non-string values', () => {
     expect(toTitleCase(12 as unknown as string)).toBe('')
   })
+
+  it('trims utility addresses before truncating them', () => {
+    expect(truncateAddress('  SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N  ')).toBe('SP3FKN…GG6N')
+  })
 })
