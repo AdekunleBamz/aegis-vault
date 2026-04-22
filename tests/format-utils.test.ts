@@ -111,6 +111,10 @@ describe('format utils', () => {
     expect(formatSTXRaw(1_500_000n)).toBe('1.5')
   })
 
+  it('formats zero raw STX as zero', () => {
+    expect(formatSTXRaw(0n)).toBe('0')
+  })
+
   it('falls back to 0 for malformed raw AGS inputs', () => {
     expect(formatAGSRaw('1.2')).toBe('0')
   })
