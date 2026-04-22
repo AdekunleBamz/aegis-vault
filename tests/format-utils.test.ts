@@ -91,6 +91,10 @@ describe('format utils', () => {
     expect(formatCompactSTX('1.2')).toBe('0.00')
   })
 
+  it('formats compact STX below one token', () => {
+    expect(formatCompactSTX(500_000n)).toBe('0.50')
+  })
+
   it('falls back to 0 for malformed raw STX inputs', () => {
     expect(formatSTXRaw('1.2')).toBe('0')
   })
