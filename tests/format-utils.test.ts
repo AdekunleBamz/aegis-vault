@@ -115,6 +115,10 @@ describe('format utils', () => {
     expect(blocksToTime(12)).toBe('2 hrs')
   })
 
+  it('formats day-long block durations', () => {
+    expect(blocksToTime(144)).toBe('1 day')
+  })
+
   it('floors decimal block heights before formatting', () => {
     expect(formatBlockHeight(1234.9)).toBe('1,234')
   })
