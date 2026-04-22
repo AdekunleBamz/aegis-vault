@@ -358,6 +358,10 @@ export function stxToMicroStx(stx: number | string): number {
     throw new Error('Invalid STX amount')
   }
 
+  if (Object.is(amount, -0)) {
+    return 0
+  }
+
   const microStx = amount * 1_000_000
   if (!Number.isFinite(microStx)) {
     throw new Error('Invalid STX amount')

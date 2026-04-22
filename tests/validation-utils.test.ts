@@ -209,6 +209,10 @@ describe('validation utils', () => {
     expect(stxToMicroStx(0)).toBe(0)
   })
 
+  it('normalizes negative zero STX input to zero micro-STX', () => {
+    expect(stxToMicroStx(-0)).toBe(0)
+  })
+
   it('rejects non-finite STX values', () => {
     expect(() => stxToMicroStx(Number.POSITIVE_INFINITY)).toThrow('Invalid STX amount')
   })
