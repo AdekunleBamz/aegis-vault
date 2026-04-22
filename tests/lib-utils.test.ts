@@ -50,4 +50,8 @@ describe('lib utils', () => {
   it('accepts devnet addresses through the combined address helper', () => {
     expect(isStacksAddress(`SN${'A'.repeat(39)}`)).toBe(true)
   })
+
+  it('accepts positive numeric string amounts', () => {
+    expect(isValidAmount('12.5')).toBe(true)
+  })
 })
