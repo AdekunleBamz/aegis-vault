@@ -1,7 +1,24 @@
 import { describe, expect, it } from 'vitest'
-import { isDevnetAddress, isMainnetAddress, isTestnetAddress, isValidContractId, splitContractId } from '../frontend/src/lib/utils'
+import {
+  clamp,
+  cn,
+  isDevnetAddress,
+  isMainnetAddress,
+  isStacksAddress,
+  isTestnetAddress,
+  isValidAmount,
+  isValidContractId,
+  pluralize,
+  splitContractId,
+  toTitleCase,
+  truncateAddress,
+} from '../frontend/src/lib/utils'
 
 describe('lib utils', () => {
+  it('merges conflicting Tailwind utility classes', () => {
+    expect(cn('px-2', 'px-4')).toBe('px-4')
+  })
+
   it('accepts trimmed contract identifiers', () => {
     expect(isValidContractId(' SP123.contract-name ')).toBe(true)
   })
