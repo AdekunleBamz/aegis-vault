@@ -75,6 +75,10 @@ describe('format utils', () => {
     expect(toMicroAGS(-1)).toBe(0n)
   })
 
+  it('converts decimal AGS amounts to microAGS', () => {
+    expect(toMicroAGS(2.75)).toBe(2_750_000n)
+  })
+
   it('falls back to 0.00 for malformed compact STX inputs', () => {
     expect(formatCompactSTX('1.2')).toBe('0.00')
   })
