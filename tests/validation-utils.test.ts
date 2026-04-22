@@ -313,4 +313,8 @@ describe('validation utils', () => {
   it('rejects unsupported stacks address prefixes', () => {
     expect(isValidStacksAddress('SM5K2RHMSBH4PAP4PGX77MCVNK1ZEED07CWX9TJT')).toBe(false)
   })
+
+  it('rejects non-string stacks address helper inputs', () => {
+    expect(isValidStacksAddress(123 as unknown as string)).toBe(false)
+  })
 })
