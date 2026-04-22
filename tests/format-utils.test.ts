@@ -218,4 +218,8 @@ describe('format utils', () => {
   it('falls back for invalid ratio percentage decimals', () => {
     expect(formatPercentage(0.1234, -1)).toBe('12.34%')
   })
+
+  it('formats APY values with a suffix', () => {
+    expect(formatAPY(15.5)).toBe('15.50% APY')
+  })
 })
