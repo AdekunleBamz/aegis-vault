@@ -46,4 +46,8 @@ describe('lib utils', () => {
   it('accepts testnet addresses through the combined address helper', () => {
     expect(isStacksAddress('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')).toBe(true)
   })
+
+  it('accepts devnet addresses through the combined address helper', () => {
+    expect(isStacksAddress(`SN${'A'.repeat(39)}`)).toBe(true)
+  })
 })
