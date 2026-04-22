@@ -138,4 +138,8 @@ describe('format utils', () => {
   it('formats recent minute-relative timestamps', () => {
     expect(formatRelativeTime(Date.now() / 1000 - 120)).toBe('2m ago')
   })
+
+  it('formats hour-relative timestamps', () => {
+    expect(formatRelativeTime(Date.now() / 1000 - 7200)).toBe('2h ago')
+  })
 })
