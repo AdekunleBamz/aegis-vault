@@ -129,6 +129,15 @@ describe('validation utils', () => {
     }).success).toBe(false)
   })
 
+  it('validates transaction records', () => {
+    expect(transactionRecordSchema.parse({
+      txId: `0x${'a'.repeat(64)}`,
+      type: 'stake',
+      status: 'success',
+      sender: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+    }).type).toBe('stake')
+  })
+
   it('converts STX and micro-STX values in both directions', () => {
     expect(stxToMicroStx('1.5')).toBe(1_500_000)
     expect(stxToMicroStx(0.000001)).toBe(1)
