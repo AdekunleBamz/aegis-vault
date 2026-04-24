@@ -38,6 +38,8 @@ export interface UseNetworkReturn {
   isDevnet: boolean;
   /** Timestamp (ms) of the last successful block height fetch, or null */
   lastFetched: number | null;
+  /** True when the last successful fetch is older than the staleness threshold */
+  isStale: boolean;
   /** Function to manually refetch the network info */
   refetch: () => Promise<void>;
 }
