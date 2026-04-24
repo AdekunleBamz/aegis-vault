@@ -127,6 +127,9 @@ npm run test:validation
 # Run a fast pre-push check bundle
 npm run check:fast
 
+# Run full repo validation bundle
+npm run validate
+
 # Console for local testing
 npm run console
 ```
