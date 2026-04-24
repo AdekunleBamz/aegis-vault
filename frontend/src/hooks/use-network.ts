@@ -28,6 +28,8 @@ export interface UseNetworkReturn {
   isLoading: boolean;
   /** Error message if the fetch failed, or null */
   error: string | null;
+  /** True when an error is currently present */
+  hasError: boolean;
   /** The current network type (mainnet, testnet, or devnet) */
   networkType: 'mainnet' | 'testnet' | 'devnet';
   /** True when connected to mainnet */
