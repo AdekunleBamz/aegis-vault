@@ -18,6 +18,10 @@ export function CopyButton({
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = async () => {
+    if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
