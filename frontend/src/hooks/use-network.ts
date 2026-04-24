@@ -17,6 +17,7 @@ const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
     : network.chainId === 1
       ? 'mainnet'
       : 'devnet';
+const NETWORK_REFRESH_INTERVAL_MS = 25_000;
 
 /**
  * Return type for the useNetwork hook.
@@ -78,7 +79,7 @@ export function useNetwork(): UseNetworkReturn {
     fetchNetworkInfo();
 
     // Refresh every 25 seconds
-    const interval = setInterval(fetchNetworkInfo, 25000);
+    const interval = setInterval(fetchNetworkInfo, NETWORK_REFRESH_INTERVAL_MS);
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 
