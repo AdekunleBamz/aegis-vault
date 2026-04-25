@@ -73,6 +73,11 @@ export const STX_DECIMALS = 6;
 export const AGS_DECIMALS = 6;
 
 /**
+ * Unit conversion factor for STX denominated in microSTX.
+ */
+export const MICROSTX_PER_STX = 1_000_000;
+
+/**
  * Minimum STX stake amount in STX.
  */
 export const MIN_STX_STAKE_STX = 0.01;
