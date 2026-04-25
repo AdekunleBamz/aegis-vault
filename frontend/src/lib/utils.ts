@@ -125,8 +125,10 @@ export function isValidAmount(amount: unknown): boolean {
  * @returns The clamped value
  */
 export function clamp(value: number, min: number, max: number): number {
-  if (!Number.isFinite(value)) return min;
-  return Math.min(Math.max(value, min), max);
+  const lower = Math.min(min, max);
+  const upper = Math.max(min, max);
+  if (!Number.isFinite(value)) return lower;
+  return Math.min(Math.max(value, lower), upper);
 }
 
 /**
