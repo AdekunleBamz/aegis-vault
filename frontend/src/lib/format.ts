@@ -194,11 +194,13 @@ export function formatRelativeTime(timestamp: number): string {
   if (!Number.isFinite(timestamp) || timestamp <= 0) return 'Just now';
   const now = Date.now() / 1000;
   const diff = now - timestamp;
+  const absDiff = Math.abs(diff);
+  const isFuture = diff < 0;
 
-  if (diff < 60) return 'Just now';
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-  if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+  if (absDiff < 60) return 'Just now';
+  if (absDiff < 3600) return `${Math.floor(absDiff / 60)}m ${isFuture ? 'from now' : 'ago'}`;
+  if (absDiff < 86400) return `${Math.floor(absDiff / 3600)}h ${isFuture ? 'from now' : 'ago'}`;
+  if (absDiff < 604800) return `${Math.floor(absDiff / 86400)}d ${isFuture ? 'from now' : 'ago'}`;
 
   return new Date(timestamp * 1000).toLocaleDateString();
 }
