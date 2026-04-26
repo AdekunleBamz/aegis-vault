@@ -46,3 +46,5 @@ export const formatApyRange = (minBps, maxBps) => (Number(minBps) / 100).toFixed
 export const formatNetAPY = (bps, feeBps) => ((Number(bps) - Number(feeBps)) / 100).toFixed(2) + "% net";
 
 export const formatPositionAge = (blocks) => Math.floor(Number(blocks) / 144) + "d old";
+
+export const formatRewardRate = (bps) => (Number(bps) / 100).toFixed(3) + "% / day";
