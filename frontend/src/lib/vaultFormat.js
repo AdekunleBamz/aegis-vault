@@ -70,3 +70,5 @@ export const formatStakerShare = (userStake, totalStake) => {
   if (Number(totalStake) === 0) return "0.00%";
   return ((Number(userStake) / Number(totalStake)) * 100).toFixed(2) + "%";
 };
+
+export const formatClaimableReward = (v) => (Number(v) / 1e6).toFixed(6) + " AGS claimable";
