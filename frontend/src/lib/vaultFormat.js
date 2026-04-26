@@ -72,3 +72,5 @@ export const formatStakerShare = (userStake, totalStake) => {
 };
 
 export const formatClaimableReward = (v) => (Number(v) / 1e6).toFixed(6) + " AGS claimable";
+
+export const formatTotalYield = (v) => (Number(v) / 1e6).toFixed(6) + " AGS total";
