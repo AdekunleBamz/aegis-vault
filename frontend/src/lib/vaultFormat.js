@@ -38,3 +38,5 @@ export const formatAGSAmount = (v) => (v / 1e6).toFixed(6) + " AGS";
 export const formatLockDays = (d) => d + " days locked";
 
 export const formatYieldEarned = (v) => (v / 1e6).toFixed(6) + " AGS earned";
+
+export const formatVaultCapacity = (used, max) => Number(used) + " / " + Number(max);
