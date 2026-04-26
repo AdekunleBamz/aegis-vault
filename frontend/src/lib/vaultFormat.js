@@ -50,3 +50,9 @@ export const formatPositionAge = (blocks) => Math.floor(Number(blocks) / 144) + 
 export const formatRewardRate = (bps) => (Number(bps) / 100).toFixed(3) + "% / day";
 
 export const formatVaultStatus = (active) => active ? "Active" : "Closed";
+
+export const formatUnlockCountdown = (blocks) => {
+  const days = Math.floor(Number(blocks) / 144);
+  const rem = Math.floor((Number(blocks) % 144) * 10 / 144);
+  return days + "." + rem + "d remaining";
+};
