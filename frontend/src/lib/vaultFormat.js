@@ -65,3 +65,8 @@ export const formatQuorumProgress = (votes, quorum) => {
   const pct = Math.min(100, Math.floor((Number(votes) / Number(quorum)) * 100));
   return pct + "% of quorum";
 };
+
+export const formatStakerShare = (userStake, totalStake) => {
+  if (Number(totalStake) === 0) return "0.00%";
+  return ((Number(userStake) / Number(totalStake)) * 100).toFixed(2) + "%";
+};
