@@ -46,3 +46,5 @@ export const isValidGovernanceQuorum = (v) => Number.isInteger(Number(v)) && Num
 export const isValidCompoundFrequency = (v) => Number.isInteger(Number(v)) && Number(v) >= 1;
 
 export const isValidPositionCount = (v) => Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) <= 5;
+
+export const isValidClaimAmount = (v) => isFinite(Number(v)) && Number(v) >= 0;
