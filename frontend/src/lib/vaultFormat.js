@@ -40,3 +40,7 @@ export const formatLockDays = (d) => d + " days locked";
 export const formatYieldEarned = (v) => (v / 1e6).toFixed(6) + " AGS earned";
 
 export const formatVaultCapacity = (used, max) => Number(used) + " / " + Number(max);
+
+export const formatApyRange = (minBps, maxBps) => (Number(minBps) / 100).toFixed(2) + "%-" + (Number(maxBps) / 100).toFixed(2) + "%";
+
+export const formatNetAPY = (bps, feeBps) => ((Number(bps) - Number(feeBps)) / 100).toFixed(2) + "% net";
