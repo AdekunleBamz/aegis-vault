@@ -60,3 +60,8 @@ export const formatUnlockCountdown = (blocks) => {
 export const formatPenaltyAmount = (v) => (Number(v) / 1e6).toFixed(6) + " STX penalty";
 
 export const formatGovProposalId = (id) => "Proposal #" + Number(id);
+
+export const formatQuorumProgress = (votes, quorum) => {
+  const pct = Math.min(100, Math.floor((Number(votes) / Number(quorum)) * 100));
+  return pct + "% of quorum";
+};
