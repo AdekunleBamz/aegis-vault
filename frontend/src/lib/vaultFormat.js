@@ -44,3 +44,5 @@ export const formatVaultCapacity = (used, max) => Number(used) + " / " + Number(
 export const formatApyRange = (minBps, maxBps) => (Number(minBps) / 100).toFixed(2) + "%-" + (Number(maxBps) / 100).toFixed(2) + "%";
 
 export const formatNetAPY = (bps, feeBps) => ((Number(bps) - Number(feeBps)) / 100).toFixed(2) + "% net";
+
+export const formatPositionAge = (blocks) => Math.floor(Number(blocks) / 144) + "d old";
