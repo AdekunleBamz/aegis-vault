@@ -56,3 +56,5 @@ export const formatUnlockCountdown = (blocks) => {
   const rem = Math.floor((Number(blocks) % 144) * 10 / 144);
   return days + "." + rem + "d remaining";
 };
+
+export const formatPenaltyAmount = (v) => (Number(v) / 1e6).toFixed(6) + " STX penalty";
