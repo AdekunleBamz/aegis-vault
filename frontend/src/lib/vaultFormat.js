@@ -48,3 +48,5 @@ export const formatNetAPY = (bps, feeBps) => ((Number(bps) - Number(feeBps)) / 1
 export const formatPositionAge = (blocks) => Math.floor(Number(blocks) / 144) + "d old";
 
 export const formatRewardRate = (bps) => (Number(bps) / 100).toFixed(3) + "% / day";
+
+export const formatVaultStatus = (active) => active ? "Active" : "Closed";
