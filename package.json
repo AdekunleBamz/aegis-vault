@@ -2,6 +2,10 @@
   "name": "aegis-vault",
   "version": "1.0.0",
   "description": "Decentralized STX staking protocol with AGS token rewards on Stacks blockchain",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdekunleBamz/aegis-vault.git"
+  },
   "type": "module",
   "scripts": {
     "frontend:dev": "npm --prefix frontend run dev",
