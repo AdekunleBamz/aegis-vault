@@ -17,6 +17,7 @@ First off, thanks for taking the time to contribute!
 - Fill out the PR template.
 - Ensure your code follows the project's style.
 - Include tests if applicable.
+- Run `npm run check` at repo root before requesting review.
 
 ## Development Setup
 
@@ -27,4 +28,4 @@ First off, thanks for taking the time to contribute!
 ## Style Guidelines
 - Use 2 spaces for indentation.
 - Follow Prettier formatting.
-- Add JSDoc comments to new functions.
+- Add concise comments only where logic is non-obvious.
