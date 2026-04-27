@@ -88,7 +88,7 @@ export function AddressDisplay({
 
   return (
     <div className={`inline-flex items-center gap-2 ${className}`}>
-      <span className="font-mono text-sm text-gray-300">{displayAddress}</span>
+      <span className="font-mono text-sm text-gray-300 break-all">{displayAddress}</span>
       {showCopy && (
         <CopyButton text={address} className="p-1.5">
           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
