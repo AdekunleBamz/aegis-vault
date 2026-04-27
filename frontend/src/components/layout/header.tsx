@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useWallet } from '@/context/wallet-context';
 import { truncateAddress, formatSTX } from '@/lib/format';
 import { cn } from '@/lib/utils';
+import { TRANSITION_DURATION, TRANSITION_EASE } from '@/lib/constants';
 import { useBalances } from '@/hooks/use-balances';
 import { useNetwork } from '@/hooks/use-network';
 import {
@@ -135,15 +136,25 @@ export function Header() {
     };
   }, []);
 
-  const isActiveRoute = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`);
+  const navLinks = [
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/stake', label: 'Stake', icon: Layers },
+    { href: '/strategies', label: 'Strategies', icon: Cpu },
+    { href: '/analytics', label: 'Analytics', icon: PieChart },
+    { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
+    { href: '/positions', label: 'Positions', icon: History },
+    { href: '/governance', label: 'Governance', icon: Vote },
+    { href: '/security', label: 'Transparency', icon: ShieldCheck },
+    { href: '/stats', label: 'Protocol Stats', icon: BarChart3 },
+    { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
+  ];
 
   return (
     <header role="banner"
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-border py-3"
+          ? "bg-background/60 backdrop-blur-3xl border-border py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)]"
           : "bg-transparent border-transparent py-5"
       )}
     >
@@ -151,7 +162,7 @@ export function Header() {
         {/* Left: Logo & Network */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="Aegis Vault Home">
-            <div className="relative">
+            <div className="relative group-hover:scale-105 transition-transform duration-500">
               <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20 group-hover:shadow-aegis-blue/40 transition-all duration-500 group-hover:rotate-6">
                 <ShieldCheck className="w-6 h-6 text-white" />
               </div>
@@ -164,17 +175,9 @@ export function Header() {
 
           <div className="hidden lg:block">
             <NetworkBadge />
-            <div className="mt-2 hidden md:flex items-center gap-2">
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/10">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80">Protocol Healthy</span>
-              </div>
-              <button className="p-2 rounded-full bg-muted border border-border/50 hover:bg-accent transition-all" aria-label="Toggle Privacy Mode" title="Hide sensitive balances">
-                <svg className="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-              </button>
+            <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/10">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80">Protocol Healthy</span>
             </div>
           </div>
         </div>
@@ -231,6 +234,7 @@ export function Header() {
                     initial={{ opacity: 0, scale: 0.95, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                    transition={{ duration: TRANSITION_DURATION, ease: TRANSITION_EASE }}
                     className="absolute right-0 mt-3 w-56 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
                     id="wallet-account-menu"
                     role="menu"
@@ -256,7 +260,7 @@ export function Header() {
                         </div>
                       </div>
 
-                      <div>
+                      <div aria-live="polite" aria-atomic="true">
                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1.5">Network</p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5">

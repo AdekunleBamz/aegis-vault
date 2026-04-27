@@ -2,20 +2,24 @@
   "name": "aegis-vault",
   "version": "1.0.0",
   "description": "Decentralized STX staking protocol with AGS token rewards on Stacks blockchain",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdekunleBamz/aegis-vault.git"
+  },
   "type": "module",
   "scripts": {
-    "frontend:install": "npm --prefix frontend ci",
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
     "frontend:start": "npm --prefix frontend run start",
+    "frontend:validate": "npm --prefix frontend run validate",
     "frontend:lint": "npm --prefix frontend run lint",
     "lint:frontend": "npm run frontend:lint",
     "test": "vitest run",
     "test:validation": "vitest run tests/validation-utils.test.ts",
     "test:watch": "vitest",
-    "contracts:check": "clarinet check",
-    "check": "clarinet check",
     "check:fast": "npm run contracts:check && npm run test:validation",
+    "contracts:check": "clarinet check",
+    "check": "npm run contracts:check && npm run test",
     "contracts:test": "clarinet test",
     "console": "clarinet console",
     "fmt": "clarinet format",
@@ -27,7 +31,7 @@
     "staking",
     "defi"
   ],
-  "author": "",
+  "author": "AdekunleBamz",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
