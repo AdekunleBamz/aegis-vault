@@ -6,6 +6,7 @@
  */
 
 import { z } from 'zod'
+import { MICROSTX_PER_STX } from './constants'
 
 // ============================================================================
 // Base Schemas
@@ -331,7 +332,7 @@ export function isValidStxAmount(amount: string): boolean {
  */
 export function microStxToStx(microStx: number): number {
   const validated = microStxSchema.parse(microStx)
-  return validated / 1_000_000
+  return validated / MICROSTX_PER_STX
 }
 
 /**
@@ -358,7 +359,11 @@ export function stxToMicroStx(stx: number | string): number {
     throw new Error('Invalid STX amount')
   }
 
-  const microStx = amount * 1_000_000
+  if (Object.is(amount, -0)) {
+    return 0
+  }
+
+  const microStx = amount * MICROSTX_PER_STX
   if (!Number.isFinite(microStx)) {
     throw new Error('Invalid STX amount')
   }
@@ -424,6 +429,37 @@ const validation = {
  */
 export function getFieldError(error: import('zod').ZodError, field: string): string | undefined {
   return error.issues.find((issue) => issue.path.join('.') === field)?.message;
+}
+
+/**
+ * Returns true if the lock period (in days) is within the allowed range [3, 30].
+ *
+ * @param days - The lock period to validate
+ * @returns True if within bounds
+ */
+export function isValidLockPeriod(days: number): boolean {
+  return Number.isInteger(days) && days >= 3 && days <= 30;
+}
+
+/**
+ * Returns true if the STX amount (in whole STX) meets the minimum stake threshold.
+ *
+ * @param amount - The amount to check in whole STX (not microSTX)
+ * @param minStx - Minimum valid amount in STX (default 0.01)
+ * @returns True if the amount is a finite positive number at or above the minimum
+ */
+export function isValidStakeAmountSTX(amount: number, minStx = 0.01): boolean {
+  return Number.isFinite(amount) && amount >= minStx;
+}
+
+/**
+ * Returns true if the value is a non-empty string after trimming.
+ *
+ * @param value - The value to test
+ * @returns True if `value` is a non-empty string
+ */
+export function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
 }
 
 export default validation

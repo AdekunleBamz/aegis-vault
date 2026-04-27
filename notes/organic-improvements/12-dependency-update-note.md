@@ -4,4 +4,4 @@
 - Re-run frontend lint and root tests after updates.
 - Document any required runtime version adjustments.
 - Keep lockfile and package changes in same commit.
-- Capture release-note impact when dependency updates alter wallet behavior.
+- Reinstall with `npm ci` after lockfile updates before smoke testing.

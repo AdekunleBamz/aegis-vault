@@ -81,6 +81,7 @@ export function useStaking(senderAddress: string): UseStakingReturn {
     isLoading,
     isStaking: isLoading,
     error,
+    hasError: error !== null,
     stakeCount,
     lastStakedAt,
     hasStaked: stakeCount > 0,
