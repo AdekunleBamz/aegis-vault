@@ -54,6 +54,7 @@
     @apply bg-background text-foreground min-h-screen;
     accent-color: hsl(var(--aegis-blue));
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image:
