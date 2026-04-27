@@ -241,7 +241,7 @@ Aegis Vault prioritizes security at every layer of the stack:
 
 ## License
 
-[MIT](LICENSE)
+MIT. See [LICENSE](LICENSE).
 
 ## Links
 
