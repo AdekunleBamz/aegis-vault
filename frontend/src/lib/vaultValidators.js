@@ -38,3 +38,15 @@ export const isValidMaxDeposit = (v) => !isNaN(Number(v)) && Number(v) <= 100000
 export const isValidLockDays = (v) => [7, 30, 90, 180].includes(Number(v));
 
 export const isValidVaultVersion = (v) => typeof v === "string" && /^\d+\.\d+\.\d+$/.test(v);
+
+export const isValidStakerShare = (v) => !isNaN(Number(v)) && Number(v) >= 0 && Number(v) <= 1;
+
+export const isValidGovernanceQuorum = (v) => Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) <= 10000;
+
+export const isValidCompoundFrequency = (v) => Number.isInteger(Number(v)) && Number(v) >= 1;
+
+export const isValidPositionCount = (v) => Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) <= 5;
+
+export const isValidClaimAmount = (v) => isFinite(Number(v)) && Number(v) >= 0;
+
+export const isValidPauseState = (v) => typeof v === "boolean";

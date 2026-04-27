@@ -17,17 +17,20 @@ const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
     : network.chainId === 1
       ? 'mainnet'
       : 'devnet';
+const NETWORK_REFRESH_INTERVAL_MS = 25_000;
 
 /**
  * Return type for the useNetwork hook.
  */
 export interface UseNetworkReturn {
   /** Current Stacks blockchain block height */
-  blockHeight: number;
+  blockHeight: number | null;
   /** Whether the network info is currently being fetched */
   isLoading: boolean;
   /** Error message if the fetch failed, or null */
   error: string | null;
+  /** True when an error is currently present */
+  hasError: boolean;
   /** The current network type (mainnet, testnet, or devnet) */
   networkType: 'mainnet' | 'testnet' | 'devnet';
   /** True when connected to mainnet */
@@ -38,18 +41,20 @@ export interface UseNetworkReturn {
   isDevnet: boolean;
   /** Timestamp (ms) of the last successful block height fetch, or null */
   lastFetched: number | null;
+  /** True when the last successful fetch is older than the staleness threshold */
+  isStale: boolean;
   /** Function to manually refetch the network info */
   refetch: () => Promise<void>;
 }
 
 /**
  * Hook for fetching current network state.
- * Automatically refreshes every 30 seconds.
+ * Automatically refreshes every 25 seconds.
  *
  * @returns Object containing block height, loading state, error, network type, and refetch function
  */
 export function useNetwork(): UseNetworkReturn {
-  const [blockHeight, setBlockHeight] = useState(0);
+  const [blockHeight, setBlockHeight] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastFetched, setLastFetched] = useState<number | null>(null);
@@ -78,7 +83,7 @@ export function useNetwork(): UseNetworkReturn {
     fetchNetworkInfo();
 
     // Refresh every 25 seconds
-    const interval = setInterval(fetchNetworkInfo, 25000);
+    const interval = setInterval(fetchNetworkInfo, NETWORK_REFRESH_INTERVAL_MS);
     return () => clearInterval(interval);
   }, [fetchNetworkInfo]);
 

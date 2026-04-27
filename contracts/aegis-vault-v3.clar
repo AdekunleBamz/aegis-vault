@@ -266,6 +266,10 @@
 ;; READ-ONLY
 ;; ============================================
 
+;; @desc Calculates the currently accruable rewards for a specific stake.
+;; @param staker - The address of the position owner.
+;; @param stake-id - The ID of the stake to query.
+;; @returns (ok uint) - The amount of AGS rewards (micro-units) pending.
 (define-read-only (get-pending-rewards (staker principal) (stake-id uint))
   (match (map-get? stakes { staker: staker, stake-id: stake-id })
     stake-data (ok (calculate-pending-rewards stake-data))

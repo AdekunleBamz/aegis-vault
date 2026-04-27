@@ -210,6 +210,7 @@ export function ConfirmModal({
       footer={
         <>
           <button
+            type="button"
             onClick={onClose}
             disabled={isLoading}
             className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white
@@ -218,6 +219,7 @@ export function ConfirmModal({
             {cancelText}
           </button>
           <button
+            type="button"
             onClick={onConfirm}
             disabled={isLoading}
             className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors
