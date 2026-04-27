@@ -18,14 +18,6 @@ export function CopyButton({
   const [copied, setCopied] = React.useState(false);
   const resetTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  React.useEffect(() => {
-    return () => {
-      if (resetTimerRef.current) {
-        clearTimeout(resetTimerRef.current);
-      }
-    };
-  }, []);
-
   const handleCopy = async () => {
     if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
       return;
