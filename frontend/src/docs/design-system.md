@@ -28,8 +28,9 @@ The interface relies on layered transparency and light-refraction effects.
 - `.glass-card`: Semi-transparent background with a subtle white border-top/left for lighting effect.
 - `.text-gradient`: Linear gradient text from blue to purple.
 
-Avoid non-essential autoplay looping animations in dense data views.
-Gradient text should be reserved for short headings, not dense body content.
+## 🎞️ Motion Preference
+- When animations are decorative (not functional), provide a reduced-motion fallback.
+- Prefer shorter transitions for frequently repeated UI interactions.
 
 ## 📐 Layout Principles
 - **Border Radius**: Consistent `32px` to `48px` for large containers, `full` for interactive elements.

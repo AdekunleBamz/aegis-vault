@@ -6,6 +6,7 @@
  */
 
 import { z } from 'zod'
+import { MICROSTX_PER_STX } from './constants'
 
 // ============================================================================
 // Base Schemas
@@ -331,7 +332,7 @@ export function isValidStxAmount(amount: string): boolean {
  */
 export function microStxToStx(microStx: number): number {
   const validated = microStxSchema.parse(microStx)
-  return validated / 1_000_000
+  return validated / MICROSTX_PER_STX
 }
 
 /**
@@ -358,7 +359,11 @@ export function stxToMicroStx(stx: number | string): number {
     throw new Error('Invalid STX amount')
   }
 
-  const microStx = amount * 1_000_000
+  if (Object.is(amount, -0)) {
+    return 0
+  }
+
+  const microStx = amount * MICROSTX_PER_STX
   if (!Number.isFinite(microStx)) {
     throw new Error('Invalid STX amount')
   }

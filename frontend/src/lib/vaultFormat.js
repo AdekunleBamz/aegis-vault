@@ -38,3 +38,41 @@ export const formatAGSAmount = (v) => (v / 1e6).toFixed(6) + " AGS";
 export const formatLockDays = (d) => d + " days locked";
 
 export const formatYieldEarned = (v) => (v / 1e6).toFixed(6) + " AGS earned";
+
+export const formatVaultCapacity = (used, max) => Number(used) + " / " + Number(max);
+
+export const formatApyRange = (minBps, maxBps) => (Number(minBps) / 100).toFixed(2) + "%-" + (Number(maxBps) / 100).toFixed(2) + "%";
+
+export const formatNetAPY = (bps, feeBps) => ((Number(bps) - Number(feeBps)) / 100).toFixed(2) + "% net";
+
+export const formatPositionAge = (blocks) => Math.floor(Number(blocks) / 144) + "d old";
+
+export const formatRewardRate = (bps) => (Number(bps) / 100).toFixed(3) + "% / day";
+
+export const formatVaultStatus = (active) => active ? "Active" : "Closed";
+
+export const formatUnlockCountdown = (blocks) => {
+  const days = Math.floor(Number(blocks) / 144);
+  const rem = Math.floor((Number(blocks) % 144) * 10 / 144);
+  return days + "." + rem + "d remaining";
+};
+
+export const formatPenaltyAmount = (v) => (Number(v) / 1e6).toFixed(6) + " STX penalty";
+
+export const formatGovProposalId = (id) => "Proposal #" + Number(id);
+
+export const formatQuorumProgress = (votes, quorum) => {
+  const pct = Math.min(100, Math.floor((Number(votes) / Number(quorum)) * 100));
+  return pct + "% of quorum";
+};
+
+export const formatStakerShare = (userStake, totalStake) => {
+  if (Number(totalStake) === 0) return "0.00%";
+  return ((Number(userStake) / Number(totalStake)) * 100).toFixed(2) + "%";
+};
+
+export const formatClaimableReward = (v) => (Number(v) / 1e6).toFixed(6) + " AGS claimable";
+
+export const formatTotalYield = (v) => (Number(v) / 1e6).toFixed(6) + " AGS total";
+
+export const formatProposalOutcome = (passed) => passed ? "Passed" : "Rejected";
