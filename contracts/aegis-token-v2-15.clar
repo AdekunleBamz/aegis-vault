@@ -158,6 +158,31 @@
   MAX-SUPPLY
 )
 
+(define-read-only (get-paused)
+  (ok (var-get paused))
+)
+
+(define-public (pause)
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (var-set paused true)
+    (ok true)
+  )
+)
+
+(define-public (unpause)
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (var-set paused false)
+    (ok true)
+  )
+)
+
+;; Get circulating supply (total - locked)
+(define-read-only (get-circulating-supply)
+  (ok (ft-get-supply ags-token))
+)
+
 ;; ============================================
 ;; FUNGIBLE TOKEN DEFINITION
 ;; ============================================
