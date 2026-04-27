@@ -4,4 +4,4 @@
 - Confirm AGS transfer amounts match expected math.
 - Check reward claim flow after long idle periods.
 - Log discrepancies with block height references.
-- Verify claim history rows match emitted contract event amounts.
+- Validate reward rounding behavior for very small stake amounts during QA.
