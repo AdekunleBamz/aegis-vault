@@ -156,7 +156,8 @@ export function Hero() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="p-5 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default text-left"
+                className="p-5 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default text-left" role="listitem"
+                aria-label={`${stat.label}: ${stat.value}`}
               >
                 <stat.icon className={cn("w-5 h-5 mb-4 opacity-70 group-hover:opacity-100 transition-opacity", stat.color)} />
                 <div className="text-3xl font-black tabular-nums tracking-tighter mb-1">
@@ -181,7 +182,7 @@ export function Hero() {
               Smart Contract Audited
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
-              <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" />
+              <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" aria-hidden="true" />
               Fully Decentralized
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
@@ -209,7 +210,7 @@ export function Hero() {
                   </h2>
                 </div>
                 <div className="rounded-2xl border border-aegis-blue/20 bg-aegis-blue/10 p-3">
-                  <ShieldCheck className="h-5 w-5 text-aegis-blue" />
+                  <ShieldCheck className="h-5 w-5 text-aegis-blue" aria-hidden="true" />
                 </div>
               </div>
 
