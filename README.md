@@ -143,13 +143,13 @@ npm run frontend:dev
 npm run frontend:lint
 
 # Run frontend tests
-npm run frontend:test
+npm run frontend:validate
 
 # Build for production
 npm run frontend:build
 
 # Start production server
-npm --prefix frontend start
+npm run frontend:start
 ```
 
 ## Deployment
