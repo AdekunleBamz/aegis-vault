@@ -1,6 +1,6 @@
 /**
  * @file Utility functions for Aegis Vault
- * 
+ *
  * Provides general-purpose utility functions including CSS class merging,
  * address validation, and contract ID parsing.
  */
@@ -10,7 +10,7 @@ import { twMerge } from "tailwind-merge"
 
 /**
  * Merges CSS classes with Tailwind CSS conflict resolution.
- * 
+ *
  * @param inputs - Class values to merge (strings, objects, arrays)
  * @returns Merged class string with Tailwind conflicts resolved
  */
@@ -19,23 +19,15 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 /**
- * Checks if a Stacks address is a mainnet address.
- * Mainnet addresses start with 'SP'.
+ * Returns a standardized accessibility metadata object for UI components.
  * 
- * @param address - The Stacks address to check
- * @returns True if the address is a mainnet address
+ * @param name - The human-readable name of the component
+ * @param description - A brief description of the component's purpose
+ * @returns An object with aria-label and role properties
  */
-export function isMainnetAddress(address: string): boolean {
-  return address.startsWith('SP');
-}
-
-/**
- * Splits a full contract ID into its address and name components.
- * 
- * @param contractId - Full contract ID in format "address.contract-name"
- * @returns Tuple of [address, contractName]
- */
-export function splitContractId(contractId: string): [string, string] {
-  const parts = contractId.split('.');
-  return [parts[0], parts[1]];
+export function getComponentMetadata(name: string, description?: string) {
+  return {
+    'aria-label': description ? `${name}: ${description}` : name,
+    'role': 'region' as const,
+  };
 }

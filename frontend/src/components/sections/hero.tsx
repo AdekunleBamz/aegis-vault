@@ -17,27 +17,27 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+const HERO_STATS = [
+  { value: '12%', label: 'Base APY', icon: TrendingUp, color: 'text-aegis-blue' },
+  { value: '24%', label: 'Max APY', icon: Zap, color: 'text-aegis-purple' },
+  { value: '3-30', label: 'Days Lockup', icon: Clock, color: 'text-aegis-indigo' },
+  { value: '4', label: 'Reward Tiers', icon: LayoutGrid, color: 'text-aegis-cyan' },
+];
+
+const PROOF_POINTS = [
+  'Non-custodial vault access',
+  'Tiered rewards with clear lock windows',
+  'Mainnet-ready analytics and transparency'
+];
+
+const OPERATING_SIGNALS = [
+  { label: 'Security posture', value: 'Audited controls' },
+  { label: 'Withdrawal model', value: 'Flexible lock windows' },
+  { label: 'Rewards cadence', value: 'Live accrual tracking' }
+];
+
 export function Hero() {
   const { isConnected, connect } = useWallet();
-
-  const stats = [
-    { value: '12%', label: 'Base APY', icon: TrendingUp, color: 'text-aegis-blue' },
-    { value: '24%', label: 'Max APY', icon: Zap, color: 'text-aegis-purple' },
-    { value: '3-30', label: 'Days Lockup', icon: Clock, color: 'text-aegis-indigo' },
-    { value: '4', label: 'Reward Tiers', icon: LayoutGrid, color: 'text-aegis-cyan' },
-  ];
-
-  const proofPoints = [
-    'Non-custodial vault access',
-    'Tiered rewards with clear lock windows',
-    'Mainnet-ready analytics and transparency'
-  ];
-
-  const operatingSignals = [
-    { label: 'Security posture', value: 'Audited controls' },
-    { label: 'Withdrawal model', value: 'Flexible lock windows' },
-    { label: 'Rewards cadence', value: 'Live accrual tracking' }
-  ];
 
   return (
     <section
@@ -137,7 +137,7 @@ export function Hero() {
             transition={{ delay: 0.35 }}
             className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
           >
-            {proofPoints.map((point) => (
+            {PROOF_POINTS.map((point) => (
               <div
                 key={point}
                 className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-4 py-2 text-sm text-muted-foreground backdrop-blur-sm"
@@ -150,13 +150,14 @@ export function Hero() {
 
           {/* Stats Grid */}
           <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-            {stats.map((stat, i) => (
+            {HERO_STATS.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
-                className="p-5 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default text-left"
+                className="p-5 rounded-3xl bg-muted/30 border border-border/50 backdrop-blur-sm group hover:border-border transition-colors cursor-default text-left" role="listitem"
+                aria-label={`${stat.label}: ${stat.value}`}
               >
                 <stat.icon className={cn("w-5 h-5 mb-4 opacity-70 group-hover:opacity-100 transition-opacity", stat.color)} />
                 <div className="text-3xl font-black tabular-nums tracking-tighter mb-1">
@@ -181,7 +182,7 @@ export function Hero() {
               Smart Contract Audited
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
-              <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" />
+              <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" aria-hidden="true" />
               Fully Decentralized
             </div>
             <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
@@ -209,12 +210,12 @@ export function Hero() {
                   </h2>
                 </div>
                 <div className="rounded-2xl border border-aegis-blue/20 bg-aegis-blue/10 p-3">
-                  <ShieldCheck className="h-5 w-5 text-aegis-blue" />
+                  <ShieldCheck className="h-5 w-5 text-aegis-blue" aria-hidden="true" />
                 </div>
               </div>
 
               <div className="space-y-4">
-                {operatingSignals.map((signal) => (
+                {OPERATING_SIGNALS.map((signal) => (
                   <div
                     key={signal.label}
                     className="flex items-center justify-between rounded-[24px] border border-border/60 bg-muted/30 px-4 py-4"

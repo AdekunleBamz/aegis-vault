@@ -1,9 +1,9 @@
 /**
  * @file Error handling utilities for Aegis Vault
- * 
+ *
  * Provides comprehensive error types, error classes, error messages,
  * and helper functions for consistent error handling throughout the application.
- * 
+ *
  * @author Aegis Vault Team
  */
 
@@ -29,6 +29,8 @@ export type ErrorCode =
   | 'RATE_LIMITED'
   | 'NOT_FOUND'
   | 'UNAUTHORIZED'
+  | 'LOCK_PERIOD_NOT_ENDED'
+  | 'STAKING_CAP_REACHED'
   | 'UNKNOWN_ERROR';
 
 /**
@@ -79,13 +81,17 @@ export class AegisError extends Error {
     };
   }
 
+  override toString(): string {
+    return `AegisError(${this.code}): ${this.message}`;
+  }
+
   static fromError(error: unknown, defaultCode: ErrorCode = 'UNKNOWN_ERROR'): AegisError {
     if (error instanceof AegisError) return error;
-    
+
     if (error instanceof Error) {
       return new AegisError(defaultCode, error.message, { originalError: error.name });
     }
-    
+
     return new AegisError(defaultCode, String(error));
   }
 }
@@ -108,6 +114,8 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   RATE_LIMITED: 'Too many requests. Please wait a moment.',
   NOT_FOUND: 'The requested resource was not found.',
   UNAUTHORIZED: 'You are not authorized to perform this action.',
+  LOCK_PERIOD_NOT_ENDED: 'The lock period has not ended yet. Use emergency withdraw if needed.',
+  STAKING_CAP_REACHED: 'The protocol staking cap has been reached. Please try again later.',
   UNKNOWN_ERROR: 'An unexpected error occurred. Please try again.',
 };
 
@@ -150,12 +158,21 @@ export function getErrorMessage(error: unknown): string {
 }
 
 /**
+ * Returns true if the error represents a recoverable condition
+ * (i.e. the user can retry without taking corrective action).
+ */
+export function isRecoverable(error: unknown): boolean {
+  if (error instanceof AegisError) return error.recoverable;
+  return true;
+}
+
+/**
  * Parses transaction error from Stacks
  */
 export function parseTransactionError(error: unknown): AegisError {
   const message = error instanceof Error ? error.message : String(error);
 
-  if (message.includes('rejected') || message.includes('cancelled')) {
+  if (message.includes('rejected') || message.includes('cancelled') || message.includes('canceled')) {
     return createError('TRANSACTION_REJECTED');
   }
   if (message.includes('insufficient')) {
@@ -183,7 +200,7 @@ export interface ErrorFallbackProps {
 // RESULT TYPE (FOR ERROR HANDLING WITHOUT EXCEPTIONS)
 // ============================================================================
 
-export type Result<T, E = AegisError> = 
+export type Result<T, E = AegisError> =
   | { ok: true; value: T }
   | { ok: false; error: E };
 
@@ -268,8 +285,8 @@ const errorReports: ErrorReport[] = [];
  * Reports an error for analytics/debugging
  */
 export function reportError(error: unknown, wallet?: string): void {
-  const appError = error instanceof AegisError 
-    ? error.toJSON() 
+  const appError = error instanceof AegisError
+    ? error.toJSON()
     : AegisError.fromError(error).toJSON();
 
   const report: ErrorReport = {
@@ -309,4 +326,14 @@ export function getErrorReports(): ErrorReport[] {
  */
 export function clearErrorReports(): void {
   errorReports.length = 0;
+}
+
+/**
+ * Type guard that checks whether an unknown value is an AegisError.
+ *
+ * @param error - The value to check
+ * @returns True if the value is an AegisError instance
+ */
+export function isAegisError(error: unknown): error is AegisError {
+  return error instanceof AegisError;
 }

@@ -22,10 +22,10 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
   const { claimRewards, isLoading, error } = useRewards();
   const [step, setStep] = useState<'view' | 'pending' | 'success'>('view');
   const [txId, setTxId] = useState<string | null>(null);
-  const [claimedAmount, setClaimedAmount] = useState<bigint>(BigInt(0));
+  const [claimedAmount, setClaimedAmount] = useState<bigint>(0n);
 
-  const pendingRewards = position?.pendingRewards || BigInt(0);
-  const stakedAmount = position?.amountStaked || BigInt(0);
+  const pendingRewards = position?.pendingRewards ?? 0n;
+  const stakedAmount = position?.amountStaked ?? 0n;
   const tier = determineTier(stakedAmount);
 
   // Calculate estimated USD value (mock rate)
@@ -52,7 +52,7 @@ export function ClaimFlow({ onSuccess, onError }: ClaimFlowProps) {
   const handleReset = () => {
     setStep('view');
     setTxId(null);
-    setClaimedAmount(BigInt(0));
+    setClaimedAmount(0n);
   };
 
   if (!isConnected) {

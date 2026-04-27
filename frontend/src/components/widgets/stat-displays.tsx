@@ -2,9 +2,29 @@
 
 import React from 'react'
 
-// ============================================================================
-// Stat Display Components
-// ============================================================================
+const CHANGE_COLORS: Record<string, string> = {
+  increase: 'text-green-600 dark:text-green-400',
+  decrease: 'text-red-600 dark:text-red-400',
+  neutral: 'text-gray-500 dark:text-gray-400',
+};
+
+const CHANGE_ICONS: Record<string, React.ReactNode> = {
+  increase: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  ),
+  decrease: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  ),
+  neutral: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14" />
+    </svg>
+  ),
+};
 
 interface StatCardProps {
   label: string
@@ -29,29 +49,6 @@ export function StatCard({
   loading = false,
   className = '',
 }: StatCardProps) {
-  const changeColors = {
-    increase: 'text-green-600 dark:text-green-400',
-    decrease: 'text-red-600 dark:text-red-400',
-    neutral: 'text-gray-500 dark:text-gray-400',
-  }
-
-  const changeIcons = {
-    increase: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-      </svg>
-    ),
-    decrease: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
-    ),
-    neutral: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14" />
-      </svg>
-    ),
-  }
 
   if (loading) {
     return (
@@ -75,10 +72,10 @@ export function StatCard({
           <p className="text-2xl font-bold text-gray-900 dark:text-white">
             {value}
           </p>
-          
+
           {change && (
-            <div className={`flex items-center gap-1 mt-1 text-sm ${changeColors[change.type]}`}>
-              {changeIcons[change.type]}
+            <div className={`flex items-center gap-1 mt-1 text-sm ${CHANGE_COLORS[change.type]}`}>
+              {CHANGE_ICONS[change.type]}
               <span>{Math.abs(change.value)}%</span>
               {change.period && (
                 <span className="text-gray-400 dark:text-gray-500">{change.period}</span>
@@ -86,7 +83,7 @@ export function StatCard({
             </div>
           )}
         </div>
-        
+
         {icon && (
           <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg text-purple-600 dark:text-purple-400" aria-hidden="true">
             {icon}
@@ -105,12 +102,12 @@ export function StatCard({
 }
 
 // Mini Sparkline Chart
-function MiniSparkline({ 
-  data, 
-  width = 120, 
+function MiniSparkline({
+  data,
+  width = 120,
   height = 40,
   color = '#8B5CF6'
-}: { 
+}: {
   data: number[]
   width?: number
   height?: number
@@ -285,11 +282,11 @@ export function LargeStat({
   className = '',
 }: LargeStatProps) {
   return (
-    <div 
+    <div
       className={`
         relative overflow-hidden rounded-2xl p-8
-        ${gradient 
-          ? 'bg-gradient-to-br from-purple-500 to-blue-600 text-white' 
+        ${gradient
+          ? 'bg-gradient-to-br from-purple-500 to-blue-600 text-white'
           : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700'
         }
         ${className}
@@ -321,7 +318,7 @@ export function LargeStat({
             </p>
           )}
         </div>
-        
+
         {icon && (
           <div className={`p-4 rounded-xl ${gradient ? 'bg-white/20' : 'bg-purple-100 dark:bg-purple-900/30'}`} aria-hidden="true">
             <span className={gradient ? 'text-white' : 'text-purple-600 dark:text-purple-400'}>

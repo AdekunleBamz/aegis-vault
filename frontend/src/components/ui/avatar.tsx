@@ -59,11 +59,11 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
-export function Avatar({ 
-  src, 
-  alt = '', 
-  name = '', 
-  size = 'md', 
+export function Avatar({
+  src,
+  alt = '',
+  name = '',
+  size = 'md',
   className = '',
   status,
 }: AvatarProps) {
@@ -74,7 +74,7 @@ export function Avatar({
 
   return (
     <div className={`relative inline-block ${className}`}>
-      <div 
+      <div
         className={`
           ${sizeClasses[size]} rounded-full overflow-hidden flex items-center justify-center font-medium
           ${showFallback ? bgColor : ''}
@@ -92,9 +92,9 @@ export function Avatar({
           />
         )}
       </div>
-      
+
       {status && (
-        <span 
+        <span
           className={`
             absolute bottom-0 right-0 block rounded-full ring-2 ring-gray-950
             ${statusSizeClasses[size]} ${statusColors[status]}
@@ -127,7 +127,7 @@ export function AvatarGroup({ avatars, max = 4, size = 'md' }: AvatarGroupProps)
         />
       ))}
       {remaining > 0 && (
-        <div 
+        <div
           className={`
             ${sizeClasses[size]} rounded-full bg-gray-700 flex items-center justify-center
             font-medium text-gray-300 ring-2 ring-gray-950
@@ -148,14 +148,14 @@ export interface WalletAvatarProps {
   className?: string;
 }
 
-export function WalletAvatar({ 
-  address, 
-  size = 'md', 
+export function WalletAvatar({
+  address,
+  size = 'md',
   showAddress = false,
   className = '',
 }: WalletAvatarProps) {
   const truncated = `${address.slice(0, 4)}...${address.slice(-4)}`;
-  
+
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <Avatar name={address} size={size} />

@@ -19,7 +19,7 @@ import { cn } from '@/lib/utils';
 export function RewardProjection() {
     const [projectedAmount, setProjectedAmount] = useState(1000);
 
-    const microAmount = BigInt(projectedAmount) * BigInt(1000000);
+    const microAmount = BigInt(projectedAmount) * 1000000n;
     const tierIndex = determineTier(microAmount);
     const tier = TIERS[tierIndex];
     const apy = calculateAPY(microAmount, tierIndex);
@@ -30,7 +30,7 @@ export function RewardProjection() {
 
     const nextTier = tierIndex < TIERS.length - 1 ? TIERS[tierIndex + 1] : null;
     const nextTierMin = nextTier ? nextTier.minStake : 0;
-    const nextTierApy = nextTier ? calculateAPY(BigInt(nextTier.minStake) * BigInt(1000000), tierIndex + 1) : 0;
+    const nextTierApy = nextTier ? calculateAPY(BigInt(nextTier.minStake) * 1000000n, tierIndex + 1) : 0;
 
     return (
         <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-3xl p-8 md:p-10 relative overflow-hidden group">
@@ -67,7 +67,7 @@ export function RewardProjection() {
                                 max="50000"
                                 step="100"
                                 value={projectedAmount}
-                                onChange={(e) => setProjectedAmount(parseInt(e.target.value))}
+                                onChange={(e) => setProjectedAmount(parseInt(e.target.value, 10))}
                                 className="w-full h-2 bg-muted rounded-full appearance-none cursor-pointer accent-aegis-blue"
                                 aria-label="Estimated stake amount in STX"
                             />

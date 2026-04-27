@@ -2,7 +2,7 @@
 
 /**
  * @file Accordion components for Aegis Vault
- * 
+ *
  * Provides collapsible container components including Accordion,
  * AccordionItem, Collapsible, ExpandableCard, and Details.
  */
@@ -25,7 +25,7 @@ export interface AccordionItemProps {
 
 /**
  * A standard accordion item component with a toggleable content area.
- * 
+ *
  * @param props - The component props
  * @returns A rendered AccordionItem component
  */
@@ -43,6 +43,7 @@ export function AccordionItem({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between px-4 py-3 bg-gray-800 hover:bg-gray-750 transition-colors"
+        aria-expanded={isOpen}
       >
         <span className="font-medium text-white">{title}</span>
         <svg
@@ -77,7 +78,7 @@ export interface AccordionProps {
 
 /**
  * Container component for grouping accordion items.
- * 
+ *
  * @param props - Component props
  * @returns A vertically stacked container for accordion items
  */
@@ -99,7 +100,7 @@ export interface CollapsibleProps {
 
 /**
  * Collapsible section with optional icon and badge.
- * 
+ *
  * @param props - Component props
  * @returns A collapsible content section
  */
@@ -162,7 +163,7 @@ export interface ExpandableCardProps {
 
 /**
  * Card component with expandable additional content.
- * 
+ *
  * @param props - Component props
  * @returns A card with optional expandable section
  */
@@ -181,7 +182,7 @@ export function ExpandableCard({
         {header}
         <div className="mt-3">{children}</div>
       </div>
-      
+
       {expandedContent && (
         <>
           <button
@@ -223,7 +224,7 @@ export interface DetailsProps {
 
 /**
  * Details/summary style collapsible component.
- * 
+ *
  * @param props - Component props
  * @returns A details/summary style collapsible
  */

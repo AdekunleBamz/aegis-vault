@@ -17,7 +17,7 @@
 (define-constant TOKEN-URI (some u"https://aegis.finance/token-metadata.json"))
 
 ;; Supply limits
-(define-constant MAX-SUPPLY u1000000000000000) ;; 1 billion tokens with 6 decimals
+(define-constant MAX-SUPPLY u1000000000000000) ;; 1 billion AGS tokens (u1000000 micro-units per token)
 
 ;; Error codes
 (define-constant ERR-NOT-AUTHORIZED (err u7001))
@@ -47,7 +47,7 @@
 ;; ============================================
 
 (define-private (is-authorized-minter (caller principal))
-  (or 
+  (or
     (is-eq caller CONTRACT-OWNER)
     (default-to false (map-get? authorized-minters caller))
   )
@@ -156,6 +156,31 @@
 
 (define-read-only (get-max-supply)
   MAX-SUPPLY
+)
+
+(define-read-only (get-paused)
+  (ok (var-get paused))
+)
+
+(define-public (pause)
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (var-set paused true)
+    (ok true)
+  )
+)
+
+(define-public (unpause)
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (var-set paused false)
+    (ok true)
+  )
+)
+
+;; Get circulating supply (total - locked)
+(define-read-only (get-circulating-supply)
+  (ok (ft-get-supply ags-token))
 )
 
 ;; ============================================

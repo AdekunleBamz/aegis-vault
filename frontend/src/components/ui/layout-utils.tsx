@@ -69,13 +69,13 @@ const spacerSizes = {
 
 export function Spacer({ size = 'md', axis = 'vertical' }: SpacerProps) {
   const sizeClass = spacerSizes[size];
-  
+
   if (axis === 'both') {
     return <div className={sizeClass.both} />;
   }
-  
+
   return (
-    <div 
+    <div
       className={axis === 'vertical' ? sizeClass.h : sizeClass.w}
       aria-hidden="true"
     />

@@ -21,6 +21,25 @@ import {
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
+const ACTION_INFO: Record<string, { label: string; icon: React.ElementType; color: string }> = {
+  stake: { label: 'Staking STX', icon: ShieldCheck, color: 'text-aegis-blue' },
+  'request-withdrawal': { label: 'Withdrawal Request', icon: ArrowUpRight, color: 'text-amber-500' },
+  'complete-withdrawal': { label: 'Settled Withdrawal', icon: Zap, color: 'text-emerald-500' },
+  'claim-rewards': { label: 'Yield Collection', icon: Coins, color: 'text-aegis-purple' },
+};
+
+const DEFAULT_ACTION_INFO = { label: '', icon: ArrowRightLeft, color: 'text-muted-foreground' };
+
+function getActionInfo(functionName: string) {
+  return ACTION_INFO[functionName] ?? { ...DEFAULT_ACTION_INFO, label: functionName };
+}
+
+function getStatusIcon(status: string) {
+  if (status === 'success') return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />;
+  if (status === 'pending') return <Clock className="w-3.5 h-3.5 text-amber-500 animate-pulse" />;
+  return <AlertCircle className="w-3.5 h-3.5 text-destructive" />;
+}
+
 export function RecentActivity() {
   const { address, isConnected } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 10);
@@ -38,22 +57,6 @@ export function RecentActivity() {
       </div>
     );
   }
-
-  const getActionInfo = (functionName: string) => {
-    const actions: Record<string, { label: string; icon: any; color: string }> = {
-      stake: { label: 'Staking STX', icon: ShieldCheck, color: 'text-aegis-blue' },
-      'request-withdrawal': { label: 'Withdrawal Request', icon: ArrowUpRight, color: 'text-amber-500' },
-      'complete-withdrawal': { label: 'Settled Withdrawal', icon: Zap, color: 'text-emerald-500' },
-      'claim-rewards': { label: 'Yield Collection', icon: Coins, color: 'text-aegis-purple' },
-    };
-    return actions[functionName] || { label: functionName, icon: ArrowRightLeft, color: 'text-muted-foreground' };
-  };
-
-  const getStatusIcon = (status: string) => {
-    if (status === 'success') return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />;
-    if (status === 'pending') return <Clock className="w-3.5 h-3.5 text-amber-500 animate-pulse" />;
-    return <AlertCircle className="w-3.5 h-3.5 text-destructive" />;
-  };
 
   return (
     <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 h-full flex flex-col">

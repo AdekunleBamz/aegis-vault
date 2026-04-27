@@ -9,20 +9,36 @@ export interface CopyButtonProps {
   children?: React.ReactNode;
 }
 
-export function CopyButton({ 
-  text, 
-  onCopy, 
+export function CopyButton({
+  text,
+  onCopy,
   className = '',
-  children 
+  children
 }: CopyButtonProps) {
   const [copied, setCopied] = React.useState(false);
+  const resetTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) {
+        clearTimeout(resetTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleCopy = async () => {
+    if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       onCopy?.();
-      setTimeout(() => setCopied(false), 2000);
+      if (resetTimerRef.current) {
+        clearTimeout(resetTimerRef.current);
+      }
+      resetTimerRef.current = setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
     }
@@ -30,14 +46,16 @@ export function CopyButton({
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
       className={`
-        inline-flex items-center gap-2 px-3 py-1.5 
+        inline-flex items-center gap-2 px-3 py-1.5
         text-sm text-gray-400 hover:text-white
-        bg-gray-800 hover:bg-gray-700 
+        bg-gray-800 hover:bg-gray-700
         rounded-lg transition-all
         ${className}
       `}
+      aria-label={copied ? 'Copied to clipboard' : 'Copy to clipboard'}
       title={copied ? 'Copied!' : 'Copy to clipboard'}
     >
       {children || (
@@ -72,8 +90,8 @@ export function AddressDisplay({
   showCopy = true,
   className = '',
 }: AddressDisplayProps) {
-  const displayAddress = truncate 
-    ? `${address.slice(0, 6)}...${address.slice(-4)}` 
+  const displayAddress = truncate
+    ? `${address.slice(0, 6)}...${address.slice(-4)}`
     : address;
 
   return (

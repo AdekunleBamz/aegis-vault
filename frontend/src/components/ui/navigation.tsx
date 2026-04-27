@@ -2,6 +2,12 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 
+const PAGINATION_SIZE_CLASSES: Record<'sm' | 'md' | 'lg', string> = {
+  sm: 'h-8 min-w-8 text-sm',
+  md: 'h-10 min-w-10 text-base',
+  lg: 'h-12 min-w-12 text-lg',
+};
+
 // =============================================================================
 // BREADCRUMBS
 // =============================================================================
@@ -117,12 +123,6 @@ export function Pagination({
     return [1, 'dots', ...range(leftSiblingIndex, rightSiblingIndex), 'dots', totalPages];
   };
 
-  const sizeClasses = {
-    sm: 'h-8 min-w-8 text-sm',
-    md: 'h-10 min-w-10 text-base',
-    lg: 'h-12 min-w-12 text-lg',
-  };
-
   const pages = getPageNumbers();
 
   return (
@@ -131,7 +131,7 @@ export function Pagination({
         <button
           onClick={() => onPageChange(1)}
           disabled={currentPage === 1}
-          className={`${sizeClasses[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+          className={`${PAGINATION_SIZE_CLASSES[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
           aria-label="First page"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,7 +143,7 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className={`${sizeClasses[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+        className={`${PAGINATION_SIZE_CLASSES[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
         aria-label="Previous page"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -154,7 +154,7 @@ export function Pagination({
       {pages.map((page, index) => {
         if (page === 'dots') {
           return (
-            <span key={`dots-${index}`} className={`${sizeClasses[size]} flex items-center justify-center text-zinc-500`}>
+            <span key={`dots-${index}`} className={`${PAGINATION_SIZE_CLASSES[size]} flex items-center justify-center text-zinc-500`}>
               ...
             </span>
           );
@@ -167,7 +167,7 @@ export function Pagination({
           <button
             key={pageNum}
             onClick={() => onPageChange(pageNum)}
-            className={`${sizeClasses[size]} px-3 flex items-center justify-center rounded-lg border transition-colors ${
+            className={`${PAGINATION_SIZE_CLASSES[size]} px-3 flex items-center justify-center rounded-lg border transition-colors ${
               isActive
                 ? 'bg-amber-500 border-amber-500 text-black font-medium'
                 : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
@@ -182,7 +182,7 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={`${sizeClasses[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+        className={`${PAGINATION_SIZE_CLASSES[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
         aria-label="Next page"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -194,7 +194,7 @@ export function Pagination({
         <button
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}
-          className={`${sizeClasses[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+          className={`${PAGINATION_SIZE_CLASSES[size]} px-2 flex items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
           aria-label="Last page"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

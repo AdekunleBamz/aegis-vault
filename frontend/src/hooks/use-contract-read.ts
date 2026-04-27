@@ -2,7 +2,7 @@
 
 /**
  * @file Contract read hook for Aegis Vault
- * 
+ *
  * Provides a reusable hook for calling read-only functions on Clarity smart contracts.
  * Handles loading states, error handling, and automatic refetching.
  */
@@ -21,13 +21,15 @@ export interface UseContractReadReturn<T> {
   isLoading: boolean;
   /** Error message if the call failed, or null */
   error: string | null;
+  /** True if data has been successfully loaded at least once */
+  isSuccess: boolean;
   /** Function to manually refetch the data */
   refetch: () => Promise<void>;
 }
 
 /**
  * Hook for calling read-only functions on Clarity smart contracts.
- * 
+ *
  * @param contractId - Full contract ID (address.contract-name)
  * @param functionName - Name of the read-only function to call
  * @param args - Function arguments as hex-encoded strings
@@ -41,8 +43,9 @@ export function useContractRead<T>(
   enabled = true
 ): UseContractReadReturn<T> {
   const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(enabled);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const fetchData = useCallback(async () => {
     if (!enabled || !contractId) return;
@@ -63,6 +66,7 @@ export function useContractRead<T>(
         const cv = hexToCV(result.result);
         const value = cvToValue(cv) as T;
         setData(value);
+        setIsSuccess(true);
       } else {
         setError('Contract call returned error');
       }
@@ -78,5 +82,5 @@ export function useContractRead<T>(
     fetchData();
   }, [fetchData]);
 
-  return { data, isLoading, error, refetch: fetchData };
+  return { data, isLoading, error, isSuccess, refetch: fetchData };
 }

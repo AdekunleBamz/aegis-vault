@@ -15,7 +15,7 @@ export function Button({
   variant = 'primary',
   size = 'md',
   isLoading = false,
-  loadingText = 'Loading...',
+  loadingText = 'Processing...',
   leftIcon,
   rightIcon,
   fullWidth = false,
@@ -46,6 +46,7 @@ export function Button({
 
   return (
     <button
+      type={props.type ?? 'button'}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
       disabled={disabled || isLoading}
       aria-busy={isLoading}

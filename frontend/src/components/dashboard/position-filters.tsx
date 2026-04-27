@@ -6,6 +6,13 @@ import { cn } from '@/lib/utils';
 
 export type PositionStatus = 'all' | 'active' | 'locking' | 'expired';
 
+const POSITION_STATUSES: { value: PositionStatus; label: string }[] = [
+    { value: 'all', label: 'All Positions' },
+    { value: 'active', label: 'Active' },
+    { value: 'locking', label: 'Locking' },
+    { value: 'expired', label: 'Expired' },
+];
+
 interface PositionFiltersProps {
     search: string;
     onSearchChange: (value: string) => void;
@@ -19,13 +26,6 @@ export function PositionFilters({
     status,
     onStatusChange
 }: PositionFiltersProps) {
-    const statuses: { value: PositionStatus; label: string }[] = [
-        { value: 'all', label: 'All Positions' },
-        { value: 'active', label: 'Active' },
-        { value: 'locking', label: 'Locking' },
-        { value: 'expired', label: 'Expired' },
-    ];
-
     return (
         <div className="flex flex-col md:flex-row gap-4 mb-8">
             {/* Search Input */}
@@ -55,7 +55,7 @@ export function PositionFilters({
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">Status</span>
                 </div>
 
-                {statuses.map((s) => (
+                {POSITION_STATUSES.map((s) => (
                     <button
                         key={s.value}
                         onClick={() => onStatusChange(s.value)}

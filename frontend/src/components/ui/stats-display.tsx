@@ -2,6 +2,18 @@
 
 import React from 'react';
 
+const TREND_COLOR: Record<'up' | 'down' | 'neutral', string> = {
+  up: 'text-emerald-400',
+  down: 'text-red-400',
+  neutral: 'text-gray-400',
+};
+
+const GRID_COLS: Record<2 | 3 | 4, string> = {
+  2: 'grid-cols-1 md:grid-cols-2',
+  3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+};
+
 // Stats Card Component
 export interface StatsCardProps {
   title: string;
@@ -23,12 +35,6 @@ export function StatsCard({
   trend,
   className = '',
 }: StatsCardProps) {
-  const trendColors = {
-    up: 'text-emerald-400',
-    down: 'text-red-400',
-    neutral: 'text-gray-400',
-  };
-
   return (
     <div className={`bg-gray-800 rounded-xl p-6 border border-gray-700 ${className}`}>
       <div className="flex items-center justify-between mb-4">
@@ -44,7 +50,7 @@ export function StatsCard({
           <p className="text-2xl font-bold text-white">{value}</p>
           {change && (
             <div className="flex items-center gap-1 mt-1">
-              <span className={trendColors[trend || (change.value >= 0 ? 'up' : 'down')]}>
+              <span className={TREND_COLOR[trend || (change.value >= 0 ? 'up' : 'down')]}>
                 {change.value >= 0 ? '+' : ''}{change.value}%
               </span>
               <span className="text-gray-500 text-sm">{change.period}</span>
@@ -64,14 +70,8 @@ export interface StatsGridProps {
 }
 
 export function StatsGrid({ children, columns = 4, className = '' }: StatsGridProps) {
-  const gridCols = {
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
-  };
-
   return (
-    <div className={`grid ${gridCols[columns]} gap-4 ${className}`}>
+    <div className={`grid ${GRID_COLS[columns]} gap-4 ${className}`}>
       {children}
     </div>
   );

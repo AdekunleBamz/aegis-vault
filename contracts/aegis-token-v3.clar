@@ -43,7 +43,7 @@
 ;; ============================================
 
 (define-private (is-authorized-minter (caller principal))
-  (or 
+  (or
     (is-eq caller CONTRACT-OWNER)
     (default-to false (map-get? authorized-minters caller))
   )

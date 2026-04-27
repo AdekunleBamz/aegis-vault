@@ -1,6 +1,6 @@
 /**
  * @file Stacks blockchain interaction utilities for Aegis Vault
- * 
+ *
  * Provides functions for executing smart contract transactions on the
  * Stacks blockchain, including staking, withdrawals, and reward claims.
  */
@@ -14,7 +14,6 @@ import {
 } from '@stacks/connect';
 import {
   uintCV,
-  
   PostConditionMode,
   FungibleConditionCode,
   makeStandardSTXPostCondition,
@@ -35,7 +34,7 @@ export interface TransactionResult {
 
 /**
  * Execute stake transaction
- * 
+ *
  * @param amount - Amount in microSTX to stake.
  * @param senderAddress - The address of the staker.
  * @returns Promise resolving to the transaction ID and success status.
@@ -78,7 +77,7 @@ export async function executeStake(
 
 /**
  * Execute a withdrawal request from a staking position.
- * 
+ *
  * @param amount - Amount in microSTX to request withdrawal of.
  * @returns Promise resolving to the transaction ID and success status.
  */
@@ -109,7 +108,7 @@ export async function executeWithdrawRequest(
 
 /**
  * Complete a pending withdrawal request.
- * 
+ *
  * @returns Promise resolving to the transaction ID and success status.
  */
 export async function executeWithdrawComplete(): Promise<TransactionResult> {
@@ -137,7 +136,7 @@ export async function executeWithdrawComplete(): Promise<TransactionResult> {
 
 /**
  * Claim accumulated staking rewards.
- * 
+ *
  * @returns Promise resolving to the transaction ID and success status.
  */
 export async function executeClaimRewards(): Promise<TransactionResult> {

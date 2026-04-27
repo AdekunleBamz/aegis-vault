@@ -30,6 +30,10 @@ interface NotificationContextType {
   markAllAsRead: () => void;
   clearAll: () => void;
   clearOld: (maxAge?: number) => void;
+  /** Total number of notifications in the list */
+  totalCount: number;
+  /** True when there are unread notifications */
+  hasUnread: boolean;
 }
 
 const NotificationContext = createContext<NotificationContextType | null>(null);
@@ -47,10 +51,10 @@ interface NotificationProviderProps {
 
 /**
  * NotificationProvider Component
- * 
+ *
  * Manages the global notification state for the application.
  * Handles adding, removing, and persisting notifications in localStorage.
- * 
+ *
  * @param {NotificationProviderProps} props - The provider props.
  * @returns {JSX.Element} The provider component.
  */
@@ -71,8 +75,8 @@ export function NotificationProvider({
         const parsed = JSON.parse(stored) as Notification[];
         setNotifications(parsed.map(n => ({ ...n, timestamp: new Date(n.timestamp) })));
       }
-    } catch (e) {
-      console.error('Failed to load notifications:', e);
+    } catch (err) {
+      console.error('Failed to load notifications:', err);
     }
   }, [persistKey]);
 
@@ -81,13 +85,13 @@ export function NotificationProvider({
     if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(persistKey, JSON.stringify(notifications));
-    } catch (e) {
-      console.error('Failed to save notifications:', e);
+    } catch (err) {
+      console.error('Failed to save notifications:', err);
     }
   }, [notifications, persistKey]);
 
-  const unreadCount = useMemo(() => 
-    notifications.filter(n => !n.read).length, 
+  const unreadCount = useMemo(() =>
+    notifications.filter(n => !n.read).length,
     [notifications]
   );
 
@@ -124,7 +128,7 @@ export function NotificationProvider({
   }, []);
 
   const markAsRead = useCallback((id: string) => {
-    setNotifications(prev => 
+    setNotifications(prev =>
       prev.map(n => n.id === id ? { ...n, read: true } : n)
     );
   }, []);
@@ -139,7 +143,7 @@ export function NotificationProvider({
 
   const clearOld = useCallback((maxAge: number = 24 * 60 * 60 * 1000) => {
     const cutoff = Date.now() - maxAge;
-    setNotifications(prev => 
+    setNotifications(prev =>
       prev.filter(n => n.timestamp.getTime() > cutoff)
     );
   }, []);
@@ -153,6 +157,8 @@ export function NotificationProvider({
     markAllAsRead,
     clearAll,
     clearOld,
+    totalCount: notifications.length,
+    hasUnread: unreadCount > 0,
   };
 
   return (
@@ -168,9 +174,9 @@ export function NotificationProvider({
 
 /**
  * Custom hook to access notification state and actions.
- * 
+ *
  * Must be used within a NotificationProvider.
- * 
+ *
  * @returns {NotificationContextType} The current notification context value.
  * @throws {Error} If used outside of NotificationProvider.
  */
@@ -201,32 +207,32 @@ export interface NotifyHelpers {
 
 export function createNotifyHelpers(addNotification: NotificationContextType['addNotification']): NotifyHelpers {
   return {
-    info: (title: string, message?: string) => 
+    info: (title: string, message?: string) =>
       addNotification({ type: 'info', title, message }),
-    
-    success: (title: string, message?: string) => 
+
+    success: (title: string, message?: string) =>
       addNotification({ type: 'success', title, message }),
-    
-    warning: (title: string, message?: string) => 
+
+    warning: (title: string, message?: string) =>
       addNotification({ type: 'warning', title, message }),
-    
-    error: (title: string, message?: string) => 
+
+    error: (title: string, message?: string) =>
       addNotification({ type: 'error', title, message, autoHide: false }),
-    
+
     txSubmitted: (txHash: string) =>
       addNotification({
         type: 'info',
         title: 'Transaction Submitted',
         message: `Transaction ${txHash.slice(0, 8)}... is being processed`,
       }),
-    
+
     txConfirmed: (txHash: string) =>
       addNotification({
         type: 'success',
         title: 'Transaction Confirmed',
         message: `Transaction ${txHash.slice(0, 8)}... was successful`,
       }),
-    
+
     txFailed: (error?: string) =>
       addNotification({
         type: 'error',
@@ -234,21 +240,21 @@ export function createNotifyHelpers(addNotification: NotificationContextType['ad
         message: error || 'Please try again',
         autoHide: false,
       }),
-    
+
     stakeCreated: (amount: string) =>
       addNotification({
         type: 'success',
         title: 'Stake Created',
         message: `Successfully staked ${amount} tokens`,
       }),
-    
+
     rewardsClaimed: (amount: string) =>
       addNotification({
         type: 'success',
         title: 'Rewards Claimed',
         message: `Successfully claimed ${amount} rewards`,
       }),
-    
+
     withdrawalComplete: (amount: string) =>
       addNotification({
         type: 'success',

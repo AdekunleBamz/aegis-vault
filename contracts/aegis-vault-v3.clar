@@ -37,7 +37,7 @@
 
 ;; Bonus multipliers (basis points)
 (define-constant BONUS-3-DAYS u10000)        ;; 1.0x
-(define-constant BONUS-7-DAYS u12000)        ;; 1.2x  
+(define-constant BONUS-7-DAYS u12000)        ;; 1.2x
 (define-constant BONUS-30-DAYS u15000)       ;; 1.5x
 
 ;; ============================================
@@ -54,7 +54,7 @@
 ;; DATA MAPS
 ;; ============================================
 
-(define-map stakes 
+(define-map stakes
   { staker: principal, stake-id: uint }
   {
     amount: uint,
@@ -163,8 +163,8 @@
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     (asserts! (is-eq (map-get? withdrawal-requests staker) none) ERR-INTERNAL-STATE)
 
-    (map-set withdrawal-requests staker { 
-      amount: (get amount stake-data), 
+    (map-set withdrawal-requests staker {
+      amount: (get amount stake-data),
       unlock-block: (+ block-height BLOCKS-PER-DAY),
       stake-id: stake-id
     })
@@ -181,7 +181,7 @@
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-NO-STAKE-FOUND))
     )
     (asserts! (>= block-height (get unlock-block request)) ERR-NOT-UNLOCKED)
-    
+
     ;; Claim remaining rewards
     (let ((pending (calculate-pending-rewards stake-data)))
       (if (> pending u0)
@@ -212,7 +212,7 @@
       (amount (get amount stake-data))
     )
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
-    
+
     (try! (as-contract (stx-transfer? (- amount FEE-AMOUNT) tx-sender staker)))
     (try! (as-contract (stx-transfer? FEE-AMOUNT tx-sender CONTRACT-OWNER)))
 
@@ -235,7 +235,7 @@
     (asserts! (> pending u0) ERR-INVALID-AMOUNT)
 
     (try! (as-contract (contract-call? .aegis-token-v3 mint staker pending)))
-    (map-set stakes { staker: staker, stake-id: stake-id } 
+    (map-set stakes { staker: staker, stake-id: stake-id }
       (merge stake-data { total-claimed: (+ (get total-claimed stake-data) pending) })
     )
     (ok pending)
@@ -266,6 +266,10 @@
 ;; READ-ONLY
 ;; ============================================
 
+;; @desc Calculates the currently accruable rewards for a specific stake.
+;; @param staker - The address of the position owner.
+;; @param stake-id - The ID of the stake to query.
+;; @returns (ok uint) - The amount of AGS rewards (micro-units) pending.
 (define-read-only (get-pending-rewards (staker principal) (stake-id uint))
   (match (map-get? stakes { staker: staker, stake-id: stake-id })
     stake-data (ok (calculate-pending-rewards stake-data))

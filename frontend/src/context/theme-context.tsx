@@ -15,6 +15,10 @@ interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
   setTheme: (theme: Theme) => void;
+  /** True when the active theme is dark */
+  isDark: boolean;
+  /** True when the active theme is light */
+  isLight: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -26,10 +30,10 @@ interface ThemeProviderProps {
 
 /**
  * ThemeProvider Component
- * 
+ *
  * Provides theme state (light/dark) to the entire application.
  * Persists theme preference in localStorage and updates document classes.
- * 
+ *
  * @param {ThemeProviderProps} props - The provider props.
  * @returns {JSX.Element} The provider component.
  */
@@ -61,7 +65,7 @@ export function ThemeProvider({
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme, isDark: theme === 'dark', isLight: theme === 'light' }}>
       {children}
     </ThemeContext.Provider>
   );
@@ -69,9 +73,9 @@ export function ThemeProvider({
 
 /**
  * Custom hook to access theme state and toggle functionality.
- * 
+ *
  * Must be used within a ThemeProvider.
- * 
+ *
  * @returns {ThemeContextValue} The current theme context value.
  * @throws {Error} If used outside of ThemeProvider.
  */

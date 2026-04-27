@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
 import { AppProviders } from '@/components/providers';
@@ -43,6 +43,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: '#0A0A0B',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -60,9 +66,7 @@ export default function RootLayout({
           </a>
           <Header />
           <NetworkWarning />
-          <main id="main-content" className="flex-1 pt-20" aria-label="Main protocol dashboard">
-            {children}
-          </main>
+          <main id="main-content" className="flex-1 pt-20" aria-label="Main content">{children}</main>
           <Footer />
         </AppProviders>
         <PerformanceMonitor />

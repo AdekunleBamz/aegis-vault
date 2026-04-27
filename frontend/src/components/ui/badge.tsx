@@ -64,7 +64,9 @@ export function Badge({
       {children}
       {removable && onRemove && (
         <button
+          type="button"
           onClick={onRemove}
+          aria-label="Remove"
           className="ml-0.5 -mr-1 p-0.5 rounded-full hover:bg-white/10 transition-colors"
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

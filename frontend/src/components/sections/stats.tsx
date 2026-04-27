@@ -2,7 +2,7 @@
 
 /**
  * @file Protocol statistics display section
- * 
+ *
  * Displays key protocol metrics including TVL, user count,
  * rewards distributed, and current block height.
  */
@@ -22,6 +22,13 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+const STAT_HIGHLIGHTS = [
+  'Capital depth',
+  'User participation',
+  'Rewards throughput',
+  'Chain sync status'
+];
+
 /**
  * Stats section displays real-time protocol metrics.
  * Shows TVL, user participation, rewards distributed, and block height.
@@ -33,7 +40,7 @@ export function Stats() {
   const stats = [
     {
       label: 'Total Value Locked',
-      value: formatSTX(BigInt(1500000000000)),
+      value: formatSTX(1500000000000n),
       unit: 'STX',
       note: 'Capital actively securing vault strategies',
       icon: BarChart3,
@@ -51,7 +58,7 @@ export function Stats() {
     },
     {
       label: 'Rewards Distributed',
-      value: formatSTX(BigInt(50000000000)),
+      value: formatSTX(50000000000n),
       unit: 'AGS',
       note: 'Governance incentives paid to participants',
       icon: Gift,
@@ -67,13 +74,6 @@ export function Stats() {
       color: 'text-aegis-indigo',
       glow: 'shadow-aegis-indigo/10'
     },
-  ];
-
-  const highlights = [
-    'Capital depth',
-    'User participation',
-    'Rewards throughput',
-    'Chain sync status'
   ];
 
   return (
@@ -109,7 +109,7 @@ export function Stats() {
               Use these numbers to sanity-check vault health before staking. The cards below separate capital, participation, rewards, and chain sync so the protocol state is easier to scan.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {highlights.map((highlight) => (
+              {STAT_HIGHLIGHTS.map((highlight) => (
                 <span
                   key={highlight}
                   className="rounded-full border border-border/50 bg-muted/30 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-muted-foreground"
@@ -144,10 +144,10 @@ export function Stats() {
               )}
             >
               <div className="flex items-center justify-between mb-6">
-                <div className={cn("p-3 rounded-2xl bg-muted group-hover:bg-foreground group-hover:text-background group-hover:shadow-[0_0_20px_-5px_currentColor] transition-all duration-500", stat.color)}>
-                  <stat.icon className="w-6 h-6" />
+                <div className={cn("p-3 rounded-2xl bg-muted group-hover:bg-foreground group-hover:text-background transition-colors duration-500", stat.color)}>
+                  <stat.icon className="w-6 h-6" aria-hidden="true" />
                 </div>
-                <TrendingUp className="w-4 h-4 text-muted-foreground/30 group-hover:text-green-500 transition-colors" />
+                <TrendingUp className="w-4 h-4 text-muted-foreground/30 group-hover:text-green-500 transition-colors" aria-hidden="true" />
               </div>
 
               <div className="flex flex-1 flex-col space-y-1">

@@ -1,6 +1,6 @@
 /**
  * @file Type definitions for Aegis Vault
- * 
+ *
  * Central type definitions for the application including network configuration,
  * tokens, wallets, transactions, staking, rewards, protocol stats, API responses,
  * form data, events, notifications, and user settings.
@@ -78,7 +78,7 @@ export interface WalletAdapter {
 /**
  * Possible states for a transaction lifecycle.
  */
-export type TransactionStatus = 
+export type TransactionStatus =
   | 'pending'
   | 'submitted'
   | 'confirmed'

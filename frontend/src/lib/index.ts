@@ -1,6 +1,6 @@
 /**
  * @file Library barrel export for Aegis Vault
- * 
+ *
  * Central export point for all library modules including constants,
  * API utilities, error handling, types, validation, formatting, and services.
  */
@@ -37,6 +37,7 @@ export {
     isErrorCode,
     getErrorMessage,
     parseTransactionError,
+    isAegisError,
     ok,
     err,
     isOk,
@@ -89,6 +90,8 @@ export {
     safeValidate,
     isValidTxId,
     isValidStxAmount,
+    isValidStacksAddress,
+    getFieldError,
     microStxToStx,
     stxToMicroStx,
     ValidationError as ZodValidationError,
@@ -105,8 +108,12 @@ export {
 export {
     formatSTX,
     formatAGS,
+    safeFormatSTX,
+    safeFormatAGS,
     toMicroSTX,
     formatPercent,
     formatBlockHeight,
-    blocksToTime
+    blocksToTime,
+    formatCompactSTX,
+    formatDuration
 } from './format';

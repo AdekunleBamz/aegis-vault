@@ -145,7 +145,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
             </p>
             <div className="mb-8 flex items-center justify-center gap-2">
               <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 italic">TX ID: {txId?.slice(0, 8)}...{txId?.slice(-8)}</span>
-              <button 
+              <button
                 onClick={() => txId && navigator.clipboard.writeText(txId)}
                 className="p-1.5 rounded-md bg-muted/50 hover:bg-muted transition-colors border border-border/50 text-muted-foreground"
                 title="Copy Transaction ID"

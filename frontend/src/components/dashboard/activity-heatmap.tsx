@@ -5,14 +5,23 @@ import { motion } from 'framer-motion';
 import { Activity, Calendar, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const HEATMAP_WEEKS = 20;
+const HEATMAP_DAYS = 7;
+
+const LEVEL_COLOR: Record<number, string> = {
+    0: 'bg-muted/30',
+    1: 'bg-aegis-blue/20',
+    2: 'bg-aegis-blue/40',
+    3: 'bg-aegis-blue/70 text-white',
+    4: 'bg-aegis-blue text-white shadow-[0_0_15px_rgba(40,140,250,0.3)]',
+};
+
+const DEFAULT_LEVEL_COLOR = 'bg-muted/30';
+
 export function ActivityHeatmap() {
     // Mock data for a 20-week grid
-    const weeks = 20;
-    const days = 7;
-    const levels = [0, 1, 2, 3, 4]; // Activity intensity levels
-
-    const generateData = () => {
-        return Array.from({ length: weeks * days }, () => {
+    const generateData = React.useMemo(() => {
+        return Array.from({ length: HEATMAP_WEEKS * HEATMAP_DAYS }, () => {
             // Randomly weight towards lower activity to look realistic
             const r = Math.random();
             if (r > 0.9) return 4;
@@ -21,20 +30,10 @@ export function ActivityHeatmap() {
             if (r > 0.3) return 1;
             return 0;
         });
-    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    const data = generateData();
-
-    const getLevelColor = (level: number) => {
-        switch (level) {
-            case 0: return 'bg-muted/30';
-            case 1: return 'bg-aegis-blue/20';
-            case 2: return 'bg-aegis-blue/40';
-            case 3: return 'bg-aegis-blue/70 text-white';
-            case 4: return 'bg-aegis-blue text-white shadow-[0_0_15px_rgba(40,140,250,0.3)]';
-            default: return 'bg-muted/30';
-        }
-    };
+    const data = generateData;
 
     return (
         <div className="p-8 lg:p-10 rounded-[40px] bg-background border border-border shadow-sm group hover:shadow-xl transition-all duration-500 relative overflow-hidden">
@@ -54,10 +53,10 @@ export function ActivityHeatmap() {
             </div>
 
             <div className="flex gap-1.5 scrollbar-hide overflow-x-auto pb-4">
-                {Array.from({ length: weeks }).map((_, w) => (
+                {Array.from({ length: HEATMAP_WEEKS }).map((_, w) => (
                     <div key={w} className="flex flex-col gap-1.5 flex-shrink-0">
-                        {Array.from({ length: days }).map((_, d) => {
-                            const level = data[w * days + d];
+                        {Array.from({ length: HEATMAP_DAYS }).map((_, d) => {
+                            const level = data[w * HEATMAP_DAYS + d];
                             return (
                                 <motion.div
                                     key={d}
@@ -67,7 +66,7 @@ export function ActivityHeatmap() {
                                     whileHover={{ scale: 1.2, zIndex: 10 }}
                                     className={cn(
                                         "w-3.5 h-3.5 rounded-[4px] transition-all cursor-help relative group/cell",
-                                        getLevelColor(level)
+                                        LEVEL_COLOR[level] ?? DEFAULT_LEVEL_COLOR
                                     )}
                                 >
                                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-foreground text-background text-[8px] font-black rounded opacity-0 group-hover/cell:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest">
@@ -86,7 +85,7 @@ export function ActivityHeatmap() {
                         <span className="text-[9px] font-bold text-muted-foreground uppercase">Less</span>
                         <div className="flex gap-1">
                             {[0, 1, 2, 3, 4].map(l => (
-                                <div key={l} className={cn("w-2.5 h-2.5 rounded-sm", getLevelColor(l))} />
+                                <div key={l} className={cn("w-2.5 h-2.5 rounded-sm", LEVEL_COLOR[l] ?? DEFAULT_LEVEL_COLOR)} />
                             ))}
                         </div>
                         <span className="text-[9px] font-bold text-muted-foreground uppercase">More</span>

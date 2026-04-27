@@ -2,10 +2,10 @@
 
 /**
  * @file Wallet connection context for Aegis Vault
- * 
+ *
  * Provides wallet connection functionality using Stacks connect.
  * Manages user sessions, connection state, and network configuration.
- * 
+ *
  * @author Aegis Vault Team
  * @see {@link https://github.com/hirosystems/connect}
  */
@@ -35,6 +35,8 @@ interface WalletState {
 interface WalletContextValue extends WalletState {
   connect: () => void;
   disconnect: () => void;
+  /** Alias for isConnected — true when a wallet is active */
+  isWalletReady: boolean;
 }
 
 const WalletContext = createContext<WalletContextValue | undefined>(undefined);
@@ -45,16 +47,19 @@ const userSession = new UserSession({ appConfig });
 // Default to mainnet, but can be configured
 const defaultNetwork = STACKS_MAINNET;
 
+// How often to poll the Stacks user session for sign-in / sign-out changes
+const SESSION_POLL_INTERVAL_MS = 1000;
+
 interface WalletProviderProps {
   children: ReactNode;
 }
 
 /**
  * WalletProvider Component
- * 
+ *
  * Manages the Stacks wallet connection state for the entire application.
  * Handles user sessions, connection requests, and network configuration.
- * 
+ *
  * @param {WalletProviderProps} props - The provider props.
  * @returns {JSX.Element} The provider component.
  */
@@ -100,7 +105,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
     };
 
     checkUserSession();
-    const interval = setInterval(checkUserSession, 1000);
+    const interval = setInterval(checkUserSession, SESSION_POLL_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
@@ -141,7 +146,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
   }, []);
 
   return (
-    <WalletContext.Provider value={{ ...state, connect, disconnect }}>
+    <WalletContext.Provider value={{ ...state, connect, disconnect, isWalletReady: state.isConnected }}>
       {children}
     </WalletContext.Provider>
   );
@@ -149,9 +154,9 @@ export function WalletProvider({ children }: WalletProviderProps) {
 
 /**
  * Custom hook to access wallet state and actions.
- * 
+ *
  * Must be used within a WalletProvider.
- * 
+ *
  * @returns {WalletContextValue} The current wallet context value.
  * @throws {Error} If used outside of WalletProvider.
  */

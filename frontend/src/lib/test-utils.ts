@@ -46,7 +46,7 @@ export function createMockStakePosition(overrides?: Partial<StakePosition>): Sta
   const startBlock = randomInt(100000, 150000)
   const lockPeriod = randomChoice([30, 60, 90, 180, 365])
   const blocksPerDay = 144 // ~144 blocks per day on Stacks
-  
+
   return {
     staker: randomStacksAddress(),
     amount: randomInt(1000000, 1000000000000), // 1 STX to 1M STX in micro-STX
@@ -63,7 +63,7 @@ export function createMockStakePosition(overrides?: Partial<StakePosition>): Sta
 export function createMockRewardInfo(overrides?: Partial<RewardInfo>): RewardInfo {
   const pending = randomInt(0, 10000000000) // 0 to 10K STX
   const claimed = randomInt(0, 50000000000) // 0 to 50K STX
-  
+
   return {
     pendingRewards: pending,
     claimedRewards: claimed,
@@ -104,7 +104,7 @@ export function createMockUserStats(overrides?: Partial<UserStats>): UserStats {
 export function createMockTransaction(overrides?: Partial<TransactionRecord>): TransactionRecord {
   const types = ['stake', 'unstake', 'claim', 'transfer'] as const
   const statuses = ['pending', 'success', 'failed', 'aborted'] as const
-  
+
   return {
     txId: randomTxId(),
     type: randomChoice([...types]),
@@ -144,7 +144,7 @@ export function createMockApiResponse<T>(data: T, success = true) {
       timestamp: Date.now(),
     }
   }
-  
+
   return {
     success: false,
     error: {
@@ -164,7 +164,7 @@ export function createMockPaginatedResponse<T>(
   const actualTotal = total ?? items.length
   const start = (page - 1) * limit
   const paginatedItems = items.slice(start, start + limit)
-  
+
   return {
     success: true,
     data: paginatedItems,

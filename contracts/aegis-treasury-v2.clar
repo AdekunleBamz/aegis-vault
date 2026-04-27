@@ -44,16 +44,16 @@
     ;; Only authorized vaults can deposit
     (asserts! (is-authorized-vault contract-caller) ERR-VAULT-ONLY)
     (asserts! (> amount u0) ERR-INVALID-AMOUNT)
-    
+
     ;; Transfer STX to treasury
     (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
-    
+
     ;; Update total collected
     (var-set total-penalties-collected (+ (var-get total-penalties-collected) amount))
-    
-    (print { 
-      event: "penalty-deposited", 
-      amount: amount, 
+
+    (print {
+      event: "penalty-deposited",
+      amount: amount,
       from-vault: contract-caller,
       total-collected: (var-get total-penalties-collected)
     })
@@ -67,16 +67,16 @@
     (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
     (asserts! (> amount u0) ERR-INVALID-AMOUNT)
     (asserts! (<= amount (get-treasury-balance)) ERR-INSUFFICIENT-FUNDS)
-    
+
     ;; Transfer STX from treasury
     (try! (as-contract (stx-transfer? amount tx-sender recipient)))
-    
+
     ;; Update total withdrawn
     (var-set total-withdrawn (+ (var-get total-withdrawn) amount))
-    
-    (print { 
-      event: "treasury-withdrawal", 
-      amount: amount, 
+
+    (print {
+      event: "treasury-withdrawal",
+      amount: amount,
       recipient: recipient,
       remaining-balance: (get-treasury-balance)
     })

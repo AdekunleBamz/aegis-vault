@@ -1,6 +1,6 @@
 /**
  * @file Custom React hooks for Aegis Vault
- * 
+ *
  * This module exports all custom hooks used throughout the application.
  * Hooks are organized by feature area: staking, withdrawals, rewards,
  * data fetching, form management, and UI utilities.
@@ -83,3 +83,8 @@ export {
   useFormSubmit,
   useAutosave
 } from './use-form';
+
+/**
+ * Cancelable debounce - hook that exposes a cancel function alongside the debounced value.
+ */
+export { useCancelableDebounce } from './use-debounce';

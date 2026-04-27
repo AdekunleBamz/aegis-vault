@@ -5,33 +5,34 @@ import { motion } from 'framer-motion';
 import { Activity, Clock, Zap, CheckCircle2, AlertCircle, Cpu, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const AUTOMATION_ACTIVITIES = [
+    {
+        id: 1,
+        type: 'Compound',
+        strategy: 'Stable Harvester',
+        amount: '42.5 STX',
+        status: 'Success',
+        time: '2 hours ago',
+    },
+    {
+        id: 2,
+        type: 'Rebalance',
+        strategy: 'AGS Momentum',
+        amount: 'N/A',
+        status: 'Success',
+        time: '5 hours ago',
+    },
+    {
+        id: 3,
+        type: 'Harvest',
+        strategy: 'Delta-Neutral',
+        amount: '128.2 STX',
+        status: 'Pending',
+        time: 'Just now',
+    }
+];
+
 export function AutomationDashboard() {
-    const activities = [
-        {
-            id: 1,
-            type: 'Compound',
-            strategy: 'Stable Harvester',
-            amount: '42.5 STX',
-            status: 'Success',
-            time: '2 hours ago',
-        },
-        {
-            id: 2,
-            type: 'Rebalance',
-            strategy: 'AGS Momentum',
-            amount: 'N/A',
-            status: 'Success',
-            time: '5 hours ago',
-        },
-        {
-            id: 3,
-            type: 'Harvest',
-            strategy: 'Delta-Neutral',
-            amount: '128.2 STX',
-            status: 'Pending',
-            time: 'Just now',
-        }
-    ];
 
     return (
         <div className="rounded-[40px] bg-background/40 backdrop-blur-2xl border border-border p-8 lg:p-10 relative overflow-hidden group">
@@ -52,7 +53,7 @@ export function AutomationDashboard() {
             </div>
 
             <div className="space-y-4">
-                {activities.map((activity, i) => (
+                {AUTOMATION_ACTIVITIES.map((activity, i) => (
                     <motion.div
                         key={activity.id}
                         initial={{ opacity: 0, x: -20 }}

@@ -33,7 +33,7 @@ export function PageContainer({
   className = '',
 }: PageContainerProps) {
   return (
-    <div 
+    <div
       className={`
         w-full mx-auto
         ${maxWidthClasses[maxWidth]}
@@ -78,7 +78,7 @@ export function PageSection({
   className = '',
 }: PageSectionProps) {
   return (
-    <section 
+    <section
       id={id}
       className={`
         ${backgroundClasses[background]}
@@ -120,7 +120,7 @@ export function ContentGrid({
   className = '',
 }: ContentGridProps) {
   return (
-    <div 
+    <div
       className={`
         grid
         ${gridClasses[columns]}
@@ -158,7 +158,7 @@ export function SidebarLayout({
   className = '',
 }: SidebarLayoutProps) {
   const sidebarContent = (
-    <aside 
+    <aside
       className={`
         ${sidebarWidthClasses[sidebarWidth]}
         flex-shrink-0
@@ -170,7 +170,7 @@ export function SidebarLayout({
   )
 
   return (
-    <div 
+    <div
       className={`
         flex flex-col lg:flex-row gap-8
         ${className}
@@ -222,7 +222,7 @@ export function SplitLayout({
   }
 
   return (
-    <div 
+    <div
       className={`
         grid grid-cols-1
         ${ratioClasses[ratio]}

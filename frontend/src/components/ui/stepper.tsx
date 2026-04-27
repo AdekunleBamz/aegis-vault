@@ -28,7 +28,7 @@ export function Stepper({
         {steps.map((step, index) => {
           const isCompleted = index < currentStep;
           const isCurrent = index === currentStep;
-          
+
           return (
             <div key={step.id} className="flex gap-4">
               <div className="flex flex-col items-center">
@@ -81,7 +81,7 @@ export function Stepper({
       {steps.map((step, index) => {
         const isCompleted = index < currentStep;
         const isCurrent = index === currentStep;
-        
+
         return (
           <React.Fragment key={step.id}>
             <div className="flex flex-col items-center">

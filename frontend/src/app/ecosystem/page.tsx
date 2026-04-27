@@ -63,7 +63,8 @@ export default function EcosystemPage() {
 
     const filtered = protocols.filter(p =>
         (categoryFilter === 'All' || p.category === categoryFilter) &&
-        (p.name.toLowerCase().includes(search.toLowerCase()))
+        (p.name.toLowerCase().includes(search.toLowerCase()) ||
+         p.description.toLowerCase().includes(search.toLowerCase()))
     );
 
     return (

@@ -1,6 +1,6 @@
 /**
  * @file User flow components for Aegis Vault
- * 
+ *
  * Exports multi-step user interaction flows for common operations:
  * staking, withdrawing, and claiming rewards.
  */

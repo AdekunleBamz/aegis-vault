@@ -1,13 +1,6 @@
 'use client';
 
-/**
- * @file Hook for managing withdrawal operations
- * 
- * Provides two-phase withdrawal functionality: request and complete.
- * Handles loading states and error management for withdrawal flows.
- */
-
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   executeWithdrawRequest,
   executeWithdrawComplete,
@@ -19,27 +12,35 @@ import { toMicroSTX } from '@/lib/format';
  * Return type for the useWithdraw hook.
  */
 export interface UseWithdrawReturn {
+  /** Function to initiate a withdrawal request transaction */
   requestWithdraw: (amount: number) => Promise<TransactionResult>;
+  /** Function to initiate a withdrawal completion transaction */
   completeWithdraw: () => Promise<TransactionResult>;
+  /** Whether a withdrawal operation is currently being processed */
   isLoading: boolean;
+  /** Error message if the operation failed, otherwise null */
   error: string | null;
+  /** Function to reset the loading and error states */
   reset: () => void;
 }
 
 /**
- * Hook to manage STX withdrawal operations.
+ * A custom hook to handle withdrawal operations (request and complete).
+ * Manages loading and error states for the two-step withdrawal process.
  * 
- * Supports two-phase withdrawals: request (initiates withdrawal)
- * and complete (finalizes after lock period).
- * 
- * @returns Object containing withdraw functions, loading state, error, and reset.
+ * @returns An object containing withdrawal functions and transaction states
  */
 export function useWithdraw(): UseWithdrawReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [completedAt, setCompletedAt] = useState<number | null>(null);
 
   const requestWithdraw = useCallback(
     async (amount: number): Promise<TransactionResult> => {
+      if (!Number.isFinite(amount) || amount <= 0) {
+        throw new Error('Withdrawal amount must be greater than zero');
+      }
+
       setIsLoading(true);
       setError(null);
 
@@ -79,5 +80,11 @@ export function useWithdraw(): UseWithdrawReturn {
     setIsLoading(false);
   }, []);
 
-  return { requestWithdraw, completeWithdraw, isLoading, error, reset };
+  return useMemo(() => ({
+    requestWithdraw,
+    completeWithdraw,
+    isLoading,
+    error,
+    reset
+  }), [requestWithdraw, completeWithdraw, isLoading, error, reset]);
 }

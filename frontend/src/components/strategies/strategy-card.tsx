@@ -5,6 +5,12 @@ import { motion } from 'framer-motion';
 import { TrendingUp, Shield, Zap, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const RISK_COLOR: Record<RiskLevel, string> = {
+  Low: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20',
+  Medium: 'text-orange-500 bg-orange-500/10 border-orange-500/20',
+  High: 'text-red-500 bg-red-500/10 border-red-500/20',
+};
+
 export type RiskLevel = 'Low' | 'Medium' | 'High';
 
 interface StrategyCardProps {
@@ -26,14 +32,6 @@ export function StrategyCard({
     tags,
     isPopular
 }: StrategyCardProps) {
-    const getRiskColor = (level: RiskLevel) => {
-        switch (level) {
-            case 'Low': return 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20';
-            case 'Medium': return 'text-orange-500 bg-orange-500/10 border-orange-500/20';
-            case 'High': return 'text-red-500 bg-red-500/10 border-red-500/20';
-        }
-    };
-
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -53,7 +51,7 @@ export function StrategyCard({
                 <div className="flex items-center gap-3 mb-4">
                     <div className={cn(
                         "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border",
-                        getRiskColor(risk)
+                        RISK_COLOR[risk]
                     )}>
                         {risk} Risk
                     </div>

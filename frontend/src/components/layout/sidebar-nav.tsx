@@ -32,7 +32,7 @@ export function SidebarNav({
   className = '',
 }: SidebarNavProps) {
   return (
-    <nav 
+    <nav
       className={`
         flex flex-col h-full
         bg-white dark:bg-gray-800
@@ -57,10 +57,10 @@ export function SidebarNav({
           aria-expanded={!collapsed}
           className="absolute -right-3 top-6 p-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         >
-          <svg 
+          <svg
             className={`w-4 h-4 text-gray-500 transition-transform ${collapsed ? 'rotate-180' : ''}`}
-            fill="none" 
-            stroke="currentColor" 
+            fill="none"
+            stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -72,9 +72,9 @@ export function SidebarNav({
       <div className="flex-1 overflow-y-auto py-4">
         <ul className="space-y-1 px-2">
           {items.map((item) => (
-            <SidebarNavItemComponent 
-              key={`${item.href || item.label}-${item.label}`} 
-              item={item} 
+            <SidebarNavItemComponent
+              key={`${item.href || item.label}-${item.label}`}
+              item={item}
               collapsed={collapsed}
             />
           ))}
@@ -106,8 +106,8 @@ function SidebarNavItemComponent({
   const baseClasses = `
     flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
     transition-colors duration-150
-    ${item.disabled 
-      ? 'text-gray-400 dark:text-gray-500 cursor-not-allowed' 
+    ${item.disabled
+      ? 'text-gray-400 dark:text-gray-500 cursor-not-allowed'
       : item.active
         ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'
         : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -131,10 +131,10 @@ function SidebarNavItemComponent({
             </span>
           )}
           {hasChildren && (
-            <svg 
+            <svg
               className={`w-4 h-4 transition-transform ${expanded ? 'rotate-90' : ''}`}
-              fill="none" 
-              stroke="currentColor" 
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -158,9 +158,9 @@ function SidebarNavItemComponent({
         {expanded && !collapsed && (
           <ul className="mt-1 space-y-1">
             {item.children!.map((child, index) => (
-              <SidebarNavItemComponent 
-                key={`${child.href || child.label}-${index}`} 
-                item={child} 
+              <SidebarNavItemComponent
+                key={`${child.href || child.label}-${index}`}
+                item={child}
                 collapsed={collapsed}
                 depth={depth + 1}
               />
@@ -250,7 +250,7 @@ export function TabNav({
   }
 
   return (
-    <nav 
+    <nav
       className={`flex ${fullWidth ? 'w-full' : ''} ${variantClasses[variant].container} ${className}`}
       role="tablist"
     >
@@ -306,7 +306,7 @@ export function StepNav({
   className = '',
 }: StepNavProps) {
   return (
-    <nav 
+    <nav
       className={`
         ${orientation === 'horizontal' ? 'flex items-start' : 'space-y-4'}
         ${className}
@@ -314,7 +314,7 @@ export function StepNav({
       aria-label="Progress"
     >
       {steps.map((step, index) => (
-        <div 
+        <div
           key={step.id}
           className={`
             ${orientation === 'horizontal' ? 'flex-1 relative' : 'flex gap-4'}
@@ -323,21 +323,21 @@ export function StepNav({
         >
           {/* Connector Line */}
           {index < steps.length - 1 && orientation === 'horizontal' && (
-            <div 
+            <div
               className={`
                 absolute top-4 left-8 right-0 h-0.5
                 ${step.status === 'completed' ? 'bg-purple-500' : 'bg-gray-200 dark:bg-gray-700'}
               `}
             />
           )}
-          
+
           <div className={`flex ${orientation === 'horizontal' ? 'flex-col items-start' : 'items-start'} relative`}>
             {/* Step Indicator */}
-            <div 
+            <div
               className={`
                 flex items-center justify-center w-8 h-8 rounded-full border-2
-                ${step.status === 'completed' 
-                  ? 'bg-purple-500 border-purple-500 text-white' 
+                ${step.status === 'completed'
+                  ? 'bg-purple-500 border-purple-500 text-white'
                   : step.status === 'current'
                     ? 'border-purple-500 text-purple-500 bg-white dark:bg-gray-800'
                     : 'border-gray-300 dark:border-gray-600 text-gray-400 bg-white dark:bg-gray-800'
@@ -357,11 +357,11 @@ export function StepNav({
 
             {/* Step Label */}
             <div className={orientation === 'horizontal' ? 'mt-2' : ''}>
-              <p 
+              <p
                 className={`
                   text-sm font-medium
-                  ${step.status === 'current' 
-                    ? 'text-purple-600 dark:text-purple-400' 
+                  ${step.status === 'current'
+                    ? 'text-purple-600 dark:text-purple-400'
                     : step.status === 'completed'
                       ? 'text-gray-900 dark:text-white'
                       : 'text-gray-500 dark:text-gray-400'

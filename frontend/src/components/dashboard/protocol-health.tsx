@@ -4,35 +4,36 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, TrendingUp, DollarSign, PieChart } from 'lucide-react';
 import { RewardChart } from './reward-chart';
+import { cn } from '@/lib/utils';
+
+const TVL_TREND = [
+    { day: 1, amount: 1200000 },
+    { day: 5, amount: 1250000 },
+    { day: 10, amount: 1400000 },
+    { day: 15, amount: 1350000 },
+    { day: 20, amount: 1500000 },
+    { day: 25, amount: 1650000 },
+    { day: 30, amount: 1800000 },
+];
+
+const HEALTH_METRICS = [
+    {
+        label: 'Protocol Revenue',
+        value: '$124.5k',
+        change: '+12.5%',
+        icon: DollarSign,
+        color: 'text-emerald-500'
+    },
+    {
+        label: 'Utilization Rate',
+        value: '88.2%',
+        change: '+2.1%',
+        icon: Activity,
+        color: 'text-aegis-blue'
+    },
+];
 
 export function ProtocolHealth() {
-    // Mock data for protocol trends
-    const tvlTrend = [
-        { day: 1, amount: 1200000 },
-        { day: 5, amount: 1250000 },
-        { day: 10, amount: 1400000 },
-        { day: 15, amount: 1350000 },
-        { day: 20, amount: 1500000 },
-        { day: 25, amount: 1650000 },
-        { day: 30, amount: 1800000 },
-    ];
-
-    const metrics = [
-        {
-            label: 'Protocol Revenue',
-            value: '$124.5k',
-            change: '+12.5%',
-            icon: DollarSign,
-            color: 'text-emerald-500'
-        },
-        {
-            label: 'Utilization Rate',
-            value: '88.2%',
-            change: '+2.1%',
-            icon: Activity,
-            color: 'text-aegis-blue'
-        },
-    ];
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
@@ -53,12 +54,12 @@ export function ProtocolHealth() {
                     </div>
                 </div>
 
-                <RewardChart data={tvlTrend} height={180} color="hsl(var(--aegis-blue))" />
+                <RewardChart data={TVL_TREND} height={180} color="hsl(var(--aegis-blue))" />
             </motion.div>
 
             {/* Health Side Cards */}
             <div className="flex flex-col gap-6">
-                {metrics.map((metric, i) => (
+                {HEALTH_METRICS.map((metric, i) => (
                     <motion.div
                         key={metric.label}
                         initial={{ opacity: 0, x: 20 }}
@@ -99,6 +100,3 @@ export function ProtocolHealth() {
         </div>
     );
 }
-
-// Missing import fix
-import { cn } from '@/lib/utils';

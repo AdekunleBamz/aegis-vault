@@ -39,7 +39,9 @@ export function Progress({
   striped = false,
   className = '',
 }: ProgressProps) {
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+  const safeValue = typeof value === 'number' && Number.isFinite(value) ? value : 0;
+  const safeMax = typeof max === 'number' && Number.isFinite(max) && max > 0 ? max : 100;
+  const percentage = Math.min(Math.max((safeValue / safeMax) * 100, 0), 100);
 
   return (
     <div className={className}>
@@ -56,9 +58,9 @@ export function Progress({
             ${animated ? 'animate-pulse' : ''}`}
           style={{ width: `${percentage}%` }}
           role="progressbar"
-          aria-valuenow={value}
+          aria-valuenow={safeValue}
           aria-valuemin={0}
-          aria-valuemax={max}
+          aria-valuemax={safeMax}
         />
       </div>
     </div>
@@ -192,10 +194,10 @@ export function StepsProgress({ steps, currentStep, orientation = 'horizontal' }
               <div
                 className={`flex items-center justify-center w-8 h-8 rounded-full border-2 font-medium text-sm
                   transition-all duration-200
-                  ${isCompleted 
-                    ? 'bg-blue-500 border-blue-500 text-white' 
-                    : isCurrent 
-                      ? 'border-blue-500 text-blue-500 bg-blue-500/10' 
+                  ${isCompleted
+                    ? 'bg-blue-500 border-blue-500 text-white'
+                    : isCurrent
+                      ? 'border-blue-500 text-blue-500 bg-blue-500/10'
                       : 'border-gray-600 text-gray-500 bg-gray-800'}`}
               >
                 {isCompleted ? (
@@ -206,7 +208,7 @@ export function StepsProgress({ steps, currentStep, orientation = 'horizontal' }
                   index + 1
                 )}
               </div>
-              
+
               {/* Connector line */}
               {index !== steps.length - 1 && (
                 <div className={`${isVertical ? 'w-0.5 h-full min-h-[2rem] mx-auto mt-2' : 'flex-1 h-0.5 mx-3'}
@@ -214,7 +216,7 @@ export function StepsProgress({ steps, currentStep, orientation = 'horizontal' }
                 />
               )}
             </div>
-            
+
             {/* Step label */}
             <div className={`${isVertical ? 'ml-4' : 'mt-2 text-center'}`}>
               <p className={`text-sm font-medium ${isCurrent ? 'text-white' : isCompleted ? 'text-gray-300' : 'text-gray-500'}`}>

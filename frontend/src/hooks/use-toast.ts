@@ -16,33 +16,80 @@ interface UseToastReturn {
     toasts: Toast[];
     addToast: (toast: Omit<Toast, 'id'>) => string;
     removeToast: (id: string) => void;
+    clearAll: () => void;
+    toastSuccess: (message: string, description?: string) => string;
+    toastError: (message: string, description?: string) => string;
+    toastInfo: (message: string, description?: string) => string;
 }
 
 export function useToast(): UseToastReturn {
     const [toasts, setToasts] = useState<Toast[]>([]);
+    const getToastId = useCallback(
+        () =>
+            typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+                ? crypto.randomUUID()
+                : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+        []
+    );
 
     const removeToast = useCallback((id: string) => {
         setToasts((prev) => prev.filter((t) => t.id !== id));
     }, []);
 
     const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
-        const id = Math.random().toString(36).substring(2, 9);
+        const id = getToastId();
         const newToast = { ...toast, id };
 
         setToasts((prev) => [...prev, newToast]);
 
         if (toast.duration !== 0) {
+            const delay = typeof toast.duration === 'number' && toast.duration > 0 ? toast.duration : 5000;
             setTimeout(() => {
                 removeToast(id);
-            }, toast.duration || 5000);
+            }, delay);
         }
 
         return id;
-    }, [removeToast]);
+    }, [getToastId, removeToast]);
+
+    const clearAll = useCallback(() => {
+        setToasts([]);
+    }, []);
+
+    const toastSuccess = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'success', message, description }),
+        [addToast]
+    );
+
+    const toastError = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'error', message, description }),
+        [addToast]
+    );
+
+    const toastInfo = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'info', message, description }),
+        [addToast]
+    );
+
+    const toastWarning = useCallback(
+        (message: string, description?: string) =>
+            addToast({ type: 'warning', message, description }),
+        [addToast]
+    );
 
     return {
         toasts,
         addToast,
         removeToast,
+        clearAll,
+        toastSuccess,
+        toastError,
+        toastInfo,
+        toastWarning,
+        toastCount: toasts.length,
+        hasToasts: toasts.length > 0,
     };
 }

@@ -63,7 +63,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
   const [step, setStep] = useState<'input' | 'confirm' | 'pending' | 'success'>('input');
   const [txId, setTxId] = useState<string | null>(null);
 
-  const stakedAmount = position?.amountStaked || BigInt(0);
+  const stakedAmount = position?.amountStaked ?? 0n;
   const maxWithdrawable = Number(stakedAmount) / 1e6;
   const numAmount = parseFloat(amount) || 0;
   const exceedsStake = numAmount > maxWithdrawable;
@@ -286,7 +286,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
                   e.stopPropagation();
                   setAmount(qa.value.toFixed(6));
                 }}
-                className="flex-1 py-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white 
+                className="flex-1 py-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white
                   rounded-lg text-sm font-medium transition-colors"
               >
                 {qa.label}

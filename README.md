@@ -29,11 +29,11 @@ The active protocol surface in this repo is centered around the current v3 vault
 
 | Contract | Description |
 |----------|-------------|
-| `aegis-vault-v3` | Consolidated staking, reward accrual, and withdrawal flow |
-| `aegis-token-v3` | AGS token implementation with mint control |
-| `aegis-treasury` | Treasury accounting for protocol-owned STX flows |
-
-Legacy `v2` and `v2-15` contracts remain in `contracts/` for reference and migration context.
+| `aegis-vault-v3` | Core vault logic, handles deposits and position tracking |
+| `aegis-withdrawals-v2-15` | Withdrawal processing with lock period enforcement |
+| `aegis-rewards-v2-15` | Reward calculation and distribution |
+| `aegis-treasury-v2-15` | Treasury for penalty fees and protocol revenue |
+| `aegis-token-v3` | AGS token (SIP-010 compliant) |
 
 ## Tech Stack
 
@@ -59,7 +59,8 @@ Legacy `v2` and `v2-15` contracts remain in `contracts/` for reference and migra
 aegis-vault/
 ├── contracts/           # Clarity smart contracts
 │   ├── aegis-vault-v3.clar
-│   ├── aegis-token-v3.clar
+│   ├── aegis-withdrawals-v2-15.clar
+│   ├── aegis-rewards-v2-15.clar
 │   ├── aegis-treasury-v2-15.clar
 │   ├── aegis-vault-v2.clar
 │   ├── aegis-token-v2.clar
@@ -80,7 +81,8 @@ aegis-vault/
 
 ### Prerequisites
 - Node.js 18+ (LTS recommended)
-- Clarinet 2.0+
+- Clarinet 2.0+ (latest stable recommended)
+- Git 2.34+ (for better performance and security)
 
 ### Setup
 
@@ -93,7 +95,10 @@ cd aegis-vault
 npm ci
 
 # Install frontend dependencies
-npm --prefix frontend ci
+npm run frontend:install
+
+# Run project-wide checks
+npm run check
 ```
 
 ## Development
@@ -103,10 +108,11 @@ npm --prefix frontend ci
 ```bash
 # Check contracts
 clarinet check
+npm run contracts:check
 
 # Equivalent root script
 npm run contracts:check
-npm run check
+npm run check   # runs contracts:check + vitest
 
 # Run tests
 clarinet test
@@ -115,10 +121,19 @@ clarinet test
 npm run contracts:test
 
 # Run JavaScript/TypeScript tests with Vitest
-npm test
+npm run test
+
+# Run focused validation utility tests
+npm run test:validation
+
+# Run a fast pre-push check bundle
+npm run check:fast
+
+# Run full repo validation bundle
+npm run validate
 
 # Console for local testing
-clarinet console
+npm run console
 ```
 
 ### Frontend
@@ -129,6 +144,9 @@ npm run frontend:dev
 
 # Lint frontend
 npm run frontend:lint
+
+# Run frontend tests
+npm run frontend:validate
 
 # Build for production
 npm run frontend:build
@@ -145,11 +163,22 @@ Contracts are deployed to Stacks mainnet at:
 
 ```
 SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-vault-v3
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-token-v3
-SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-withdrawals-v2-15
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-rewards-v2-15
+SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N.aegis-treasury-v2-15
 ```
 
+Ensure wallet network is set to mainnet before interacting with these deployed contracts.
+
 ### Deployment Plans
+
+Recommended pre-deployment verification:
+
+```bash
+npm run check
+npm run contracts:test
+npm run frontend:build
+```
 
 ```bash
 # Use Clarinet.toml as the source of truth for the active contract names
@@ -212,11 +241,11 @@ Aegis Vault prioritizes security at every layer of the stack:
 
 ## License
 
-MIT
+[MIT](LICENSE)
 
 ## Links
 
 - [Stacks Explorer](https://explorer.stacks.co/address/SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N)
 - [Stacks Documentation](https://docs.stacks.co)
-- [@stacks/connect](https://github.com/hirosystems/connect)
+- [@stacks/connect](https://www.npmjs.com/package/@stacks/connect)
 - [@stacks/transactions](https://github.com/hirosystems/stacks.js)

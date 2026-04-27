@@ -65,6 +65,10 @@ interface SettingsContextType {
   resetSettings: () => void;
   exportSettings: () => string;
   importSettings: (json: string) => boolean;
+  /** True when expertMode is enabled in the active settings */
+  isExpertMode: boolean;
+  /** True when balances should be hidden */
+  isBalanceHidden: boolean;
 }
 
 const SettingsContext = createContext<SettingsContextType | null>(null);
@@ -91,8 +95,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
         const parsed = JSON.parse(stored);
         setSettings(prev => ({ ...prev, ...parsed }));
       }
-    } catch (e) {
-      console.error('Failed to load settings:', e);
+    } catch (err) {
+      console.error('Failed to load settings:', err);
     }
     setIsLoaded(true);
   }, [storageKey]);
@@ -102,8 +106,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
     if (typeof window === 'undefined' || !isLoaded) return;
     try {
       localStorage.setItem(storageKey, JSON.stringify(settings));
-    } catch (e) {
-      console.error('Failed to save settings:', e);
+    } catch (err) {
+      console.error('Failed to save settings:', err);
     }
   }, [settings, storageKey, isLoaded]);
 
@@ -159,8 +163,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
       }
       setSettings(validated);
       return true;
-    } catch (e) {
-      console.error('Failed to import settings:', e);
+    } catch (err) {
+      console.error('Failed to import settings:', err);
       return false;
     }
   }, []);
@@ -172,6 +176,8 @@ export function SettingsProvider({ children, storageKey = 'aegis_settings' }: Se
     resetSettings,
     exportSettings,
     importSettings,
+    isExpertMode: settings.expertMode,
+    isBalanceHidden: settings.hideBalances,
   };
 
   return (

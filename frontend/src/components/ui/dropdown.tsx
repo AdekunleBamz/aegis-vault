@@ -27,12 +27,12 @@ const widthClasses = {
   lg: 'w-56',
 };
 
-export function Dropdown({ 
-  trigger, 
-  items, 
-  align = 'left', 
+export function Dropdown({
+  trigger,
+  items,
+  align = 'left',
   width = 'auto',
-  className = '' 
+  className = ''
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -70,9 +70,15 @@ export function Dropdown({
   return (
     <div ref={dropdownRef} className={`relative inline-block ${className}`}>
       {/* Trigger */}
-      <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="cursor-pointer border-0 bg-transparent p-0 text-left"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+      >
         {trigger}
-      </div>
+      </button>
 
       {/* Menu */}
       {isOpen && (
@@ -99,10 +105,10 @@ export function Dropdown({
 
             const itemClasses = `
               flex items-center gap-3 w-full px-4 py-2.5 text-left text-sm transition-colors
-              ${item.disabled 
-                ? 'text-gray-500 cursor-not-allowed' 
-                : item.danger 
-                  ? 'text-red-400 hover:bg-red-500/10' 
+              ${item.disabled
+                ? 'text-gray-500 cursor-not-allowed'
+                : item.danger
+                  ? 'text-red-400 hover:bg-red-500/10'
                   : 'text-gray-300 hover:bg-gray-800 hover:text-white'
               }
             `;
@@ -124,6 +130,7 @@ export function Dropdown({
             return (
               <button
                 key={index}
+                type="button"
                 onClick={() => handleItemClick(item)}
                 disabled={item.disabled}
                 className={itemClasses}
@@ -193,18 +200,18 @@ export function SelectDropdown({
           {label}
         </label>
       )}
-      
+
       {/* Trigger Button */}
       <button
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
         className={`
-          w-full flex items-center justify-between gap-2 px-4 py-3 
+          w-full flex items-center justify-between gap-2 px-4 py-3
           bg-gray-900 border border-gray-700 rounded-xl text-left
           transition-all duration-200
-          ${disabled 
-            ? 'opacity-50 cursor-not-allowed' 
+          ${disabled
+            ? 'opacity-50 cursor-not-allowed'
             : 'hover:border-gray-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20'
           }
           ${isOpen ? 'border-blue-500 ring-2 ring-blue-500/20' : ''}
@@ -216,10 +223,10 @@ export function SelectDropdown({
           )}
           {selectedOption?.label || placeholder}
         </span>
-        <svg 
-          className={`w-5 h-5 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className={`w-5 h-5 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -239,8 +246,8 @@ export function SelectDropdown({
               }}
               className={`
                 flex items-center gap-3 w-full px-4 py-2.5 text-left text-sm transition-colors
-                ${option.value === value 
-                  ? 'bg-blue-500/10 text-blue-400' 
+                ${option.value === value
+                  ? 'bg-blue-500/10 text-blue-400'
                   : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }
               `}

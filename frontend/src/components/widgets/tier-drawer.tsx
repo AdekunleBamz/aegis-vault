@@ -5,50 +5,51 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check, Zap, Shield, Crown, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const TIER_DEFINITIONS = [
+    {
+        name: 'Bronze',
+        min: '0',
+        multiplier: '1.0x',
+        icon: Star,
+        color: 'text-orange-400',
+        bg: 'bg-orange-400/10',
+        features: ['Base APR', 'Standard Support', 'No minimum lock']
+    },
+    {
+        name: 'Silver',
+        min: '10k',
+        multiplier: '1.2x',
+        icon: Shield,
+        color: 'text-slate-300',
+        bg: 'bg-slate-300/10',
+        features: ['20% Bonus Yield', 'Priority Withdrawals', 'Community Access']
+    },
+    {
+        name: 'Gold',
+        min: '50k',
+        multiplier: '1.5x',
+        icon: Zap,
+        color: 'text-yellow-400',
+        bg: 'bg-yellow-400/10',
+        features: ['50% Bonus Yield', 'Governance Voting', 'Exclusive NFT drops']
+    },
+    {
+        name: 'Diamond',
+        min: '250k',
+        multiplier: '2.0x',
+        icon: Crown,
+        color: 'text-cyan-400',
+        bg: 'bg-cyan-400/10',
+        features: ['100% Bonus Yield', 'Direct Protocol Support', 'Institutional Tools']
+    },
+];
+
 interface TierDrawerProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
 export function TierDrawer({ isOpen, onClose }: TierDrawerProps) {
-    const tiers = [
-        {
-            name: 'Bronze',
-            min: '0',
-            multiplier: '1.0x',
-            icon: Star,
-            color: 'text-orange-400',
-            bg: 'bg-orange-400/10',
-            features: ['Base APR', 'Standard Support', 'No minimum lock']
-        },
-        {
-            name: 'Silver',
-            min: '10k',
-            multiplier: '1.2x',
-            icon: Shield,
-            color: 'text-slate-300',
-            bg: 'bg-slate-300/10',
-            features: ['20% Bonus Yield', 'Priority Withdrawals', 'Community Access']
-        },
-        {
-            name: 'Gold',
-            min: '50k',
-            multiplier: '1.5x',
-            icon: Zap,
-            color: 'text-yellow-400',
-            bg: 'bg-yellow-400/10',
-            features: ['50% Bonus Yield', 'Governance Voting', 'Exclusive NFT drops']
-        },
-        {
-            name: 'Diamond',
-            min: '250k',
-            multiplier: '2.0x',
-            icon: Crown,
-            color: 'text-cyan-400',
-            bg: 'bg-cyan-400/10',
-            features: ['100% Bonus Yield', 'Direct Protocol Support', 'Institutional Tools']
-        },
-    ];
 
     return (
         <AnimatePresence>
@@ -91,7 +92,7 @@ export function TierDrawer({ isOpen, onClose }: TierDrawerProps) {
                             </div>
 
                             <div className="grid gap-6">
-                                {tiers.map((tier, i) => (
+                                {TIER_DEFINITIONS.map((tier, i) => (
                                     <motion.div
                                         key={tier.name}
                                         initial={{ opacity: 0, y: 20 }}

@@ -1,10 +1,10 @@
 /**
  * @file Staking utilities for Aegis Vault
- * 
+ *
  * Provides functions for interacting with the Aegis Staking protocol,
  * including staker info retrieval, APY calculation, tier determination,
  * and reward estimation.
- * 
+ *
  * @author Aegis Vault Team
  */
 import { CONTRACTS, TIERS, BLOCKS_PER_YEAR } from './constants';
@@ -19,6 +19,9 @@ export interface StakerInfo {
   tier: number;
 }
 
+/**
+ * Global protocol statistics across all stakers
+ */
 export interface PoolStats {
   totalStaked: bigint;
   totalStakers: number;
@@ -28,6 +31,8 @@ export interface PoolStats {
 
 /**
  * Get staker information from the contract
+ * @param address Stacks address to query
+ * @returns Staker data or null if not found/error
  */
 export async function getStakerInfo(address: string): Promise<StakerInfo | null> {
   try {
@@ -38,16 +43,16 @@ export async function getStakerInfo(address: string): Promise<StakerInfo | null>
       'get-staker-info',
       [`0x${Buffer.from(address).toString('hex')}`]
     );
-    
+
     if (!result.okay || !result.result) {
       return null;
     }
-    
+
     const cv = hexToCV(result.result);
     const value = cvToValue(cv);
-    
+
     if (!value) return null;
-    
+
     return {
       amountStaked: BigInt(value['amount-staked'] || 0),
       stakeStartBlock: Number(value['stake-start-block'] || 0),
@@ -73,14 +78,14 @@ export async function getPoolStats(): Promise<PoolStats | null> {
       'get-pool-stats',
       []
     );
-    
+
     if (!result.okay || !result.result) {
       return null;
     }
-    
+
     const cv = hexToCV(result.result);
     const value = cvToValue(cv);
-    
+
     return {
       totalStaked: BigInt(value['total-staked'] || 0),
       totalStakers: Number(value['total-stakers'] || 0),
@@ -97,13 +102,17 @@ export async function getPoolStats(): Promise<PoolStats | null> {
  * Calculate APY based on stake amount and tier
  */
 export function calculateAPY(stakeAmount: bigint, tier: number): number {
-  const baseAPY = TIERS[tier]?.baseApy || 12;
-  const tierMultiplier = TIERS[tier]?.multiplier || 1.0;
+  const clampedTier = Math.max(0, Math.min(tier, TIERS.length - 1));
+  const baseAPY = TIERS[clampedTier]?.baseApy || 12;
+  const tierMultiplier = TIERS[clampedTier]?.multiplier || 1.0;
   return baseAPY * tierMultiplier;
 }
 
 /**
  * Calculate estimated rewards for a period
+ * @param stakeAmount Amount of STX staked (microSTX)
+ * @param apy Current APY percentage (e.g., 12.5)
+ * @param blocks Number of blocks to calculate rewards for
  */
 export function calculateEstimatedRewards(
   stakeAmount: bigint,
@@ -120,19 +129,19 @@ export function calculateEstimatedRewards(
  */
 export function determineTier(stakeAmount: bigint): number {
   const stakeSTX = Number(stakeAmount) / 1e6;
-  
+
   for (let i = TIERS.length - 1; i >= 0; i--) {
     if (stakeSTX >= TIERS[i].minStake) {
       return i;
     }
   }
-  
+
   return 0;
 }
 
 /**
  * Get tier object by its name (e.g. 'Bronze')
  */
-export function getTierByName(name: string): (typeof TIERS)[number] {
+export function getTierByName(name: string) {
   return TIERS.find(t => t.name === name) || TIERS[0];
 }

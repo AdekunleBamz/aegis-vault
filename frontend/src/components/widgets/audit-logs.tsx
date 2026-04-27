@@ -5,45 +5,46 @@ import { motion } from 'framer-motion';
 import { FileSearch, ExternalLink, ShieldAlert, CheckCircle2, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const AUDIT_LOGS = [
+    {
+        id: 'AUD-2026-003',
+        date: '2026-03-10',
+        type: 'Smart Contract Audit',
+        entity: 'Halborn',
+        status: 'Completed',
+        severity: 'Low Risk',
+        hash: '0x82f...a12'
+    },
+    {
+        id: 'SEC-2026-001',
+        date: '2026-03-05',
+        type: 'Security Patch',
+        entity: 'Core Devs',
+        status: 'Deployed',
+        severity: 'Critical Fix',
+        hash: '0x1de...f90'
+    },
+    {
+        id: 'AUD-2026-002',
+        date: '2026-02-15',
+        type: 'Penetration Test',
+        entity: 'Kudelski Security',
+        status: 'Completed',
+        severity: 'Secure',
+        hash: '0x45a...b32'
+    },
+    {
+        id: 'AUD-2026-001',
+        date: '2026-01-20',
+        type: 'Initial Code Audit',
+        entity: 'Zell-O',
+        status: 'Completed',
+        severity: 'Resolved',
+        hash: '0xce3...d44'
+    },
+];
+
 export function AuditLogs() {
-    const logs = [
-        {
-            id: 'AUD-2026-003',
-            date: '2026-03-10',
-            type: 'Smart Contract Audit',
-            entity: 'Halborn',
-            status: 'Completed',
-            severity: 'Low Risk',
-            hash: '0x82f...a12'
-        },
-        {
-            id: 'SEC-2026-001',
-            date: '2026-03-05',
-            type: 'Security Patch',
-            entity: 'Core Devs',
-            status: 'Deployed',
-            severity: 'Critical Fix',
-            hash: '0x1de...f90'
-        },
-        {
-            id: 'AUD-2026-002',
-            date: '2026-02-15',
-            type: 'Penetration Test',
-            entity: 'Kudelski Security',
-            status: 'Completed',
-            severity: 'Secure',
-            hash: '0x45a...b32'
-        },
-        {
-            id: 'AUD-2026-001',
-            date: '2026-01-20',
-            type: 'Initial Code Audit',
-            entity: 'Zell-O',
-            status: 'Completed',
-            severity: 'Resolved',
-            hash: '0xce3...d44'
-        },
-    ];
 
     return (
         <div className="rounded-[40px] border border-border bg-background/40 backdrop-blur-2xl p-8 lg:p-10 relative overflow-hidden group">
@@ -63,7 +64,7 @@ export function AuditLogs() {
             </div>
 
             <div className="space-y-4">
-                {logs.map((log, i) => (
+                {AUDIT_LOGS.map((log, i) => (
                     <motion.div
                         key={log.id}
                         initial={{ opacity: 0, y: 10 }}

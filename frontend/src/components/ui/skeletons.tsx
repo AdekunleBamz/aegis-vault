@@ -24,18 +24,18 @@ export function Skeleton({ className = '', animate = true }: SkeletonProps) {
   )
 }
 
-export function SkeletonText({ 
-  lines = 1, 
-  className = '' 
-}: { 
+export function SkeletonText({
+  lines = 1,
+  className = ''
+}: {
   lines?: number
-  className?: string 
+  className?: string
 }) {
   return (
     <div className={`space-y-2 ${className}`}>
       {Array.from({ length: lines }).map((_, i) => (
-        <Skeleton 
-          key={i} 
+        <Skeleton
+          key={i}
           className={`h-4 ${i === lines - 1 && lines > 1 ? 'w-3/4' : 'w-full'}`}
         />
       ))}
@@ -43,10 +43,10 @@ export function SkeletonText({
   )
 }
 
-export function SkeletonAvatar({ 
-  size = 'md' 
-}: { 
-  size?: 'sm' | 'md' | 'lg' | 'xl' 
+export function SkeletonAvatar({
+  size = 'md'
+}: {
+  size?: 'sm' | 'md' | 'lg' | 'xl'
 }) {
   const sizeClasses = {
     sm: 'w-8 h-8',
@@ -58,10 +58,10 @@ export function SkeletonAvatar({
   return <Skeleton className={`${sizeClasses[size]} rounded-full`} />
 }
 
-export function SkeletonButton({ 
+export function SkeletonButton({
   size = 'md',
   fullWidth = false,
-}: { 
+}: {
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
 }) {
@@ -72,7 +72,7 @@ export function SkeletonButton({
   }
 
   return (
-    <Skeleton 
+    <Skeleton
       className={`${sizeClasses[size]} ${fullWidth ? 'w-full' : ''} rounded-lg`}
     />
   )
@@ -84,9 +84,9 @@ export function SkeletonButton({
 
 export function SkeletonCard({ className = '' }: { className?: string }) {
   return (
-    <div 
+    <div
       className={`
-        bg-white dark:bg-gray-800 rounded-xl p-6 
+        bg-white dark:bg-gray-800 rounded-xl p-6
         border border-gray-200 dark:border-gray-700
         ${className}
       `}
@@ -104,9 +104,9 @@ export function SkeletonCard({ className = '' }: { className?: string }) {
 
 export function SkeletonStatsCard({ className = '' }: { className?: string }) {
   return (
-    <div 
+    <div
       className={`
-        bg-white dark:bg-gray-800 rounded-xl p-6 
+        bg-white dark:bg-gray-800 rounded-xl p-6
         border border-gray-200 dark:border-gray-700
         ${className}
       `}
@@ -120,9 +120,9 @@ export function SkeletonStatsCard({ className = '' }: { className?: string }) {
 
 export function SkeletonPositionCard({ className = '' }: { className?: string }) {
   return (
-    <div 
+    <div
       className={`
-        bg-white dark:bg-gray-800 rounded-xl p-6 
+        bg-white dark:bg-gray-800 rounded-xl p-6
         border border-gray-200 dark:border-gray-700
         ${className}
       `}
@@ -134,7 +134,7 @@ export function SkeletonPositionCard({ className = '' }: { className?: string })
         </div>
         <Skeleton className="h-6 w-16 rounded-full" />
       </div>
-      
+
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
           <Skeleton className="h-3 w-16 mb-1" />
@@ -145,9 +145,9 @@ export function SkeletonPositionCard({ className = '' }: { className?: string })
           <Skeleton className="h-5 w-20" />
         </div>
       </div>
-      
+
       <Skeleton className="h-2 w-full rounded-full mb-4" />
-      
+
       <div className="flex gap-2">
         <SkeletonButton size="sm" />
         <SkeletonButton size="sm" />
@@ -189,14 +189,14 @@ export function SkeletonDashboard() {
   return (
     <div className="space-y-6">
       <SkeletonPageHeader />
-      
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <SkeletonStatsCard key={i} />
         ))}
       </div>
-      
+
       {/* Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-4">
@@ -221,7 +221,7 @@ export function SkeletonStakePage() {
   return (
     <div className="max-w-xl mx-auto space-y-6">
       <SkeletonPageHeader />
-      
+
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 space-y-6">
         {/* Amount Input */}
         <div>
@@ -232,7 +232,7 @@ export function SkeletonStakePage() {
             <Skeleton className="h-3 w-16" />
           </div>
         </div>
-        
+
         {/* Lock Period */}
         <div>
           <Skeleton className="h-4 w-32 mb-2" />
@@ -242,7 +242,7 @@ export function SkeletonStakePage() {
             ))}
           </div>
         </div>
-        
+
         {/* Summary */}
         <div className="space-y-2 pt-4 border-t border-gray-200 dark:border-gray-700">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -252,7 +252,7 @@ export function SkeletonStakePage() {
             </div>
           ))}
         </div>
-        
+
         {/* Submit Button */}
         <Skeleton className="h-12 w-full rounded-lg" />
       </div>
@@ -271,7 +271,7 @@ export function SkeletonTable({ rows = 5 }: { rows?: number }) {
           ))}
         </div>
       </div>
-      
+
       {/* Rows */}
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         {Array.from({ length: rows }).map((_, i) => (
@@ -290,21 +290,21 @@ export function SkeletonTable({ rows = 5 }: { rows?: number }) {
 // Custom Shimmer Animation
 // ============================================================================
 
-export function ShimmerBlock({ 
-  width, 
-  height, 
-  className = '' 
-}: { 
+export function ShimmerBlock({
+  width,
+  height,
+  className = ''
+}: {
   width: string | number
   height: string | number
-  className?: string 
+  className?: string
 }) {
   return (
-    <div 
+    <div
       className={`relative overflow-hidden bg-gray-200 dark:bg-gray-700 rounded ${className}`}
       style={{ width, height }}
     >
-      <div 
+      <div
         className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent"
       />
     </div>

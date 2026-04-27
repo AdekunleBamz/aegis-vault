@@ -2,7 +2,7 @@
 
 /**
  * @file Positions hook for Aegis Vault
- * 
+ *
  * Provides a reusable hook for fetching and managing staking position data
  * for a given wallet address.
  */
@@ -20,13 +20,15 @@ export interface UsePositionsReturn {
   isLoading: boolean;
   /** Error message if the fetch failed, or null */
   error: string | null;
+  /** True if a position has been loaded and is non-null */
+  hasPosition: boolean;
   /** Function to manually refetch the position data */
   refetch: () => Promise<void>;
 }
 
 /**
  * Hook for fetching a user's staking position.
- * 
+ *
  * @param address - The Stacks address to fetch position for
  * @returns Object containing position data, loading state, error, and refetch function
  */
@@ -36,7 +38,8 @@ export function usePositions(address: string): UsePositionsReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchPositions = useCallback(async () => {
-    if (!address) {
+    const trimmedAddress = typeof address === 'string' ? address.trim() : '';
+    if (!trimmedAddress) {
       setPosition(null);
       setError(null);
       setIsLoading(false);
@@ -47,7 +50,7 @@ export function usePositions(address: string): UsePositionsReturn {
     setError(null);
 
     try {
-      const stakerInfo = await getStakerInfo(address);
+      const stakerInfo = await getStakerInfo(trimmedAddress);
       setPosition(stakerInfo);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to fetch positions';
@@ -61,5 +64,12 @@ export function usePositions(address: string): UsePositionsReturn {
     fetchPositions();
   }, [fetchPositions]);
 
-  return { position, isLoading, error, refetch: fetchPositions };
+  return {
+    position,
+    isLoading,
+    error,
+    hasPosition: position !== null,
+    hasError: error !== null,
+    refetch: fetchPositions,
+  };
 }

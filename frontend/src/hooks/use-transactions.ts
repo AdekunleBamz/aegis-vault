@@ -2,7 +2,7 @@
 
 /**
  * @file Transactions hook for Aegis Vault
- * 
+ *
  * Provides a reusable hook for fetching and managing transaction history
  * for a given wallet address, filtered for Aegis protocol interactions.
  */
@@ -20,6 +20,10 @@ export interface UseTransactionsReturn {
   isLoading: boolean;
   /** Error message if the fetch failed, or null */
   error: string | null;
+  /** Total number of fetched transactions */
+  count: number;
+  /** True if there is at least one transaction */
+  hasTransactions: boolean;
   /** Function to manually refetch the transactions */
   refetch: () => Promise<void>;
 }
@@ -27,7 +31,7 @@ export interface UseTransactionsReturn {
 /**
  * Hook for fetching a user's transaction history.
  * Automatically filters for Aegis protocol-related transactions.
- * 
+ *
  * @param address - The Stacks address to fetch transactions for
  * @param limit - Maximum number of transactions to fetch (default: 20)
  * @returns Object containing transactions, loading state, error, and refetch function
@@ -36,8 +40,9 @@ export function useTransactions(
   address: string,
   limit = 20
 ): UseTransactionsReturn {
+  const safeLimit = Number.isInteger(limit) && limit > 0 ? limit : 20;
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(!!address);
   const [error, setError] = useState<string | null>(null);
 
   const fetchTransactions = useCallback(async () => {
@@ -47,12 +52,10 @@ export function useTransactions(
     setError(null);
 
     try {
-      const txs = await getAccountTransactions(address, limit);
+      const txs = await getAccountTransactions(address, safeLimit);
       // Filter for Aegis-related transactions
       const aegisTxs = txs.filter(
-        (tx) =>
-          tx.contract_call?.contract_id.includes('aegis-') ||
-          tx.contract_call?.contract_id.includes('aegis-vault')
+        (tx) => tx.contract_call?.contract_id.includes('aegis-')
       );
       setTransactions(aegisTxs);
     } catch (err) {
@@ -61,11 +64,19 @@ export function useTransactions(
     } finally {
       setIsLoading(false);
     }
-  }, [address, limit]);
+  }, [address, safeLimit]);
 
   useEffect(() => {
     fetchTransactions();
   }, [fetchTransactions]);
 
-  return { transactions, isLoading, error, refetch: fetchTransactions };
+  return {
+    transactions,
+    isLoading,
+    error,
+    hasError: error !== null,
+    count: transactions.length,
+    hasTransactions: transactions.length > 0,
+    refetch: fetchTransactions,
+  };
 }

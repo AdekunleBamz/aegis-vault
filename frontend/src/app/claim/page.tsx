@@ -1,5 +1,6 @@
 import { ClaimFlow } from '@/components/flows/claim-flow';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import Link from 'next/link';
 
 export default function ClaimPage() {
   return (
@@ -69,12 +70,12 @@ export default function ClaimPage() {
 
           {/* Rewards History Link */}
           <div className="mt-4 text-center">
-            <a href="/history" className="text-purple-400 hover:text-purple-300 text-sm inline-flex items-center gap-1 transition-colors">
+            <Link href="/history" className="text-purple-400 hover:text-purple-300 text-sm inline-flex items-center gap-1 transition-colors">
               View Rewards History
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

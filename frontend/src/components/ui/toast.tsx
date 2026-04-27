@@ -34,7 +34,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     const newToast = { ...toast, id };
     setToasts((prev) => [...prev, newToast]);
 
-    const duration = toast.duration ?? 5000;
+    const duration = typeof toast.duration === 'number' && toast.duration > 0 ? toast.duration : 5000;
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, duration);
@@ -156,7 +156,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
 
   return (
     <div
-      className={`${style.bg} ${style.border} border text-white rounded-xl shadow-2xl 
+      className={`${style.bg} ${style.border} border text-white rounded-xl shadow-2xl
         min-w-[320px] overflow-hidden backdrop-blur-sm
         transform transition-all duration-200 ease-out
         ${isExiting ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100 animate-slide-in'}`}
@@ -195,7 +195,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
       </div>
       {/* Progress bar */}
       <div className="h-1 bg-black/20">
-        <div 
+        <div
           className="h-full bg-white/30 transition-all duration-100 ease-linear"
           style={{ width: `${progress}%` }}
         />

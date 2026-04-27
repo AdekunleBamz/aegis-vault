@@ -335,7 +335,7 @@ export function AccessibleIconButton({
       className={`
         ${sizeClasses[size]}
         flex items-center justify-center
-        bg-zinc-800 hover:bg-zinc-700 
+        bg-zinc-800 hover:bg-zinc-700
         border border-zinc-700 rounded-lg
         text-zinc-400 hover:text-zinc-200
         transition-colors

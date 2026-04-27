@@ -1,11 +1,12 @@
 /**
  * @file Validation utilities for Aegis Vault
- * 
+ *
  * Provides Zod schemas and validation functions for API requests,
  * form data, and blockchain data validation.
  */
 
 import { z } from 'zod'
+import { MICROSTX_PER_STX } from './constants'
 
 // ============================================================================
 // Base Schemas
@@ -27,7 +28,7 @@ export const microStxSchema = z.number().int().nonnegative()
 /**
  * Validates an STX amount string format.
  */
-export const stxAmountSchema = z.string().regex(
+export const stxAmountSchema = z.string().trim().regex(
   /^\d+(\.\d{1,6})?$/,
   'Invalid STX amount format'
 )
@@ -211,6 +212,23 @@ export const paginationSchema = z.object({
 
 export type Pagination = z.infer<typeof paginationSchema>
 
+/**
+ * Schema for validating lock period values (days).
+ * Accepts only the three supported lock durations: 3, 7, or 30 days.
+ */
+export const lockPeriodDaysSchema = z.union([
+  z.literal(3),
+  z.literal(7),
+  z.literal(30),
+])
+
+export type LockPeriodDays = z.infer<typeof lockPeriodDaysSchema>
+
+/**
+ * Schema for a positive integer (e.g. stake IDs, block counts).
+ */
+export const positiveIntSchema = z.number().int().positive()
+
 // ============================================================================
 // Validation Helpers
 // ============================================================================
@@ -230,7 +248,7 @@ export class ValidationError extends Error {
 
 /**
  * Validates data against a schema, throwing on failure.
- * 
+ *
  * @param schema - The Zod schema to validate against
  * @param data - The data to validate
  * @returns The validated and typed data
@@ -241,7 +259,7 @@ export function validate<T>(
   data: unknown
 ): T {
   const result = schema.safeParse(data)
-  
+
   if (!result.success) {
     const issues = result.error.issues
     const message = issues
@@ -249,13 +267,13 @@ export function validate<T>(
       .join('; ')
     throw new ValidationError(`Validation failed: ${message}`, issues)
   }
-  
+
   return result.data
 }
 
 /**
  * Safe validation that returns a result instead of throwing.
- * 
+ *
  * @param schema - The Zod schema to validate against
  * @param data - The data to validate
  * @returns Success with data or failure with ZodError
@@ -265,68 +283,96 @@ export function safeValidate<T>(
   data: unknown
 ): { success: true; data: T } | { success: false; error: z.ZodError } {
   const result = schema.safeParse(data)
-  
+
   if (result.success) {
     return { success: true, data: result.data }
   }
-  
+
   return { success: false, error: result.error }
 }
 
 /**
  * Checks if a string is a valid Stacks address.
- * 
+ *
  * @param address - The address string to validate
  * @returns True if the address is valid
  */
 export function isValidStacksAddress(address: string): boolean {
-  return stacksAddressSchema.safeParse(address).success
+  const normalized = typeof address === 'string' ? address.trim() : ''
+  return stacksAddressSchema.safeParse(normalized).success
 }
 
 /**
  * Checks if a string is a valid transaction ID.
- * 
+ *
  * @param txId - The transaction ID string to validate
  * @returns True if the transaction ID is valid
  */
 export function isValidTxId(txId: string): boolean {
-  return txIdSchema.safeParse(txId).success
+  const normalized = typeof txId === 'string' ? txId.trim() : ''
+  return txIdSchema.safeParse(normalized).success
 }
 
 /**
  * Checks if a string is a valid STX amount.
- * 
+ *
  * @param amount - The amount string to validate
  * @returns True if the amount is valid
  */
 export function isValidStxAmount(amount: string): boolean {
-  return stxAmountSchema.safeParse(amount).success
+  const normalized = typeof amount === 'string' ? amount.trim() : ''
+  return stxAmountSchema.safeParse(normalized).success
 }
 
 /**
  * Converts micro-STX to STX with validation.
- * 
+ *
  * @param microStx - Amount in micro-STX
  * @returns Amount in STX
  */
 export function microStxToStx(microStx: number): number {
   const validated = microStxSchema.parse(microStx)
-  return validated / 1_000_000
+  return validated / MICROSTX_PER_STX
 }
 
 /**
  * Converts STX to micro-STX with validation.
- * 
+ *
  * @param stx - Amount in STX (number or string)
  * @returns Amount in micro-STX
  * @throws Error if the amount is invalid
  */
 export function stxToMicroStx(stx: number | string): number {
-  const amount = typeof stx === 'string' ? parseFloat(stx) : stx
-  if (isNaN(amount) || amount < 0) {
+  const normalizedInput = typeof stx === 'string' ? stx.trim() : stx
+
+  if (typeof normalizedInput === 'string') {
+    if (!/^\d+(\.\d{1,6})?$/.test(normalizedInput)) {
+      throw new Error('Invalid STX amount')
+    }
+  }
+
+  const amount = typeof normalizedInput === 'string'
+    ? Number(normalizedInput)
+    : normalizedInput
+
+  if (!Number.isFinite(amount) || amount < 0) {
     throw new Error('Invalid STX amount')
   }
-  return Math.floor(amount * 1_000_000)
+
+  if (Object.is(amount, -0)) {
+    return 0
+  }
+
+  const microStx = amount * MICROSTX_PER_STX
+  if (!Number.isFinite(microStx)) {
+    throw new Error('Invalid STX amount')
+  }
+
+  if (Math.abs(microStx - Math.round(microStx)) > 0.000001) {
+    throw new Error('STX amount cannot have more than 6 decimal places')
+  }
+
+  return Math.round(microStx)
 }
 
 // ============================================================================
@@ -372,6 +418,48 @@ const validation = {
   isValidStxAmount,
   microStxToStx,
   stxToMicroStx,
+}
+
+/**
+ * Returns the first ZodIssue message for the given field path, or undefined.
+ *
+ * @param error - A ZodError instance
+ * @param field - The field path to look up (e.g. "amount")
+ * @returns The first error message for that field, or undefined
+ */
+export function getFieldError(error: import('zod').ZodError, field: string): string | undefined {
+  return error.issues.find((issue) => issue.path.join('.') === field)?.message;
+}
+
+/**
+ * Returns true if the lock period (in days) is within the allowed range [3, 30].
+ *
+ * @param days - The lock period to validate
+ * @returns True if within bounds
+ */
+export function isValidLockPeriod(days: number): boolean {
+  return Number.isInteger(days) && days >= 3 && days <= 30;
+}
+
+/**
+ * Returns true if the STX amount (in whole STX) meets the minimum stake threshold.
+ *
+ * @param amount - The amount to check in whole STX (not microSTX)
+ * @param minStx - Minimum valid amount in STX (default 0.01)
+ * @returns True if the amount is a finite positive number at or above the minimum
+ */
+export function isValidStakeAmountSTX(amount: number, minStx = 0.01): boolean {
+  return Number.isFinite(amount) && amount >= minStx;
+}
+
+/**
+ * Returns true if the value is a non-empty string after trimming.
+ *
+ * @param value - The value to test
+ * @returns True if `value` is a non-empty string
+ */
+export function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
 }
 
 export default validation

@@ -16,9 +16,9 @@
 (define-constant ERR-MAX-STAKES-REACHED (err u4005))
 
 ;; Staking parameters
-(define-constant MIN-STAKE u10000)           ;; 0.01 STX minimum
-(define-constant MAX-STAKES-PER-USER u20)    ;; Max 20 concurrent stakes
-(define-constant BLOCKS-PER-DAY u144)        ;; ~144 blocks per day
+(define-constant MIN-STAKE u10000)           ;; 0.01 STX minimum stake to participate
+(define-constant MAX-STAKES-PER-USER u20)    ;; Max 20 concurrent stakes per wallet
+(define-constant BLOCKS-PER-DAY u144)        ;; ~144 blocks per day on Stacks
 
 ;; Lock periods (in days, converted to blocks on-chain)
 (define-constant LOCK-3-DAYS u3)
@@ -27,7 +27,7 @@
 
 ;; Bonus multipliers (basis points, 10000 = 1x)
 (define-constant BONUS-3-DAYS u10000)        ;; 1.0x
-(define-constant BONUS-7-DAYS u12000)        ;; 1.2x  
+(define-constant BONUS-7-DAYS u12000)        ;; 1.2x
 (define-constant BONUS-30-DAYS u15000)       ;; 1.5x
 
 ;; ============================================
@@ -46,7 +46,7 @@
 ;; ============================================
 
 ;; Individual stake positions
-(define-map stakes 
+(define-map stakes
   { staker: principal, stake-id: uint }
   {
     amount: uint,
@@ -73,7 +73,7 @@
 ;; ============================================
 
 (define-private (is-authorized)
-  (or 
+  (or
     (is-eq tx-sender CONTRACT-OWNER)
     (default-to false (map-get? authorized-contracts contract-caller))
   )
@@ -136,9 +136,9 @@
 )
 
 (define-private (is-valid-lock-period (lock-period uint))
-  (or 
+  (or
     (is-eq lock-period LOCK-3-DAYS)
-    (or 
+    (or
       (is-eq lock-period LOCK-7-DAYS)
       (is-eq lock-period LOCK-30-DAYS)
     )
@@ -164,10 +164,10 @@
     (asserts! (>= amount MIN-STAKE) ERR-INVALID-AMOUNT)
     (asserts! (is-valid-lock-period lock-period) ERR-INVALID-LOCK-PERIOD)
     (asserts! (< (len current-stakes) MAX-STAKES-PER-USER) ERR-MAX-STAKES-REACHED)
-    
+
     ;; Transfer STX to this contract
     (try! (stx-transfer? amount staker (as-contract tx-sender)))
-    
+
     ;; Create stake record
     (map-set stakes
       { staker: staker, stake-id: new-stake-id }
@@ -181,24 +181,24 @@
         total-claimed: u0
       }
     )
-    
+
     ;; Update user's stake list
-    (map-set user-stake-ids staker 
+    (map-set user-stake-ids staker
       (unwrap! (as-max-len? (append current-stakes new-stake-id) u20) ERR-MAX-STAKES-REACHED))
-    
+
     ;; Update totals
-    (map-set user-total-staked staker 
+    (map-set user-total-staked staker
       (+ (default-to u0 (map-get? user-total-staked staker)) amount))
     (var-set total-staked (+ (var-get total-staked) amount))
     (var-set stake-counter new-stake-id)
-    
+
     ;; Increment stakers if first stake
     (if (is-eq (len current-stakes) u0)
       (var-set total-stakers (+ (var-get total-stakers) u1))
       true
     )
-    
-    (print { 
+
+    (print {
       event: "stake",
       staker: staker,
       stake-id: new-stake-id,
@@ -207,7 +207,7 @@
       lock-blocks: lock-blocks,
       unlock-block: (+ block-height lock-blocks)
     })
-    
+
     (ok new-stake-id)
   )
 )
@@ -220,18 +220,18 @@
     )
     (asserts! (is-authorized) ERR-NOT-AUTHORIZED)
     (asserts! (get is-active stake-data) ERR-INVALID-AMOUNT)
-    
+
     ;; Deactivate stake
     (map-set stakes
       { staker: staker, stake-id: stake-id }
       (merge stake-data { is-active: false })
     )
-    
+
     ;; Update totals
-    (map-set user-total-staked staker 
+    (map-set user-total-staked staker
       (- (default-to u0 (map-get? user-total-staked staker)) amount))
     (var-set total-staked (- (var-get total-staked) amount))
-    
+
     (ok true)
   )
 )
@@ -243,12 +243,12 @@
       (stake-data (unwrap! (map-get? stakes { staker: staker, stake-id: stake-id }) ERR-INVALID-AMOUNT))
     )
     (asserts! (is-authorized) ERR-NOT-AUTHORIZED)
-    
+
     (map-set stakes
       { staker: staker, stake-id: stake-id }
       (merge stake-data { total-claimed: (+ (get total-claimed stake-data) claimed-amount) })
     )
-    
+
     (ok true)
   )
 )

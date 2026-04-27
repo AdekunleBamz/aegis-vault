@@ -45,7 +45,7 @@ export function ProtocolStats() {
   const statItems = [
     {
       label: 'Protocol TVL',
-      value: formatSTX(stats?.totalStaked || BigInt(0)),
+      value: formatSTX(stats?.totalStaked ?? 0n),
       unit: 'STX',
       icon: ShieldCheck,
       color: 'text-aegis-blue',
@@ -61,7 +61,7 @@ export function ProtocolStats() {
     },
     {
       label: 'Reward Rate',
-      value: formatSTX(stats?.rewardRate || BigInt(0)),
+      value: formatSTX(stats?.rewardRate ?? 0n),
       unit: 'AGS/blk',
       icon: Zap,
       color: 'text-emerald-500',

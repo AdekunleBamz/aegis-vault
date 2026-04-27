@@ -21,8 +21,8 @@
 
 ;; Reward parameters
 (define-constant BLOCKS-PER-DAY u144)
-(define-constant BASE-REWARD-PER-DAY u5000000)  ;; 5 AGS tokens (6 decimals)
-(define-constant CLAIM-VALIDITY-BLOCKS u1008)   ;; Claims valid for ~7 days
+(define-constant BASE-REWARD-PER-DAY u5000000)  ;; 5 AGS tokens per day (6 decimals: 1 AGS = u1000000)
+(define-constant CLAIM-VALIDITY-BLOCKS u1008)   ;; Claims valid for ~7 days (7 * 144 blocks)
 
 ;; ============================================
 ;; DATA VARIABLES
@@ -44,7 +44,7 @@
 ;; ============================================
 
 ;; Track claimed amounts per stake to prevent double claims
-(define-map claimed-rewards 
+(define-map claimed-rewards
   { staker: principal, stake-id: uint, merkle-root: (buff 32) }
   uint
 )
@@ -108,8 +108,8 @@
 
 ;; Verify a merkle proof for a claim
 ;; Leaf = hash(staker, stake-id, amount)
-(define-private (verify-merkle-proof 
-  (leaf (buff 32)) 
+(define-private (verify-merkle-proof
+  (leaf (buff 32))
   (proof (list 10 (buff 32)))
   (root (buff 32))
 )
@@ -129,8 +129,8 @@
 ;; Claim rewards using merkle proof (INSTANT - no on-chain calculation)
 ;; The leaf hash is computed off-chain and passed in for verification
 ;; Leaf = keccak256(staker, stake-id, claimable-amount)
-(define-public (claim-rewards-merkle 
-  (stake-id uint) 
+(define-public (claim-rewards-merkle
+  (stake-id uint)
   (claimable-amount uint)
   (leaf-hash (buff 32))
   (proof (list 10 (buff 32)))
@@ -146,15 +146,15 @@
     (asserts! (not (var-get contract-paused)) ERR-CONTRACT-PAUSED)
     (asserts! (> to-claim u0) ERR-ZERO-AMOUNT)
     (asserts! (verify-merkle-proof leaf-hash proof current-root) ERR-INVALID-PROOF)
-    
+
     ;; Check stake exists and is active
     (asserts! (is-some (contract-call? .aegis-staking-v2-15 get-stake staker stake-id)) ERR-NO-STAKE-FOUND)
-    
+
     ;; Mint AGS tokens to staker
     (try! (contract-call? .aegis-token-v2-15 mint staker to-claim))
-    
+
     ;; Update claimed tracking
-    (map-set claimed-rewards 
+    (map-set claimed-rewards
       { staker: staker, stake-id: stake-id, merkle-root: current-root }
       claimable-amount
     )
@@ -162,22 +162,22 @@
       { staker: staker, stake-id: stake-id }
       (+ (default-to u0 (map-get? total-claimed-per-stake { staker: staker, stake-id: stake-id })) to-claim)
     )
-    
+
     ;; Update staking contract
     (try! (contract-call? .aegis-staking-v2-15 update-claimed staker stake-id to-claim))
-    
+
     ;; Update stats
     (var-set total-rewards-distributed (+ (var-get total-rewards-distributed) to-claim))
     (var-set total-claims (+ (var-get total-claims) u1))
-    
-    (print { 
+
+    (print {
       event: "claim-rewards",
       method: "merkle",
       staker: staker,
       stake-id: stake-id,
       amount: to-claim
     })
-    
+
     (ok to-claim)
   )
 )
@@ -194,25 +194,25 @@
     (asserts! (not (var-get contract-paused)) ERR-CONTRACT-PAUSED)
     (asserts! (get is-active stake-data) ERR-NO-STAKE-FOUND)
     (asserts! (> pending u0) ERR-ZERO-AMOUNT)
-    
+
     ;; Mint AGS tokens
     (try! (contract-call? .aegis-token-v2-15 mint staker pending))
-    
+
     ;; Update claimed in staking contract
     (try! (contract-call? .aegis-staking-v2-15 update-claimed staker stake-id pending))
-    
+
     ;; Update stats
     (var-set total-rewards-distributed (+ (var-get total-rewards-distributed) pending))
     (var-set total-claims (+ (var-get total-claims) u1))
-    
-    (print { 
+
+    (print {
       event: "claim-rewards",
       method: "direct",
       staker: staker,
       stake-id: stake-id,
       amount: pending
     })
-    
+
     (ok pending)
   )
 )
@@ -283,7 +283,7 @@
 
 ;; Verify a claim proof with pre-computed leaf hash
 ;; The leaf hash is computed off-chain: sha256(staker || stake-id || amount)
-(define-read-only (verify-claim-proof 
+(define-read-only (verify-claim-proof
   (leaf-hash (buff 32))
   (proof (list 10 (buff 32)))
 )

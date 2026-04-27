@@ -1,6 +1,6 @@
 /**
  * @file Application services for Aegis Vault
- * 
+ *
  * Provides core services for storage, caching, event emission,
  * logging, retry logic, and utility functions like debounce/throttle.
  */
@@ -162,6 +162,13 @@ export const cache = {
   },
 
   /**
+   * Returns the number of entries currently in the cache.
+   */
+  size(): number {
+    return memoryCache.size;
+  },
+
+  /**
    * Gets or fetches with caching
    */
   async getOrFetch<T>(
@@ -171,7 +178,7 @@ export const cache = {
   ): Promise<T> {
     const cached = this.get<T>(key);
     if (cached !== null) return cached;
-    
+
     const data = await fetcher();
     this.set(key, data, ttlMs);
     return data;
@@ -194,7 +201,7 @@ class EventEmitter {
       this.events.set(event, new Set());
     }
     this.events.get(event)!.add(callback as EventCallback);
-    
+
     // Return unsubscribe function
     return () => this.off(event, callback as EventCallback);
   }
@@ -357,7 +364,7 @@ interface RetryOptions {
 
 /**
  * Retries an async function with configurable backoff.
- * 
+ *
  * @param fn - The async function to retry
  * @param options - Retry configuration options
  * @returns The resolved value from the function
@@ -380,7 +387,7 @@ export async function retry<T>(
       return await fn();
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
-      
+
       if (attempt === maxAttempts) {
         throw lastError;
       }
@@ -400,7 +407,7 @@ export async function retry<T>(
 
 /**
  * Debounces a function by delaying its execution.
- * 
+ *
  * @param fn - The function to debounce
  * @param delayMs - Delay in milliseconds
  * @returns Debounced function
@@ -419,7 +426,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
 
 /**
  * Throttles a function to limit execution frequency.
- * 
+ *
  * @param fn - The function to throttle
  * @param limitMs - Minimum time between executions in milliseconds
  * @returns Throttled function
