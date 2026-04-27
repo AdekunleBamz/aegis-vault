@@ -59,7 +59,7 @@ export function Footer() {
       { label: 'Vault Stats', href: '/stats' },
     ],
     resources: [
-      { label: 'Partner Portal', href: '#' },
+      { label: 'Status Page', href: 'https://status.example.com', external: true },
       { label: 'Documentation', href: '#' },
       { label: 'Analytics Hub', href: '/analytics' },
       { label: 'Security Portal', href: '/security' },
