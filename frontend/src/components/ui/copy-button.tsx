@@ -41,7 +41,7 @@ export function CopyButton({
       type="button"
       onClick={handleCopy}
       className={`
-        inline-flex items-center gap-2 px-3 py-1.5
+        inline-flex items-center gap-2 px-3 py-1.5 min-h-10
         text-sm text-gray-400 hover:text-white
         bg-gray-800 hover:bg-gray-700
         rounded-lg transition-all
