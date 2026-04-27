@@ -57,6 +57,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.625;
     background-image:
       radial-gradient(circle at top, hsl(var(--aegis-blue) / 0.14), transparent 34%),
       radial-gradient(circle at bottom right, hsl(var(--aegis-purple) / 0.12), transparent 28%);
