@@ -27,6 +27,7 @@ export const CopyButton = React.forwardRef<HTMLButtonElement, CopyButtonProps>(
     return (
       <button
         ref={ref}
+        type={props.type ?? 'button'}
         onClick={handleCopy}
         className={`
           inline-flex items-center gap-2 px-3 py-2 rounded-lg

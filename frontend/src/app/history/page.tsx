@@ -10,8 +10,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { LoadingSkeleton } from '@/components/ui/loading';
-import { Tabs } from '@/components/ui/tabs';
-import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { HistoryFilters } from '@/components/widgets';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy } from 'lucide-react';
 
 // Action configuration
 const ACTION_CONFIG: Record<string, {
@@ -22,41 +23,25 @@ const ACTION_CONFIG: Record<string, {
 }> = {
   stake: {
     name: 'Stake',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-      </svg>
-    ),
+    icon: <ArrowUpRight className="w-5 h-5" />,
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
   },
   'request-withdrawal': {
     name: 'Withdrawal Request',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+    icon: <ArrowDownLeft className="w-5 h-5" />,
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/20',
   },
   'complete-withdrawal': {
     name: 'Withdrawal Complete',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-      </svg>
-    ),
+    icon: <RefreshCw className="w-5 h-5" />,
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
   },
   'claim-rewards': {
     name: 'Claim Rewards',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+    icon: <Trophy className="w-5 h-5" />,
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/20',
   },
@@ -64,11 +49,7 @@ const ACTION_CONFIG: Record<string, {
 
 const defaultAction = {
   name: 'Transaction',
-  icon: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-    </svg>
-  ),
+  icon: <Search className="w-5 h-5" />,
   color: 'text-gray-400',
   bgColor: 'bg-gray-500/20',
 };
@@ -77,6 +58,15 @@ export default function HistoryPage() {
   const { address, isConnected, connect } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 50);
   const [filter, setFilter] = useState<'all' | 'stake' | 'withdraw' | 'claim'>('all');
+
+  const hasActiveFilters = filter !== 'all' || searchQuery !== '' || statusFilter !== 'all';
+
+  const resetFilters = () => {
+    setFilter('all');
+    setSearchQuery('');
+    setStatusFilter('all');
+    setSortBy('date-desc');
+  };
 
   const getActionConfig = (functionName: string) => {
     return ACTION_CONFIG[functionName] || defaultAction;
@@ -169,21 +159,44 @@ export default function HistoryPage() {
 
           {/* Filter Tabs */}
           {!isLoading && transactions.length > 0 && (
-            <div className="flex gap-2 mb-6">
-              {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                    ${filter === f
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
-                    }`}
-                >
-                  {f.charAt(0).toUpperCase() + f.slice(1)}
-                </button>
-              ))}
-            </div>
+            <>
+              <div className="flex items-center justify-between mb-4 gap-4">
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                  {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setFilter(f)}
+                      className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all
+                        ${filter === f
+                          ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
+                          : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
+                        }`}
+                    >
+                      {f.charAt(0).toUpperCase() + f.slice(1)}
+                    </button>
+                  ))}
+                </div>
+
+                {hasActiveFilters && (
+                  <button
+                    onClick={resetFilters}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-lg transition-all border border-red-500/10 whitespace-nowrap"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                    Clear Filters
+                  </button>
+                )}
+              </div>
+
+              <HistoryFilters
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                statusFilter={statusFilter}
+                setStatusFilter={setStatusFilter}
+              />
+            </>
           )}
 
           <Card>
@@ -200,25 +213,25 @@ export default function HistoryPage() {
                   </div>
                 ))}
               </div>
-            ) : filteredTransactions.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="w-16 h-16 bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">No Transactions Found</h3>
-                <p className="text-gray-400 mb-6">
-                  {filter === 'all'
-                    ? "You haven&apos;t made any transactions yet. Start by staking some STX!"
-                    : `No ${filter} transactions found.`
-                  }
+            ) : processedTransactions.length === 0 ? (
+              <div className="text-center py-20 px-4">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="w-20 h-20 bg-gray-950 rounded-3xl flex items-center justify-center mx-auto mb-6 border border-white/5 shadow-inner"
+                >
+                  <Search className="w-10 h-10 text-gray-700" />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-white mb-2 italic">No Matches Found</h3>
+                <p className="text-gray-500 max-w-xs mx-auto mb-8 text-sm leading-relaxed">
+                  We couldn't find any transactions matching your current filters. Try broadening your search or resetting the filters below.
                 </p>
-                {filter === 'all' && (
-                  <Link href="/stake">
-                    <Button>Start Staking</Button>
-                  </Link>
-                )}
+                <div className="flex justify-center gap-4">
+                  <Button onClick={resetFilters} variant="secondary">Reset Filters</Button>
+                  {filter === 'all' && searchQuery === '' && (
+                    <Button as="a" href="/stake">Start Staking</Button>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="divide-y divide-gray-700/50">
@@ -253,23 +266,37 @@ export default function HistoryPage() {
                         </div>
                       </div>
 
-                      {/* Status & Time */}
-                      <div className="text-right flex-shrink-0">
-                        <Badge variant={getStatusVariant(tx.tx_status)} size="sm">
-                          {tx.tx_status === 'success' && (
-                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          )}
-                          {tx.tx_status}
-                        </Badge>
-                        <p className="text-gray-500 text-sm mt-1">
-                          {formatRelativeTime(tx.burn_block_time)}
-                        </p>
-                      </div>
-                    </a>
-                  );
-                })}
+                        {/* Details */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p className="text-white font-bold group-hover:text-blue-400 transition-colors uppercase text-sm tracking-tight">{action.name}</p>
+                            <ExternalLink className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                            <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded italic">{truncateAddress(tx.tx_id)}</span>
+                            <span>•</span>
+                            <span>Block #{tx.block_height?.toLocaleString()}</span>
+                          </div>
+                        </div>
+
+                        {/* Status & Time */}
+                        <div className="text-right flex-shrink-0">
+                          <Badge variant={getStatusVariant(tx.tx_status)} size="sm" className="font-bold">
+                            {tx.tx_status === 'success' && (
+                              <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                            {tx.tx_status}
+                          </Badge>
+                          <p className="text-gray-500 text-xs mt-1.5 font-medium">
+                            {formatRelativeTime(tx.burn_block_time)}
+                          </p>
+                        </div>
+                      </motion.a>
+                    );
+                  })}
+                </AnimatePresence>
               </div>
             )}
           </Card>
