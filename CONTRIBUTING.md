@@ -29,4 +29,4 @@ First off, thanks for taking the time to contribute!
 ## Style Guidelines
 - Use 2 spaces for indentation.
 - Follow Prettier formatting.
-- Add JSDoc comments to new functions.
+- Add concise comments only where logic is non-obvious.
