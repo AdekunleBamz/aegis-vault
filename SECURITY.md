@@ -19,3 +19,5 @@ We take the security of Aegis Vault seriously. If you believe you've found a sec
 4. We will acknowledge your report within 48 hours and provide a timeline for a fix.
 
 Thank you for helping keep Aegis Vault secure.
+
+Maintain this contact address as part of each release-doc review cycle.

@@ -80,6 +80,7 @@ export function useBalances(address: string): UseBalancesReturn {
     agsBalance,
     hasStxBalance: stxBalance > 0n,
     hasAgsBalance: agsBalance > 0n,
+    hasAnyBalance: stxBalance > 0n || agsBalance > 0n,
     isLoading,
     error,
     refetch: fetchBalances,
