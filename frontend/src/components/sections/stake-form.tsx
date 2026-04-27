@@ -135,9 +135,8 @@ export function StakeForm() {
                 Deposit STX to earn AGS governance tokens.
               </p>
             </div>
-            <div className="w-16 h-16 bg-muted rounded-[28px] flex items-center justify-center group-hover:rotate-6 transition-transform">
-              <Plus className="w-8 h-8 text-aegis-blue" />
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-background rounded-full border border-border flex items-center justify-center text-[10px] font-black text-muted-foreground hover:text-foreground cursor-help" title="How it works">?</div>
+            <div className="w-16 h-16 bg-muted rounded-[28px] flex items-center justify-center group-hover:rotate-6 transition-transform" aria-hidden="true">
+              <Plus className="w-8 h-8 text-aegis-blue" aria-hidden="true" focusable="false" />
             </div>
           </div>
 
@@ -162,13 +161,7 @@ export function StakeForm() {
               </button>
             </motion.div>
           ) : (
-            <form onSubmit={handleStake} className="space-y-8">
-                <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 flex items-start gap-3">
-                  <AlertCircle className="w-4 h-4 text-amber-500 mt-0.5" />
-                  <p className="text-[11px] leading-relaxed text-amber-500/80">
-                    <span className="font-bold uppercase tracking-widest break-all">Risk Warning:</span> Smart contract staking involves inherent risks. Please ensure you understand the protocol mechanism before proceeding.
-                  </p>
-                </div>
+            <form onSubmit={handleStake} className="space-y-8" aria-label="Stake STX in Aegis Vault">
               <div className="grid gap-4 rounded-[32px] border border-border/30 bg-muted/15 p-5 md:grid-cols-2">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
@@ -207,7 +200,7 @@ export function StakeForm() {
                     type="button"
                     onClick={() => setSuggestedAmount(balanceSTX)}
                     className="self-start rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan"
-                    title="Fill with your entire available STX balance minus gas reserve"
+                    aria-label={`Use maximum balance: ${balanceSTX} STX`}
                   >
                     Use Max Balance
                   </button>
@@ -222,7 +215,10 @@ export function StakeForm() {
                     onChange={handleAmountChange}
                     placeholder="0.00"
                     aria-invalid={!!hasError}
-                    aria-describedby={hasError ? "stake-error" : undefined}
+                    aria-describedby={cn(
+                      "stake-amount-description",
+                      hasError && "stake-error"
+                    )}
                     className={cn(
                       "mt-4 w-full bg-muted/20 border-2 rounded-[32px] px-8 py-7 text-4xl font-black focus:outline-none transition-all duration-500 placeholder:text-muted-foreground/20",
                       hasError
@@ -323,8 +319,7 @@ export function StakeForm() {
                     <TrendingUp className="w-4 h-4 text-emerald-500 group-hover/stat:rotate-12 transition-transform" />
                   </div>
                   <div>
-                    <div className="text-2xl font-black text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}
-                      aria-live="polite">
+                    <div className="text-2xl font-black tabular-nums text-emerald-500" aria-label={`${numAmount > 0 ? monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0.00"} AGS tokens per month`}>
                       {numAmount > 0 ? `+${monthlyAGS.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : "0.00"}
                     </div>
                     <div className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest mt-1">Est. AGS / Month</div>
@@ -339,7 +334,7 @@ export function StakeForm() {
                 <div className="p-6 rounded-[32px] bg-muted/20 border border-border/30 flex flex-col justify-between group/stat hover:bg-muted/30 transition-all" aria-labelledby="tier-label">
                   <div className="flex items-center justify-between mb-4">
                     <span id="tier-label" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Reward Tier</span>
-                    <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" />
+                    <LayoutGrid className="w-4 h-4 text-aegis-blue group-hover/stat:rotate-12 transition-transform" aria-hidden="true" />
                   </div>
                   <div>
                     <div className="text-2xl font-black flex items-center gap-2" style={{ color: TIERS[tier]?.color }} aria-label={`Current Tier: ${TIERS[tier]?.name}, ${apy} percent APY`}>
@@ -427,7 +422,7 @@ export function StakeForm() {
                   type="submit"
                   disabled={!canSubmit}
                   aria-label={isLoading ? "Processing transaction" : "Confirm staking deposit"}
-                  className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98]"
+                  className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     {isLoading ? (
@@ -456,12 +451,12 @@ export function StakeForm() {
                   <Lock className="w-3 h-3" />
                   24h Lock
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <Activity className="w-3 h-3" />
-                  Instant Rewards
+                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter" role="listitem" aria-label="Rewards status indicator">
+                  <Activity className="w-3 h-3" aria-hidden="true" />
+                  Live Rewards
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
-                  <ShieldCheck className="w-3 h-3" />
+                <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter" role="listitem" aria-label="Protocol verification indicator">
+                  <ShieldCheck className="w-3 h-3" aria-hidden="true" />
                   v2 Verified
                 </div>
               </div>

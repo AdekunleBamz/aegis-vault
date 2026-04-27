@@ -24,13 +24,20 @@ interface UseToastReturn {
 
 export function useToast(): UseToastReturn {
     const [toasts, setToasts] = useState<Toast[]>([]);
+    const getToastId = useCallback(
+        () =>
+            typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+                ? crypto.randomUUID()
+                : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+        []
+    );
 
     const removeToast = useCallback((id: string) => {
         setToasts((prev) => prev.filter((t) => t.id !== id));
     }, []);
 
     const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
-        const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+        const id = getToastId();
         const newToast = { ...toast, id };
 
         setToasts((prev) => [...prev, newToast]);
@@ -43,7 +50,7 @@ export function useToast(): UseToastReturn {
         }
 
         return id;
-    }, [removeToast]);
+    }, [getToastId, removeToast]);
 
     const clearAll = useCallback(() => {
         setToasts([]);
