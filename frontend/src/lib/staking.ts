@@ -19,6 +19,9 @@ export interface StakerInfo {
   tier: number;
 }
 
+/**
+ * Global protocol statistics across all stakers
+ */
 export interface PoolStats {
   totalStaked: bigint;
   totalStakers: number;
@@ -28,6 +31,8 @@ export interface PoolStats {
 
 /**
  * Get staker information from the contract
+ * @param address Stacks address to query
+ * @returns Staker data or null if not found/error
  */
 export async function getStakerInfo(address: string): Promise<StakerInfo | null> {
   try {
@@ -105,6 +110,9 @@ export function calculateAPY(stakeAmount: bigint, tier: number): number {
 
 /**
  * Calculate estimated rewards for a period
+ * @param stakeAmount Amount of STX staked (microSTX)
+ * @param apy Current APY percentage (e.g., 12.5)
+ * @param blocks Number of blocks to calculate rewards for
  */
 export function calculateEstimatedRewards(
   stakeAmount: bigint,
@@ -134,36 +142,6 @@ export function determineTier(stakeAmount: bigint): number {
 /**
  * Get tier object by its name (e.g. 'Bronze')
  */
-export function getTierByName(name: string): (typeof TIERS)[number] {
+export function getTierByName(name: string) {
   return TIERS.find(t => t.name === name) || TIERS[0];
-}
-
-/**
- * Convert microSTX stake amount to a human-readable STX value.
- *
- * @param microStx - Amount in microSTX
- * @returns Amount in STX as a floating-point number
- */
-export function stakeAmountToSTX(microStx: bigint): number {
-  return Number(microStx) / 1e6;
-}
-
-/**
- * Returns true if the staker has an active stake (amount > 0).
- *
- * @param info - StakerInfo from getStakerInfo
- * @returns True when the staker currently has funds staked
- */
-export function isActiveStaker(info: StakerInfo | null): boolean {
-  return info !== null && info.amountStaked > 0n;
-}
-
-/**
- * Returns true if the staker has pending rewards to claim.
- *
- * @param info - StakerInfo from getStakerInfo
- * @returns True when pendingRewards is greater than zero
- */
-export function hasClaimableRewards(info: StakerInfo | null): boolean {
-  return info !== null && info.pendingRewards > 0n;
 }

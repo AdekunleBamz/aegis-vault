@@ -19,6 +19,10 @@ export function CopyButton({
   const resetTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleCopy = async () => {
+    if (typeof navigator === 'undefined' || !navigator.clipboard?.writeText) {
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
