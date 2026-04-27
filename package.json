@@ -31,7 +31,10 @@
     "staking",
     "defi"
   ],
-  "author": "AdekunleBamz",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/AdekunleBamz/aegis-vault/issues"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
