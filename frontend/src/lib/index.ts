@@ -108,6 +108,8 @@ export {
 export {
     formatSTX,
     formatAGS,
+    safeFormatSTX,
+    safeFormatAGS,
     toMicroSTX,
     formatPercent,
     formatBlockHeight,

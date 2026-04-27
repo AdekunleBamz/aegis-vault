@@ -19,96 +19,15 @@ export function cn(...inputs: ClassValue[]): string {
 }
 
 /**
- * Checks if a Stacks address is a mainnet address.
- * Mainnet addresses start with 'SP'.
- *
- * @param address - The Stacks address to check
- * @returns True if the address is a mainnet address
+ * Returns a standardized accessibility metadata object for UI components.
+ * 
+ * @param name - The human-readable name of the component
+ * @param description - A brief description of the component's purpose
+ * @returns An object with aria-label and role properties
  */
-export function isMainnetAddress(address: string): boolean {
-  const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
-  return normalized.startsWith('SP');
-}
-
-/**
- * Splits a full contract ID into its address and name components.
- *
- * @param contractId - Full contract ID in format "address.contract-name"
- * @returns Tuple of [address, contractName]
- */
-export function splitContractId(contractId: string): [string, string] {
-  const [address = '', ...nameParts] = contractId.split('.');
-  return [address, nameParts.join('.')];
-}
-
-/**
- * Checks if a Stacks address is a testnet address.
- * Testnet addresses start with 'ST'.
- *
- * @param address - The Stacks address to check
- * @returns True if the address is a testnet address
- */
-export function isTestnetAddress(address: string): boolean {
-  const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
-  return normalized.startsWith('ST');
-}
-
-/**
- * Validates that a string is a well-formed contract ID (address.name).
- *
- * @param contractId - The string to validate
- * @returns True if the string contains exactly one dot separating two non-empty parts
- */
-export function isValidContractId(contractId: string): boolean {
-  if (typeof contractId !== 'string') return false;
-  const parts = contractId.split('.');
-  return parts.length === 2 && parts[0].length > 0 && parts[1].length > 0;
-}
-
-/**
- * Checks if a Stacks address is a devnet/mocknet address.
- * Devnet addresses start with 'SN'.
- *
- * @param address - The Stacks address to check
- * @returns True if the address is a devnet address
- */
-export function isDevnetAddress(address: string): boolean {
-  const normalized = typeof address === 'string' ? address.trim().toUpperCase() : '';
-  return normalized.startsWith('SN');
-}
-
-/**
- * Returns true if the address is a valid Stacks address on any network.
- *
- * @param address - The Stacks address to check
- * @returns True for mainnet (SP), testnet (ST), or devnet (SN) addresses
- */
-export function isStacksAddress(address: string): boolean {
-  return isMainnetAddress(address) || isTestnetAddress(address) || isDevnetAddress(address);
-}
-
-/**
- * Truncates a Stacks address for display, keeping leading and trailing chars.
- *
- * @param address - The address to truncate
- * @param startChars - Characters to keep at the start (default 6)
- * @param endChars - Characters to keep at the end (default 4)
- * @returns Truncated address string, e.g. "SP1234…5678"
- */
-export function truncateAddress(address: string, startChars = 6, endChars = 4): string {
-  if (typeof address !== 'string') return '';
-  const trimmed = address.trim();
-  if (trimmed.length <= startChars + endChars) return trimmed;
-  return `${trimmed.slice(0, startChars)}…${trimmed.slice(-endChars)}`;
-}
-
-/**
- * Returns true if the value is a finite positive number (or numeric string).
- *
- * @param amount - The value to check
- * @returns True if the value represents a valid positive amount
- */
-export function isValidAmount(amount: unknown): boolean {
-  const n = Number(amount);
-  return Number.isFinite(n) && n > 0;
+export function getComponentMetadata(name: string, description?: string) {
+  return {
+    'aria-label': description ? `${name}: ${description}` : name,
+    'role': 'region' as const,
+  };
 }

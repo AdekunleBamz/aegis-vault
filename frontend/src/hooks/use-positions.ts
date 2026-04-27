@@ -69,6 +69,7 @@ export function usePositions(address: string): UsePositionsReturn {
     isLoading,
     error,
     hasPosition: position !== null,
+    hasError: error !== null,
     refetch: fetchPositions,
   };
 }

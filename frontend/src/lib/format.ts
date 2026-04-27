@@ -10,24 +10,24 @@
 
 import { AVG_BLOCK_TIME_MINUTES, STX_DECIMALS, AGS_DECIMALS } from './constants';
 
+const STX_FORMATTER = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 6,
+});
+
+const AGS_FORMATTER = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 6,
+});
+
 /**
- * Format microSTX to STX with proper decimals.
- *
- * STX uses 6 decimal places (microSTX). This function converts
- * microSTX values to human-readable STX format.
- *
- * @param microStx - Amount in microSTX (1 STX = 1,000,000 microSTX)
- * @returns Formatted STX string with 2-6 decimal places
- * @example formatSTX(1000000) // "1.00"
- * @example formatSTX(1234567) // "1.234567"
+ * Format microSTX to STX with proper decimals
+ * @example formatSTX(1000000) -> "1.00"
  */
 export function formatSTX(microStx: string | number | bigint): string {
   const value = BigInt(microStx);
-  const stx = Number(value) / Math.pow(10, STX_DECIMALS);
-  return stx.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 6,
-  });
+  const stx = Number(value) / MICRO_STX_DENOMINATOR;
+  return STX_FORMATTER.format(stx);
 }
 
 /**
@@ -44,10 +44,7 @@ export function formatSTX(microStx: string | number | bigint): string {
 export function formatAGS(microAgs: string | number | bigint): string {
   const value = BigInt(microAgs);
   const ags = Number(value) / Math.pow(10, AGS_DECIMALS);
-  return ags.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 6,
-  });
+  return AGS_FORMATTER.format(ags);
 }
 
 /**
@@ -86,17 +83,16 @@ export function safeFormatSTX(value: string | number | bigint | null | undefined
  * @example toMicroSTX(0.5) // 500000n
  */
 export function toMicroSTX(stx: number): bigint {
+  if (!Number.isFinite(stx) || stx <= 0) return 0n;
   return BigInt(Math.floor(stx * Math.pow(10, STX_DECIMALS)));
 }
 
 /**
- * Convert AGS to microAGS.
- *
- * @param ags - Amount in AGS (e.g., 2.5 for 2.5 AGS)
- * @returns Amount in microAGS as bigint
- * @example toMicroAGS(1) // 1000000n
+ * Truncate address for display
+ * @example truncateAddress("SP3FKNEZ...") -> "SP3FKN...GG6N"
  */
 export function toMicroAGS(ags: number): bigint {
+  if (!Number.isFinite(ags) || ags <= 0) return 0n;
   return BigInt(Math.floor(ags * Math.pow(10, AGS_DECIMALS)));
 }
 
@@ -112,9 +108,12 @@ export function toMicroAGS(ags: number): bigint {
  * @example truncateAddress("SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N") // "SP3F...CGG6N"
  */
 export function truncateAddress(address: string, chars = 4): string {
-  if (!address) return '';
-  if (address.length <= (chars * 2) + 2) return address;
-  return `${address.slice(0, chars + 2)}...${address.slice(-chars)}`;
+  if (typeof address !== 'string') return '';
+  const normalizedAddress = address.trim();
+  const safeChars = Number.isInteger(chars) && chars >= 0 ? chars : 4;
+  if (!normalizedAddress) return '';
+  if (normalizedAddress.length <= (safeChars * 2) + 2) return normalizedAddress;
+  return `${normalizedAddress.slice(0, safeChars + 2)}...${normalizedAddress.slice(-safeChars)}`;
 }
 
 /**
@@ -143,7 +142,7 @@ export function formatPercent(value: number): string {
  */
 export function formatBlockHeight(height: number): string {
   if (!Number.isFinite(height)) return '0';
-  return height.toLocaleString('en-US');
+  return Math.floor(height).toLocaleString('en-US');
 }
 
 /**
@@ -158,7 +157,8 @@ export function formatBlockHeight(height: number): string {
  */
 export function blocksToTime(blocks: number): string {
   if (!Number.isFinite(blocks) || blocks <= 0) return '0 min';
-  const minutes = blocks * AVG_BLOCK_TIME_MINUTES;
+  const normalizedBlocks = Math.floor(blocks);
+  const minutes = normalizedBlocks * AVG_BLOCK_TIME_MINUTES;
 
   if (minutes < 60) {
     return `${minutes} min`;
@@ -185,13 +185,16 @@ export function blocksToTime(blocks: number): string {
  * @example formatRelativeTime(Date.now() / 1000 - 30) // "Just now"
  */
 export function formatRelativeTime(timestamp: number): string {
+  if (!Number.isFinite(timestamp) || timestamp <= 0) return 'Just now';
   const now = Date.now() / 1000;
   const diff = now - timestamp;
+  const absDiff = Math.abs(diff);
+  const isFuture = diff < 0;
 
-  if (diff < 60) return 'Just now';
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-  if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+  if (absDiff < 60) return 'Just now';
+  if (absDiff < 3600) return `${Math.floor(absDiff / 60)}m ${isFuture ? 'from now' : 'ago'}`;
+  if (absDiff < 86400) return `${Math.floor(absDiff / 3600)}h ${isFuture ? 'from now' : 'ago'}`;
+  if (absDiff < 604800) return `${Math.floor(absDiff / 86400)}d ${isFuture ? 'from now' : 'ago'}`;
 
   return new Date(timestamp * 1000).toLocaleDateString();
 }
@@ -207,7 +210,12 @@ export function formatRelativeTime(timestamp: number): string {
  * @example formatCompactSTX(500000n)     // "0.50"
  */
 export function formatCompactSTX(microStx: string | number | bigint): string {
-  const stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  let stx = 0;
+  try {
+    stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  } catch {
+    return '0.00';
+  }
   if (stx >= 1_000_000) return `${(stx / 1_000_000).toFixed(2)}M`;
   if (stx >= 1_000) return `${(stx / 1_000).toFixed(2)}K`;
   return stx.toFixed(2);
@@ -229,4 +237,75 @@ export function formatDuration(ms: number): string {
   if (hours > 0) return `${hours}h ${minutes}m`;
   if (minutes > 0) return `${minutes}m ${seconds}s`;
   return `${seconds}s`;
+}
+
+/**
+ * Format a block count as an approximate number of days.
+ *
+ * @param blocks - Number of Stacks blocks
+ * @returns Human-readable string such as "1 day" or "14 days"
+ */
+export function formatBlocksAsDays(blocks: number): string {
+  if (!Number.isFinite(blocks) || blocks < 0) return '0 days';
+  const days = Math.round(blocks / 144);
+  return days === 1 ? '1 day' : `${days} days`;
+}
+
+/**
+ * Format a ratio as a percentage string.
+ *
+ * @param value - Decimal ratio between 0 and 1 (e.g. 0.152 → "15.20%")
+ * @param decimals - Number of decimal places to show (default 2)
+ * @returns Formatted percentage string
+ */
+export function formatPercentage(value: number, decimals = 2): string {
+  if (!Number.isFinite(value)) return '0.00%';
+  const safeDec = Number.isInteger(decimals) && decimals >= 0 ? decimals : 2;
+  return `${(value * 100).toFixed(safeDec)}%`;
+}
+
+/**
+ * Format a microSTX amount as a plain STX number without locale separators.
+ * Useful when the value will be used inside a larger formatted string.
+ *
+ * @param microStx - Amount in microSTX
+ * @returns Plain STX value such as "1.234567"
+ */
+export function formatSTXRaw(microStx: string | number | bigint): string {
+  let stx = 0;
+  try {
+    stx = Number(BigInt(microStx)) / Math.pow(10, STX_DECIMALS);
+  } catch {
+    return '0';
+  }
+  return stx.toFixed(6).replace(/\.?0+$/, '') || '0';
+}
+
+/**
+ * Format a microAGS amount as a plain AGS number without locale separators.
+ *
+ * @param microAgs - Amount in microAGS
+ * @returns Plain AGS value such as "2.5"
+ */
+export function formatAGSRaw(microAgs: string | number | bigint): string {
+  let ags = 0;
+  try {
+    ags = Number(BigInt(microAgs)) / Math.pow(10, AGS_DECIMALS);
+  } catch {
+    return '0';
+  }
+  return ags.toFixed(6).replace(/\.?0+$/, '') || '0';
+}
+
+/**
+ * Format an APY (Annual Percentage Yield) value for display.
+ *
+ * @param apy - The APY as a plain percentage number (e.g. 15.5 for 15.5%)
+ * @param decimals - Decimal places to show (default 2)
+ * @returns Formatted string such as "15.50% APY"
+ */
+export function formatAPY(apy: number, decimals = 2): string {
+  if (!Number.isFinite(apy) || apy < 0) return '0.00% APY';
+  const safeDec = Number.isInteger(decimals) && decimals >= 0 ? decimals : 2;
+  return `${apy.toFixed(safeDec)}% APY`;
 }

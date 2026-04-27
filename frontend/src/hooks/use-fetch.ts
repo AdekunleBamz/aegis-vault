@@ -96,7 +96,7 @@ export function useFetch<T>(
     await fetchData();
   }, [fetchData]);
 
-  return { ...state, mutate };
+  return { ...state, hasError: state.error !== null, mutate };
 }
 
 interface UseOptimisticReturn<T> {

@@ -20,14 +20,46 @@ export function FilterChip({
   count,
   className = '',
 }: FilterChipProps) {
+  const chipClasses = `inline-flex items-center rounded-full text-sm font-medium transition-all ${
+    isActive
+      ? 'bg-emerald-500 text-white'
+      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+  } ${className}`;
+
+  if (onRemove && isActive) {
+    return (
+      <div className={chipClasses}>
+        <button
+          type="button"
+          onClick={onClick}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5"
+        >
+          <span>{label}</span>
+          {count !== undefined && (
+            <span className="px-1.5 py-0.5 text-xs rounded-full bg-white/20">
+              {count}
+            </span>
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={onRemove}
+          className="mr-1 p-0.5 hover:bg-white/20 rounded-full"
+          aria-label={`Remove ${label} filter`}
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-        isActive
-          ? 'bg-emerald-500 text-white'
-          : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-      } ${className}`}
+      className={`${chipClasses} gap-1.5 px-3 py-1.5`}
     >
       <span>{label}</span>
       {count !== undefined && (
@@ -36,19 +68,6 @@ export function FilterChip({
         }`}>
           {count}
         </span>
-      )}
-      {onRemove && isActive && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove();
-          }}
-          className="ml-1 p-0.5 hover:bg-white/20 rounded-full"
-        >
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       )}
     </button>
   );
