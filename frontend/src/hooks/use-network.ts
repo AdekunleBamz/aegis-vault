@@ -99,8 +99,8 @@ export function useNetwork(): UseNetworkReturn {
     isTestnet: NETWORK_TYPE === 'testnet',
     isDevnet: NETWORK_TYPE === 'devnet',
     lastFetched,
-    hasError: error !== null,
-    isStale: lastFetched !== null ? Date.now() - lastFetched > NETWORK_STALE_THRESHOLD_MS : false,
+    hasError,
+    isStale,
     refetch: fetchNetworkInfo,
   };
 }
