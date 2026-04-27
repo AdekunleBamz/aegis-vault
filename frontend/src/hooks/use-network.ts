@@ -17,7 +17,7 @@ const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
     : network.chainId === 1
       ? 'mainnet'
       : 'devnet';
-const NETWORK_REFRESH_INTERVAL_MS = 25_000;
+const NETWORK_STALE_THRESHOLD_MS = 60_000;
 
 /**
  * Return type for the useNetwork hook.
