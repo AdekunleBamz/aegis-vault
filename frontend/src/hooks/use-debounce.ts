@@ -1,21 +1,24 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
- * Hook for debouncing values with customizable delay.
- * Useful for search inputs and any field that triggers expensive operations.
+ * A custom hook to debounce a value.
+ * Useful for preventing expensive operations (like API calls) on every keystroke.
+ * 
+ * @template T - The type of the value being debounced
+ * @param value - The value to debounce
+ * @param delayMs - The delay in milliseconds (default: 300)
+ * @returns The debounced value
  */
 export function useDebounce<T>(value: T, delayMs: number = 300): T {
-  const safeDelay = typeof delayMs === 'number' && delayMs >= 0 ? delayMs : 300;
-  const [debouncedValue, setDebouncedValue] = useState<T>(() => value);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
+    const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, safeDelay);
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      clearTimeout(handler);
     };
   }, [value, safeDelay]);
 

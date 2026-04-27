@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { ClarityType } from "@stacks/transactions";
 import { initSimnet } from "@stacks/clarinet-sdk";
 import { Cl } from "../node_modules/@stacks/clarinet-sdk/node_modules/@stacks/transactions/dist/index.js";
