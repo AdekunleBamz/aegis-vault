@@ -7,6 +7,7 @@
     "frontend:dev": "npm --prefix frontend run dev",
     "frontend:build": "npm --prefix frontend run build",
     "frontend:start": "npm --prefix frontend run start",
+    "frontend:validate": "npm --prefix frontend run validate",
     "frontend:lint": "npm --prefix frontend run lint",
     "test": "vitest run",
     "test:validation": "vitest run tests/validation-utils.test.ts",
