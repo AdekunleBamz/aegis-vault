@@ -172,6 +172,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
           </p>
           {toast.action && (
             <button
+              type="button"
               onClick={() => {
                 toast.action?.onClick();
                 handleClose();
@@ -182,8 +183,9 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
             </button>
           )}
         </div>
-        <button
-          onClick={handleClose}
+        <button 
+          type="button"
+          onClick={handleClose} 
           className="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1 rounded hover:bg-white/10"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
