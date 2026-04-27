@@ -1,13 +1,6 @@
 'use client';
 
-/**
- * @file Hook for managing withdrawal operations
- *
- * Provides two-phase withdrawal functionality: request and complete.
- * Handles loading states and error management for withdrawal flows.
- */
-
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   executeWithdrawRequest,
   executeWithdrawComplete,
@@ -19,24 +12,23 @@ import { toMicroSTX } from '@/lib/format';
  * Return type for the useWithdraw hook.
  */
 export interface UseWithdrawReturn {
+  /** Function to initiate a withdrawal request transaction */
   requestWithdraw: (amount: number) => Promise<TransactionResult>;
+  /** Function to initiate a withdrawal completion transaction */
   completeWithdraw: () => Promise<TransactionResult>;
+  /** Whether a withdrawal operation is currently being processed */
   isLoading: boolean;
-  /** True when not loading and no error — ready for next action */
-  isIdle: boolean;
+  /** Error message if the operation failed, otherwise null */
   error: string | null;
-  /** Timestamp (ms) of the most recent completed withdrawal, or null */
-  completedAt: number | null;
+  /** Function to reset the loading and error states */
   reset: () => void;
 }
 
 /**
- * Hook to manage STX withdrawal operations.
- *
- * Supports two-phase withdrawals: request (initiates withdrawal)
- * and complete (finalizes after lock period).
- *
- * @returns Object containing withdraw functions, loading state, error, and reset.
+ * A custom hook to handle withdrawal operations (request and complete).
+ * Manages loading and error states for the two-step withdrawal process.
+ * 
+ * @returns An object containing withdrawal functions and transaction states
  */
 export function useWithdraw(): UseWithdrawReturn {
   const [isLoading, setIsLoading] = useState(false);
@@ -88,15 +80,11 @@ export function useWithdraw(): UseWithdrawReturn {
     setIsLoading(false);
   }, []);
 
-  return {
+  return useMemo(() => ({
     requestWithdraw,
     completeWithdraw,
     isLoading,
-    isIdle: !isLoading && error === null,
     error,
-    hasError: error !== null,
-    hasCompleted: completedAt !== null,
-    completedAt,
-    reset,
-  };
+    reset
+  }), [requestWithdraw, completeWithdraw, isLoading, error, reset]);
 }

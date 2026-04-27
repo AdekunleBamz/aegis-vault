@@ -70,9 +70,15 @@ export function Dropdown({
   return (
     <div ref={dropdownRef} className={`relative inline-block ${className}`}>
       {/* Trigger */}
-      <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="cursor-pointer border-0 bg-transparent p-0 text-left"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+      >
         {trigger}
-      </div>
+      </button>
 
       {/* Menu */}
       {isOpen && (
@@ -124,6 +130,7 @@ export function Dropdown({
             return (
               <button
                 key={index}
+                type="button"
                 onClick={() => handleItemClick(item)}
                 disabled={item.disabled}
                 className={itemClasses}
