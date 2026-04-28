@@ -5,3 +5,5 @@
 - Review dependency advisories before release cut.
 - Re-run regression scenarios after security patches.
 - Include one emergency pause/resume authorization drill in security QA cycles.
+
+- Include this checkpoint in the final release handoff review.
