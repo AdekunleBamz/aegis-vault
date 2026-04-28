@@ -58,7 +58,7 @@ export function VotingModal({ isOpen, onClose, proposalId, proposalTitle }: Voti
                             <p className="text-muted-foreground font-medium mb-12 max-w-sm mx-auto">
                                 Your vote for {proposalId} has been successfully recorded on the Stacks blockchain.
                             </p>
-                            <button
+                            <button type="button"
                                 onClick={onClose}
                                 className="w-full py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all active:scale-95"
                             >
@@ -72,7 +72,7 @@ export function VotingModal({ isOpen, onClose, proposalId, proposalTitle }: Voti
                                     <div className="text-[10px] font-black uppercase tracking-widest text-aegis-purple mb-1">Casting Ballot</div>
                                     <h3 className="text-2xl font-black tracking-tighter">{proposalId}</h3>
                                 </div>
-                                <button
+                                <button type="button"
                                     onClick={onClose}
                                     className="p-3 hover:bg-muted rounded-2xl transition-all"
                                 >
@@ -89,7 +89,7 @@ export function VotingModal({ isOpen, onClose, proposalId, proposalTitle }: Voti
                                         { id: 'against', label: 'Vote Against', icon: X, color: 'text-red-500', bg: 'bg-red-500/10' },
                                         { id: 'abstain', label: 'Abstain', icon: Info, color: 'text-muted-foreground', bg: 'bg-muted/50' }
                                     ].map((option) => (
-                                        <button
+                                        <button type="button"
                                             key={option.id}
                                             onClick={() => setSelectedOption(option.id as any)}
                                             className={cn(
@@ -132,7 +132,7 @@ export function VotingModal({ isOpen, onClose, proposalId, proposalTitle }: Voti
                                 </div>
                             </div>
 
-                            <button
+                            <button type="button"
                                 disabled={!selectedOption || isCasting}
                                 onClick={handleCastVote}
                                 className={cn(
