@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { HistoryFilters } from '@/components/widgets';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy } from 'lucide-react';
 
@@ -58,6 +59,9 @@ export default function HistoryPage() {
   const { address, isConnected, connect } = useWallet();
   const { transactions, isLoading } = useTransactions(address || '', 50);
   const [filter, setFilter] = useState<'all' | 'stake' | 'withdraw' | 'claim'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'date-desc' | 'date-asc' | 'status'>('date-desc');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'success' | 'pending' | 'failed'>('all');
 
   const hasActiveFilters = filter !== 'all' || searchQuery !== '' || statusFilter !== 'all';
 
