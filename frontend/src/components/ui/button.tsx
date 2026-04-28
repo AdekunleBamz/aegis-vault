@@ -54,7 +54,7 @@ export function Button({
       {...props}
     >
       {isLoading ? (
-        <span className="flex items-center gap-2" role="status" aria-live="polite">
+        <span className="flex items-center gap-2" role="status" aria-live="polite" aria-label={loadingText}>
           <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
             <circle
               className="opacity-25"
