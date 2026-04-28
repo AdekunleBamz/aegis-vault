@@ -41,6 +41,8 @@ export function PositionFilters({
                 {search && (
                     <button type="button"
                         onClick={() => onSearchChange('')}
+                        aria-label="Clear position search"
+                        title="Clear search"
                         className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded-full transition-colors"
                     >
                         <X className="w-3 h-3 text-muted-foreground" />
