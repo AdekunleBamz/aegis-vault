@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { LoadingSkeleton } from '@/components/ui/loading';
 import { HistoryFilters } from '@/components/widgets';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Search, X, ExternalLink, ArrowDownLeft, ArrowUpRight, RefreshCw, Trophy } from 'lucide-react';
 
 // Action configuration
