@@ -66,7 +66,7 @@ export function EmptyState({
       {(action || secondaryAction) && (
         <div className="flex items-center gap-3">
           {action && (
-            <button
+            <button type="button"
               onClick={action.onClick}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${action.variant === 'secondary'
                   ? 'bg-zinc-700 hover:bg-zinc-600 text-zinc-200'
@@ -77,7 +77,7 @@ export function EmptyState({
             </button>
           )}
           {secondaryAction && (
-            <button
+            <button type="button"
               onClick={secondaryAction.onClick}
               className="px-4 py-2 text-zinc-400 hover:text-zinc-200 transition-colors"
             >
@@ -242,7 +242,7 @@ export function ErrorState({
       <h3 className="text-xl font-semibold text-zinc-100 mb-2">{title}</h3>
       <p className="text-zinc-400 text-center max-w-sm mb-6">{message}</p>
       {onRetry && (
-        <button
+        <button type="button"
           onClick={onRetry}
           className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-zinc-200 rounded-lg font-medium transition-colors"
         >
@@ -283,7 +283,7 @@ export function SuccessState({
       <h3 className="text-xl font-semibold text-zinc-100 mb-2">{title}</h3>
       <p className="text-zinc-400 text-center max-w-sm mb-6">{message}</p>
       {action && (
-        <button
+        <button type="button"
           onClick={action.onClick}
           className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black rounded-lg font-medium transition-colors"
         >
@@ -349,7 +349,7 @@ export function ConnectionState({ status, onConnect, onRetry, className = '' }: 
       <h3 className="text-xl font-semibold text-zinc-100 mb-2">{config.title}</h3>
       <p className="text-zinc-400 text-center max-w-sm mb-6">{config.description}</p>
       {config.action && (
-        <button
+        <button type="button"
           onClick={config.action.onClick}
           className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black rounded-lg font-medium transition-colors"
         >
