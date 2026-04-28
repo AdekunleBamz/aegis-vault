@@ -34,7 +34,7 @@ export function PortfolioExport() {
 
                 <div className="space-y-4 mb-10">
                     {EXPORT_FORMATS.map((f) => (
-                        <button
+                        <button type="button"
                             key={f.id}
                             onClick={() => setFormat(f.id as any)}
                             className={cn(
@@ -61,7 +61,7 @@ export function PortfolioExport() {
                     ))}
                 </div>
 
-                <button
+                <button type="button"
                     disabled={status !== 'idle'}
                     onClick={handleExport}
                     className={cn(
