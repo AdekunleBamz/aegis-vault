@@ -5,3 +5,5 @@
 - Confirm monitoring endpoints are healthy.
 - Log pending follow-up tasks before handoff closes.
 - Include UTC timestamp for handoff completion to avoid timezone confusion.
+
+- Include this checkpoint in the final release handoff review.
