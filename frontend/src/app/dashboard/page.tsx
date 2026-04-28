@@ -4,7 +4,7 @@ import React from 'react';
 import { PortfolioSummary } from '@/components/widgets/portfolio-summary';
 import { RecentActivity } from '@/components/widgets/recent-activity';
 import { ProtocolStats } from '@/components/widgets/protocol-stats';
-import { KPICard } from '@/components/dashboard/kpi-card';
+import { KPICard, SkeletonKPI } from '@/components/dashboard/kpi-card';
 import { RewardChart } from '@/components/dashboard/reward-chart';
 import { ProtocolHealth } from '@/components/dashboard/protocol-health';
 import {
