@@ -90,7 +90,7 @@ export default function GovernancePage() {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.2 }}
                         >
-                            <button className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest flex items-center gap-3 hover:shadow-xl hover:-translate-y-1 transition-all active:scale-95 group">
+                            <button type="button" className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest flex items-center gap-3 hover:shadow-xl hover:-translate-y-1 transition-all active:scale-95 group">
                                 <FilePlus2 className="w-4 h-4" />
                                 Create Proposal
                                 <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -125,7 +125,7 @@ export default function GovernancePage() {
                                 </div>
                                 <div className="flex bg-muted/30 border border-border rounded-2xl p-1">
                                     {['All', 'Active', 'Passed'].map((t) => (
-                                        <button
+                                        <button type="button"
                                             key={t}
                                             onClick={() => setFilter(t as any)}
                                             className={cn(
