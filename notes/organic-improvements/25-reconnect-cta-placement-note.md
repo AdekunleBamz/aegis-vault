@@ -1,4 +1,4 @@
-# Reconnect CTA placement note
+# Reconnect CTA Placement Note
 
 Place reconnect actions near wallet status indicators.
 Users recover faster when reconnect controls are easy to discover.
