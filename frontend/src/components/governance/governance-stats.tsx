@@ -59,7 +59,7 @@ export function GovernanceStats() {
                     <h3 className="text-2xl font-black tracking-tighter">Governance <span className="text-gradient">Pulse</span></h3>
                     <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest mt-1">Real-time protocol metrics</p>
                 </div>
-                <button
+                <button type="button"
                   className="p-3 bg-muted/50 hover:bg-muted rounded-2xl transition-all"
                   aria-label="Open governance trend details"
                 >
