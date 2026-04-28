@@ -1,4 +1,4 @@
-# Withdraw penalty copy note
+# Withdraw Penalty Copy Note
 
 Keep emergency-withdraw penalty messaging consistent across forms and receipts.
 Clear penalty copy helps users make informed timing decisions.
