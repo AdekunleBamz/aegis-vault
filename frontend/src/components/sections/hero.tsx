@@ -111,7 +111,7 @@ export function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-aegis-blue to-aegis-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </Link>
             ) : (
-              <button
+              <button type="button"
                 onClick={connect}
                 className="group relative px-8 py-4 bg-foreground text-background rounded-full font-bold text-lg hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-blue)/0.5)] transition-all overflow-hidden"
               >
