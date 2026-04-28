@@ -92,7 +92,7 @@ export function SecurityScore() {
                     <ShieldCheck className="w-5 h-5 text-aegis-blue" />
                     <span className="text-sm font-bold">Audited by <span className="text-aegis-blue">Halborn</span> & <span className="text-aegis-blue">Kudelski</span></span>
                 </div>
-                <button
+                <button type="button"
                     aria-label="View detailed security audit report"
                     className="flex items-center gap-2 px-4 py-2 bg-muted/50 hover:bg-muted rounded-full text-xs font-black uppercase tracking-widest transition-all"
                 >
