@@ -59,6 +59,7 @@ export function PositionFilters({
                     <button type="button"
                         key={s.value}
                         onClick={() => onStatusChange(s.value)}
+                        aria-pressed={status === s.value}
                         className={cn(
                             "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
                             status === s.value
