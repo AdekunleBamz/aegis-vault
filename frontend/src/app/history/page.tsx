@@ -197,6 +197,7 @@ export default function HistoryPage() {
                 <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                   {(['all', 'stake', 'withdraw', 'claim'] as const).map((f) => (
                     <button
+                      type="button"
                       key={f}
                       onClick={() => setFilter(f)}
                       className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all
@@ -212,6 +213,7 @@ export default function HistoryPage() {
 
                 {hasActiveFilters && (
                   <button
+                    type="button"
                     onClick={resetFilters}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-lg transition-all border border-red-500/10 whitespace-nowrap"
                   >
