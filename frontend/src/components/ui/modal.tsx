@@ -148,7 +148,7 @@ export function Modal({
         )}
 
         {/* Content */}
-        <div className="p-5 max-h-[60vh] overflow-y-auto custom-scrollbar">
+        <div className="p-5 max-h-[65vh] overflow-y-auto custom-scrollbar">
           {children}
         </div>
 
