@@ -46,7 +46,7 @@ export function ScrollToTop({
   if (!isVisible) return null;
 
   return (
-    <button
+    <button type="button"
       onClick={scrollToTop}
       className={`
         fixed z-50 p-3 bg-amber-500 hover:bg-amber-400 text-black rounded-full shadow-lg
