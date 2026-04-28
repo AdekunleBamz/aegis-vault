@@ -60,7 +60,7 @@ export function PositionFilters({
                         key={s.value}
                         onClick={() => onStatusChange(s.value)}
                         className={cn(
-                            "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
+                            "px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
                             status === s.value
                                 ? "bg-foreground text-background border-foreground shadow-lg"
                                 : "bg-muted/30 text-muted-foreground border-border hover:bg-muted/50"
