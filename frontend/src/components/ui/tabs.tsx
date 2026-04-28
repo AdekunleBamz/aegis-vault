@@ -153,7 +153,7 @@ export function Tabs({
         role="tablist"
       >
         {tabs.map((tab, index) => (
-          <button
+          <button type="button"
             key={tab.id}
             ref={(el) => {
               tabButtonRefs.current[index] = el;
@@ -235,7 +235,7 @@ export function VerticalTabs({ tabs, defaultTab, onChange }: VerticalTabsProps) 
     <div className="flex gap-6">
       <div className="flex flex-col w-48 border-r border-gray-700 pr-4">
         {tabs.map((tab) => (
-          <button
+          <button type="button"
             key={tab.id}
             onClick={() => handleTabChange(tab.id)}
             disabled={tab.disabled}
