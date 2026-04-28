@@ -268,7 +268,7 @@ export default function HistoryPage() {
               </div>
             ) : (
               <div className="divide-y divide-gray-700/50">
-                {filteredTransactions.map((tx) => {
+                {processedTransactions.map((tx) => {
                   const action = getActionConfig(tx.contract_call?.function_name || '');
 
                   return (
@@ -335,7 +335,7 @@ export default function HistoryPage() {
           </Card>
 
           {/* Pagination hint */}
-          {filteredTransactions.length >= 50 && (
+          {processedTransactions.length >= 50 && (
             <p className="text-center text-gray-500 text-sm mt-6">
               Showing latest 50 transactions. View more on{' '}
               <a
