@@ -1,4 +1,4 @@
-# Core vault version pin
+# Core Vault Version Pin
 
 Pin expected core vault contract version in release notes.
 Version pinning reduces ambiguity during hotfix investigations.
