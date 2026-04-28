@@ -5,3 +5,5 @@
 - Confirm treasury accounting reflects penalties.
 - Verify position status updates on successful withdraw.
 - Capture wallet rejection/error codes alongside contract responses for failed withdrawals.
+
+- Include this checkpoint in the final release handoff review.
