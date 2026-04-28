@@ -235,7 +235,7 @@ export function Header() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
                     transition={{ duration: TRANSITION_DURATION, ease: TRANSITION_EASE }}
-                    className="absolute right-0 mt-3 w-56 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
+                    className="absolute right-0 mt-3 w-60 rounded-3xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl p-2 z-50 overflow-hidden"
                     id="wallet-account-menu"
                     role="menu"
                     aria-label="Wallet account menu"
