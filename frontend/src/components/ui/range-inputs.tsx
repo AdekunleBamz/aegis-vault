@@ -250,7 +250,7 @@ export function ColorPicker({
       )}
       <div className="flex flex-wrap gap-2">
         {colors.map((color) => (
-          <button
+          <button type="button"
             key={color}
             onClick={() => onChange(color)}
             className={`w-8 h-8 rounded-lg transition-all ${
