@@ -86,7 +86,7 @@ export function NotificationItem({
           <p className="text-sm text-gray-400 line-clamp-2">{message}</p>
           <div className="flex items-center gap-2 mt-2">
             {!isRead && onRead && (
-              <button
+              <button type="button"
                 onClick={() => onRead(id)}
                 className="text-xs text-emerald-400 hover:text-emerald-300"
               >
@@ -94,7 +94,7 @@ export function NotificationItem({
               </button>
             )}
             {onDismiss && (
-              <button
+              <button type="button"
                 onClick={() => onDismiss(id)}
                 className="text-xs text-gray-400 hover:text-white"
               >
@@ -117,7 +117,7 @@ export interface NotificationBellProps {
 
 export function NotificationBell({ count = 0, onClick, className = '' }: NotificationBellProps) {
   return (
-    <button
+    <button type="button"
       onClick={onClick}
       className={`relative p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors ${className}`}
     >
@@ -162,7 +162,7 @@ export function NotificationPanel({
         </div>
         <div className="flex items-center gap-2">
           {onReadAll && unreadCount > 0 && (
-            <button
+            <button type="button"
               onClick={onReadAll}
               className="text-sm text-emerald-400 hover:text-emerald-300"
             >
@@ -170,7 +170,7 @@ export function NotificationPanel({
             </button>
           )}
           {onClearAll && notifications.length > 0 && (
-            <button
+            <button type="button"
               onClick={onClearAll}
               className="text-sm text-gray-400 hover:text-white"
             >
