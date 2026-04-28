@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef, useId } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -57,6 +57,7 @@ export function Modal({
   const [isAnimating, setIsAnimating] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const descriptionId = useId();
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -99,6 +100,7 @@ export function Modal({
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? 'modal-title' : undefined}
+      aria-describedby={description ? descriptionId : undefined}
     >
       <div
         className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-200
@@ -128,7 +130,7 @@ export function Modal({
                 </h3>
               )}
               {description && (
-                <p className="mt-1 text-sm text-gray-400">{description}</p>
+                <p id={descriptionId} className="mt-1 text-sm text-gray-400">{description}</p>
               )}
             </div>
             {showCloseButton && (
