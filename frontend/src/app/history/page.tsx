@@ -262,7 +262,9 @@ export default function HistoryPage() {
                 <div className="flex justify-center gap-4">
                   <Button onClick={resetFilters} variant="secondary">Reset Filters</Button>
                   {filter === 'all' && searchQuery === '' && (
-                    <Button as="a" href="/stake">Start Staking</Button>
+                    <Link href="/stake" className="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:opacity-90 hover:shadow-lg hover:shadow-blue-500/25 hover:-translate-y-0.5 active:translate-y-0">
+                      Start Staking
+                    </Link>
                   )}
                 </div>
               </div>
