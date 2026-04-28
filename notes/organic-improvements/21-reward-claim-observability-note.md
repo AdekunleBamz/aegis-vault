@@ -1,4 +1,4 @@
-# Reward claim observability note
+# Reward Claim Observability Note
 
 Capture claim transaction IDs during release smoke tests.
 Claim flow visibility improves incident diagnosis speed.
