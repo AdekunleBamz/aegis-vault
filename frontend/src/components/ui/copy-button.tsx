@@ -135,6 +135,7 @@ export function TxHashDisplay({
         target="_blank"
         rel="noopener noreferrer"
         className="p-1.5 text-gray-400 hover:text-white transition-colors"
+        aria-label="Open transaction in Stacks Explorer"
         title="View on Explorer"
       >
         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
