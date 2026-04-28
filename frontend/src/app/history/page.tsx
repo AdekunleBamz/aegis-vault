@@ -95,6 +95,35 @@ export default function HistoryPage() {
     });
   }, [transactions, filter]);
 
+  const processedTransactions = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    const visible = filteredTransactions.filter((tx) => {
+      const matchesSearch =
+        normalizedQuery === '' ||
+        tx.tx_id.toLowerCase().includes(normalizedQuery) ||
+        getActionConfig(tx.contract_call?.function_name || '').name.toLowerCase().includes(normalizedQuery);
+
+      const matchesStatus =
+        statusFilter === 'all' ||
+        (statusFilter === 'failed'
+          ? tx.tx_status !== 'success' && tx.tx_status !== 'pending'
+          : tx.tx_status === statusFilter);
+
+      return matchesSearch && matchesStatus;
+    });
+
+    return [...visible].sort((a, b) => {
+      if (sortBy === 'status') {
+        return a.tx_status.localeCompare(b.tx_status);
+      }
+
+      const aTime = a.burn_block_time ?? 0;
+      const bTime = b.burn_block_time ?? 0;
+      return sortBy === 'date-asc' ? aTime - bTime : bTime - aTime;
+    });
+  }, [filteredTransactions, searchQuery, statusFilter, sortBy]);
+
   // Calculate stats
   const stats = useMemo(() => {
     const successful = transactions.filter(tx => tx.tx_status === 'success').length;
