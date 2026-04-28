@@ -5,3 +5,5 @@
 - Rebuild frontend after contract identifier updates.
 - Confirm no placeholder secrets in committed files.
 - Update explorer base URL whenever network endpoint is changed.
+
+- Include this checkpoint in the final release handoff review.
