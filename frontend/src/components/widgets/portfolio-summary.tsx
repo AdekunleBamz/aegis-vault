@@ -76,7 +76,7 @@ export function PortfolioSummary() {
           <p className="text-muted-foreground font-medium mb-8 max-w-sm mx-auto">
             Connect your wallet to unlock real-time portfolio tracking and yield analytics.
           </p>
-          <button
+          <button type="button"
             onClick={connect}
             className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_30px_-5px_hsl(var(--foreground)/0.4)] transition-all active:scale-95"
           >
@@ -228,7 +228,7 @@ export function PortfolioSummary() {
         {/* Actions Footer */}
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-border/50">
           <Link href="/stake" className="flex-1">
-            <button
+            <button type="button"
               aria-label="Increase your STX stake"
               className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-foreground text-background rounded-3xl font-black text-xs uppercase tracking-widest transition-all hover:shadow-[0_0_30px_-5px_hsl(var(--foreground)/0.3)] active:scale-95"
             >
@@ -237,7 +237,7 @@ export function PortfolioSummary() {
             </button>
           </Link>
           <Link href="/claim" className="flex-1">
-            <button
+            <button type="button"
               aria-label="Claim your accumulated AGS rewards"
               className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-muted/50 hover:bg-muted border border-border/50 rounded-3xl font-black text-xs uppercase tracking-widest transition-all active:scale-95"
             >
