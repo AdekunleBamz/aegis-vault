@@ -152,7 +152,7 @@ export function SortDropdown({
   return (
     <div className={`relative ${className}`}>
       <div className="flex items-center gap-2">
-        <button
+        <button type="button"
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-300 hover:border-gray-600 transition-colors"
         >
@@ -167,7 +167,7 @@ export function SortDropdown({
           </svg>
         </button>
         {onDirectionChange && (
-          <button
+          <button type="button"
             onClick={() => onDirectionChange(direction === 'asc' ? 'desc' : 'asc')}
             className="p-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-white hover:border-gray-600 transition-colors"
             title={direction === 'asc' ? 'Ascending' : 'Descending'}
@@ -187,7 +187,7 @@ export function SortDropdown({
       {isOpen && (
         <div className="absolute z-10 mt-1 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg overflow-hidden">
           {options.map((option) => (
-            <button
+            <button type="button"
               key={option.id}
               onClick={() => {
                 onChange(option.id);
@@ -233,7 +233,7 @@ export function DateRangeFilter({
   return (
     <div className={`inline-flex bg-gray-800 rounded-lg p-1 ${className}`}>
       {presets.map((preset) => (
-        <button
+        <button type="button"
           key={preset.id}
           onClick={() => onChange(preset.id)}
           className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${
