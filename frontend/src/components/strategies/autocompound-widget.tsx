@@ -23,7 +23,7 @@ export function AutoCompoundWidget() {
                     </div>
                 </div>
 
-                <button
+                <button type="button"
                     onClick={() => setIsEnabled(!isEnabled)}
                     className={cn(
                         "w-14 h-8 rounded-full transition-all relative",
