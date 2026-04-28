@@ -102,7 +102,7 @@ export function AuditLogs() {
                                 </div>
                                 <div className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest mt-1">Severity: {log.severity}</div>
                             </div>
-                            <button className="p-3 bg-background border border-border rounded-xl text-muted-foreground hover:text-foreground hover:border-aegis-blue transition-all group/btn">
+                            <button type="button" className="p-3 bg-background border border-border rounded-xl text-muted-foreground hover:text-foreground hover:border-aegis-blue transition-all group/btn">
                                 <ExternalLink className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
                             </button>
                         </div>
@@ -110,7 +110,7 @@ export function AuditLogs() {
                 ))}
             </div>
 
-            <button className="w-full mt-8 py-5 bg-background border border-border/50 rounded-3xl text-xs font-black uppercase tracking-widest hover:border-aegis-blue/50 transition-all flex items-center justify-center gap-2 group/footer">
+            <button type="button" className="w-full mt-8 py-5 bg-background border border-border/50 rounded-3xl text-xs font-black uppercase tracking-widest hover:border-aegis-blue/50 transition-all flex items-center justify-center gap-2 group/footer">
                 Load Historical Archives
                 <ChevronRight className="w-4 h-4 group-hover/footer:translate-x-1 transition-transform" />
             </button>
