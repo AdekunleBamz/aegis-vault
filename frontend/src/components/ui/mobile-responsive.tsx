@@ -40,7 +40,7 @@ export const TouchFriendlyButton = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className = '', ...props }, ref) => (
-  <button
+  <button type="button"
     ref={ref}
     className={`
       min-h-[44px] min-w-[44px] px-4 py-3
