@@ -68,7 +68,7 @@ export default function PositionsPage() {
               </div>
               <h1 className="text-4xl font-black tracking-tighter mb-4">Vault Access Locked</h1>
               <p className="text-muted-foreground font-medium mb-10">Connect your decentralized wallet to view your active staking positions and accrued governance rewards.</p>
-              <button
+              <button type="button"
                 onClick={connect}
                 className="w-full py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] transition-all active:scale-95"
               >
@@ -179,13 +179,13 @@ export default function PositionsPage() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link href="/stake">
-                      <button className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-lg transition-all active:scale-95 flex items-center gap-2">
+                      <button type="button" className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-lg transition-all active:scale-95 flex items-center gap-2">
                         <Plus className="w-4 h-4" />
                         Initiate Staking
                       </button>
                     </Link>
                     <Link href="/tiers">
-                      <button
+                      <button type="button"
                         onClick={() => setTierDrawerOpen(true)}
                         className="px-8 py-4 bg-muted/50 hover:bg-muted rounded-full font-black text-xs uppercase tracking-widest transition-all active:scale-95"
                       >
@@ -242,12 +242,12 @@ export default function PositionsPage() {
 
                       <div className="flex gap-3">
                         <Link href="/withdraw" className="flex-1 lg:flex-initial">
-                          <button className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-muted/50 hover:bg-muted rounded-2xl font-black text-xs uppercase tracking-widest transition-all">
+                          <button type="button" className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-muted/50 hover:bg-muted rounded-2xl font-black text-xs uppercase tracking-widest transition-all">
                             Unstake
                           </button>
                         </Link>
                         <Link href="/stake" className="flex-1 lg:flex-initial">
-                          <button className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background rounded-2xl font-black text-xs uppercase tracking-widest transition-all hover:shadow-lg">
+                          <button type="button" className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-foreground text-background rounded-2xl font-black text-xs uppercase tracking-widest transition-all hover:shadow-lg">
                             Add Capital
                           </button>
                         </Link>
@@ -496,7 +496,7 @@ export default function PositionsPage() {
                         )}
                       </div>
 
-                      <button className="w-full mt-10 py-4 bg-muted/30 hover:bg-muted/50 border border-border/50 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
+                      <button type="button" className="w-full mt-10 py-4 bg-muted/30 hover:bg-muted/50 border border-border/50 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
                         View Full History
                       </button>
                     </div>
