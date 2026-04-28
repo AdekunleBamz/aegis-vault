@@ -17,7 +17,7 @@ export function NetworkBadge() {
             role="status"
             aria-live="polite"
             aria-label={`Current Network: ${isMainnet ? "Mainnet" : "Testnet"}${!isMainnet ? " - Trial Mode" : ""}`}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 border border-border/50 backdrop-blur-md"
+            className="flex items-center gap-2 px-3 py-1.5 min-h-9 rounded-full bg-muted/50 border border-border/50 backdrop-blur-md"
         >
             <div className="relative flex items-center justify-center">
                 <div className={cn(
