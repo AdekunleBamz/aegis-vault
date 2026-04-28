@@ -3,3 +3,5 @@
 - Track provider handshake failures separately from transaction failures.
 - Expose the latest provider health state in diagnostics.
 - This narrows root-cause analysis when users report connection issues.
+
+- Include this checkpoint in the final release handoff review.
