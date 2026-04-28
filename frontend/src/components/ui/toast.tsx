@@ -136,6 +136,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(100);
   const duration = toast.duration ?? 5000;
+  const isInterruptive = toast.type === 'error' || toast.type === 'warning';
 
   useEffect(() => {
     const startTime = Date.now();
@@ -160,6 +161,9 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
         min-w-[320px] overflow-hidden backdrop-blur-sm
         transform transition-all duration-200 ease-out
         ${isExiting ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100 animate-slide-in'}`}
+      role={isInterruptive ? 'alert' : 'status'}
+      aria-live={isInterruptive ? 'assertive' : 'polite'}
+      aria-atomic="true"
     >
       <div className="px-4 py-3 flex items-start gap-3">
         <div className="flex-shrink-0 mt-0.5">{style.icon}</div>
