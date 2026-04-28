@@ -2,3 +2,5 @@
 
 Capture wallet disconnect timing in incident notes.
 Temporal context helps correlate provider outages and user reports.
+
+- Include this checkpoint in the final release handoff review.
