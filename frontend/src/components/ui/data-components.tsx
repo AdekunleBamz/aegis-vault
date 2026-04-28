@@ -32,7 +32,7 @@ export const SortableTable: React.FC<{
             {columns.map((col) => (
               <th key={col.key} className="px-4 py-3 text-left font-semibold text-gray-300">
                 {col.sortable ? (
-                  <button
+                  <button type="button"
                     onClick={() => handleSort(col.key)}
                     className="flex items-center gap-2 hover:text-white transition-colors"
                   >
@@ -112,7 +112,7 @@ export const Pagination: React.FC<{
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <button
+      <button type="button"
         onClick={() => onPageChange(current - 1)}
         disabled={current === 1}
         className="px-3 py-2 rounded-lg bg-gray-800 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700"
@@ -120,7 +120,7 @@ export const Pagination: React.FC<{
         ← Prev
       </button>
       {pages.map((page) => (
-        <button
+        <button type="button"
           key={page}
           onClick={() => onPageChange(page)}
           className={`px-3 py-2 rounded-lg ${
@@ -132,7 +132,7 @@ export const Pagination: React.FC<{
           {page}
         </button>
       ))}
-      <button
+      <button type="button"
         onClick={() => onPageChange(current + 1)}
         disabled={current === totalPages}
         className="px-3 py-2 rounded-lg bg-gray-800 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700"
