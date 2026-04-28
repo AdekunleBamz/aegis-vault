@@ -36,6 +36,7 @@ export function PositionFilters({
                     value={search}
                     onChange={(e) => onSearchChange(e.target.value)}
                     placeholder="Search by ID or amount..."
+                    aria-label="Search positions by ID or amount"
                     className="w-full bg-muted/30 border border-border rounded-2xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-aegis-blue/20 focus:border-aegis-blue/50 transition-all"
                 />
                 {search && (
