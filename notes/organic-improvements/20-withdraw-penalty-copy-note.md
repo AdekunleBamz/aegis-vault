@@ -2,3 +2,5 @@
 
 Keep emergency-withdraw penalty messaging consistent across forms and receipts.
 Clear penalty copy helps users make informed timing decisions.
+
+- Include this checkpoint in the final release handoff review.
