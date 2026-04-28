@@ -5,3 +5,5 @@
 - Publish temporary guidance for active stakers.
 - Capture remediation steps for postmortem follow-up.
 - Assign one incident owner per shift to avoid split mitigation decisions.
+
+- Include this checkpoint in the final release handoff review.
