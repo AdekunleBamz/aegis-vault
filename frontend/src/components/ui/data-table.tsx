@@ -55,7 +55,7 @@ export function DataTable<T extends Record<string, unknown>>({
                 style={{ width: column.width }}
               >
                 {column.sortable && onSort ? (
-                  <button
+                  <button type="button"
                     onClick={() => onSort(column.key)}
                     className="inline-flex items-center gap-1 hover:text-white transition-colors"
                   >
@@ -158,7 +158,7 @@ export function Pagination({
 
   return (
     <div className={`flex items-center justify-center gap-2 ${className}`}>
-      <button
+      <button type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
         className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -176,7 +176,7 @@ export function Pagination({
                 ...
               </span>
             ) : (
-              <button
+              <button type="button"
                 key={page}
                 onClick={() => onPageChange(page as number)}
                 className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
@@ -192,7 +192,7 @@ export function Pagination({
         </div>
       )}
 
-      <button
+      <button type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
         className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
