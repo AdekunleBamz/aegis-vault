@@ -222,7 +222,7 @@ export function SegmentedControl({
       } ${className}`}
     >
       {options.map((option) => (
-        <button
+        <button type="button"
           key={option.value}
           onClick={() => onChange(option.value)}
           className={`flex items-center justify-center gap-1.5 ${sizeClasses[size]} rounded-md font-medium transition-all ${
