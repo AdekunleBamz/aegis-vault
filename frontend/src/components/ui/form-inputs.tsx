@@ -57,7 +57,7 @@ export function SearchInput({
           className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-colors"
         />
         {value && (
-          <button
+          <button type="button"
             onClick={() => onChange('')}
             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
           >
@@ -71,7 +71,7 @@ export function SearchInput({
       {showSuggestions && suggestions.length > 0 && value && (
         <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg overflow-hidden">
           {suggestions.map((suggestion, index) => (
-            <button
+            <button type="button"
               key={index}
               onClick={() => {
                 onChange(suggestion);
@@ -150,7 +150,7 @@ export function AmountInput({
         />
         <div className="absolute inset-y-0 right-0 flex items-center gap-2 pr-3">
           {max !== undefined && (
-            <button
+            <button type="button"
               onClick={handleMax}
               disabled={disabled}
               className="px-2 py-1 text-xs font-medium text-emerald-400 bg-emerald-500/10 rounded hover:bg-emerald-500/20 transition-colors disabled:opacity-50"
@@ -206,7 +206,7 @@ export function NumberStepper({
         <label className="block text-sm text-gray-400 mb-2">{label}</label>
       )}
       <div className="flex items-center gap-2">
-        <button
+        <button type="button"
           onClick={decrement}
           disabled={value <= min}
           className="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-lg text-white hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -228,7 +228,7 @@ export function NumberStepper({
           max={max}
           className="w-20 text-center py-2 bg-gray-800 border border-gray-700 rounded-lg text-white font-medium focus:border-emerald-500 outline-none"
         />
-        <button
+        <button type="button"
           onClick={increment}
           disabled={value >= max}
           className="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-lg text-white hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
