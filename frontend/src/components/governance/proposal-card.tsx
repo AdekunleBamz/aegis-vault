@@ -119,7 +119,7 @@ export function ProposalCard({
             </div>
 
             <div className="mt-8 pt-8 border-t border-border flex items-center justify-between">
-                <button
+                <button type="button"
                     onClick={onVote}
                     disabled={status !== 'Active'}
                     aria-label={status === 'Active' ? `Cast vote for proposal ${id}` : `Voting closed for proposal ${id}`}
@@ -130,7 +130,7 @@ export function ProposalCard({
                 >
                     {status === 'Active' ? 'Cast Vote' : 'Voting Ended'}
                 </button>
-                <button className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-foreground transition-all group/view" aria-label={`View details for proposal ${id}`}>
+                <button type="button" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-foreground transition-all group/view" aria-label={`View details for proposal ${id}`}>
                     View Detail
                     <ChevronRight className="w-4 h-4 group-hover/view:translate-x-1 transition-transform" />
                 </button>
