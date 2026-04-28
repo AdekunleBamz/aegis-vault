@@ -154,3 +154,21 @@ export function KPICard({
         </motion.div>
     );
 }
+
+interface SkeletonKPIProps {
+    className?: string;
+    variant?: 'blue' | 'purple' | 'cyan' | 'indigo';
+}
+
+export function SkeletonKPI({ className, variant = 'blue' }: SkeletonKPIProps) {
+    return (
+        <KPICard
+            label="Loading"
+            value="--"
+            icon={Minus}
+            variant={variant}
+            loading
+            className={className}
+        />
+    );
+}
