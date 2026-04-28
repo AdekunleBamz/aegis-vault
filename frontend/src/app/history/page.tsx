@@ -259,7 +259,7 @@ export default function HistoryPage() {
                 </motion.div>
                 <h3 className="text-2xl font-bold text-white mb-2 italic">No Matches Found</h3>
                 <p className="text-gray-500 max-w-xs mx-auto mb-8 text-sm leading-relaxed">
-                  We couldn't find any transactions matching your current filters. Try broadening your search or resetting the filters below.
+                  We couldn&rsquo;t find any transactions matching your current filters. Try broadening your search or resetting the filters below.
                 </p>
                 <div className="flex justify-center gap-4">
                   <Button onClick={resetFilters} variant="secondary">Reset Filters</Button>
