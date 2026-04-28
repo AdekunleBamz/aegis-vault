@@ -105,7 +105,7 @@ export function RewardsCalculator() {
           />
           <div className="flex gap-2 mt-2">
             {AMOUNT_PRESETS.map((amount) => (
-              <button
+              <button type="button"
                 key={amount}
                 onClick={() => setStakeAmount(amount.toString())}
                 aria-label={`Set stake amount to ${amount.toLocaleString()} STX`}
@@ -134,7 +134,7 @@ export function RewardsCalculator() {
           />
           <div className="flex gap-2 mt-2">
             {DURATION_PRESETS.map((preset) => (
-              <button
+              <button type="button"
                 key={preset.days}
                 onClick={() => setDuration(preset.days.toString())}
                 aria-label={`Set duration to ${preset.label}`}
