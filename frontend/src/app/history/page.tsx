@@ -1,11 +1,10 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { STACKS_MAINNET } from '@stacks/network';
 import { useWallet } from '@/context/wallet-context';
 import { useTransactions } from '@/hooks/use-transactions';
-import { formatRelativeTime, truncateAddress, formatSTX, formatAGS } from '@/lib/format';
-import { Card, CardHeader } from '@/components/ui/card';
+import { formatRelativeTime, truncateAddress } from '@/lib/format';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
