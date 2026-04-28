@@ -83,6 +83,11 @@
     @apply transition-colors duration-200;
   }
 
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: from-font;
+  }
+
   :focus-visible {
     outline: 2px solid hsl(var(--aegis-blue));
     outline-offset: 3px;
