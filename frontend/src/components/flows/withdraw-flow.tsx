@@ -280,7 +280,7 @@ export function WithdrawFlow({ onSuccess, onError }: WithdrawFlowProps) {
           {/* Quick amount buttons */}
           <div className="flex gap-2 mt-3">
             {quickAmounts.map((qa) => (
-              <button
+              <button type="button"
                 key={qa.label}
                 onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
