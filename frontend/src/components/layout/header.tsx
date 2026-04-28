@@ -210,7 +210,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           {isConnected ? (
             <div ref={walletMenuRef} className="relative">
-              <button
+              <button type="button"
                 onClick={() => setShowWalletMenu(!showWalletMenu)}
                 aria-label="Wallet menu"
                 aria-expanded={showWalletMenu}
@@ -279,7 +279,7 @@ export function Header() {
                       </div>
                     </div>
 
-                    <button
+                    <button type="button"
                       onClick={disconnect}
                       role="menuitem"
                       className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-destructive hover:bg-destructive/10 rounded-2xl transition-all group"
@@ -292,7 +292,7 @@ export function Header() {
               </AnimatePresence>
             </div>
           ) : (
-            <button
+            <button type="button"
               onClick={connect}
               disabled={isConnecting}
               aria-label={isConnecting ? "Authenticating wallet" : "Connect Stacks Wallet"}
@@ -316,7 +316,7 @@ export function Header() {
           )}
 
           {/* Mobile Menu Toggle */}
-          <button
+          <button type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
