@@ -138,7 +138,7 @@ export function Tooltip({
           aria-hidden={!isVisible}
           className={`
             fixed z-50 px-3 py-2 text-sm text-white bg-gray-800 rounded-lg shadow-lg
-            border border-gray-700/50 max-w-xs
+            border border-gray-700/50 max-w-xs break-words
             animate-in fade-in-0 zoom-in-95 duration-150
             ${className}
           `}
