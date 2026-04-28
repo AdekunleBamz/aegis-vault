@@ -98,7 +98,7 @@ export function AutomationDashboard() {
                 ))}
             </div>
 
-            <button className="w-full mt-8 py-4 px-6 rounded-2xl bg-muted/30 border border-border/40 hover:bg-muted font-black text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-all flex items-center justify-center gap-2 group/btn">
+            <button type="button" className="w-full mt-8 py-4 px-6 rounded-2xl bg-muted/30 border border-border/40 hover:bg-muted font-black text-[10px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-all flex items-center justify-center gap-2 group/btn">
                 View All Automation History
                 <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
             </button>
