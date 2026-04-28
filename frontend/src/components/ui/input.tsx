@@ -1,4 +1,4 @@
-import React, { forwardRef, useId, useState } from 'react';
+import React, { forwardRef, useEffect, useId, useState } from 'react';
 
 interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   label?: string;
@@ -46,6 +46,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const describedBy = [errorTextId, helpTextId].filter(Boolean).join(' ') || undefined;
     const [charCount, setCharCount] = useState(0);
     const [isFocused, setIsFocused] = useState(false);
+
+    useEffect(() => {
+      const currentValue = typeof props.value === 'string'
+        ? props.value
+        : typeof props.defaultValue === 'string'
+          ? props.defaultValue
+          : '';
+      setCharCount(currentValue.length);
+    }, [props.value, props.defaultValue]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setCharCount(e.target.value.length);
