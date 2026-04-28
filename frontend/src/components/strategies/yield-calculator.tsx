@@ -67,7 +67,7 @@ export function YieldCalculator() {
                         </div>
                         <div className="grid grid-cols-4 gap-2">
                             {[30, 90, 180, 365].map((d) => (
-                                <button
+                                <button type="button"
                                     key={d}
                                     onClick={() => setDuration(d)}
                                     className={cn(
@@ -87,7 +87,7 @@ export function YieldCalculator() {
                         <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-4 block">Select Strategy</label>
                         <div className="space-y-3">
                             {Object.entries(STRATEGIES).map(([id, s]) => (
-                                <button
+                                <button type="button"
                                     key={id}
                                     onClick={() => setSelectedStrategy(id)}
                                     className={cn(
