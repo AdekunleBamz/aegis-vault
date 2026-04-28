@@ -338,7 +338,7 @@ export function TablePagination({
       {/* Page Navigation */}
       <nav className="flex items-center gap-1">
         {/* Previous Button */}
-        <button
+        <button type="button"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -356,7 +356,7 @@ export function TablePagination({
               ...
             </span>
           ) : (
-            <button
+            <button type="button"
               key={page}
               onClick={() => onPageChange(page)}
               className={`
@@ -374,7 +374,7 @@ export function TablePagination({
         ))}
 
         {/* Next Button */}
-        <button
+        <button type="button"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
