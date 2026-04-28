@@ -142,7 +142,7 @@ export default function EcosystemPage() {
                             </div>
                             <div className="flex overflow-x-auto bg-muted/30 border border-border rounded-2xl p-1 no-scrollbar w-full sm:w-auto">
                                 {categories.map((c) => (
-                                    <button
+                                    <button type="button"
                                         key={c}
                                         onClick={() => setCategoryFilter(c)}
                                         className={cn(
@@ -177,7 +177,7 @@ export default function EcosystemPage() {
                             </div>
                             <h3 className="text-xl font-black mb-2">Propose Integration</h3>
                             <p className="text-xs text-muted-foreground font-medium mb-6">Want to see your protocol here?</p>
-                            <button className="px-6 py-2.5 bg-foreground text-background rounded-full text-[10px] font-black uppercase tracking-widest hover:shadow-lg transition-all">
+                            <button type="button" className="px-6 py-2.5 bg-foreground text-background rounded-full text-[10px] font-black uppercase tracking-widest hover:shadow-lg transition-all">
                                 Submit Protocol
                             </button>
                         </motion.div>
@@ -195,7 +195,7 @@ export default function EcosystemPage() {
                                 Every protocol in the Aegis Ecosystem undergoes a rigorous security review and technical validation process to ensure the highest standards of safety for our users.
                             </p>
                             <div className="flex flex-col sm:flex-row items-center gap-6">
-                                <button className="w-full sm:w-auto px-8 py-4 bg-aegis-blue text-white rounded-full text-xs font-black uppercase tracking-widest hover:shadow-[0_0_40px_rgba(40,140,250,0.4)] transition-all flex items-center justify-center gap-3">
+                                <button type="button" className="w-full sm:w-auto px-8 py-4 bg-aegis-blue text-white rounded-full text-xs font-black uppercase tracking-widest hover:shadow-[0_0_40px_rgba(40,140,250,0.4)] transition-all flex items-center justify-center gap-3">
                                     Read Integration Standards
                                     <ArrowRight className="w-4 h-4" />
                                 </button>
