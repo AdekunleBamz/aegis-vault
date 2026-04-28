@@ -10,10 +10,10 @@ import { useState, useEffect, useRef, useCallback } from 'react';
  * @returns The debounced value
  */
 export function useDebounce<T>(value: T, delayMs: number = 300): T {
-  const safeDelay = typeof delayMs === 'number' && delayMs >= 0 ? delayMs : 300;
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
+    const safeDelay = typeof delayMs === 'number' && delayMs >= 0 ? delayMs : 300;
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, safeDelay);
@@ -21,7 +21,7 @@ export function useDebounce<T>(value: T, delayMs: number = 300): T {
     return () => {
       clearTimeout(handler);
     };
-  }, [value, safeDelay]);
+  }, [value, delayMs]);
 
   return debouncedValue;
 }
