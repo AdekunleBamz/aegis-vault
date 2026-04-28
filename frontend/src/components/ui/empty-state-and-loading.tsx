@@ -38,7 +38,7 @@ interface LoadingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
   ({ loading = false, loadingText = 'Loading...', icon, children, disabled, ...props }, ref) => (
-    <button
+    <button type="button"
       ref={ref}
       disabled={disabled || loading}
       className={`
