@@ -5,3 +5,5 @@
 - Check staking state updates after confirmation.
 - Capture tx links for every smoke test action.
 - Confirm wallet network matches configured endpoint before staking smoke actions.
+
+- Include this checkpoint in the final release handoff review.
