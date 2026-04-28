@@ -136,7 +136,7 @@ export function KeyboardShortcutsDisplay({ className = '' }: KeyboardShortcutsDi
       <div className="bg-zinc-900 border border-zinc-700 rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-zinc-100">Keyboard Shortcuts</h2>
-          <button onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-zinc-200">
+          <button type="button" onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-zinc-200">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -327,7 +327,7 @@ export function AccessibleIconButton({
   };
 
   return (
-    <button
+    <button type="button"
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
