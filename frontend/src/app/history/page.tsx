@@ -314,7 +314,6 @@ export default function HistoryPage() {
                     </a>
                     );
                   })}
-                </AnimatePresence>
               </div>
             )}
           </Card>
