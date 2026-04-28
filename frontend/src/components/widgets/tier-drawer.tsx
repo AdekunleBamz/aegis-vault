@@ -82,7 +82,7 @@ export function TierDrawer({ isOpen, onClose }: TierDrawerProps) {
                                     <h2 id="tier-drawer-title" className="text-3xl font-black tracking-tight">Tier <span className="text-gradient">Benefits</span></h2>
                                     <p id="tier-drawer-description" className="text-muted-foreground font-medium mt-1">Unlock superior yield by increasing your stake.</p>
                                 </div>
-                                <button
+                                <button type="button"
                                     onClick={onClose}
                                     aria-label="Close tier benefits drawer"
                                     className="p-2 hover:bg-muted rounded-full transition-colors"
