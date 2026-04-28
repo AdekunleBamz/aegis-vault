@@ -86,6 +86,7 @@
   :focus-visible {
     outline: 2px solid hsl(var(--aegis-blue));
     outline-offset: 3px;
+    box-shadow: 0 0 0 4px hsl(var(--aegis-blue) / 0.25);
   }
 
   @media (prefers-reduced-motion: reduce) {
