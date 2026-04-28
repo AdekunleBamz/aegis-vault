@@ -39,7 +39,7 @@ export function PositionFilters({
                     className="w-full bg-muted/30 border border-border rounded-2xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-aegis-blue/20 focus:border-aegis-blue/50 transition-all"
                 />
                 {search && (
-                    <button
+                    <button type="button"
                         onClick={() => onSearchChange('')}
                         className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded-full transition-colors"
                     >
@@ -56,7 +56,7 @@ export function PositionFilters({
                 </div>
 
                 {POSITION_STATUSES.map((s) => (
-                    <button
+                    <button type="button"
                         key={s.value}
                         onClick={() => onStatusChange(s.value)}
                         className={cn(
