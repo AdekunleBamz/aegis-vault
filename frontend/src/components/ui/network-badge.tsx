@@ -46,7 +46,7 @@ export function NetworkBadge() {
                         className="overflow-hidden flex items-center gap-1.5 ml-1 border-l border-border/50 pl-2"
                     >
                         <AlertTriangle className="w-3 h-3 text-amber-500" />
-                        <span className="text-[9px] font-bold text-amber-500/80 whitespace-nowrap">Trial Mode</span>
+                        <span className="text-[10px] font-bold text-amber-500/80 whitespace-nowrap">Trial Mode</span>
                     </motion.div>
                 )}
             </AnimatePresence>
