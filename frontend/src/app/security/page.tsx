@@ -111,10 +111,10 @@ export default function SecurityPage() {
                                 DeFi is only as strong as its weakest link. At Aegis Vault, we employ a multi-layered security strategy including continuous smart contract monitoring, professional third-party audits, and a robust community insurance fund. Every transaction is transparently recorded on the Stacks blockchain, ensuring you remain in control of your assets at all times.
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <button className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-lg transition-all active:scale-95">
+                                <button type="button" className="px-8 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-lg transition-all active:scale-95">
                                     Read Whitepaper
                                 </button>
-                                <button className="px-8 py-4 bg-muted/50 hover:bg-muted rounded-full font-black text-xs uppercase tracking-widest transition-all active:scale-95">
+                                <button type="button" className="px-8 py-4 bg-muted/50 hover:bg-muted rounded-full font-black text-xs uppercase tracking-widest transition-all active:scale-95">
                                     Bug Bounty Program
                                 </button>
                             </div>
