@@ -64,7 +64,7 @@ export function VotingPower() {
                         <Users className="w-4 h-4 text-aegis-purple" />
                         <span className="text-xs font-bold text-muted-foreground">Delegation Status</span>
                     </div>
-                    <button
+                    <button type="button"
                         className="text-[10px] font-black uppercase tracking-widest text-aegis-purple hover:underline flex items-center gap-1"
                         aria-label="Setup voting power delegation"
                     >
