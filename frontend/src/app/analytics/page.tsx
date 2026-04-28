@@ -121,7 +121,7 @@ export default function AnalyticsPage() {
                             </div>
                         </div>
 
-                        <button className="flex items-center gap-3 px-10 py-5 bg-foreground text-background rounded-full text-xs font-black uppercase tracking-widest hover:translate-x-1 transition-transform group/btn">
+                        <button type="button" className="flex items-center gap-3 px-10 py-5 bg-foreground text-background rounded-full text-xs font-black uppercase tracking-widest hover:translate-x-1 transition-transform group/btn">
                             Download Audit Info
                             <MousePointer2 className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" />
                         </button>
