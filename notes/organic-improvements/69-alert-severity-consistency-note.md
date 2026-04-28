@@ -3,3 +3,5 @@
 - Align alert colors and labels across staking, withdrawal, and rewards modules.
 - Reserve error severity for action-blocking failures only.
 - This improves signal quality during incident response.
+
+- Include this checkpoint in the final release handoff review.
