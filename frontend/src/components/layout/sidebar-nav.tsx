@@ -51,7 +51,7 @@ export function SidebarNav({
 
       {/* Collapse Toggle */}
       {onCollapse && (
-        <button
+        <button type="button"
           onClick={() => onCollapse(!collapsed)}
           aria-label={collapsed ? 'Expand sidebar navigation' : 'Collapse sidebar navigation'}
           aria-expanded={!collapsed}
@@ -148,7 +148,7 @@ function SidebarNavItemComponent({
   if (hasChildren) {
     return (
       <li>
-        <button
+        <button type="button"
           onClick={() => setExpanded(!expanded)}
           className={`w-full ${baseClasses}`}
           disabled={item.disabled}
@@ -255,7 +255,7 @@ export function TabNav({
       role="tablist"
     >
       {items.map((item) => (
-        <button
+        <button type="button"
           key={item.id}
           onClick={() => !item.disabled && onChange(item.id)}
           className={`
