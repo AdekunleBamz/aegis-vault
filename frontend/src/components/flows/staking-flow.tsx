@@ -70,7 +70,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
         <p className="text-muted-foreground font-medium mb-10 max-w-sm mx-auto">
           Please connect your wallet to access the decentralized staking vault and start earning AGS.
         </p>
-        <button
+        <button type="button"
           onClick={connect}
           className="px-12 py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] transition-all active:scale-95"
         >
@@ -145,7 +145,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
             </p>
             <div className="mb-8 flex items-center justify-center gap-2">
               <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 italic">TX ID: {txId?.slice(0, 8)}...{txId?.slice(-8)}</span>
-              <button
+              <button type="button"
                 onClick={() => txId && navigator.clipboard.writeText(txId)}
                 className="p-1.5 rounded-md bg-muted/50 hover:bg-muted transition-colors border border-border/50 text-muted-foreground"
                 title="Copy Transaction ID"
@@ -175,7 +175,7 @@ export function StakingFlow({ onSuccess, onError }: StakingFlowProps) {
               </Link>
             </div>
 
-            <button
+            <button type="button"
               onClick={() => setStep('input')}
               className="flex items-center gap-2 mx-auto text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors"
             >
