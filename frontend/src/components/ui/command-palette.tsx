@@ -126,7 +126,7 @@ export function CommandPalette({
                   currentIndex++;
                   const isSelected = currentIndex === selectedIndex;
                   return (
-                    <button
+                    <button type="button"
                       key={cmd.id}
                       onClick={() => {
                         cmd.action();
@@ -267,7 +267,7 @@ export function SearchInput({
           </div>
         )}
         {value && !isLoading && (
-          <button
+          <button type="button"
             onClick={() => onChange('')}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
           >
@@ -285,13 +285,13 @@ export function SearchInput({
               <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-700">
                 <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wide">Recent Searches</span>
                 {onClearRecent && (
-                  <button onClick={onClearRecent} className="text-xs text-zinc-500 hover:text-zinc-300">
+                  <button type="button" onClick={onClearRecent} className="text-xs text-zinc-500 hover:text-zinc-300">
                     Clear
                   </button>
                 )}
               </div>
               {recentSearches.map((search, index) => (
-                <button
+                <button type="button"
                   key={index}
                   onClick={() => onChange(search)}
                   className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-zinc-700 text-zinc-300"
@@ -308,7 +308,7 @@ export function SearchInput({
           {value && suggestions.length > 0 && (
             <div className="py-1">
               {suggestions.map((suggestion, index) => (
-                <button
+                <button type="button"
                   key={suggestion.id}
                   onClick={() => {
                     onSelect?.(suggestion);
@@ -360,7 +360,7 @@ export function QuickActions({ actions, className = '' }: QuickActionsProps) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       {actions.map(action => (
-        <button
+        <button type="button"
           key={action.id}
           onClick={action.action}
           title={action.label}
