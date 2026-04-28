@@ -49,6 +49,7 @@ export function Button({
       type={props.type ?? 'button'}
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
       disabled={disabled || isLoading}
+      aria-disabled={disabled || isLoading}
       aria-busy={isLoading}
       aria-live={isLoading ? "polite" : "off"}
       {...props}
