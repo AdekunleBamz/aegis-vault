@@ -156,7 +156,7 @@ export function BannerAlert({
       </span>
       <span>{children}</span>
       {action && (
-        <button
+        <button type="button"
           onClick={action.onClick}
           className="font-medium underline hover:no-underline ml-2"
         >
