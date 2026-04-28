@@ -287,46 +287,31 @@ export default function HistoryPage() {
                       {/* Details */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <p className="text-white font-medium">{action.name}</p>
-                          <svg className="w-4 h-4 text-gray-600 group-hover:text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
+                          <p className="text-white font-bold group-hover:text-blue-400 transition-colors uppercase text-sm tracking-tight">{action.name}</p>
+                          <ExternalLink className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <span className="font-mono">{truncateAddress(tx.tx_id)}</span>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                          <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded italic">{truncateAddress(tx.tx_id)}</span>
                           <span>•</span>
-                          <span>Block {tx.block_height?.toLocaleString()}</span>
+                          <span>Block #{tx.block_height?.toLocaleString()}</span>
                         </div>
                       </div>
 
-                        {/* Details */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <p className="text-white font-bold group-hover:text-blue-400 transition-colors uppercase text-sm tracking-tight">{action.name}</p>
-                            <ExternalLink className="w-3.5 h-3.5 text-gray-600 group-hover:text-blue-400 transition-colors" />
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
-                            <span className="font-mono bg-white/5 px-1.5 py-0.5 rounded italic">{truncateAddress(tx.tx_id)}</span>
-                            <span>•</span>
-                            <span>Block #{tx.block_height?.toLocaleString()}</span>
-                          </div>
-                        </div>
-
-                        {/* Status & Time */}
-                        <div className="text-right flex-shrink-0">
-                          <Badge variant={getStatusVariant(tx.tx_status)} size="sm" className="font-bold">
-                            {tx.tx_status === 'success' && (
-                              <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                            {tx.tx_status}
-                          </Badge>
-                          <p className="text-gray-500 text-xs mt-1.5 font-medium">
-                            {formatRelativeTime(tx.burn_block_time)}
-                          </p>
-                        </div>
-                      </motion.a>
+                      {/* Status & Time */}
+                      <div className="text-right flex-shrink-0">
+                        <Badge variant={getStatusVariant(tx.tx_status)} size="sm" className="font-bold">
+                          {tx.tx_status === 'success' && (
+                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                          {tx.tx_status}
+                        </Badge>
+                        <p className="text-gray-500 text-xs mt-1.5 font-medium">
+                          {formatRelativeTime(tx.burn_block_time)}
+                        </p>
+                      </div>
+                    </a>
                     );
                   })}
                 </AnimatePresence>
