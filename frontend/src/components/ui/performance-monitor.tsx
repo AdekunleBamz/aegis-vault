@@ -63,7 +63,7 @@ export function PerformanceMonitor() {
                                 <Gauge className="w-4 h-4 text-aegis-blue" />
                                 <span className="text-[10px] font-black uppercase tracking-widest">System Pulse</span>
                             </div>
-                            <button
+                            <button type="button"
                                 onClick={() => setIsOpen(false)}
                                 className="p-1 hover:bg-muted rounded-full transition-colors"
                             >
