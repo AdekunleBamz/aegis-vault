@@ -84,13 +84,13 @@ export function StrategyCard({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button
+                    <button type="button"
                       className="flex-1 py-4 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all active:scale-95"
                       aria-label={`Deploy ${title} strategy`}
                     >
                         Deploy Vault
                     </button>
-                    <button
+                    <button type="button"
                       className="p-4 bg-muted/50 hover:bg-muted rounded-full transition-all group/info"
                       aria-label={`View ${title} metrics`}
                     >
