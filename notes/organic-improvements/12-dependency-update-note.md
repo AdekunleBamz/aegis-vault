@@ -5,3 +5,5 @@
 - Document any required runtime version adjustments.
 - Keep lockfile and package changes in same commit.
 - Reinstall with `npm ci` after lockfile updates before smoke testing.
+
+- Include this checkpoint in the final release handoff review.
