@@ -5,3 +5,5 @@
 - Confirm Clarinet is installed and available in PATH.
 - Keep one funded wallet for staking smoke tests.
 - Verify wallet key files remain ignored by git before sharing setup branches.
+
+- Include this checkpoint in the final release handoff review.
