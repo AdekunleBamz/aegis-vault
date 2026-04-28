@@ -50,7 +50,7 @@ export function EmergencyBanner() {
                             {alert.cta}
                             <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                         </a>
-                        <button
+                        <button type="button"
                             onClick={() => setIsVisible(false)}
                             className="p-1 hover:bg-white/10 rounded-full transition-colors"
                         >
