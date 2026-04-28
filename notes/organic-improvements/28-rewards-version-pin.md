@@ -1,4 +1,4 @@
-# Rewards version pin
+# Rewards Version Pin
 
 Track rewards contract version with each release candidate.
 Clear version history simplifies reward-distribution incident triage.
