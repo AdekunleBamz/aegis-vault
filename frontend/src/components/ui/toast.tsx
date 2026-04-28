@@ -178,6 +178,8 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
                 handleClose();
               }}
               className="mt-2 text-sm font-medium underline hover:no-underline"
+              aria-label={toast.action.label}
+              title={toast.action.label}
             >
               {toast.action.label}
             </button>
