@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useCallback, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef, useId } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -57,6 +57,7 @@ export function Modal({
   const [isAnimating, setIsAnimating] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -98,7 +99,7 @@ export function Modal({
         ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
       role="dialog"
       aria-modal="true"
-      aria-labelledby={title ? 'modal-title' : undefined}
+      aria-labelledby={title ? titleId : undefined}
     >
       <div
         className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-200
@@ -123,7 +124,7 @@ export function Modal({
             )}
             <div className="flex-1 min-w-0">
               {title && (
-                <h3 id="modal-title" className="text-lg font-semibold text-white">
+                <h3 id={titleId} className="text-lg font-semibold text-white">
                   {title}
                 </h3>
               )}
