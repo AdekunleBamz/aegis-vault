@@ -133,7 +133,7 @@ export default function StrategiesPage() {
                             </div>
                             <div className="flex bg-muted/30 border border-border rounded-2xl p-1">
                                 {['All', 'Low', 'Medium', 'High'].map((r) => (
-                                    <button
+                                    <button type="button"
                                         key={r}
                                         onClick={() => setRiskFilter(r as any)}
                                         className={cn(
@@ -172,7 +172,7 @@ export default function StrategiesPage() {
                         <p className="text-lg text-muted-foreground font-medium max-w-2xl mb-8 leading-relaxed">
                             Your assets never leave your vault control. Automation strategies interact with your vault via verified, open-source smart contracts. You can withdraw or deactivate any strategy at any time.
                         </p>
-                        <button className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-aegis-blue hover:translate-x-1 transition-transform cursor-pointer">
+                        <button type="button" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-aegis-blue hover:translate-x-1 transition-transform cursor-pointer">
                             Read strategy documentation
                             <ArrowRight className="w-4 h-4" />
                         </button>
