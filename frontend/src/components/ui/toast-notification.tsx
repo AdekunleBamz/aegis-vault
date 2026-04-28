@@ -58,7 +58,7 @@ export function ToastNotification({ toast, onDismiss }: ToastNotificationProps) 
     >
       <Icon className="w-5 h-5 flex-shrink-0" />
       <p className="text-sm font-medium flex-1">{toast.message}</p>
-      <button
+      <button type="button"
         onClick={() => onDismiss(toast.id)}
         className="p-1 rounded-lg hover:bg-black/10 transition-colors"
         aria-label="Dismiss notification"
