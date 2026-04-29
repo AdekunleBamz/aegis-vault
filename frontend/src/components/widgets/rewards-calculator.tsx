@@ -109,7 +109,7 @@ export function RewardsCalculator() {
                 key={amount}
                 onClick={() => setStakeAmount(amount.toString())}
                 aria-label={`Set stake amount to ${amount.toLocaleString()} STX`}
-                className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors
+                className={`flex-1 min-h-10 py-1.5 px-2 rounded-lg text-xs font-medium transition-colors
                   ${parseFloat(stakeAmount) === amount
                     ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
                     : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
