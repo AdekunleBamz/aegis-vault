@@ -177,7 +177,7 @@ export function PortfolioSummary() {
                       <span className="text-emerald-500 text-[10px] font-black uppercase tracking-widest">{metrics.apy}% APY</span>
                     </div>
                   </div>
-                  <Link href="/positions" className="p-2 bg-background/50 rounded-full hover:bg-background transition-colors">
+                  <Link href="/positions" aria-label="Open detailed vault position history" className="p-2 bg-background/50 rounded-full hover:bg-background transition-colors">
                     <History className="w-4 h-4" />
                   </Link>
                 </div>
