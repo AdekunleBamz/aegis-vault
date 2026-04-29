@@ -296,6 +296,7 @@ export function Header() {
               onClick={connect}
               disabled={isConnecting}
               aria-label={isConnecting ? "Authenticating wallet" : "Connect Stacks Wallet"}
+              title={isConnecting ? "Authenticating wallet" : "Connect Stacks Wallet"}
               className="group relative px-6 py-2.5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_20px_-5px_hsl(var(--foreground)/0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
