@@ -49,6 +49,8 @@ export const SECONDS_PER_MINUTE = 60;
 export const SECONDS_PER_HOUR = 3600;
 export const SECONDS_PER_DAY = 86400;
 export const SECONDS_PER_WEEK = 604800;
+export const TRANSITION_DURATION = 0.3;
+export const TRANSITION_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 /**
  * Number of blocks produced per week.
