@@ -167,7 +167,7 @@ export function Footer() {
                 className="inline-flex items-center gap-2 text-xs font-bold text-aegis-blue hover:text-aegis-purple transition-colors relative z-10"
               >
                 Get Started
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3 h-3" aria-hidden="true" />
               </Link>
             </div>
           </div>
