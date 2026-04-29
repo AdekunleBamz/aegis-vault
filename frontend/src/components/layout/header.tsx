@@ -362,7 +362,7 @@ export function Header() {
                       <link.icon className="w-5 h-5" />
                       {link.label}
                     </div>
-                    <ChevronRight className="w-4 h-4 opacity-50" />
+                    <ChevronRight className="w-4 h-4 opacity-50" aria-hidden="true" />
                   </Link>
                 )
               })}
