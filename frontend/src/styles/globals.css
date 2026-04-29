@@ -106,7 +106,8 @@
 
 @layer utilities {
   .glass {
-    @apply bg-background/40 backdrop-blur-2xl border border-white/5 shadow-[0_8px_32px_0_rgba(0, 0, 0, 0.37)];
+    @apply bg-background/40 backdrop-blur-2xl border border-white/5;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
 
   .glass-card {
@@ -117,7 +118,15 @@
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(var(--aegis-blue))] via-[hsl(var(--aegis-purple))] to-[hsl(var(--aegis-cyan))];
+    background-image: linear-gradient(
+      to right,
+      hsl(var(--aegis-blue)),
+      hsl(var(--aegis-purple)),
+      hsl(var(--aegis-cyan))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .glow-blue {
