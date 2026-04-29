@@ -134,7 +134,7 @@ export function RecentActivity() {
                       </p>
                     </div>
 
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity">
                       <ExternalLink className="w-3.5 h-3.5 text-muted-foreground/40" />
                     </div>
                   </motion.a>
