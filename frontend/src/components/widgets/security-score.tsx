@@ -97,7 +97,7 @@ export function SecurityScore() {
                     className="flex items-center gap-2 px-4 py-2 bg-muted/50 hover:bg-muted rounded-full text-xs font-black uppercase tracking-widest transition-all"
                 >
                     <Info className="w-3.5 h-3.5" aria-hidden="true" />
-                    Detail Report
+                    Detailed Report
                 </button>
             </div>
         </div>
