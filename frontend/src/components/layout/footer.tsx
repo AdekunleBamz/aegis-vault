@@ -141,6 +141,7 @@ export function Footer() {
                     target={link.external ? '_blank' : undefined}
                     rel={link.external ? 'noopener noreferrer' : undefined}
                     aria-label={link.external ? `Open ${link.label} in a new tab` : `Navigate to ${link.label}`}
+                    title={link.label}
                     className="text-muted-foreground hover:text-foreground text-sm transition-colors flex items-center gap-1 group"
                   >
                     {link.label}
