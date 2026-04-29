@@ -225,7 +225,7 @@ export function Header() {
                 <ChevronRight className={cn(
                   "w-4 h-4 text-muted-foreground transition-transform duration-300",
                   showWalletMenu ? "rotate-90" : ""
-                )} />
+                )} aria-hidden="true" />
               </button>
 
               <AnimatePresence>
