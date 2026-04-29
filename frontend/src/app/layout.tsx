@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     images: ['/images/logo.png'],
   },
   other: {
-    'talentapp:project_verification': '36aec8876745b73a508e63b8c62b758a9b3cbf52bf469e2db41d5c2a1a65294eab81b60bd435d913b20894a9a09e86672a56efc5f7ad3da8df4f45caf9523e2e',
+    'talentapp:project_verification': '97f1417eea4c614858708ed913cea3f5dfc4b32d144515bedc0e919f0802e580b4b5603400b6ba05c7c6e0143dcb77958b1d2649f88c4b5c27e873f7fee1702f',
   },
 };
 
