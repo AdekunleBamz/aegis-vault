@@ -136,18 +136,11 @@ export function Header() {
     };
   }, []);
 
-  const navLinks = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/stake', label: 'Stake', icon: Layers },
-    { href: '/strategies', label: 'Strategies', icon: Cpu },
-    { href: '/analytics', label: 'Analytics', icon: PieChart },
-    { href: '/ecosystem', label: 'Ecosystem', icon: Globe },
-    { href: '/positions', label: 'Positions', icon: History },
-    { href: '/governance', label: 'Governance', icon: Vote },
-    { href: '/security', label: 'Transparency', icon: ShieldCheck },
-    { href: '/stats', label: 'Protocol Stats', icon: BarChart3 },
-    { href: '/tiers', label: 'Tiers', icon: ShieldCheck },
-  ];
+  const isActiveRoute = (href: string) => {
+    if (!pathname) return false;
+    if (href === '/') return pathname === '/';
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
     <header role="banner"
