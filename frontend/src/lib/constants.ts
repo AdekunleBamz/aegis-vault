@@ -56,19 +56,9 @@ export const SECONDS_PER_WEEK = 604800;
 export const BLOCKS_PER_WEEK = 1008;
 
 /**
- * Number of blocks produced per year.
- */
-export const BLOCKS_PER_YEAR = 52560;
-
-/**
  * Average time between blocks in minutes.
  */
 export const AVG_BLOCK_TIME_MINUTES = 10;
-
-/**
- * Cooldown period in blocks before rewards can be claimed.
- */
-export const COOLDOWN_BLOCKS = 144;
 
 /**
  * Decimal precision for STX token display formatting.
