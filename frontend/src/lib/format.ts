@@ -8,7 +8,7 @@
  * @see {@link https://github.com/AdekunleBamz/aegis-vault}
  */
 
-import { AVG_BLOCK_TIME_MINUTES, STX_DECIMALS, AGS_DECIMALS } from './constants';
+import { AVG_BLOCK_TIME_MINUTES, STX_DECIMALS, AGS_DECIMALS, MICROSTX_PER_STX } from './constants';
 
 const STX_FORMATTER = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
@@ -26,7 +26,7 @@ const AGS_FORMATTER = new Intl.NumberFormat('en-US', {
  */
 export function formatSTX(microStx: string | number | bigint): string {
   const value = BigInt(microStx);
-  const stx = Number(value) / MICRO_STX_DENOMINATOR;
+  const stx = Number(value) / MICROSTX_PER_STX;
   return STX_FORMATTER.format(stx);
 }
 

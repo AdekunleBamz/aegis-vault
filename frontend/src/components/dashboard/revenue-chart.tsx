@@ -38,7 +38,7 @@ export function RevenueChart() {
                     <div key={i} className="absolute w-full h-px bg-border/20" style={{ bottom: `${i * 33.3}%` }} />
                 ))}
 
-                {data.map((h, i) => (
+                {REVENUE_DATA.map((h, i) => (
                     <div key={i} className="flex-1 h-full flex flex-col justify-end items-center gap-4 group/bar">
                         {/* Tooltip */}
                         <div className="absolute bottom-[110%] mb-2 opacity-0 group-hover/bar:opacity-100 transition-all scale-90 group-hover/bar:scale-100 pointer-events-none z-20">
@@ -53,12 +53,12 @@ export function RevenueChart() {
                             transition={{ delay: i * 0.05, duration: 1, ease: 'circOut' }}
                             className={cn(
                                 "w-full rounded-t-2xl transition-all duration-300 relative overflow-hidden",
-                                i === data.length - 1
+                                i === REVENUE_DATA.length - 1
                                     ? "bg-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]"
                                     : "bg-emerald-500/20 group-hover/bar:bg-emerald-500/40"
                             )}
                         >
-                            {i === data.length - 1 && (
+                            {i === REVENUE_DATA.length - 1 && (
                                 <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent" />
                             )}
                         </motion.div>
