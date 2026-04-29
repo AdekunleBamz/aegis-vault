@@ -213,6 +213,7 @@ export function Header() {
               <button type="button"
                 onClick={() => setShowWalletMenu(!showWalletMenu)}
                 aria-label="Wallet menu"
+                title={showWalletMenu ? "Close wallet menu" : "Open wallet menu"}
                 aria-expanded={showWalletMenu}
                 aria-haspopup="menu"
                 aria-controls="wallet-account-menu"
