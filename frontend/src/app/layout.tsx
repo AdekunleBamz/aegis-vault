@@ -10,6 +10,7 @@ import { PerformanceMonitor } from '@/components/ui/performance-monitor';
 const outfit = Outfit({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://aegisvault-app.vercel.app'),
   title: 'Aegis Vault | Premium Bitcoin DeFi Staking & Yield Optimization',
   description: 'The premier yield optimization protocol on Stacks. Secure, non-custodial Bitcoin DeFi with automated strategies, advanced governance, and institutional-grade analytics.',
   keywords: ['Stacks', 'Bitcoin', 'DeFi', 'Staking', 'Yield Farming', 'Crypto', 'Aegis Vault', 'Smart Contracts'],
