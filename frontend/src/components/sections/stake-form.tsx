@@ -32,6 +32,26 @@ function formatAmount(value: number): string {
 }
 
 export function StakeForm() {
+  const { address, isConnected, connect } = useWallet();
+  const { stxBalance } = useBalances(address || '');
+  const { stake, isLoading, error } = useStaking(address || '');
+  const [amount, setAmount] = useState('');
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const balanceSTX = Number(stxBalance) / 1_000_000;
+  const numAmount = Number(amount || 0);
+
+  const hasError = useMemo(() => {
+    if (validationError) return validationError;
+    if (!amount.trim()) return null;
+    if (!Number.isFinite(numAmount) || numAmount <= 0) {
+      return 'Enter a valid STX amount';
+    }
+    if (numAmount > balanceSTX) {
+      return 'Amount exceeds available balance';
+    }
+    return null;
+  }, [amount, balanceSTX, numAmount, validationError]);
 
   const setSuggestedAmount = (value: number) => {
     const safeBalance = Number.isFinite(balanceSTX) && balanceSTX >= 0 ? balanceSTX : 0;
@@ -168,7 +188,7 @@ export function StakeForm() {
                     Available Balance
                   </p>
                   <p className="mt-2 text-2xl font-black tabular-nums">
-                    {balanceSTX.toLocaleString(undefined, { maximumFractionDigits: 2 })} STX
+                    {formatSTX(stxBalance)} STX
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Use quick-fill controls below to prefill a sensible deposit size.

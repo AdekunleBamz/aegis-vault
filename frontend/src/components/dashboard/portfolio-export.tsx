@@ -15,6 +15,20 @@ export function PortfolioExport() {
     const [status, setStatus] = useState<'idle' | 'generating' | 'success'>('idle');
     const [format, setFormat] = useState<'PDF' | 'CSV' | 'JSON'>('PDF');
 
+    const handleExport = async () => {
+        setStatus('generating');
+
+        await new Promise((resolve) => {
+            setTimeout(resolve, 900);
+        });
+
+        setStatus('success');
+
+        setTimeout(() => {
+            setStatus('idle');
+        }, 1800);
+    };
+
     return (
         <div className="p-8 lg:p-10 rounded-[40px] bg-foreground text-background shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-10 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
