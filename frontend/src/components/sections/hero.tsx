@@ -185,7 +185,7 @@ export function Hero() {
               <Globe className="w-4 h-4 text-blue-500/50 group-hover:text-blue-500 transition-colors" aria-hidden="true" />
               Fully Decentralized
             </div>
-            <div className="flex items-center gap-2 group hover:text-foreground transition-colors">
+            <div className="flex items-center gap-2 group hover:text-foreground transition-colors" title="Reward tracking freshness signal">
               <Zap className="w-4 h-4 text-purple-500/50 group-hover:text-purple-500 transition-colors" />
               Real-time Rewards
             </div>
