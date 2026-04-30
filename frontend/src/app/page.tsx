@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       <div className="flex-1">
-        <div className="container pt-8 pb-2 flex flex-wrap items-center justify-center gap-3" role="navigation" aria-label="Page sections">
+        <div className="container pt-8 pb-2 flex flex-wrap items-center justify-center gap-3" role="navigation" aria-label="Page sections" title="Quick links to page sections">
           <a
             href="#protocol-overview"
             className="rounded-full border border-border/70 bg-muted/30 px-4 py-2 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:border-aegis-blue/40 transition-colors"
