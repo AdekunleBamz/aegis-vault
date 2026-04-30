@@ -55,7 +55,7 @@ export function Button({
     >
       {isLoading ? (
         <span className="flex items-center gap-2" role="status" aria-live="polite">
-          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
+          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle
               className="opacity-25"
               cx="12"
