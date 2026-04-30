@@ -50,7 +50,7 @@ export function Breadcrumbs({
             {item.href && item.label !== '...' ? (
               <a
                 href={item.href}
-                className="flex items-center gap-1.5 text-zinc-400 hover:text-zinc-200 transition-colors"
+                className="flex items-center gap-1.5 text-zinc-400 hover:text-zinc-200 transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/70"
               >
                 {item.icon && <span className="w-4 h-4">{item.icon}</span>}
                 {item.label}
