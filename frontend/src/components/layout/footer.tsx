@@ -175,7 +175,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-border mt-16 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground text-xs" title="Copyright notice">
             &copy; {currentYear} Aegis Vault. All rights reserved.
           </p>
           <div className="flex items-center gap-8">
