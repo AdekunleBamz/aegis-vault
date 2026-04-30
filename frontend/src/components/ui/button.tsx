@@ -50,6 +50,7 @@ export function Button({
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`}
       disabled={disabled || isLoading}
       aria-busy={isLoading}
+      aria-atomic={isLoading ? 'true' : undefined}
       aria-live={isLoading ? "polite" : "off"}
       {...props}
     >
