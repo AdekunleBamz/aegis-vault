@@ -226,7 +226,7 @@ export function Hero() {
                 ))}
               </div>
 
-              <div className="mt-6 rounded-[28px] border border-aegis-purple/20 bg-gradient-to-br from-aegis-purple/10 via-background/40 to-aegis-cyan/10 p-5">
+              <div className="mt-6 rounded-[28px] border border-aegis-purple/20 bg-gradient-to-br from-aegis-purple/10 via-background/40 to-aegis-cyan/10 p-5" aria-label="Deposit workflow steps">
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/70">
                   Deposit Workflow
                 </p>
