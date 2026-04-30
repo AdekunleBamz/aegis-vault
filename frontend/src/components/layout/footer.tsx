@@ -160,7 +160,7 @@ export function Footer() {
                 <ShieldCheck className="w-12 h-12" />
               </div>
               <h4 className="text-foreground font-semibold mb-2 text-sm relative z-10">Start Staking</h4>
-              <p className="text-muted-foreground text-xs mb-4 relative z-10">Join 5,000+ stakers securing the network.</p>
+              <p className="text-muted-foreground text-xs mb-4 relative z-10" title="Current staking participation snapshot">Join 5,000+ stakers securing the network.</p>
               <Link
                 href="/stake"
                 aria-label="Start staking now"
