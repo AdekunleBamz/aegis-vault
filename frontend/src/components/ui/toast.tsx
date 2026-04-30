@@ -143,7 +143,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(0, 100 - (elapsed / duration) * 100);
       setProgress(remaining);
-    }, 50);
+    }, 100);
     return () => clearInterval(interval);
   }, [duration]);
 
