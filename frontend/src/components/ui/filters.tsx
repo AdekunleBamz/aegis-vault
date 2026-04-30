@@ -236,7 +236,7 @@ export function DateRangeFilter({
         <button type="button"
           key={preset.id}
           onClick={() => onChange(preset.id)}
-          className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${
+          className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 ${
             selected === preset.id
               ? 'bg-emerald-500 text-white'
               : 'text-gray-400 hover:text-white'
