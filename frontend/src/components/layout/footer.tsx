@@ -164,6 +164,7 @@ export function Footer() {
               <Link
                 href="/stake"
                 aria-label="Start staking now"
+                title="Open the staking page"
                 className="inline-flex items-center gap-2 text-xs font-bold text-aegis-blue hover:text-aegis-purple transition-colors relative z-10"
               >
                 Get Started
