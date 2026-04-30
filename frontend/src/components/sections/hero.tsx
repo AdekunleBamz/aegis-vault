@@ -219,6 +219,7 @@ export function Hero() {
                   <div
                     key={signal.label}
                     className="flex items-center justify-between rounded-[24px] border border-border/60 bg-muted/30 px-4 py-4"
+                    title={`${signal.label}: ${signal.value}`}
                   >
                     <span className="text-sm text-muted-foreground">{signal.label}</span>
                     <span className="text-sm font-bold text-foreground">{signal.value}</span>
