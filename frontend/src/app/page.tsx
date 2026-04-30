@@ -10,18 +10,21 @@ export default function Home() {
           <a
             href="#protocol-overview"
             className="rounded-full border border-border/70 bg-muted/30 px-4 py-2 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:border-aegis-blue/40 transition-colors"
+            title="Jump to protocol overview"
           >
             Overview
           </a>
           <a
             href="#protocol-stats"
             className="rounded-full border border-border/70 bg-muted/30 px-4 py-2 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:border-aegis-blue/40 transition-colors"
+            title="Jump to live protocol stats"
           >
             Live Stats
           </a>
           <a
             href="#stake-entry"
             className="rounded-full border border-border/70 bg-muted/30 px-4 py-2 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:border-aegis-blue/40 transition-colors"
+            title="Jump to staking entry form"
           >
             Start Staking
           </a>
