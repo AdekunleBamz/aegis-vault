@@ -186,6 +186,7 @@ export function Footer() {
                   href={item.href}
                   className="text-muted-foreground hover:text-foreground text-xs transition-colors"
                   aria-label={`Open ${item.label} page`}
+                  title={`Open ${item.label} page`}
                 >
                   {item.label}
                 </Link>
