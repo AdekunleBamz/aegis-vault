@@ -262,7 +262,7 @@ export function Header() {
                           </div>
                           <div className="flex items-center gap-1">
                             <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                            <span className="text-[10px] font-black text-muted-foreground">24ms</span>
+                            <span className="text-[10px] font-black text-muted-foreground" title="Latest network latency estimate">24ms</span>
                           </div>
                         </div>
                         <div className="mt-1 flex items-center justify-between">
