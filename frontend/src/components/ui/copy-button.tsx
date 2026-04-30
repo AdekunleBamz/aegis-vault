@@ -134,6 +134,7 @@ export function TxHashDisplay({
         href={explorerUrl}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`View transaction ${txId} on Explorer (opens in a new tab)`}
         className="p-1.5 text-gray-400 hover:text-white transition-colors"
         title="View on Explorer"
       >
