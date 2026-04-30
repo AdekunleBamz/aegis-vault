@@ -278,7 +278,7 @@ export function PageSizeSelector({
       <select
         value={pageSize}
         onChange={e => onPageSizeChange(Number(e.target.value))}
-        className="px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        className="px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-sm text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
       >
         {options.map(option => (
           <option key={option} value={option}>
