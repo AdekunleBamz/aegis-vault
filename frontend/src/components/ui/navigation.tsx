@@ -279,6 +279,7 @@ export function PageSizeSelector({
         value={pageSize}
         onChange={e => onPageSizeChange(Number(e.target.value))}
         className="px-2 py-1 bg-zinc-800 border border-zinc-700 rounded text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        aria-label="Rows per page"
       >
         {options.map(option => (
           <option key={option} value={option}>
