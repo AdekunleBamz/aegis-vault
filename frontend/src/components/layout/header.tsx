@@ -267,7 +267,7 @@ export function Header() {
                         </div>
                         <div className="mt-1 flex items-center justify-between">
                           <span className="text-[10px] font-bold text-muted-foreground italic">Block Height</span>
-                          <span className="text-[10px] font-black tabular-nums text-aegis-blue">{blockHeight}</span>
+                          <span className="text-[10px] font-black tabular-nums text-aegis-blue" title="Current Stacks block height">{blockHeight}</span>
                         </div>
                       </div>
                     </div>
