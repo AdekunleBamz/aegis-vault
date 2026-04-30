@@ -212,7 +212,7 @@ export function Header() {
                 className="flex items-center gap-3 px-4 py-2 bg-muted/50 hover:bg-muted/80 rounded-full border border-border/50 backdrop-blur-sm transition-all group"
               >
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                <span className="text-xs font-black tabular-nums tracking-wider text-muted-foreground group-hover:text-foreground transition-colors">
+                <span className="text-xs font-black tabular-nums tracking-wider text-muted-foreground group-hover:text-foreground transition-colors" title={address || ""}>
                   {truncateAddress(address || '')}
                 </span>
                 <ChevronRight className={cn(
