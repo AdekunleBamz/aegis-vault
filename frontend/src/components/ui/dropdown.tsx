@@ -255,7 +255,7 @@ export function SelectDropdown({
               {option.icon && <span className="flex-shrink-0">{option.icon}</span>}
               <span>{option.label}</span>
               {option.value === value && (
-                <svg className="w-4 h-4 ml-auto text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 ml-auto text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               )}
