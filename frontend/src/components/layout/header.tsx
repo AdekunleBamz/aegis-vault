@@ -185,6 +185,7 @@ export function Header() {
                 href={link.href}
                 aria-current={isActive ? 'page' : undefined}
                 aria-label={`Navigate to ${link.label} Hub`}
+                title={`Open ${link.label}`}
                 className={cn(
                   "shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-full transition-all flex items-center gap-2",
                   isActive
