@@ -188,7 +188,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
           onClick={handleClose} 
           className="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1 rounded hover:bg-white/10"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
