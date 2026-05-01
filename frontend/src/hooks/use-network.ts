@@ -88,7 +88,7 @@ export function useNetwork(): UseNetworkReturn {
   }, [fetchNetworkInfo]);
 
   const hasError = error !== null;
-  const isStale = lastFetched !== null ? Date.now() - lastFetched > 60_000 : false;
+  const isStale = lastFetched !== null ? Date.now() - lastFetched > NETWORK_STALE_THRESHOLD_MS : false;
 
   return {
     blockHeight,
