@@ -158,7 +158,7 @@ export function SkeletonForm({ fields = 3, className = '' }: { fields?: number; 
 }
 
 // Card skeleton
-export function CardSkeleton() {
+export function CardSkeleton({ fields = 3, className = '' }: { fields?: number; className?: string }) {
   return (
     <div className={`space-y-6 ${className}`}>
       {Array.from({ length: fields }).map((_, i) => (
