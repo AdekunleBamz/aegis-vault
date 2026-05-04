@@ -16,6 +16,7 @@ import React, {
   useState,
   useCallback,
   useEffect,
+  useRef,
   ReactNode,
 } from 'react';
 import { connect as stacksConnect, disconnect as stacksDisconnect, isConnected as stacksIsConnected, getLocalStorage } from '@stacks/connect';
@@ -77,6 +78,8 @@ export function WalletProvider({ children }: WalletProviderProps) {
     network: defaultNetwork,
     error: null,
   });
+  // Prevent opening a second wallet picker if one is already in progress.
+  const connectingRef = useRef(false);
 
   useEffect(() => {
     const checkSession = () => {
@@ -102,10 +105,21 @@ export function WalletProvider({ children }: WalletProviderProps) {
   }, []);
 
   const connect = useCallback(() => {
-    setState((prev) => ({ ...prev, isConnecting: true, error: null }));
+    if (connectingRef.current) return;
+    connectingRef.current = true;
 
+    // `stacksConnect()` opens the `<connect-modal>` wallet-picker overlay and
+    // returns a Promise that resolves only once the user has selected a wallet
+    // AND the wallet extension has approved the request.
+    //
+    // We intentionally do NOT set isConnecting here so the Connect button
+    // stays enabled and visible while the modal is open (the modal itself
+    // provides all the loading UI). isConnecting is set to true only during
+    // the brief extension-auth phase after the user picks a wallet, which
+    // is handled by the .then() callback below.
     stacksConnect()
       .then(() => {
+        connectingRef.current = false;
         const address = getAddressFromStorage();
         setState((prev) => ({
           ...prev,
@@ -115,6 +129,8 @@ export function WalletProvider({ children }: WalletProviderProps) {
         }));
       })
       .catch(() => {
+        connectingRef.current = false;
+        // User cancelled the picker or the wallet rejected — nothing to do.
         setState((prev) => ({ ...prev, isConnecting: false }));
       });
   }, []);
