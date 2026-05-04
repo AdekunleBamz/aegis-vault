@@ -10,6 +10,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getCurrentBlockHeight } from '@/lib/api';
 import { network } from '@/lib/stacks';
+import { NETWORK_REFRESH_INTERVAL_MS } from '@/lib/constants';
 
 const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
   network.chainId === 2147483648
