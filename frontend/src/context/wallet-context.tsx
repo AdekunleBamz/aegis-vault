@@ -18,8 +18,8 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { AppConfig, UserSession, showConnect } from '@stacks/connect';
-import { STACKS_MAINNET, STACKS_TESTNET, StacksNetwork } from '@stacks/network';
+import { connect as stacksConnect, disconnect as stacksDisconnect, isConnected as stacksIsConnected, getLocalStorage } from '@stacks/connect';
+import { STACKS_MAINNET, StacksNetwork } from '@stacks/network';
 
 /**
  * Internal state shape for wallet connection.
@@ -41,17 +41,23 @@ interface WalletContextValue extends WalletState {
 
 const WalletContext = createContext<WalletContextValue | undefined>(undefined);
 
-const appConfig = new AppConfig(['store_write', 'publish_data']);
-const userSession = new UserSession({ appConfig });
-
 // Default to mainnet, but can be configured
 const defaultNetwork = STACKS_MAINNET;
 
-// How often to poll the Stacks user session for sign-in / sign-out changes
+// How often to poll the connection state for sign-out changes
 const SESSION_POLL_INTERVAL_MS = 1000;
 
 interface WalletProviderProps {
   children: ReactNode;
+}
+
+function getAddressFromStorage(): string | null {
+  try {
+    const data = getLocalStorage();
+    return (data as { addresses?: { stx?: { address: string }[] } })?.addresses?.stx?.[0]?.address ?? null;
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -73,69 +79,48 @@ export function WalletProvider({ children }: WalletProviderProps) {
   });
 
   useEffect(() => {
-    const checkUserSession = () => {
-      if (userSession.isUserSignedIn()) {
-        const userData = userSession.loadUserData();
-        const currentAddress = userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet;
+    const checkSession = () => {
+      const connected = stacksIsConnected();
+      const address = connected ? getAddressFromStorage() : null;
 
-        setState((prev) => {
-          if (prev.address !== currentAddress) {
-            return {
-              ...prev,
-              address: currentAddress,
-              isConnected: true,
-              isConnecting: false,
-            };
-          }
-          return prev;
-        });
-      } else {
-        setState((prev) => {
-          if (prev.isConnected) {
-            return {
-              ...prev,
-              address: null,
-              isConnected: false,
-              isConnecting: false,
-            };
-          }
-          return prev;
-        });
-      }
+      setState((prev) => {
+        if (prev.isConnected !== connected || prev.address !== address) {
+          return {
+            ...prev,
+            address,
+            isConnected: connected,
+            isConnecting: prev.isConnecting && !connected ? prev.isConnecting : false,
+          };
+        }
+        return prev;
+      });
     };
 
-    checkUserSession();
-    const interval = setInterval(checkUserSession, SESSION_POLL_INTERVAL_MS);
+    checkSession();
+    const interval = setInterval(checkSession, SESSION_POLL_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
   const connect = useCallback(() => {
     setState((prev) => ({ ...prev, isConnecting: true, error: null }));
 
-    showConnect({
-      appDetails: {
-        name: 'Aegis Vault',
-        icon: window.location.origin + '/images/logo.png',
-      },
-      redirectTo: '/',
-      onFinish: () => {
-        const userData = userSession.loadUserData();
+    stacksConnect()
+      .then(() => {
+        const address = getAddressFromStorage();
         setState((prev) => ({
           ...prev,
-          address: userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet,
+          address,
           isConnected: true,
           isConnecting: false,
         }));
-      },
-      onCancel: () => {
+      })
+      .catch(() => {
         setState((prev) => ({ ...prev, isConnecting: false }));
-      },
-      userSession,
-    });
+      });
   }, []);
 
   const disconnect = useCallback(() => {
-    userSession.signUserOut();
+    stacksDisconnect();
     setState({
       address: null,
       isConnected: false,
