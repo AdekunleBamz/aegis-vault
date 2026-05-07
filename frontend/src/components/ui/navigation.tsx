@@ -317,6 +317,7 @@ export function LinkTabs({ tabs, activeHref, className = '' }: LinkTabsProps) {
           <a
             key={tab.href}
             href={tab.href}
+            aria-current={isActive ? 'page' : undefined}
             className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors ${
               isActive
                 ? 'border-amber-500 text-amber-400'
