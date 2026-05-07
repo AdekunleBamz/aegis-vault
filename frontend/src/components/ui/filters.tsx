@@ -169,7 +169,7 @@ export function SortDropdown({
         {onDirectionChange && (
           <button type="button"
             onClick={() => onDirectionChange(direction === 'asc' ? 'desc' : 'asc')}
-            className="p-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-white hover:border-gray-600 transition-colors"
+            className="p-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-white hover:border-gray-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
             title={direction === 'asc' ? 'Ascending' : 'Descending'}
           >
             <svg
