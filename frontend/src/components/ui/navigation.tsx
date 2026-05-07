@@ -374,6 +374,7 @@ export function SidebarNav({ items, activeHref, className = '' }: SidebarNavProp
         <a
           href={hasChildren ? undefined : item.href}
           onClick={hasChildren ? () => toggleExpand(item.href) : undefined}
+          aria-expanded={hasChildren ? isExpanded : undefined}
           className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
             isActive
               ? 'bg-amber-500/10 text-amber-400'
