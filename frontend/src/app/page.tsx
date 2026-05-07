@@ -26,7 +26,7 @@ export default function Home() {
             Start Staking
           </a>
         </div>
-        <section id="protocol-overview" className="scroll-mt-28">
+        <section id="protocol-overview" className="scroll-mt-28" aria-label="Protocol overview section">
           <Hero />
         </section>
         <section id="protocol-stats" className="scroll-mt-28">
