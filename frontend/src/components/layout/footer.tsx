@@ -103,6 +103,7 @@ export function Footer() {
                   <span
                     key={social.label}
                     aria-disabled="true"
+                    aria-label={` coming soon`}
                     title={`${social.label} coming soon`}
                     className="w-10 h-10 rounded-full bg-muted/50 border border-border/30 flex items-center justify-center text-muted-foreground/40 cursor-not-allowed"
                   >
