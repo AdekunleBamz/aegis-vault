@@ -29,7 +29,7 @@ export default function Home() {
         <section id="protocol-overview" className="scroll-mt-28">
           <Hero />
         </section>
-        <section id="protocol-stats" className="scroll-mt-28">
+        <section id="protocol-stats" className="scroll-mt-28" aria-label="Live protocol statistics section">
           <Stats />
         </section>
         <section id="stake-entry" className="scroll-mt-28">
