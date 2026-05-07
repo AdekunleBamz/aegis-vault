@@ -312,6 +312,7 @@ export function Header() {
           <button type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            title={mobileMenuOpen ? "Close main navigation" : "Open main navigation"}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-primary-navigation"
             className="md:hidden p-2.5 text-muted-foreground hover:text-foreground transition-colors bg-muted/50 rounded-full border border-border/50"
