@@ -125,6 +125,7 @@ export function Hero() {
             <Link
               href="#stake-panel"
               aria-label="Jump to the staking calculator"
+              title="Jump to staking calculator"
               className="px-8 py-4 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground font-bold text-lg hover:bg-muted/50 transition-all flex items-center justify-center gap-2"
             >
               Estimate My Rewards
