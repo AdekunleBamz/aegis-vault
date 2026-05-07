@@ -171,6 +171,7 @@ export function SortDropdown({
             onClick={() => onDirectionChange(direction === 'asc' ? 'desc' : 'asc')}
             className="p-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 hover:text-white hover:border-gray-600 transition-colors"
             title={direction === 'asc' ? 'Ascending' : 'Descending'}
+            aria-label={`Sort direction: ${direction === 'asc' ? 'ascending' : 'descending'}`}
           >
             <svg
               className={`w-4 h-4 transition-transform ${direction === 'asc' ? 'rotate-180' : ''}`}
