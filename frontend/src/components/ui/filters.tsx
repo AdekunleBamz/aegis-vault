@@ -59,7 +59,7 @@ export function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`${chipClasses} gap-1.5 px-3 py-1.5`}
+      className={`${chipClasses} gap-1.5 px-3 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60`}
     >
       <span>{label}</span>
       {count !== undefined && (
