@@ -158,7 +158,7 @@ export function BannerAlert({
       {action && (
         <button type="button"
           onClick={action.onClick}
-          className="font-medium underline hover:no-underline ml-2"
+          className="font-medium underline hover:no-underline ml-2 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/60"
         >
           {action.label}
         </button>
