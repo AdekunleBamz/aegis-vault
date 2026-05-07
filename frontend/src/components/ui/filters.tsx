@@ -44,7 +44,7 @@ export function FilterChip({
         <button
           type="button"
           onClick={onRemove}
-          className="mr-1 p-0.5 hover:bg-white/20 rounded-full"
+          className="mr-1 p-0.5 hover:bg-white/20 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           aria-label={`Remove ${label} filter`}
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
