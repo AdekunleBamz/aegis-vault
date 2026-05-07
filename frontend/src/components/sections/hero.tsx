@@ -232,7 +232,7 @@ export function Hero() {
                 </p>
                 <div className="mt-4 grid gap-3">
                   {['Connect wallet', 'Preview rewards', 'Confirm stake'].map((step, index) => (
-                    <div key={step} className="flex items-center gap-3">
+                    <div key={step} className="flex items-center gap-3" title={`${index + 1}. ${step}`}>
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-xs font-black text-background">
                         0{index + 1}
                       </div>
