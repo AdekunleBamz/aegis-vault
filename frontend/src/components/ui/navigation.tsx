@@ -409,7 +409,7 @@ export function SidebarNav({ items, activeHref, className = '' }: SidebarNavProp
   };
 
   return (
-    <nav className={`space-y-1 ${className}`}>
+    <nav aria-label="Sidebar navigation" className={`space-y-1 ${className}`}>
       {items.map(item => renderItem(item))}
     </nav>
   );
