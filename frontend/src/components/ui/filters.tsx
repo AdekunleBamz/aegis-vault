@@ -154,7 +154,7 @@ export function SortDropdown({
       <div className="flex items-center gap-2">
         <button type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-300 hover:border-gray-600 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-300 hover:border-gray-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60"
         >
           <span className="text-sm">Sort by: {selectedOption?.label || 'Select'}</span>
           <svg
