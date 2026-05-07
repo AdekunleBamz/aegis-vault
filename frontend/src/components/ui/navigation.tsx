@@ -172,6 +172,7 @@ export function Pagination({
                 ? 'bg-amber-500 border-amber-500 text-black font-medium'
                 : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
             }`}
+            aria-label={`Go to page ${pageNum}`}
             aria-current={isActive ? 'page' : undefined}
           >
             {pageNum}
