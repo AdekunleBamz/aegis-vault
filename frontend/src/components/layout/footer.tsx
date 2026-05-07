@@ -75,7 +75,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
           <div className="md:col-span-4 lg:col-span-5">
-            <Link href="/" className="flex items-center gap-2.5 group mb-6" aria-label="Aegis Vault Home">
+            <Link href="/" className="flex items-center gap-2.5 group mb-6" aria-label="Aegis Vault Home" title="Return to Aegis Vault home">
               <div className="w-10 h-10 bg-gradient-to-br from-aegis-blue to-aegis-purple rounded-xl flex items-center justify-center shadow-lg shadow-aegis-blue/20">
                 <ShieldCheck className="w-6 h-6 text-white" aria-hidden="true" />
               </div>
