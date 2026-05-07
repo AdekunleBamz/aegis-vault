@@ -99,6 +99,7 @@ export function Modal({
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? 'modal-title' : undefined}
+      aria-describedby={description ? 'modal-description' : undefined}
     >
       <div
         className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-200
@@ -128,7 +129,7 @@ export function Modal({
                 </h3>
               )}
               {description && (
-                <p className="mt-1 text-sm text-gray-400">{description}</p>
+                <p id="modal-description" className="mt-1 text-sm text-gray-400">{description}</p>
               )}
             </div>
             {showCloseButton && (
