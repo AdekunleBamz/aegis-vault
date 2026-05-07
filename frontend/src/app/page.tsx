@@ -32,7 +32,7 @@ export default function Home() {
         <section id="protocol-stats" className="scroll-mt-28">
           <Stats />
         </section>
-        <section id="stake-entry" className="scroll-mt-28">
+        <section id="stake-entry" className="scroll-mt-28" aria-label="Staking entry section">
           <StakeForm />
         </section>
       </div>
