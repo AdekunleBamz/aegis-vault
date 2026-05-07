@@ -102,6 +102,7 @@ export function Hero() {
             {isConnected ? (
               <Link
                 href="/stake"
+                title="Open staking flow"
                 className="group relative px-8 py-4 bg-foreground text-background rounded-full font-bold text-lg hover:shadow-[0_0_30px_-5px_hsl(var(--aegis-blue)/0.5)] transition-all overflow-hidden"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
