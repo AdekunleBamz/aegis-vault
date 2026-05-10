@@ -122,6 +122,7 @@ export function Alert({
  */
 export interface BannerAlertProps extends Omit<AlertProps, 'dismissible'> {
   action?: {
+    /** Button label for the CTA action. */
     label: string;
     onClick: () => void;
   };
