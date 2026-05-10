@@ -40,7 +40,15 @@ export const formatUnlockDate = (ts) => new Date(ts).toLocaleDateString();
 
 export const formatPositionId = (id) => "POS-" + id;
 
-export const formatProposalStatus = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+/**
+ * Formats a proposal status for display with title case.
+ * @param {string|null|undefined} s - Raw status string
+ * @returns {string} Title-cased status
+ */
+export const formatProposalStatus = (s) => {
+  if (!s) return '';
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
 
 export const formatVoteWeight = (v) => (v / 1e6).toFixed(2) + " AGS";
 
