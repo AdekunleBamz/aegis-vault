@@ -6,6 +6,11 @@
  */
 export const isValidDepositAmount = (v) => !isNaN(Number(v)) && Number(v) >= 1000000;
 
+/**
+ * Validates a lock period is one of the supported day counts.
+ * @param {*} v - Value to validate
+ * @returns {boolean}
+ */
 export const isValidLockPeriod = (v) => [7, 30, 90, 180].includes(Number(v));
 
 export const isValidWithdrawalAmount = (v) => !isNaN(Number(v)) && Number(v) > 0;
