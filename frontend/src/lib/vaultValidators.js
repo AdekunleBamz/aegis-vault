@@ -38,6 +38,11 @@ export const isValidBlockHeight = (v) => Number.isInteger(Number(v)) && Number(v
 
 export const isValidFeeAmount = (v) => !isNaN(Number(v)) && Number(v) >= 0;
 
+/**
+ * Validates an APY in basis points is within the allowed range (0-10000).
+ * @param {*} v - Value to validate
+ * @returns {boolean}
+ */
 export const isValidAPYBps = (v) => Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) <= 10000;
 
 export const isValidMaxPositions = (v) => Number.isInteger(Number(v)) && Number(v) >= 1;
