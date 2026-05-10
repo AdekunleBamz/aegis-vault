@@ -100,6 +100,7 @@ export class AegisError extends Error {
 // ERROR MESSAGES
 // ============================================================================
 
+/** All user-facing error messages keyed by error code. */
 export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   WALLET_NOT_CONNECTED: 'Please connect your wallet to continue.',
   WALLET_CONNECTION_REJECTED: 'Wallet connection was rejected. Please try again.',
