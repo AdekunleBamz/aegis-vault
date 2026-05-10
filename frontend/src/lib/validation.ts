@@ -462,4 +462,14 @@ export function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+/**
+ * Returns true if the value is a safe positive integer (e.g. position IDs, block counts).
+ *
+ * @param value - The value to check
+ * @returns True if `value` is a safe positive integer
+ */
+export function isSafePositiveInt(value: unknown): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value > 0;
+}
+
 export default validation
