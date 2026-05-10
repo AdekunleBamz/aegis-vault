@@ -8,6 +8,11 @@ export const formatDepositAmount = (v) => (v / 1e6).toFixed(2) + " STX";
 
 export const formatLockPeriod = (days) => days + " days";
 
+/**
+ * Formats an APY in basis points as a percentage string.
+ * @param {number} bps - APY in basis points (1 BPS = 0.01%)
+ * @returns {string} e.g. "8.00%"
+ */
 export const formatAPYDisplay = (bps) => (bps / 100).toFixed(2) + "%";
 
 export const formatPositionValue = (v) => (v / 1e6).toFixed(6) + " STX";
