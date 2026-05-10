@@ -17,6 +17,11 @@ export const formatAPYDisplay = (bps) => (bps / 100).toFixed(2) + "%";
 
 export const formatPositionValue = (v) => (v / 1e6).toFixed(6) + " STX";
 
+/**
+ * Formats a reward amount in microAGS as an AGS decimal string.
+ * @param {number} v - Amount in micro-AGS
+ * @returns {string} e.g. "1.000000 AGS"
+ */
 export const formatRewardAmount = (v) => (v / 1e6).toFixed(6) + " AGS";
 
 export const formatWithdrawalFee = (bps) => (bps / 100).toFixed(2) + "% fee";
