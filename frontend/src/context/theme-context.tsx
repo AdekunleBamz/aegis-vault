@@ -11,6 +11,7 @@ import React, {
 
 type Theme = 'dark' | 'light';
 
+/** Context value exposed by ThemeProvider. */
 interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
