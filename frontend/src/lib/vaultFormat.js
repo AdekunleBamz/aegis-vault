@@ -36,7 +36,15 @@ export const formatStakerCount = (n) => n + " stakers";
 
 export const formatBlocksRemaining = (n) => n + " blocks";
 
-export const formatUnlockDate = (ts) => new Date(ts).toLocaleDateString();
+/**
+ * Formats the unlock date from a Unix timestamp.
+ * @param {number|null|undefined} ts - Timestamp in ms
+ * @returns {string} Locale date string or empty string
+ */
+export const formatUnlockDate = (ts) => {
+  if (ts == null) return '';
+  return new Date(ts).toLocaleDateString();
+};
 
 export const formatPositionId = (id) => "POS-" + id;
 
