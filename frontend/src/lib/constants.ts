@@ -171,3 +171,8 @@ export const LOCK_PERIOD_LABELS: Record<number, string> = {
   14: '2 weeks',
   30: '1 month',
 };
+
+/**
+ * Character limit for user-provided position notes or labels.
+ */
+export const MAX_POSITION_NOTE_LENGTH = 120;
