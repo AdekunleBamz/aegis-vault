@@ -1,7 +1,9 @@
 import React, { forwardRef, useId, useState } from 'react';
 
+/** Props for the accessible Input component. */
 interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix'> {
   label?: string;
+  /** Validation error message shown below the field. */
   error?: string;
   helperText?: string;
   suffix?: React.ReactNode;
