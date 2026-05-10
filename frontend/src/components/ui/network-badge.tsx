@@ -6,6 +6,10 @@ import { Globe, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useWallet } from '@/context/wallet-context';
 
+/**
+ * Displays the current Stacks network (Mainnet/Testnet) with a status indicator.
+ * Uses the wallet context to detect the active chainId.
+ */
 export function NetworkBadge() {
     const { network, isConnected } = useWallet();
 
