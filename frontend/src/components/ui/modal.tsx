@@ -2,6 +2,7 @@
 
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 
+/** Props for the accessible Modal dialog component. */
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -10,6 +11,7 @@ interface ModalProps {
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   showCloseButton?: boolean;
+  /** Close the modal when clicking the backdrop overlay. */
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   footer?: React.ReactNode;
