@@ -18,6 +18,7 @@ const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
     : network.chainId === 1
       ? 'mainnet'
       : 'devnet';
+/** Milliseconds after which network data is considered stale. */
 const NETWORK_STALE_THRESHOLD_MS = 60_000;
 
 /**
