@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 
+/** Describes a single tab entry in the Tabs component. */
 interface Tab {
   id: string;
   label: string;
@@ -11,6 +12,7 @@ interface Tab {
   content: React.ReactNode;
 }
 
+/** Props for the Tabs component. */
 interface TabsProps {
   tabs: Tab[];
   defaultTab?: string;
