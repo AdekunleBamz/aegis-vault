@@ -1,6 +1,8 @@
 import React from 'react';
 
+/** Props for the Progress bar component. */
 interface ProgressProps {
+  /** Current progress value (0 – max). */
   value: number;
   max?: number;
   size?: 'xs' | 'sm' | 'md' | 'lg';
