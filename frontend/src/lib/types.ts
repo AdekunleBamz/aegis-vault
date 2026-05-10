@@ -383,3 +383,9 @@ export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
  * @example Awaited<Promise<StakePosition>> // StakePosition
  */
 export type Resolved<T> = T extends Promise<infer U> ? U : T;
+
+/**
+ * A non-nullable version of a type — strips `null` and `undefined`.
+ * @example NonNullish<string | null | undefined> // string
+ */
+export type NonNullish<T> = T extends null | undefined ? never : T;
