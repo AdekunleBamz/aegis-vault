@@ -181,3 +181,9 @@ export const MAX_POSITION_NOTE_LENGTH = 120;
  * Default UI theme for new Aegis Vault users.
  */
 export const DEFAULT_THEME = 'dark';
+
+/**
+ * Number of blocks after which a pending transaction is considered stuck.
+ * At ~10 min/block this is approximately 30 minutes.
+ */
+export const STUCK_TX_THRESHOLD_BLOCKS = 3;
