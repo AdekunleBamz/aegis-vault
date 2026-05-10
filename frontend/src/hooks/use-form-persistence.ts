@@ -6,6 +6,7 @@ import React from 'react';
  */
 export type FormState = Record<string, unknown>;
 
+/** Return value of the useFormPersistence hook. */
 export interface UseFormPersistenceReturn {
   values: FormState;
   updateField: (fieldName: string, value: unknown) => void;
