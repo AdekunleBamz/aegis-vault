@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+/** The loading/data/error state returned by useFetch. */
 export interface FetchState<T> {
   data: T | null;
   isLoading: boolean;
@@ -9,6 +10,7 @@ export interface FetchState<T> {
   isValidating: boolean;
 }
 
+/** Options to control caching and refresh behaviour of useFetch. */
 export interface UseFetchOptions {
   refreshInterval?: number;
   revalidateOnFocus?: boolean;
