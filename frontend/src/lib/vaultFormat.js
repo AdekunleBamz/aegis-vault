@@ -30,6 +30,11 @@ export const formatEarlyExitPenalty = (bps) => (bps / 100).toFixed(2) + "% penal
 
 export const formatGovernanceVotes = (n) => n + " votes";
 
+/**
+ * Formats a vault total value locked in microSTX as a STX string.
+ * @param {number} v - TVL in microSTX
+ * @returns {string} e.g. "1500.00 STX"
+ */
 export const formatVaultTVL = (v) => (v / 1e6).toFixed(2) + " STX";
 
 export const formatStakerCount = (n) => n + " stakers";
