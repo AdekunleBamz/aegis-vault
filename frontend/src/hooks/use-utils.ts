@@ -339,3 +339,15 @@ export function useCopyToClipboard(): UseCopyToClipboardReturn {
 
   return { copiedText, isCopied, copy };
 }
+
+/**
+ * Hook that returns true when the component has mounted on the client.
+ * Useful to avoid hydration mismatches in SSR environments.
+ *
+ * @returns `true` after first client-side render, `false` during SSR
+ */
+export function useIsMounted(): boolean {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  return mounted;
+}
