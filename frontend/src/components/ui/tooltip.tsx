@@ -2,10 +2,12 @@
 
 import React, { useState, useRef, useEffect, useCallback, ReactNode, useId } from 'react';
 
+/** Props for the Tooltip component. */
 export interface TooltipProps {
   content: ReactNode;
   children: ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';
+  /** Milliseconds to wait before showing the tooltip (default 200). */
   delay?: number;
   className?: string;
 }
