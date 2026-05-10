@@ -56,3 +56,6 @@ export const MAX_APY_BPS = 5000
 
 /** Minimum AGS token balance required to submit a governance proposal */
 export const MIN_GOVERNANCE_PROPOSAL_BALANCE = 1_000_000
+
+/** Default UI refresh interval for vault position data (ms) */
+export const VAULT_UI_REFRESH_MS = 30_000
