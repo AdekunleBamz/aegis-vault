@@ -59,3 +59,6 @@ export const MIN_GOVERNANCE_PROPOSAL_BALANCE = 1_000_000
 
 /** Default UI refresh interval for vault position data (ms) */
 export const VAULT_UI_REFRESH_MS = 30_000
+
+/** Maximum character length for a vault position label */
+export const VAULT_POSITION_LABEL_MAX_LENGTH = 48
