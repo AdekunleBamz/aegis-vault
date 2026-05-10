@@ -1,8 +1,10 @@
 import React from 'react';
 
+/** Props for the Button UI component. */
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success';
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** When true, shows a spinner and disables the button. */
   isLoading?: boolean;
   loadingText?: string;
   leftIcon?: React.ReactNode;
