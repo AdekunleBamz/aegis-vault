@@ -126,6 +126,8 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
 
 /**
  * Creates a specific error with standard message
+ * @param code - The error code to create
+ * @param details - Optional extra data to attach to the error
  */
 export function createError(code: ErrorCode, details?: unknown): AegisError {
   return new AegisError(code, ERROR_MESSAGES[code], details);
