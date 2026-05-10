@@ -1,4 +1,9 @@
 
+/**
+ * Validates a deposit amount is at least the minimum (1 STX = 1,000,000 microSTX).
+ * @param {*} v - Value to validate
+ * @returns {boolean}
+ */
 export const isValidDepositAmount = (v) => !isNaN(Number(v)) && Number(v) >= 1000000;
 
 export const isValidLockPeriod = (v) => [7, 30, 90, 180].includes(Number(v));
