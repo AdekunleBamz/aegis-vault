@@ -62,3 +62,6 @@ export const VAULT_UI_REFRESH_MS = 30_000
 
 /** Maximum character length for a vault position label */
 export const VAULT_POSITION_LABEL_MAX_LENGTH = 48
+
+/** Minimum reward amount in microSTX before claim is allowed */
+export const MIN_CLAIMABLE_REWARD_USTX = 100_000
