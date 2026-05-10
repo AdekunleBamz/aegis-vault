@@ -309,3 +309,12 @@ export function formatAPY(apy: number, decimals = 2): string {
   const safeDec = Number.isInteger(decimals) && decimals >= 0 ? decimals : 2;
   return `${apy.toFixed(safeDec)}% APY`;
 }
+
+/**
+ * Returns true if an address looks like a valid Stacks mainnet address.
+ * @param address - Value to check
+ * @returns `true` if the string starts with SP and has at least 30 chars
+ */
+export function isValidMainnetAddress(address: string): boolean {
+  return typeof address === 'string' && address.startsWith('SP') && address.length >= 30;
+}
