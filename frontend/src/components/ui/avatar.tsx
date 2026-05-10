@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
+/** Props for the Avatar component. */
 export interface AvatarProps {
   src?: string;
   alt?: string;
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
+  /** Optional online status indicator. */
   status?: 'online' | 'offline' | 'away' | 'busy';
 }
 
