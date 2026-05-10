@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
+/** Shape of a single toast notification. */
 export interface Toast {
     id: string;
     type: ToastType;
