@@ -377,3 +377,9 @@ export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
  * Makes specified keys optional.
  */
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+/**
+ * Extracts the resolved value type from a Promise.
+ * @example Awaited<Promise<StakePosition>> // StakePosition
+ */
+export type Resolved<T> = T extends Promise<infer U> ? U : T;
