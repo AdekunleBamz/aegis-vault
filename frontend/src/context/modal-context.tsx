@@ -6,6 +6,7 @@ import React, { createContext, useContext, useState, useCallback, useMemo, useRe
 // TYPES
 // =============================================================================
 
+/** All supported modal types in the application. */
 export type ModalType =
   | 'wallet-connect'
   | 'transaction-confirm'
