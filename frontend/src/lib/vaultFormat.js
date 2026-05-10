@@ -1,4 +1,9 @@
 
+/**
+ * Formats a microSTX deposit amount as a STX decimal string.
+ * @param {number} v - Amount in microSTX
+ * @returns {string} e.g. "1.50 STX"
+ */
 export const formatDepositAmount = (v) => (v / 1e6).toFixed(2) + " STX";
 
 export const formatLockPeriod = (days) => days + " days";
