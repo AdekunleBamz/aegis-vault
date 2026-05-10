@@ -11,6 +11,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 
 /**
  * State management for multi-step forms.
+ * Each step's data is merged into a shared `data` record.
  */
 export interface StepFormState {
   /** The current step index (0-based) */
