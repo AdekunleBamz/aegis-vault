@@ -176,3 +176,8 @@ export const LOCK_PERIOD_LABELS: Record<number, string> = {
  * Character limit for user-provided position notes or labels.
  */
 export const MAX_POSITION_NOTE_LENGTH = 120;
+
+/**
+ * Default UI theme for new Aegis Vault users.
+ */
+export const DEFAULT_THEME = 'dark';
