@@ -85,6 +85,11 @@ export const formatPositionAge = (blocks) => Math.floor(Number(blocks) / 144) + 
 
 export const formatRewardRate = (bps) => (Number(bps) / 100).toFixed(3) + "% / day";
 
+/**
+ * Formats a vault active/closed state for display.
+ * @param {boolean} active - Whether the vault is currently active
+ * @returns {"Active"|"Closed"}
+ */
 export const formatVaultStatus = (active) => active ? "Active" : "Closed";
 
 export const formatUnlockCountdown = (blocks) => {
