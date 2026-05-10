@@ -1,5 +1,6 @@
 import React from 'react';
 
+/** Props for the Badge UI component. */
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'premium' | 'new';
   size?: 'sm' | 'md' | 'lg';
