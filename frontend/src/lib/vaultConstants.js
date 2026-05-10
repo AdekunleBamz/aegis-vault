@@ -65,3 +65,6 @@ export const VAULT_POSITION_LABEL_MAX_LENGTH = 48
 
 /** Minimum reward amount in microSTX before claim is allowed */
 export const MIN_CLAIMABLE_REWARD_USTX = 100_000
+
+/** Number of blocks to wait after deposit before first reward accrual */
+export const REWARD_ACCRUAL_DELAY_BLOCKS = 1
