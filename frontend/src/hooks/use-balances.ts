@@ -23,6 +23,8 @@ export interface UseBalancesReturn {
   isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
+  /** The address currently being queried, or null if none */
+  address: string | null;
 }
 
 /**
@@ -84,5 +86,6 @@ export function useBalances(address: string): UseBalancesReturn {
     isLoading,
     error,
     refetch: fetchBalances,
+    address: address ?? null,
   };
 }
