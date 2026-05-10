@@ -53,3 +53,6 @@ export const MAX_EARLY_EXIT_PENALTY_BPS = 500
 
 /** Maximum allowed staking APY in basis points for display validation */
 export const MAX_APY_BPS = 5000
+
+/** Minimum AGS token balance required to submit a governance proposal */
+export const MIN_GOVERNANCE_PROPOSAL_BALANCE = 1_000_000
