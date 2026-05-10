@@ -135,6 +135,8 @@ export function createError(code: ErrorCode, details?: unknown): AegisError {
 
 /**
  * Checks if error is a specific type
+ * @param error - Any thrown value
+ * @param code - The error code to test against
  */
 export function isErrorCode(error: unknown, code: ErrorCode): boolean {
   return error instanceof AegisError && error.code === code;
