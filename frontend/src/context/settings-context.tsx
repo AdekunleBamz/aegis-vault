@@ -10,6 +10,7 @@ export type Currency = 'USD' | 'EUR' | 'GBP' | 'BTC' | 'STX';
 export type Language = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'zh';
 export type GasPreference = 'slow' | 'normal' | 'fast';
 
+/** Full application settings persisted in localStorage. */
 export interface AppSettings {
   // Display
   theme: 'light' | 'dark' | 'system';
