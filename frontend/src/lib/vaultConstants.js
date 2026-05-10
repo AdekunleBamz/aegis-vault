@@ -50,3 +50,6 @@ export const VAULT_PAUSE_COOLDOWN_BLOCKS = 144
 export const REWARD_CLAIM_DELAY_BLOCKS = 10
 
 export const MAX_EARLY_EXIT_PENALTY_BPS = 500
+
+/** Maximum allowed staking APY in basis points for display validation */
+export const MAX_APY_BPS = 5000
