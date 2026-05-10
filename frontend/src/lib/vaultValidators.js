@@ -61,6 +61,11 @@ export const isValidVaultVersion = (v) => typeof v === "string" && /^\d+\.\d+\.\
 
 export const isValidStakerShare = (v) => !isNaN(Number(v)) && Number(v) >= 0 && Number(v) <= 1;
 
+/**
+ * Validates a governance quorum in basis points is within valid range.
+ * @param {*} v - Value to validate
+ * @returns {boolean}
+ */
 export const isValidGovernanceQuorum = (v) => Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) <= 10000;
 
 export const isValidCompoundFrequency = (v) => Number.isInteger(Number(v)) && Number(v) >= 1;
