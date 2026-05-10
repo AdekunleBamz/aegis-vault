@@ -6,6 +6,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 // TYPES
 // =============================================================================
 
+/** A single notification entry displayed in the notification centre. */
 export interface Notification {
   id: string;
   type: 'info' | 'success' | 'warning' | 'error';
