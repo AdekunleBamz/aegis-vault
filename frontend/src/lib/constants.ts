@@ -187,3 +187,8 @@ export const DEFAULT_THEME = 'dark';
  * At ~10 min/block this is approximately 30 minutes.
  */
 export const STUCK_TX_THRESHOLD_BLOCKS = 3;
+
+/**
+ * Maximum number of stake positions a single wallet can hold at one time.
+ */
+export const MAX_POSITIONS_PER_WALLET = 10;
