@@ -11,6 +11,10 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { TIERS } from '@/lib/constants';
 import { determineTier } from '@/lib/staking';
 
+/**
+ * Props for the ClaimFlow component.
+ * Callbacks are invoked after a successful or failed reward claim transaction.
+ */
 interface ClaimFlowProps {
   onSuccess?: (txId: string) => void;
   onError?: (error: string) => void;
