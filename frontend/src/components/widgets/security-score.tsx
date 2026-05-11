@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { ShieldCheck, AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/** Protocol safety score displayed on the radial chart (0–100). */
 const SECURITY_SCORE = 94; // Out of 100
 
+/** Risk factor assessments shown below the radial score graphic. */
 const RISK_FACTORS = [
     { label: 'Smart Contract Audit', status: 'secure', value: 'Verified' },
     { label: 'Liquidity Depth', status: 'secure', value: 'High' },
