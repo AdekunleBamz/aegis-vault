@@ -3,6 +3,10 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
+/**
+ * Wraps page content in a Framer Motion fade-and-slide transition
+ * keyed to the current pathname so each route change animates in/out.
+ */
 export function PageTransition({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
