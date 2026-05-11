@@ -98,7 +98,10 @@ export function PageSection({
   )
 }
 
-// Content Grid - Responsive grid for content layout
+/**
+ * Props for the ContentGrid component.
+ * Wraps children in a responsive CSS grid with configurable column count and gap.
+ */
 interface ContentGridProps {
   children: React.ReactNode
   columns?: 1 | 2 | 3 | 4
