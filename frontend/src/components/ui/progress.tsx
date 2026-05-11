@@ -14,6 +14,7 @@ interface ProgressProps {
   className?: string;
 }
 
+/** CSS height classes keyed by the Progress size prop variant. */
 const sizeClasses = {
   xs: 'h-1',
   sm: 'h-1.5',
