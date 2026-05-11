@@ -21,6 +21,7 @@ import {
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
+/** Display metadata for known contract function calls in the activity feed. */
 const ACTION_INFO: Record<string, { label: string; icon: React.ElementType; color: string }> = {
   stake: { label: 'Staking STX', icon: ShieldCheck, color: 'text-aegis-blue' },
   'request-withdrawal': { label: 'Withdrawal Request', icon: ArrowUpRight, color: 'text-amber-500' },
