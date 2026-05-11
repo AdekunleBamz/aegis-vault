@@ -41,15 +41,25 @@ export const TIERS = [
  * Number of blocks produced per day (10-minute block time).
  */
 export const BLOCKS_PER_DAY = 144;
+/** Total blocks produced per year at a 10-minute block time (144 × 365). */
 export const BLOCKS_PER_YEAR = 52560;
+/** Number of blocks in the withdrawal cooldown window (equivalent to 1 day). */
 export const COOLDOWN_BLOCKS = 144;
+/** Average Stacks block time expressed in minutes. */
 export const BLOCK_TIME_MINUTES = 10;
+/** Polling interval in milliseconds for user session state checks. */
 export const USER_SESSION_INTERVAL = 1000;
+/** Seconds in one minute. */
 export const SECONDS_PER_MINUTE = 60;
+/** Seconds in one hour. */
 export const SECONDS_PER_HOUR = 3600;
+/** Seconds in one day. */
 export const SECONDS_PER_DAY = 86400;
+/** Seconds in one week. */
 export const SECONDS_PER_WEEK = 604800;
+/** Default Framer Motion animation duration in seconds. */
 export const TRANSITION_DURATION = 0.3;
+/** Default Framer Motion cubic-bezier easing for smooth UI transitions. */
 export const TRANSITION_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 /**
