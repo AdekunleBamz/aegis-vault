@@ -2,7 +2,10 @@
 
 import React from 'react'
 
-// Page Container - Main layout wrapper for pages
+/**
+ * Props for the PageContainer component.
+ * Provides a centred max-width wrapper used as the main layout container for pages.
+ */
 interface PageContainerProps {
   children: React.ReactNode
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
