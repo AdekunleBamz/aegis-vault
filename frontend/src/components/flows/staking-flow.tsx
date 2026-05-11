@@ -24,6 +24,10 @@ import Link from 'next/link';
 import { TransactionStepper, Step } from '@/components/ui/transaction-stepper';
 import { StakeForm } from '@/components/sections/stake-form';
 
+/**
+ * Props for the StakingFlow component.
+ * Callbacks are fired after a successful or failed stake transaction.
+ */
 interface StakingFlowProps {
   onSuccess?: (txId: string) => void;
   onError?: (error: string) => void;
