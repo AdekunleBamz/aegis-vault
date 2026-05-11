@@ -2,12 +2,14 @@
 
 import React from 'react'
 
+/** Tailwind colour classes indexed by change direction for stat trend indicators. */
 const CHANGE_COLORS: Record<string, string> = {
   increase: 'text-green-600 dark:text-green-400',
   decrease: 'text-red-600 dark:text-red-400',
   neutral: 'text-gray-500 dark:text-gray-400',
 };
 
+/** SVG icon elements indexed by change direction for stat trend indicators. */
 const CHANGE_ICONS: Record<string, React.ReactNode> = {
   increase: (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
