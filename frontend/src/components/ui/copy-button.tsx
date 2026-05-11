@@ -2,6 +2,10 @@
 
 import React from 'react';
 
+/**
+ * Props for the CopyButton component.
+ * Provides a button that copies arbitrary text to the clipboard with visual feedback.
+ */
 export interface CopyButtonProps {
   text: string;
   onCopy?: () => void;
