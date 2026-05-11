@@ -10,11 +10,13 @@
 
 import { AVG_BLOCK_TIME_MINUTES, STX_DECIMALS, AGS_DECIMALS, MICROSTX_PER_STX } from './constants';
 
+/** `Intl.NumberFormat` instance for rendering STX amounts with 2–6 decimal places. */
 const STX_FORMATTER = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
   maximumFractionDigits: 6,
 });
 
+/** `Intl.NumberFormat` instance for rendering AGS token amounts with 2–6 decimal places. */
 const AGS_FORMATTER = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
   maximumFractionDigits: 6,
