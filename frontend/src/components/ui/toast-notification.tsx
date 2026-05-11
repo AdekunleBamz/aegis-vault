@@ -18,6 +18,7 @@ interface ToastNotificationProps {
   onDismiss: (id: string) => void;
 }
 
+/** Lucide icon component mapped to each toast type. */
 const icons = {
   success: CheckCircle,
   error: AlertCircle,
@@ -25,6 +26,7 @@ const icons = {
   info: Info,
 };
 
+/** Tailwind colour classes keyed by toast type for border, background, and text. */
 const styles = {
   success: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500',
   error: 'bg-red-500/10 border-red-500/30 text-red-500',
