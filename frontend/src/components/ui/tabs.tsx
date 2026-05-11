@@ -23,6 +23,7 @@ interface TabsProps {
   className?: string;
 }
 
+/** Tailwind padding/text classes keyed by the Tabs size prop variant. */
 const sizeClasses = {
   sm: 'text-sm py-2 px-3',
   md: 'text-sm py-3 px-4',
