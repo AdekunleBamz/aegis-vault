@@ -11,6 +11,10 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from './button';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 
+/**
+ * Props for the ErrorBoundary component.
+ * Supports custom fallback UI and an optional error reporting callback.
+ */
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode;
