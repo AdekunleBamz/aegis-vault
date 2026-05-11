@@ -5,7 +5,9 @@ import { motion } from 'framer-motion';
 import { Activity, Calendar, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/** Total number of weeks rendered in the activity heatmap grid. */
 const HEATMAP_WEEKS = 20;
+/** Total number of days per week column in the activity heatmap grid. */
 const HEATMAP_DAYS = 7;
 
 const LEVEL_COLOR: Record<number, string> = {
