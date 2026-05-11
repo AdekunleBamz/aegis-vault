@@ -33,6 +33,9 @@ interface WalletState {
   error: string | null;
 }
 
+/**
+ * Extends WalletState with connect/disconnect actions and a convenience alias.
+ */
 interface WalletContextValue extends WalletState {
   connect: () => void;
   disconnect: () => void;
@@ -42,10 +45,10 @@ interface WalletContextValue extends WalletState {
 
 const WalletContext = createContext<WalletContextValue | undefined>(undefined);
 
-// Default to mainnet, but can be configured
+/** Default to mainnet; can be overridden via environment configuration. */
 const defaultNetwork = STACKS_MAINNET;
 
-// How often to poll the connection state for sign-out changes
+/** How often to poll the connection state to detect external sign-out events. */
 const SESSION_POLL_INTERVAL_MS = 1000;
 
 interface WalletProviderProps {
