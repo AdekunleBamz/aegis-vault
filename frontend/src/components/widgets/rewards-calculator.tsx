@@ -8,7 +8,7 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 
-// Duration presets
+/** Duration preset options available in the rewards calculator UI. */
 const DURATION_PRESETS = [
   { label: '1 Month', days: 30 },
   { label: '3 Months', days: 90 },
@@ -16,7 +16,7 @@ const DURATION_PRESETS = [
   { label: '1 Year', days: 365 },
 ];
 
-// Amount presets
+/** Quick-select STX amounts (in whole units) for the rewards calculator. */
 const AMOUNT_PRESETS = [1000, 5000, 10000, 50000];
 
 /**
