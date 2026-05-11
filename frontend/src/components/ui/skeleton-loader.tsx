@@ -1,8 +1,8 @@
 import React from 'react';
 
 /**
- * PR #11: Skeleton loaders for card components
- * Reusable skeleton component for loading states
+ * Props for the Skeleton placeholder component.
+ * Supports configurable count, dimensions, shape, and pulse animation.
  */
 interface SkeletonProps {
   className?: string;
