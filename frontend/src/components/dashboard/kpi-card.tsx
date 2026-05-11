@@ -30,6 +30,7 @@ interface KPICardProps {
     className?: string;
 }
 
+/** Tailwind class maps for each colour variant of the KPICard. */
 const variants = {
     blue: {
         iconBg: 'bg-aegis-blue/10',
