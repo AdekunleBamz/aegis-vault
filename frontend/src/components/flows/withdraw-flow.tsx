@@ -11,12 +11,18 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
+/**
+ * Props for the WithdrawFlow component.
+ * Callbacks are fired after a successful or failed withdrawal transaction.
+ */
 interface WithdrawFlowProps {
   onSuccess?: (txId: string) => void;
   onError?: (error: string) => void;
 }
 
-// Timeline step component
+/**
+ * Renders a single numbered step in the withdrawal timeline with active/completed state.
+ */
 function TimelineStep({
   step,
   title,
