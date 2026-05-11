@@ -32,7 +32,7 @@ export function PortfolioSummary() {
   const tier = determineTier(stakedAmount);
   const pendingRewards = position?.pendingRewards ?? 0n;
 
-  // Calculate portfolio metrics
+    // Calculate portfolio metrics — combines wallet balances with staked position
   const metrics = useMemo(() => {
     const stxNum = Number(stxBalance) / 1e6;
     const agsNum = Number(agsBalance) / 1e6;
