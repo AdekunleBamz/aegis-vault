@@ -21,6 +21,10 @@ export interface Step {
     status: StepStatus;
 }
 
+/**
+ * Props for the TransactionStepper component.
+ * Renders a vertical stepper that visualises multi-step transaction progress.
+ */
 interface TransactionStepperProps {
     steps: Step[];
     currentStepIndex: number;
