@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * Return type for the `useFormFocus` hook.
+ * Exposes the focused field name and helpers for navigating focus order.
+ */
 export interface UseFormFocusReturn {
   focusedField: string | null;
   registerField: (fieldName: string, element: HTMLInputElement | null) => void;
