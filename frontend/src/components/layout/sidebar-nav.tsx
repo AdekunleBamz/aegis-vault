@@ -3,7 +3,9 @@
 import React from 'react'
 import Link from 'next/link'
 
-// Sidebar Navigation Component
+/**
+ * A single item in the SidebarNav, supporting nested children.
+ */
 interface SidebarNavItem {
   label: string
   href: string
