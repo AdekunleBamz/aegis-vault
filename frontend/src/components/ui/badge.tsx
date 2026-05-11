@@ -13,6 +13,7 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   onRemove?: () => void;
 }
 
+/** Tailwind class strings for each Badge colour variant. */
 const variants = {
   default: 'bg-gray-700 text-gray-300 border-gray-600',
   success: 'bg-green-500/20 text-green-400 border-green-500/30',
@@ -23,6 +24,7 @@ const variants = {
   new: 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 border-purple-500/30',
 };
 
+/** Tailwind background colour classes for the optional status dot per variant. */
 const dotColors = {
   default: 'bg-gray-400',
   success: 'bg-green-400',
