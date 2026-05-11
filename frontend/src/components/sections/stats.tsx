@@ -22,6 +22,7 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+/** Labels describing the dimensions captured in the Stats section. */
 const STAT_HIGHLIGHTS = [
   'Capital depth',
   'User participation',
