@@ -28,6 +28,10 @@ const CHANGE_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
+/**
+ * Props for the StatCard widget.
+ * Displays a labelled metric with optional trend change and sparkline.
+ */
 interface StatCardProps {
   label: string
   value: string | number
