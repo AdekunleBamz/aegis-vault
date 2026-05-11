@@ -2,6 +2,10 @@
 
 import React, { useState, useRef, useEffect, ReactNode } from 'react';
 
+/**
+ * Represents a single entry in a Dropdown menu list.
+ * Setting `divider: true` renders a horizontal separator instead of an item.
+ */
 export interface DropdownItem {
   label: string;
   icon?: ReactNode;
@@ -20,6 +24,7 @@ export interface DropdownProps {
   className?: string;
 }
 
+/** Min/fixed width classes for each Dropdown width option. */
 const widthClasses = {
   auto: 'min-w-[160px]',
   sm: 'w-40',
