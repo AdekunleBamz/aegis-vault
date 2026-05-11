@@ -3,7 +3,10 @@
 import React from 'react'
 import Link from 'next/link'
 
-// Page Header Props
+/**
+ * Props for the PageHeader layout component.
+ * Supports breadcrumbs, back link, badge, and an action slot.
+ */
 interface PageHeaderProps {
   title: string
   description?: string
@@ -24,7 +27,7 @@ interface PageHeaderProps {
   className?: string
 }
 
-// Badge variant styles
+/** Tailwind CSS classes for each badge variant in the PageHeader component. */
 const badgeVariants = {
   default: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
   success: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
