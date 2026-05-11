@@ -12,12 +12,14 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/** Social platform links rendered in the Footer. */
 const SOCIAL_LINKS = [
   { icon: Github, href: 'https://github.com/AdekunleBamz/aegis-vault', label: 'View source code on GitHub' },
   { icon: Twitter, href: '', label: 'Follow us on Twitter' },
   { icon: Discord, href: '', label: 'Join our Discord community' },
 ];
 
+/** Navigation link groups used in the Footer columns. */
 const FOOTER_LINKS = {
   protocol: [
     { label: 'Dashboard', href: '/dashboard' },
@@ -38,6 +40,7 @@ const FOOTER_LINKS = {
   ],
 };
 
+/** Legal page links shown at the very bottom of the Footer. */
 const LEGAL_LINKS = [
   { label: 'Terms', href: '' },
   { label: 'Privacy', href: '' },
