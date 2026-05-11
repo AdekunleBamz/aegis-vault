@@ -13,6 +13,10 @@ export interface Toast {
     duration?: number;
 }
 
+/**
+ * Return type for the `useToast` hook.
+ * Exposes the active toasts list and helpers to add, remove, or clear them.
+ */
 interface UseToastReturn {
     toasts: Toast[];
     addToast: (toast: Omit<Toast, 'id'>) => string;
