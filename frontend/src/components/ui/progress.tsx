@@ -22,6 +22,7 @@ const sizeClasses = {
   lg: 'h-3',
 };
 
+/** Tailwind background-color classes keyed by the Progress color prop variant. */
 const colorClasses = {
   blue: 'bg-blue-500',
   green: 'bg-green-500',
