@@ -5,6 +5,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, Home } from 'lucide-react';
 
+/**
+ * Auto-generates breadcrumb navigation from the current pathname.
+ * Each path segment is capitalised and hyphen-separated words are joined with spaces.
+ */
 export function Breadcrumbs() {
     const pathname = usePathname();
     const paths = pathname.split('/').filter(Boolean);
