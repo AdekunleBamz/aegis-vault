@@ -17,6 +17,7 @@ import {
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+/** Key protocol metrics rendered in the Hero stats bar. */
 const HERO_STATS = [
   { value: '12%', label: 'Base APY', icon: TrendingUp, color: 'text-aegis-blue' },
   { value: '24%', label: 'Max APY', icon: Zap, color: 'text-aegis-purple' },
@@ -24,6 +25,7 @@ const HERO_STATS = [
   { value: '4', label: 'Reward Tiers', icon: LayoutGrid, color: 'text-aegis-cyan' },
 ];
 
+/** Trust-building bullet points displayed in the Hero section. */
 const PROOF_POINTS = [
   'Non-custodial vault access',
   'Tiered rewards with clear lock windows',
