@@ -6,6 +6,7 @@ import { Activity, TrendingUp, DollarSign, PieChart } from 'lucide-react';
 import { RewardChart } from './reward-chart';
 import { cn } from '@/lib/utils';
 
+/** Mock 30-day TVL data points used to render the TVL Growth chart. */
 const TVL_TREND = [
     { day: 1, amount: 1200000 },
     { day: 5, amount: 1250000 },
@@ -16,6 +17,7 @@ const TVL_TREND = [
     { day: 30, amount: 1800000 },
 ];
 
+/** Protocol health metrics rendered in the side cards of the ProtocolHealth widget. */
 const HEALTH_METRICS = [
     {
         label: 'Protocol Revenue',
