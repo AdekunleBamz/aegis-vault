@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 export type PositionStatus = 'all' | 'active' | 'locking' | 'expired';
 
+/** Available status filters for the Positions dashboard view. */
 const POSITION_STATUSES: { value: PositionStatus; label: string }[] = [
     { value: 'all', label: 'All Positions' },
     { value: 'active', label: 'Active' },
@@ -13,6 +14,10 @@ const POSITION_STATUSES: { value: PositionStatus; label: string }[] = [
     { value: 'expired', label: 'Expired' },
 ];
 
+/**
+ * Props for the PositionFilters component.
+ * Controls the search text and status filter for the positions list.
+ */
 interface PositionFiltersProps {
     search: string;
     onSearchChange: (value: string) => void;
