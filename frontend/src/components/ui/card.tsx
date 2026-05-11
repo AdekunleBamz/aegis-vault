@@ -49,6 +49,10 @@ export function Card({
   );
 }
 
+/**
+ * Props for the CardHeader sub-component.
+ * Renders a titled header row with optional subtitle, icon, badge, and action slot.
+ */
 interface CardHeaderProps {
   title: string;
   subtitle?: string;
