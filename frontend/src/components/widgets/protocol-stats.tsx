@@ -16,6 +16,10 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/**
+ * Polls on-chain pool statistics every 60 seconds and renders key protocol metrics
+ * such as TVL, active stakers, average APY, and current block height.
+ */
 export function ProtocolStats() {
   const [stats, setStats] = useState<PoolStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
