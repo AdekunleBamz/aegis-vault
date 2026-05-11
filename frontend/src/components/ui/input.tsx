@@ -14,12 +14,14 @@ interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, '
   maxLength?: number;
 }
 
+/** Padding and font-size classes for each Input size variant. */
 const sizeClasses = {
   sm: 'px-3 py-2 text-sm',
   md: 'px-4 py-3 text-base',
   lg: 'px-5 py-4 text-lg',
 };
 
+/** Border and background classes for each Input visual variant. */
 const variantClasses = {
   default: 'bg-gray-900 border-gray-700 focus:border-blue-500',
   filled: 'bg-gray-800 border-transparent focus:border-blue-500 focus:bg-gray-900',
