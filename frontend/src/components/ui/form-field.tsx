@@ -1,5 +1,9 @@
 import React, { InputHTMLAttributes, forwardRef } from 'react';
 
+/**
+ * Props for the FormField component.
+ * Extends native input attributes with label, error, helper text, and icon slots.
+ */
 interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
@@ -10,8 +14,7 @@ interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 /**
- * PR #3: Field-level error messages with icons
- * Enhanced form input component with error display
+ * Enhanced form input component with validation error display and accessible labelling.
  */
 export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
   (
