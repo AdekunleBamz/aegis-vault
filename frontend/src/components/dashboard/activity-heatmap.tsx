@@ -10,6 +10,7 @@ const HEATMAP_WEEKS = 20;
 /** Total number of days per week column in the activity heatmap grid. */
 const HEATMAP_DAYS = 7;
 
+/** Tailwind background colour classes indexed by activity level (0 = none, 4 = highest). */
 const LEVEL_COLOR: Record<number, string> = {
     0: 'bg-muted/30',
     1: 'bg-aegis-blue/20',
