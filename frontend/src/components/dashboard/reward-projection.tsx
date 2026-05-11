@@ -16,6 +16,11 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/**
+ * Interactive yield projection calculator.
+ * Lets users adjust a stake amount slider and see estimated weekly, monthly,
+ * and yearly AGS earnings based on the current tier APY.
+ */
 export function RewardProjection() {
     const [projectedAmount, setProjectedAmount] = useState(1000);
 
