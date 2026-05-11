@@ -6,6 +6,10 @@ import React, { useState, useEffect } from 'react';
 // EMPTY STATE
 // =============================================================================
 
+/**
+ * Props for the EmptyState component.
+ * Renders a centred placeholder with optional icon, action buttons, and size variants.
+ */
 interface EmptyStateProps {
   icon?: React.ReactNode;
   title: string;
