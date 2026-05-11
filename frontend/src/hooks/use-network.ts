@@ -12,6 +12,10 @@ import { getCurrentBlockHeight } from '@/lib/api';
 import { network } from '@/lib/stacks';
 import { NETWORK_REFRESH_INTERVAL_MS } from '@/lib/constants';
 
+/**
+ * Resolved network type derived from the configured Stacks network chainId.
+ * chainId 2147483648 = testnet; chainId 1 = mainnet; anything else = devnet.
+ */
 const NETWORK_TYPE: 'mainnet' | 'testnet' | 'devnet' =
   network.chainId === 2147483648
     ? 'testnet'
