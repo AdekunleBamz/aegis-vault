@@ -98,6 +98,10 @@ export function EmptyState({
 // NO DATA VARIANTS
 // =============================================================================
 
+/**
+ * Props for the NoData component.
+ * Renders a contextual empty-data message based on a type discriminator.
+ */
 interface NoDataProps {
   type: 'transactions' | 'positions' | 'rewards' | 'notifications' | 'search' | 'error';
   action?: {
