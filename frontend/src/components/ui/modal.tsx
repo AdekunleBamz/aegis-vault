@@ -19,6 +19,7 @@ interface ModalProps {
   variant?: 'default' | 'danger' | 'success';
 }
 
+/** Max-width classes for each Modal size option. */
 const sizeClasses = {
   sm: 'max-w-sm',
   md: 'max-w-md',
@@ -27,6 +28,7 @@ const sizeClasses = {
   full: 'max-w-4xl',
 };
 
+/** Icon background and border classes for each Modal visual variant. */
 const variantStyles = {
   default: {
     icon: 'bg-blue-500/10 text-blue-500',
