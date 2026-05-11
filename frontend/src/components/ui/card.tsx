@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * Props for the Card component.
+ * Extends all native div attributes with visual variant, hover, and padding controls.
+ */
 interface CardProps extends React.ComponentPropsWithoutRef<'div'> {
   variant?: 'default' | 'gradient' | 'glass' | 'highlight';
   hover?: boolean;
