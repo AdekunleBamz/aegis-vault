@@ -24,6 +24,10 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+/**
+ * Formats a numeric STX amount for display in the stake input field.
+ * Returns an empty string for non-positive or non-finite values.
+ */
 function formatAmount(value: number): string {
   if (!Number.isFinite(value) || value <= 0) {
     return '';
