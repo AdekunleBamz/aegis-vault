@@ -49,7 +49,10 @@ export function PageContainer({
   )
 }
 
-// Page Section - Section within a page
+/**
+ * Props for the PageSection component.
+ * Wraps a semantic `<section>` element with optional background and vertical spacing variants.
+ */
 interface PageSectionProps {
   children: React.ReactNode
   id?: string
