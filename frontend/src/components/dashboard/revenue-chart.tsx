@@ -5,7 +5,9 @@ import { motion } from 'framer-motion';
 import { TrendingUp, ArrowUpRight, DollarSign, Activity, PieChart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/** Monthly revenue data points (in $100 units) for the RevenueChart bar graph. */
 const REVENUE_DATA = [12, 18, 15, 24, 21, 32, 28, 45, 42, 58, 54, 72];
+/** Maximum value in REVENUE_DATA used to normalise bar heights. */
 const REVENUE_MAX = Math.max(...REVENUE_DATA);
 
 export function RevenueChart() {
