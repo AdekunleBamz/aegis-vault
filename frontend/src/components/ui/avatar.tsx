@@ -14,6 +14,7 @@ export interface AvatarProps {
   status?: 'online' | 'offline' | 'away' | 'busy';
 }
 
+/** Width, height, and text-size classes for each Avatar size option. */
 const sizeClasses = {
   xs: 'w-6 h-6 text-xs',
   sm: 'w-8 h-8 text-sm',
@@ -37,7 +38,7 @@ const statusColors = {
   busy: 'bg-red-500',
 };
 
-// Generate color from string
+/** Generates a deterministic Tailwind background colour class from an arbitrary string. */
 function stringToColor(str: string): string {
   const colors = [
     'bg-blue-500', 'bg-purple-500', 'bg-pink-500', 'bg-red-500',
