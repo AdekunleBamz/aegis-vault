@@ -13,7 +13,7 @@ import { useWallet } from '@/context/wallet-context';
 export function NetworkBadge() {
     const { network, isConnected } = useWallet();
 
-    // Use chainId for network detection
+    // Use chainId for network detection (testnet chainId is 2147483648)
     const isMainnet = network.chainId !== 2147483648;
 
     return (
