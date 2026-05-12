@@ -24,6 +24,8 @@ const AGS_FORMATTER = new Intl.NumberFormat('en-US', {
 
 /**
  * Format microSTX to STX with proper decimals
+ * @param microStx - Amount in microSTX, accepted as string, number, or bigint
+ * @returns Human-readable STX value without the currency suffix
  * @example formatSTX(1000000) -> "1.00"
  */
 export function formatSTX(microStx: string | number | bigint): string {
