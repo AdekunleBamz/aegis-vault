@@ -10,6 +10,9 @@ interface CardProps extends React.ComponentPropsWithoutRef<'div'> {
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
+/**
+ * Generic surface container for dashboard panels and grouped content.
+ */
 export function Card({
   children,
   className = '',
