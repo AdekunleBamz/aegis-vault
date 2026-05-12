@@ -29,6 +29,7 @@ export const API = {
 
 /**
  * Staking reward tier configurations with multipliers and base APY.
+ * Values are UI display defaults; contract state remains the source of truth.
  */
 export const TIERS = [
   { name: 'Bronze', minStake: 100, multiplier: 1.0, color: '#CD7F32', baseApy: 12 },
