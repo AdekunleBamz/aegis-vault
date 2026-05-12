@@ -13,6 +13,7 @@ export function useDebounce<T>(value: T, delayMs: number = 300): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
+    // Clamp invalid delays to the documented default so callers cannot create NaN timers.
     const safeDelay = typeof delayMs === 'number' && delayMs >= 0 ? delayMs : 300;
     const handler = setTimeout(() => {
       setDebouncedValue(value);
