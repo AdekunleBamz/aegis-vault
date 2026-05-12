@@ -65,6 +65,7 @@ export function useNetwork(): UseNetworkReturn {
   const [error, setError] = useState<string | null>(null);
   const [lastFetched, setLastFetched] = useState<number | null>(null);
 
+  /** Fetches and validates the latest Stacks block height for the active network. */
   const fetchNetworkInfo = useCallback(async () => {
     setIsLoading(true);
     setError(null);
