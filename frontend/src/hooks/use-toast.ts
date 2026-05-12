@@ -27,6 +27,9 @@ interface UseToastReturn {
     toastWarning: (message: string, description?: string) => string;
 }
 
+/**
+ * Manages transient toast notifications and convenience helpers for common types.
+ */
 export function useToast(): UseToastReturn {
     const [toasts, setToasts] = useState<Toast[]>([]);
     const getToastId = useCallback(
