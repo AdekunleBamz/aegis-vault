@@ -9,6 +9,7 @@ import { useWallet } from '@/context/wallet-context';
 /**
  * Displays the current Stacks network (Mainnet/Testnet) with a status indicator.
  * Uses the wallet context to detect the active chainId.
+ * @returns Network status badge for the connected wallet context.
  */
 export function NetworkBadge() {
     const { network, isConnected } = useWallet();
