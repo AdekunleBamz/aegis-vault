@@ -41,6 +41,9 @@ const sizes = {
   lg: 'px-3 py-1 text-sm',
 };
 
+/**
+ * Inline status label with optional dot, icon, animation, and remove action.
+ */
 export function Badge({
   variant = 'default',
   size = 'md',
