@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 /**
  * A custom hook to track the previous value of a variable.
  * Useful for detecting direction of change (e.g., increasing vs. decreasing balances).
+ * The first render intentionally returns undefined because no previous value exists.
  *
  * @template T - The type of the value being tracked
  * @param value - The current value
