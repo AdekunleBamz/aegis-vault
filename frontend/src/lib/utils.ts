@@ -23,7 +23,7 @@ export function cn(...inputs: ClassValue[]): string {
  * 
  * @param name - The human-readable name of the component
  * @param description - A brief description of the component's purpose
- * @returns An object with aria-label and role properties
+ * @returns An object with aria-label and role properties for spread usage
  */
 export function getComponentMetadata(name: string, description?: string) {
   return {
