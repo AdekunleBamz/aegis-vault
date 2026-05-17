@@ -145,7 +145,7 @@ export function Footer() {
                   >
                     {link.label}
                     {link.external ? (
-                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity" aria-hidden="true" />
                     ) : null}
                   </a>
                 </li>
