@@ -124,7 +124,7 @@ export function ProtocolStats() {
       </div>
 
       <div className="mt-auto pt-6 flex items-center justify-between border-t border-border/50 relative z-10">
-        <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+        <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest tabular-nums">
           <RefreshCw className={cn("w-3 h-3", isRefreshing && "animate-spin")} />
           Last Update: {lastUpdated?.toLocaleTimeString() || 'Waiting...'}
         </div>
