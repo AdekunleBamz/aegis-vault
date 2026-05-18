@@ -1,4 +1,4 @@
-# Release monitoring window note
+# Release Monitoring Window Note
 
 Hold a focused monitoring window for at least one hour after production deploy.
 Early observation catches regressions before broad user impact grows.
