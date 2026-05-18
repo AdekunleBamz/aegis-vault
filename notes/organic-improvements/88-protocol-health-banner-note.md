@@ -6,4 +6,4 @@ Protocol health banners should identify source, timestamp, and recommended actio
 ## Checks
 - Verify healthy, degraded, and paused states.
 - Confirm timestamps use a consistent timezone.
-- Keep stale health data labeled.
+- Keep stale health data clearly labeled.
