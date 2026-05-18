@@ -2,7 +2,7 @@
 
 - Test normal withdrawal after lock expiry.
 - Validate emergency withdrawal fee deductions.
-- Confirm treasury accounting reflects penalties.
+- Confirm treasury accounting reflects the penalties.
 - Verify position status updates on successful withdraw.
 - Capture wallet rejection/error codes alongside contract responses for failed withdrawals.
 
