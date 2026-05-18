@@ -5,5 +5,5 @@ Build warnings should be classified before release so slow-route noise is not co
 
 ## Checks
 - Capture warnings from Next.js production builds.
-- Separate dependency warnings from app-owned fixes.
+- Separate dependency warnings from app-owned issues.
 - Open follow-up work for repeated slow static pages.
