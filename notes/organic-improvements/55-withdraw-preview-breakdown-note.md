@@ -4,4 +4,4 @@
 - Keep row ordering consistent with the final confirmation sheet.
 - This helps users reconcile expectations before signing.
 
-- Include this checkpoint in the final release handoff review.
+- Include this step in the final release handoff review.
