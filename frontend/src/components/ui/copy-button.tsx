@@ -48,6 +48,8 @@ export function CopyButton({
         ${className}
       `}
       aria-label={copied ? 'Copied to clipboard' : 'Copy to clipboard'}
+      aria-live="polite"
+      aria-atomic="true"
       title={copied ? 'Copied!' : 'Copy to clipboard'}
     >
       {children || (
