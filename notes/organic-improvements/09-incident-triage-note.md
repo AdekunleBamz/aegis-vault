@@ -1,7 +1,7 @@
 # Incident Triage Note
 
 - Record user impact and affected contract immediately.
-- Confirm issue on clean wallet session before mitigation.
+- Confirm the issue on a clean wallet session before mitigation.
 - Publish temporary guidance for active stakers.
 - Capture remediation steps for postmortem follow-up.
 - Assign one incident owner per shift to avoid split mitigation decisions.
