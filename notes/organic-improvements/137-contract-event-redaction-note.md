@@ -5,5 +5,5 @@ Contract event examples should avoid including unnecessary full wallet addresses
 
 ## Checks
 - Redact event samples used in support docs.
-- Preserve tx id and event type when needed for debugging.
+- Preserve the tx id and event type when needed for debugging.
 - Keep private keys and mnemonics out of fixtures.
