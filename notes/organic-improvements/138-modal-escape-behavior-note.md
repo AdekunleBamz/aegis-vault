@@ -6,4 +6,4 @@ Modal escape behavior should be consistent across stake, claim, withdraw, and se
 ## Checks
 - Press escape in each modal state.
 - Confirm pending wallet prompts are not described as cancelled.
-- Return focus to the trigger after close.
+- Return focus to the trigger element after close.
