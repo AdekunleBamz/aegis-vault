@@ -6,4 +6,4 @@ Protocol health should show degraded states without marking the entire app as un
 ## Checks
 - Simulate missing data for one health metric.
 - Confirm healthy metrics remain visible.
-- Record degraded thresholds in the release checklist.
+- Record the degraded thresholds in the release checklist.
