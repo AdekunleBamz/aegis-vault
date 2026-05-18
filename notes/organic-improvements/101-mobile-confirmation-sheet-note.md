@@ -5,5 +5,5 @@ Mobile confirmation sheets should keep action, amount, duration, and network vis
 
 ## Checks
 - Test small viewport and software keyboard states.
-- Confirm primary action remains reachable.
+- Confirm the primary action remains reachable.
 - Capture one mobile confirmation screenshot.
