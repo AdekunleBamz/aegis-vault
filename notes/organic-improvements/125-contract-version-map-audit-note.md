@@ -5,5 +5,5 @@ Contract version maps should be audited before releases that touch staking, rewa
 
 ## Checks
 - Compare configured contract names against deployment plans.
-- Confirm archived versions are not routed from production UI.
+- Confirm archived versions are not routed from the production UI.
 - Record the active version set in release notes.
