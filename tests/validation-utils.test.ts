@@ -470,4 +470,8 @@ describe('validation utils', () => {
   it('rejects null STX conversion helper inputs', () => {
     expect(() => stxToMicroStx(null as unknown as number)).toThrow('Invalid STX amount')
   })
+
+  it('rejects object STX conversion helper inputs', () => {
+    expect(() => stxToMicroStx({} as unknown as number)).toThrow('Invalid STX amount')
+  })
 })
