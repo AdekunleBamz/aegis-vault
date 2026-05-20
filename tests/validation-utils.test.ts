@@ -10,6 +10,7 @@ import {
   paginationSchema,
   positiveIntSchema,
   protocolStatsSchema,
+  rewardInfoSchema,
   safeValidate,
   stakeRequestSchema,
   stxToMicroStx,
@@ -349,5 +350,14 @@ describe('validation utils', () => {
       tier: 1,
       status: 'queued',
     }).success).toBe(false)
+  })
+
+  it('validates reward information payloads', () => {
+    expect(rewardInfoSchema.parse({
+      pendingRewards: 0,
+      claimedRewards: 0,
+      totalRewards: 0,
+      apr: 10,
+    }).apr).toBe(10)
   })
 })
