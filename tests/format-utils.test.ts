@@ -326,4 +326,8 @@ describe('format utils', () => {
   it('formats negative block counts as zero minutes', () => {
     expect(blocksToTime(-1)).toBe('0 min')
   })
+
+  it('formats a single block as ten minutes', () => {
+    expect(blocksToTime(1)).toBe('10 min')
+  })
 })
