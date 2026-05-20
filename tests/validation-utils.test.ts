@@ -383,4 +383,8 @@ describe('validation utils', () => {
   it('accepts the shortest configured lock period schema value', () => {
     expect(lockPeriodDaysSchema.parse(3)).toBe(3)
   })
+
+  it('rejects unsupported lock period schema values', () => {
+    expect(lockPeriodDaysSchema.safeParse(90).success).toBe(false)
+  })
 })
