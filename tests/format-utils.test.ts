@@ -246,4 +246,8 @@ describe('format utils', () => {
   it('formats large STX values with separators', () => {
     expect(formatSTX(1_234_567_890_000n)).toBe('1,234,567.89')
   })
+
+  it('formats zero microAGS with fixed decimals', () => {
+    expect(formatAGS(0n)).toBe('0.00')
+  })
 })
