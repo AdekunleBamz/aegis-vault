@@ -446,4 +446,8 @@ describe('validation utils', () => {
   it('returns typed data for successful safe validation', () => {
     expect(safeValidate(stakeRequestSchema, { amount: '2', lockPeriod: 7 })).toEqual({ success: true, data: { amount: '2', lockPeriod: 7 } })
   })
+
+  it('rejects lock periods below the helper minimum', () => {
+    expect(isValidLockPeriod(2)).toBe(false)
+  })
 })
