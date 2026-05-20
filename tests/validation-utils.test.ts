@@ -27,6 +27,7 @@ import {
   isValidTxId,
   isValidStxAmount,
   stakePositionSchema,
+  stxAmountSchema,
 } from '../frontend/src/lib/validation'
 
 describe('validation utils', () => {
@@ -395,5 +396,9 @@ describe('validation utils', () => {
 
   it('rejects fractional micro-STX schema values', () => {
     expect(microStxSchema.safeParse(1.5).success).toBe(false)
+  })
+
+  it('accepts STX amount schema values with six decimals', () => {
+    expect(stxAmountSchema.parse('1.123456')).toBe('1.123456')
   })
 })
