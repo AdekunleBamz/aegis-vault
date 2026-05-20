@@ -45,6 +45,8 @@ export function CopyButton({
         text-sm text-gray-400 hover:text-white
         bg-gray-800 hover:bg-gray-700
         rounded-lg transition-all
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/50
+        focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900
         ${className}
       `}
       aria-label={copied ? 'Copied to clipboard' : 'Copy to clipboard'}
