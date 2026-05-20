@@ -278,4 +278,8 @@ describe('format utils', () => {
   it('floors extra STX precision when converting to microSTX', () => {
     expect(toMicroSTX(1.2345678)).toBe(1_234_567n)
   })
+
+  it('returns zero microAGS for zero AGS input', () => {
+    expect(toMicroAGS(0)).toBe(0n)
+  })
 })
