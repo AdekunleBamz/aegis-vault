@@ -392,4 +392,8 @@ describe('validation utils', () => {
   it('accepts zero micro-STX schema values', () => {
     expect(microStxSchema.parse(0)).toBe(0)
   })
+
+  it('rejects fractional micro-STX schema values', () => {
+    expect(microStxSchema.safeParse(1.5).success).toBe(false)
+  })
 })
