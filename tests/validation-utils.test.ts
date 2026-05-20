@@ -432,4 +432,10 @@ describe('validation utils', () => {
     const schema = apiResponseSchema(stakeRequestSchema)
     expect(schema.parse({ success: false, error: { code: 'BAD', message: 'Nope', details: { field: 'amount' } }, timestamp: 1 }).error?.details).toEqual({ field: 'amount' })
   })
+
+  it('returns undefined for missing field validation errors', () => {
+    const result = safeValidate(stakeRequestSchema, { amount: '', lockPeriod: 7 })
+    expect(result.success && true).toBe(false)
+    if (!result.success) expect(getFieldError(result.error, 'lockPeriod')).toBeUndefined()
+  })
 })
