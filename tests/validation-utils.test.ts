@@ -442,4 +442,8 @@ describe('validation utils', () => {
   it('includes field paths in thrown validation errors', () => {
     expect(() => validate(stakeRequestSchema, { amount: '', lockPeriod: 7 })).toThrow('amount: Invalid STX amount format')
   })
+
+  it('returns typed data for successful safe validation', () => {
+    expect(safeValidate(stakeRequestSchema, { amount: '2', lockPeriod: 7 })).toEqual({ success: true, data: { amount: '2', lockPeriod: 7 } })
+  })
 })
