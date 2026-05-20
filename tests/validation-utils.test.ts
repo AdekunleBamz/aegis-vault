@@ -462,4 +462,8 @@ describe('validation utils', () => {
   it('rejects non-finite stake amount helper values', () => {
     expect(isValidStakeAmountSTX(Number.POSITIVE_INFINITY)).toBe(false)
   })
+
+  it('rejects non-string values in non-empty string helper', () => {
+    expect(isNonEmptyString(123)).toBe(false)
+  })
 })
