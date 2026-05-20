@@ -7,6 +7,7 @@ import {
   getFieldError,
   isNonEmptyString,
   isValidLockPeriod,
+  lockPeriodDaysSchema,
   microStxToStx,
   paginationSchema,
   positiveIntSchema,
@@ -377,5 +378,9 @@ describe('validation utils', () => {
 
   it('rejects claim requests with negative position ids', () => {
     expect(claimRequestSchema.safeParse({ positionIds: [-1] }).success).toBe(false)
+  })
+
+  it('accepts the shortest configured lock period schema value', () => {
+    expect(lockPeriodDaysSchema.parse(3)).toBe(3)
   })
 })
