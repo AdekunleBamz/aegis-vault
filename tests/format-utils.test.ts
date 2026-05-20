@@ -262,4 +262,8 @@ describe('format utils', () => {
   it('safely formats null AGS values', () => {
     expect(safeFormatAGS(null)).toBe('0.00')
   })
+
+  it('uses default address truncation length for invalid char counts', () => {
+    expect(truncateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N', 1.5)).toBe('SP3FKN...GG6N')
+  })
 })
