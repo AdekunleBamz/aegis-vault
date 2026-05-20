@@ -314,4 +314,8 @@ describe('format utils', () => {
   it('formats raw AGS at one microAGS precision', () => {
     expect(formatAGSRaw(1n)).toBe('0.000001')
   })
+
+  it('formats negative percentage values explicitly', () => {
+    expect(formatPercent(-1)).toBe('-1.00%')
+  })
 })
