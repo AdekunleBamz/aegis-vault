@@ -310,4 +310,8 @@ describe('format utils', () => {
   it('formats raw AGS from string microAGS inputs', () => {
     expect(formatAGSRaw('3000000')).toBe('3')
   })
+
+  it('formats raw AGS at one microAGS precision', () => {
+    expect(formatAGSRaw(1n)).toBe('0.000001')
+  })
 })
