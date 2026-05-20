@@ -401,4 +401,8 @@ describe('validation utils', () => {
   it('accepts STX amount schema values with six decimals', () => {
     expect(stxAmountSchema.parse('1.123456')).toBe('1.123456')
   })
+
+  it('rejects STX amount schema values with trailing decimal points', () => {
+    expect(stxAmountSchema.safeParse('1.').success).toBe(false)
+  })
 })
