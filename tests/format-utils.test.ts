@@ -250,4 +250,8 @@ describe('format utils', () => {
   it('formats zero microAGS with fixed decimals', () => {
     expect(formatAGS(0n)).toBe('0.00')
   })
+
+  it('formats string microAGS inputs', () => {
+    expect(formatAGS('3500000')).toBe('3.50')
+  })
 })
