@@ -274,4 +274,8 @@ describe('format utils', () => {
   it('uses default address truncation length for negative char counts', () => {
     expect(truncateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N', -1)).toBe('SP3FKN...GG6N')
   })
+
+  it('floors extra STX precision when converting to microSTX', () => {
+    expect(toMicroSTX(1.2345678)).toBe(1_234_567n)
+  })
 })
