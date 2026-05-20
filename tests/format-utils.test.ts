@@ -358,4 +358,8 @@ describe('format utils', () => {
   it('formats negative block day estimates with zero fallback', () => {
     expect(formatBlocksAsDays(-1)).toBe('0 days')
   })
+
+  it('rounds half-day block estimates up to one day', () => {
+    expect(formatBlocksAsDays(72)).toBe('1 day')
+  })
 })
