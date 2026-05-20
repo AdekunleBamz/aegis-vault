@@ -374,4 +374,8 @@ describe('validation utils', () => {
   it('validates claim requests without explicit position ids', () => {
     expect(claimRequestSchema.parse({})).toEqual({})
   })
+
+  it('rejects claim requests with negative position ids', () => {
+    expect(claimRequestSchema.safeParse({ positionIds: [-1] }).success).toBe(false)
+  })
 })
