@@ -258,4 +258,8 @@ describe('format utils', () => {
   it('safely formats undefined STX values', () => {
     expect(safeFormatSTX(undefined)).toBe('0.00')
   })
+
+  it('safely formats null AGS values', () => {
+    expect(safeFormatAGS(null)).toBe('0.00')
+  })
 })
