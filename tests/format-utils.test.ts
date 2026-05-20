@@ -242,4 +242,8 @@ describe('format utils', () => {
   it('formats string microSTX inputs', () => {
     expect(formatSTX('2500000')).toBe('2.50')
   })
+
+  it('formats large STX values with separators', () => {
+    expect(formatSTX(1_234_567_890_000n)).toBe('1,234,567.89')
+  })
 })
