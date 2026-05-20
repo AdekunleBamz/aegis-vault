@@ -322,4 +322,8 @@ describe('format utils', () => {
   it('formats zero percentage values with fixed decimals', () => {
     expect(formatPercent(0)).toBe('0.00%')
   })
+
+  it('formats negative block counts as zero minutes', () => {
+    expect(blocksToTime(-1)).toBe('0 min')
+  })
 })
