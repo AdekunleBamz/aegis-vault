@@ -8,6 +8,7 @@ import {
   isNonEmptyString,
   isValidLockPeriod,
   lockPeriodDaysSchema,
+  microStxSchema,
   microStxToStx,
   paginationSchema,
   positiveIntSchema,
@@ -386,5 +387,9 @@ describe('validation utils', () => {
 
   it('rejects unsupported lock period schema values', () => {
     expect(lockPeriodDaysSchema.safeParse(90).success).toBe(false)
+  })
+
+  it('accepts zero micro-STX schema values', () => {
+    expect(microStxSchema.parse(0)).toBe(0)
   })
 })
