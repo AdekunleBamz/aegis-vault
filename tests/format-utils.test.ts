@@ -362,4 +362,8 @@ describe('format utils', () => {
   it('rounds half-day block estimates up to one day', () => {
     expect(formatBlocksAsDays(72)).toBe('1 day')
   })
+
+  it('formats invalid ratio percentages with zero fallback', () => {
+    expect(formatPercentage(Number.NaN)).toBe('0.00%')
+  })
 })
