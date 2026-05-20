@@ -466,4 +466,8 @@ describe('validation utils', () => {
   it('rejects non-string values in non-empty string helper', () => {
     expect(isNonEmptyString(123)).toBe(false)
   })
+
+  it('rejects null STX conversion helper inputs', () => {
+    expect(() => stxToMicroStx(null as unknown as number)).toThrow('Invalid STX amount')
+  })
 })
