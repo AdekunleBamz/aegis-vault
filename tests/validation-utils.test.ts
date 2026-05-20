@@ -450,4 +450,8 @@ describe('validation utils', () => {
   it('rejects lock periods below the helper minimum', () => {
     expect(isValidLockPeriod(2)).toBe(false)
   })
+
+  it('rejects lock periods above the helper maximum', () => {
+    expect(isValidLockPeriod(31)).toBe(false)
+  })
 })
