@@ -458,4 +458,8 @@ describe('validation utils', () => {
   it('accepts stake amounts at a custom minimum boundary', () => {
     expect(isValidStakeAmountSTX(1, 1)).toBe(true)
   })
+
+  it('rejects non-finite stake amount helper values', () => {
+    expect(isValidStakeAmountSTX(Number.POSITIVE_INFINITY)).toBe(false)
+  })
 })
