@@ -370,4 +370,8 @@ describe('format utils', () => {
   it('formats ratio percentages with zero decimals', () => {
     expect(formatPercentage(0.1234, 0)).toBe('12%')
   })
+
+  it('formats APY values with zero decimals', () => {
+    expect(formatAPY(15.6, 0)).toBe('16% APY')
+  })
 })
