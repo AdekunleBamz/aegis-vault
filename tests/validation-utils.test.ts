@@ -410,4 +410,8 @@ describe('validation utils', () => {
   it('accepts uppercase hex transaction id schema values', () => {
     expect(txIdSchema.parse(`0x${'A'.repeat(64)}`)).toBe(`0x${'A'.repeat(64)}`)
   })
+
+  it('rejects uppercase transaction id schema prefixes', () => {
+    expect(txIdSchema.safeParse(`0X${'a'.repeat(64)}`).success).toBe(false)
+  })
 })
