@@ -282,4 +282,8 @@ describe('format utils', () => {
   it('returns zero microAGS for zero AGS input', () => {
     expect(toMicroAGS(0)).toBe(0n)
   })
+
+  it('floors extra AGS precision when converting to microAGS', () => {
+    expect(toMicroAGS(1.2345678)).toBe(1_234_567n)
+  })
 })
