@@ -197,6 +197,7 @@ export function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.25 }}
             className="relative"
+            title="Operator risk snapshot panel"
           >
             <div className="absolute inset-x-12 top-10 h-40 rounded-full bg-aegis-blue/20 blur-[90px]" />
             <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-background/65 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] backdrop-blur-2xl">
