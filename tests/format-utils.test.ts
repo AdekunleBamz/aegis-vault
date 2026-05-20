@@ -318,4 +318,8 @@ describe('format utils', () => {
   it('formats negative percentage values explicitly', () => {
     expect(formatPercent(-1)).toBe('-1.00%')
   })
+
+  it('formats zero percentage values with fixed decimals', () => {
+    expect(formatPercent(0)).toBe('0.00%')
+  })
 })
