@@ -3,6 +3,7 @@ import {
   ValidationError,
   apiResponseSchema,
   blockHeightSchema,
+  claimRequestSchema,
   getFieldError,
   isNonEmptyString,
   isValidLockPeriod,
@@ -368,5 +369,9 @@ describe('validation utils', () => {
       totalRewards: 0,
       apr: 101,
     }).success).toBe(false)
+  })
+
+  it('validates claim requests without explicit position ids', () => {
+    expect(claimRequestSchema.parse({})).toEqual({})
   })
 })
