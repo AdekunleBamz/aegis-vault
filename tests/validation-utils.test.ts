@@ -28,6 +28,7 @@ import {
   isValidTxId,
   isValidStxAmount,
   stakePositionSchema,
+  stacksAddressSchema,
   stxAmountSchema,
 } from '../frontend/src/lib/validation'
 
@@ -413,5 +414,9 @@ describe('validation utils', () => {
 
   it('rejects uppercase transaction id schema prefixes', () => {
     expect(txIdSchema.safeParse(`0X${'a'.repeat(64)}`).success).toBe(false)
+  })
+
+  it('accepts valid stacks address schema values', () => {
+    expect(stacksAddressSchema.parse('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')).toBe('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')
   })
 })
