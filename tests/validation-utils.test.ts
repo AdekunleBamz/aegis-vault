@@ -423,4 +423,8 @@ describe('validation utils', () => {
   it('rejects lowercase stacks address schema values', () => {
     expect(stacksAddressSchema.safeParse('st1sj3dte5dn7x54ydh5d64r3bcb6a2ag2zq8ypd5').success).toBe(false)
   })
+
+  it('validates pagination totals and hasMore flags', () => {
+    expect(paginationSchema.parse({ page: 2, limit: 10, total: 25, hasMore: true })).toMatchObject({ total: 25, hasMore: true })
+  })
 })
