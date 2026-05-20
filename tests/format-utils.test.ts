@@ -294,4 +294,8 @@ describe('format utils', () => {
   it('formats compact STX at the thousand-token boundary', () => {
     expect(formatCompactSTX(1_000_000_000n)).toBe('1.00K')
   })
+
+  it('formats zero compact STX values with decimals', () => {
+    expect(formatCompactSTX(0n)).toBe('0.00')
+  })
 })
