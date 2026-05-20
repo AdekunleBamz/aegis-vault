@@ -298,4 +298,8 @@ describe('format utils', () => {
   it('formats zero compact STX values with decimals', () => {
     expect(formatCompactSTX(0n)).toBe('0.00')
   })
+
+  it('formats raw STX from string microSTX inputs', () => {
+    expect(formatSTXRaw('2500000')).toBe('2.5')
+  })
 })
