@@ -366,4 +366,8 @@ describe('format utils', () => {
   it('formats invalid ratio percentages with zero fallback', () => {
     expect(formatPercentage(Number.NaN)).toBe('0.00%')
   })
+
+  it('formats ratio percentages with zero decimals', () => {
+    expect(formatPercentage(0.1234, 0)).toBe('12%')
+  })
 })
