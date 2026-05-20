@@ -454,4 +454,8 @@ describe('validation utils', () => {
   it('rejects lock periods above the helper maximum', () => {
     expect(isValidLockPeriod(31)).toBe(false)
   })
+
+  it('accepts stake amounts at a custom minimum boundary', () => {
+    expect(isValidStakeAmountSTX(1, 1)).toBe(true)
+  })
 })
