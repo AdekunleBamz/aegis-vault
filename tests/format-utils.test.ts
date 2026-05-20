@@ -238,4 +238,8 @@ describe('format utils', () => {
   it('formats zero microSTX with fixed decimals', () => {
     expect(formatSTX(0n)).toBe('0.00')
   })
+
+  it('formats string microSTX inputs', () => {
+    expect(formatSTX('2500000')).toBe('2.50')
+  })
 })
