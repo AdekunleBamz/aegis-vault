@@ -338,4 +338,16 @@ describe('validation utils', () => {
       status: 'active',
     }).status).toBe('active')
   })
+
+  it('rejects unsupported stake position statuses', () => {
+    expect(stakePositionSchema.safeParse({
+      staker: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      amount: 1,
+      lockPeriod: 7,
+      startBlock: 1,
+      endBlock: 2,
+      tier: 1,
+      status: 'queued',
+    }).success).toBe(false)
+  })
 })
