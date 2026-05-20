@@ -19,6 +19,7 @@ import {
   stxToMicroStx,
   transactionRecordSchema,
   transactionStatusSchema,
+  txIdSchema,
   unstakeRequestSchema,
   userStatsSchema,
   validate,
@@ -404,5 +405,9 @@ describe('validation utils', () => {
 
   it('rejects STX amount schema values with trailing decimal points', () => {
     expect(stxAmountSchema.safeParse('1.').success).toBe(false)
+  })
+
+  it('accepts uppercase hex transaction id schema values', () => {
+    expect(txIdSchema.parse(`0x${'A'.repeat(64)}`)).toBe(`0x${'A'.repeat(64)}`)
   })
 })
