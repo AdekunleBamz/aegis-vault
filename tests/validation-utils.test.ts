@@ -360,4 +360,13 @@ describe('validation utils', () => {
       apr: 10,
     }).apr).toBe(10)
   })
+
+  it('rejects reward information APR above the cap', () => {
+    expect(rewardInfoSchema.safeParse({
+      pendingRewards: 0,
+      claimedRewards: 0,
+      totalRewards: 0,
+      apr: 101,
+    }).success).toBe(false)
+  })
 })
