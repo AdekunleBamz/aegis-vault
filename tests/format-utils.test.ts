@@ -234,4 +234,8 @@ describe('format utils', () => {
   it('falls back for invalid APY decimal settings', () => {
     expect(formatAPY(12.345, -1)).toBe('12.35% APY')
   })
+
+  it('formats zero microSTX with fixed decimals', () => {
+    expect(formatSTX(0n)).toBe('0.00')
+  })
 })
