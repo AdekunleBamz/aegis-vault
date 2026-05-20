@@ -330,4 +330,8 @@ describe('format utils', () => {
   it('formats a single block as ten minutes', () => {
     expect(blocksToTime(1)).toBe('10 min')
   })
+
+  it('formats one-hour block durations with a singular label', () => {
+    expect(blocksToTime(6)).toBe('1 hr')
+  })
 })
