@@ -354,4 +354,8 @@ describe('format utils', () => {
   it('formats non-finite durations as zero seconds', () => {
     expect(formatDuration(Number.NaN)).toBe('0s')
   })
+
+  it('formats negative block day estimates with zero fallback', () => {
+    expect(formatBlocksAsDays(-1)).toBe('0 days')
+  })
 })
