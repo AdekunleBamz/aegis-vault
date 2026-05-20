@@ -346,4 +346,8 @@ describe('format utils', () => {
   it('formats future hour-relative timestamps', () => {
     expect(formatRelativeTime(Date.now() / 1000 + 3700)).toBe('1h from now')
   })
+
+  it('formats zero millisecond durations as zero seconds', () => {
+    expect(formatDuration(0)).toBe('0s')
+  })
 })
