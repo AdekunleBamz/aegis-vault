@@ -438,4 +438,8 @@ describe('validation utils', () => {
     expect(result.success && true).toBe(false)
     if (!result.success) expect(getFieldError(result.error, 'lockPeriod')).toBeUndefined()
   })
+
+  it('includes field paths in thrown validation errors', () => {
+    expect(() => validate(stakeRequestSchema, { amount: '', lockPeriod: 7 })).toThrow('amount: Invalid STX amount format')
+  })
 })
