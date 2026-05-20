@@ -474,4 +474,8 @@ describe('validation utils', () => {
   it('rejects object STX conversion helper inputs', () => {
     expect(() => stxToMicroStx({} as unknown as number)).toThrow('Invalid STX amount')
   })
+
+  it('rejects fractional micro-STX conversion helper inputs', () => {
+    expect(() => microStxToStx(1.5)).toThrow()
+  })
 })
