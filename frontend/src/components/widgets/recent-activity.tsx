@@ -69,7 +69,7 @@ export function RecentActivity() {
         </div>
         <Link
           href="/history"
-          className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors flex items-center gap-1.5"
+          className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-foreground transition-colors flex items-center gap-1.5 min-h-11 px-2 rounded-full"
         >
           Full Ledger
           <ChevronRight className="w-3 h-3" />
