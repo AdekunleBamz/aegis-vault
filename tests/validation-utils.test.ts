@@ -22,6 +22,7 @@ import {
   isValidStakeAmountSTX,
   isValidTxId,
   isValidStxAmount,
+  stakePositionSchema,
 } from '../frontend/src/lib/validation'
 
 describe('validation utils', () => {
@@ -324,5 +325,17 @@ describe('validation utils', () => {
 
   it('rejects non-string STX amount helper inputs', () => {
     expect(isValidStxAmount(123 as unknown as string)).toBe(false)
+  })
+
+  it('validates active stake position payloads', () => {
+    expect(stakePositionSchema.parse({
+      staker: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      amount: 1,
+      lockPeriod: 7,
+      startBlock: 1,
+      endBlock: 2,
+      tier: 1,
+      status: 'active',
+    }).status).toBe('active')
   })
 })
