@@ -427,4 +427,9 @@ describe('validation utils', () => {
   it('validates pagination totals and hasMore flags', () => {
     expect(paginationSchema.parse({ page: 2, limit: 10, total: 25, hasMore: true })).toMatchObject({ total: 25, hasMore: true })
   })
+
+  it('validates API error responses with details payloads', () => {
+    const schema = apiResponseSchema(stakeRequestSchema)
+    expect(schema.parse({ success: false, error: { code: 'BAD', message: 'Nope', details: { field: 'amount' } }, timestamp: 1 }).error?.details).toEqual({ field: 'amount' })
+  })
 })
