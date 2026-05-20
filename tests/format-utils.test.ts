@@ -302,4 +302,8 @@ describe('format utils', () => {
   it('formats raw STX from string microSTX inputs', () => {
     expect(formatSTXRaw('2500000')).toBe('2.5')
   })
+
+  it('formats raw STX at one microSTX precision', () => {
+    expect(formatSTXRaw(1n)).toBe('0.000001')
+  })
 })
