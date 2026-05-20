@@ -334,4 +334,8 @@ describe('format utils', () => {
   it('formats one-hour block durations with a singular label', () => {
     expect(blocksToTime(6)).toBe('1 hr')
   })
+
+  it('formats non-finite block heights with zero fallback', () => {
+    expect(formatBlockHeight(Number.NaN)).toBe('0')
+  })
 })
