@@ -306,4 +306,8 @@ describe('format utils', () => {
   it('formats raw STX at one microSTX precision', () => {
     expect(formatSTXRaw(1n)).toBe('0.000001')
   })
+
+  it('formats raw AGS from string microAGS inputs', () => {
+    expect(formatAGSRaw('3000000')).toBe('3')
+  })
 })
