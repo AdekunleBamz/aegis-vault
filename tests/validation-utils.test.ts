@@ -419,4 +419,8 @@ describe('validation utils', () => {
   it('accepts valid stacks address schema values', () => {
     expect(stacksAddressSchema.parse('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')).toBe('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')
   })
+
+  it('rejects lowercase stacks address schema values', () => {
+    expect(stacksAddressSchema.safeParse('st1sj3dte5dn7x54ydh5d64r3bcb6a2ag2zq8ypd5').success).toBe(false)
+  })
 })
