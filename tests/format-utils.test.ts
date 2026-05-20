@@ -286,4 +286,8 @@ describe('format utils', () => {
   it('floors extra AGS precision when converting to microAGS', () => {
     expect(toMicroAGS(1.2345678)).toBe(1_234_567n)
   })
+
+  it('formats compact STX at the million-token boundary', () => {
+    expect(formatCompactSTX(1_000_000_000_000n)).toBe('1.00M')
+  })
 })
