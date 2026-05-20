@@ -266,4 +266,8 @@ describe('format utils', () => {
   it('uses default address truncation length for invalid char counts', () => {
     expect(truncateAddress('SP3FKNEZ86RG5RT7SZ5FBRGH85FZNG94ZH1MCGG6N', 1.5)).toBe('SP3FKN...GG6N')
   })
+
+  it('returns an empty address label for blank addresses', () => {
+    expect(truncateAddress('   ')).toBe('')
+  })
 })
