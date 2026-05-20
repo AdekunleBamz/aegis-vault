@@ -254,4 +254,8 @@ describe('format utils', () => {
   it('formats string microAGS inputs', () => {
     expect(formatAGS('3500000')).toBe('3.50')
   })
+
+  it('safely formats undefined STX values', () => {
+    expect(safeFormatSTX(undefined)).toBe('0.00')
+  })
 })
