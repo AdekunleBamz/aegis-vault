@@ -338,4 +338,8 @@ describe('format utils', () => {
   it('formats non-finite block heights with zero fallback', () => {
     expect(formatBlockHeight(Number.NaN)).toBe('0')
   })
+
+  it('formats zero relative-time timestamps as just now', () => {
+    expect(formatRelativeTime(0)).toBe('Just now')
+  })
 })
