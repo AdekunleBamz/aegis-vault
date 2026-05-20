@@ -350,4 +350,8 @@ describe('format utils', () => {
   it('formats zero millisecond durations as zero seconds', () => {
     expect(formatDuration(0)).toBe('0s')
   })
+
+  it('formats non-finite durations as zero seconds', () => {
+    expect(formatDuration(Number.NaN)).toBe('0s')
+  })
 })
