@@ -478,4 +478,8 @@ describe('validation utils', () => {
   it('rejects fractional micro-STX conversion helper inputs', () => {
     expect(() => microStxToStx(1.5)).toThrow()
   })
+
+  it('rejects NaN micro-STX conversion helper inputs', () => {
+    expect(() => microStxToStx(Number.NaN)).toThrow()
+  })
 })
