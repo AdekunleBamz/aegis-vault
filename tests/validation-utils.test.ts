@@ -501,4 +501,17 @@ describe('validation utils', () => {
       sender: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
     }).success).toBe(false)
   })
+
+  it('rejects user stats with negative staking power', () => {
+    expect(userStatsSchema.safeParse({
+      address: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      stakedBalance: 0,
+      availableBalance: 0,
+      pendingRewards: 0,
+      totalRewardsClaimed: 0,
+      positionCount: 0,
+      tier: 0,
+      stakingPower: -1,
+    }).success).toBe(false)
+  })
 })
