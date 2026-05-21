@@ -526,4 +526,8 @@ describe('validation utils', () => {
       activePositions: -1,
     }).success).toBe(false)
   })
+
+  it('rejects zero block heights in the block height schema', () => {
+    expect(blockHeightSchema.safeParse(0).success).toBe(false)
+  })
 })
