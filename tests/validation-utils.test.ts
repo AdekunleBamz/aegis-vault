@@ -492,4 +492,13 @@ describe('validation utils', () => {
       recipient: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
     }).recipient).toBe('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')
   })
+
+  it('rejects transaction records with unsupported statuses', () => {
+    expect(transactionRecordSchema.safeParse({
+      txId: `0x${'b'.repeat(64)}`,
+      type: 'stake',
+      status: 'queued',
+      sender: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+    }).success).toBe(false)
+  })
 })
