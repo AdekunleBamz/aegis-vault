@@ -482,4 +482,14 @@ describe('validation utils', () => {
   it('rejects NaN micro-STX conversion helper inputs', () => {
     expect(() => microStxToStx(Number.NaN)).toThrow()
   })
+
+  it('validates transaction records with optional recipients', () => {
+    expect(transactionRecordSchema.parse({
+      txId: `0x${'b'.repeat(64)}`,
+      type: 'transfer',
+      status: 'pending',
+      sender: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      recipient: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+    }).recipient).toBe('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')
+  })
 })
