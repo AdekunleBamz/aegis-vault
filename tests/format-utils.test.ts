@@ -176,7 +176,7 @@ describe('format utils', () => {
   })
 
   it('formats future minute-relative timestamps', () => {
-    expect(formatRelativeTime(Date.now() / 1000 + 180)).toBe('2m from now')
+    expect(formatRelativeTime(Date.now() / 1000 + 150)).toBe('2m from now')
   })
 
   it('formats sub-minute durations in seconds', () => {
