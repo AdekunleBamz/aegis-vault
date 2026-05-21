@@ -175,8 +175,8 @@ describe('format utils', () => {
     expect(formatRelativeTime(Date.now() / 1000 - 172800)).toBe('2d ago')
   })
 
-  it('keeps future relative timestamps as just now', () => {
-    expect(formatRelativeTime(Date.now() / 1000 + 120)).toBe('Just now')
+  it('formats future minute-relative timestamps', () => {
+    expect(formatRelativeTime(Date.now() / 1000 + 180)).toBe('2m from now')
   })
 
   it('formats sub-minute durations in seconds', () => {
