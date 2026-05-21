@@ -514,4 +514,16 @@ describe('validation utils', () => {
       stakingPower: -1,
     }).success).toBe(false)
   })
+
+  it('rejects protocol stats with negative active positions', () => {
+    expect(protocolStatsSchema.safeParse({
+      totalStaked: 0,
+      totalStakers: 0,
+      totalRewardsDistributed: 0,
+      currentAPR: 0,
+      tvl: 0,
+      treasuryBalance: 0,
+      activePositions: -1,
+    }).success).toBe(false)
+  })
 })
