@@ -147,7 +147,7 @@ npm run frontend:dev
 # Lint frontend
 npm run frontend:lint
 
-# Run frontend tests
+# Validate frontend lint and build
 npm run frontend:validate
 
 # Build for production
