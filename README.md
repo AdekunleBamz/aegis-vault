@@ -101,6 +101,8 @@ npm run frontend:install
 npm run check
 ```
 
+Before sharing deployment evidence, record the contract version suffixes and network name used for the frontend build.
+
 ## Development
 
 ### Smart Contracts
