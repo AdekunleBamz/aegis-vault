@@ -69,7 +69,7 @@
 )
 
 ;; Track user's stake IDs
-(define-map user-stake-ids principal (list 20 uint))
+(define-map user-stake-ids principal (list 50 uint))
 
 ;; Track user's total staked amount
 (define-map user-total-staked principal uint)
@@ -133,7 +133,7 @@
     (
       (current-ids (default-to (list) (map-get? user-stake-ids user)))
     )
-    (map-set user-stake-ids user (unwrap! (as-max-len? (append current-ids stake-id) u20) false))
+    (map-set user-stake-ids user (unwrap! (as-max-len? (append current-ids stake-id) u50) false))
     true
   )
 )

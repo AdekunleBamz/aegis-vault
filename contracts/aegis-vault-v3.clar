@@ -24,7 +24,7 @@
 ;; Staking parameters
 (define-constant MIN-STAKE u10000)           ;; 0.01 STX
 (define-constant FEE-AMOUNT u10000)          ;; 0.01 STX fixed fee for specific actions
-(define-constant MAX-STAKES-PER-USER u20)
+(define-constant MAX-STAKES-PER-USER u50)
 (define-constant BLOCKS-PER-DAY u144)
 
 ;; Reward rate (based on v2-15)
@@ -66,7 +66,7 @@
   }
 )
 
-(define-map user-stake-ids principal (list 20 uint))
+(define-map user-stake-ids principal (list 50 uint))
 (define-map user-total-staked principal uint)
 
 ;; Withdrawal cooldown
@@ -144,7 +144,7 @@
         total-claimed: u0
       }
     )
-    (map-set user-stake-ids staker (unwrap! (as-max-len? (append current-ids new-id) u20) ERR-MAX-STAKES-REACHED))
+    (map-set user-stake-ids staker (unwrap! (as-max-len? (append current-ids new-id) u50) ERR-MAX-STAKES-REACHED))
     (map-set user-total-staked staker (+ (default-to u0 (map-get? user-total-staked staker)) amount))
     (var-set total-staked (+ (var-get total-staked) amount))
     (var-set stake-counter new-id)

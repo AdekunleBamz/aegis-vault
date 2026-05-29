@@ -17,7 +17,7 @@
 
 ;; Staking parameters
 (define-constant MIN-STAKE u10000)           ;; 0.01 STX minimum stake to participate
-(define-constant MAX-STAKES-PER-USER u20)    ;; Max 20 concurrent stakes per wallet
+(define-constant MAX-STAKES-PER-USER u50)    ;; Max 50 concurrent stakes per wallet
 (define-constant BLOCKS-PER-DAY u144)        ;; ~144 blocks per day on Stacks
 
 ;; Lock periods (in days, converted to blocks on-chain)
@@ -60,7 +60,7 @@
 )
 
 ;; Track user's stake IDs
-(define-map user-stake-ids principal (list 20 uint))
+(define-map user-stake-ids principal (list 50 uint))
 
 ;; Track user's total staked
 (define-map user-total-staked principal uint)
@@ -184,7 +184,7 @@
 
     ;; Update user's stake list
     (map-set user-stake-ids staker
-      (unwrap! (as-max-len? (append current-stakes new-stake-id) u20) ERR-MAX-STAKES-REACHED))
+      (unwrap! (as-max-len? (append current-stakes new-stake-id) u50) ERR-MAX-STAKES-REACHED))
 
     ;; Update totals
     (map-set user-total-staked staker
