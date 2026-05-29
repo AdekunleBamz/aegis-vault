@@ -14,6 +14,8 @@
     "frontend:validate": "npm --prefix frontend run validate",
     "frontend:lint": "npm --prefix frontend run lint",
     "lint:frontend": "npm run frontend:lint",
+    "lint": "npm run lint:frontend",
+    "build": "npm run frontend:build",
     "test": "vitest run",
     "test:validation": "vitest run tests/validation-utils.test.ts",
     "test:watch": "vitest",
