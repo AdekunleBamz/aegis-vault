@@ -1,6 +1,28 @@
 import { Hero } from '@/components/sections/hero';
-import { Stats } from '@/components/sections/stats';
-import { StakeForm } from '@/components/sections/stake-form';
+import dynamic from 'next/dynamic';
+
+const Stats = dynamic(
+  () => import('@/components/sections/stats'),
+  {
+    loading: () => (
+      <div className="container py-24">
+        <div className="h-64 rounded-[32px] border border-border/60 bg-muted/20" />
+      </div>
+    ),
+  }
+);
+
+const StakeForm = dynamic(
+  () => import('@/components/sections/stake-form'),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="container max-w-2xl py-24">
+        <div className="h-96 rounded-[48px] border border-border/40 bg-muted/20" />
+      </div>
+    ),
+  }
+);
 
 export default function Home() {
   return (
