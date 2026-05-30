@@ -7,3 +7,4 @@
 - Verify SECURITY.md references stay current whenever incident workflow changes.
 
 - Include this checkpoint in the final release handoff review.
+- Keep release-only notes separate from user-facing troubleshooting copy.

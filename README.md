@@ -95,11 +95,13 @@ cd aegis-vault
 npm ci
 
 # Install frontend dependencies
-npm run frontend:install
+npm --prefix frontend ci
 
 # Run project-wide checks
 npm run check
 ```
+
+Before sharing deployment evidence, record the contract version suffixes and network name used for the frontend build.
 
 ## Development
 
@@ -145,7 +147,7 @@ npm run frontend:dev
 # Lint frontend
 npm run frontend:lint
 
-# Run frontend tests
+# Validate frontend lint and build
 npm run frontend:validate
 
 # Build for production

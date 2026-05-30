@@ -3,18 +3,23 @@ import {
   ValidationError,
   apiResponseSchema,
   blockHeightSchema,
+  claimRequestSchema,
   getFieldError,
   isNonEmptyString,
   isValidLockPeriod,
+  lockPeriodDaysSchema,
+  microStxSchema,
   microStxToStx,
   paginationSchema,
   positiveIntSchema,
   protocolStatsSchema,
+  rewardInfoSchema,
   safeValidate,
   stakeRequestSchema,
   stxToMicroStx,
   transactionRecordSchema,
   transactionStatusSchema,
+  txIdSchema,
   unstakeRequestSchema,
   userStatsSchema,
   validate,
@@ -22,6 +27,9 @@ import {
   isValidStakeAmountSTX,
   isValidTxId,
   isValidStxAmount,
+  stakePositionSchema,
+  stacksAddressSchema,
+  stxAmountSchema,
 } from '../frontend/src/lib/validation'
 
 describe('validation utils', () => {
@@ -324,5 +332,202 @@ describe('validation utils', () => {
 
   it('rejects non-string STX amount helper inputs', () => {
     expect(isValidStxAmount(123 as unknown as string)).toBe(false)
+  })
+
+  it('validates active stake position payloads', () => {
+    expect(stakePositionSchema.parse({
+      staker: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      amount: 1,
+      lockPeriod: 7,
+      startBlock: 1,
+      endBlock: 2,
+      tier: 1,
+      status: 'active',
+    }).status).toBe('active')
+  })
+
+  it('rejects unsupported stake position statuses', () => {
+    expect(stakePositionSchema.safeParse({
+      staker: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      amount: 1,
+      lockPeriod: 7,
+      startBlock: 1,
+      endBlock: 2,
+      tier: 1,
+      status: 'queued',
+    }).success).toBe(false)
+  })
+
+  it('validates reward information payloads', () => {
+    expect(rewardInfoSchema.parse({
+      pendingRewards: 0,
+      claimedRewards: 0,
+      totalRewards: 0,
+      apr: 10,
+    }).apr).toBe(10)
+  })
+
+  it('rejects reward information APR above the cap', () => {
+    expect(rewardInfoSchema.safeParse({
+      pendingRewards: 0,
+      claimedRewards: 0,
+      totalRewards: 0,
+      apr: 101,
+    }).success).toBe(false)
+  })
+
+  it('validates claim requests without explicit position ids', () => {
+    expect(claimRequestSchema.parse({})).toEqual({})
+  })
+
+  it('rejects claim requests with negative position ids', () => {
+    expect(claimRequestSchema.safeParse({ positionIds: [-1] }).success).toBe(false)
+  })
+
+  it('accepts the shortest configured lock period schema value', () => {
+    expect(lockPeriodDaysSchema.parse(3)).toBe(3)
+  })
+
+  it('rejects unsupported lock period schema values', () => {
+    expect(lockPeriodDaysSchema.safeParse(90).success).toBe(false)
+  })
+
+  it('accepts zero micro-STX schema values', () => {
+    expect(microStxSchema.parse(0)).toBe(0)
+  })
+
+  it('rejects fractional micro-STX schema values', () => {
+    expect(microStxSchema.safeParse(1.5).success).toBe(false)
+  })
+
+  it('accepts STX amount schema values with six decimals', () => {
+    expect(stxAmountSchema.parse('1.123456')).toBe('1.123456')
+  })
+
+  it('rejects STX amount schema values with trailing decimal points', () => {
+    expect(stxAmountSchema.safeParse('1.').success).toBe(false)
+  })
+
+  it('accepts uppercase hex transaction id schema values', () => {
+    expect(txIdSchema.parse(`0x${'A'.repeat(64)}`)).toBe(`0x${'A'.repeat(64)}`)
+  })
+
+  it('rejects uppercase transaction id schema prefixes', () => {
+    expect(txIdSchema.safeParse(`0X${'a'.repeat(64)}`).success).toBe(false)
+  })
+
+  it('accepts valid stacks address schema values', () => {
+    expect(stacksAddressSchema.parse('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')).toBe('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')
+  })
+
+  it('rejects lowercase stacks address schema values', () => {
+    expect(stacksAddressSchema.safeParse('st1sj3dte5dn7x54ydh5d64r3bcb6a2ag2zq8ypd5').success).toBe(false)
+  })
+
+  it('validates pagination totals and hasMore flags', () => {
+    expect(paginationSchema.parse({ page: 2, limit: 10, total: 25, hasMore: true })).toMatchObject({ total: 25, hasMore: true })
+  })
+
+  it('validates API error responses with details payloads', () => {
+    const schema = apiResponseSchema(stakeRequestSchema)
+    expect(schema.parse({ success: false, error: { code: 'BAD', message: 'Nope', details: { field: 'amount' } }, timestamp: 1 }).error?.details).toEqual({ field: 'amount' })
+  })
+
+  it('returns undefined for missing field validation errors', () => {
+    const result = safeValidate(stakeRequestSchema, { amount: '', lockPeriod: 7 })
+    expect(result.success && true).toBe(false)
+    if (!result.success) expect(getFieldError(result.error, 'lockPeriod')).toBeUndefined()
+  })
+
+  it('includes field paths in thrown validation errors', () => {
+    expect(() => validate(stakeRequestSchema, { amount: '', lockPeriod: 7 })).toThrow('amount: Invalid STX amount format')
+  })
+
+  it('returns typed data for successful safe validation', () => {
+    expect(safeValidate(stakeRequestSchema, { amount: '2', lockPeriod: 7 })).toEqual({ success: true, data: { amount: '2', lockPeriod: 7 } })
+  })
+
+  it('rejects lock periods below the helper minimum', () => {
+    expect(isValidLockPeriod(2)).toBe(false)
+  })
+
+  it('rejects lock periods above the helper maximum', () => {
+    expect(isValidLockPeriod(31)).toBe(false)
+  })
+
+  it('accepts stake amounts at a custom minimum boundary', () => {
+    expect(isValidStakeAmountSTX(1, 1)).toBe(true)
+  })
+
+  it('rejects non-finite stake amount helper values', () => {
+    expect(isValidStakeAmountSTX(Number.POSITIVE_INFINITY)).toBe(false)
+  })
+
+  it('rejects non-string values in non-empty string helper', () => {
+    expect(isNonEmptyString(123)).toBe(false)
+  })
+
+  it('rejects null STX conversion helper inputs', () => {
+    expect(() => stxToMicroStx(null as unknown as number)).toThrow('Invalid STX amount')
+  })
+
+  it('rejects object STX conversion helper inputs', () => {
+    expect(() => stxToMicroStx({} as unknown as number)).toThrow('Invalid STX amount')
+  })
+
+  it('rejects fractional micro-STX conversion helper inputs', () => {
+    expect(() => microStxToStx(1.5)).toThrow()
+  })
+
+  it('rejects NaN micro-STX conversion helper inputs', () => {
+    expect(() => microStxToStx(Number.NaN)).toThrow()
+  })
+
+  it('validates transaction records with optional recipients', () => {
+    expect(transactionRecordSchema.parse({
+      txId: `0x${'b'.repeat(64)}`,
+      type: 'transfer',
+      status: 'pending',
+      sender: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      recipient: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+    }).recipient).toBe('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')
+  })
+
+  it('rejects transaction records with unsupported statuses', () => {
+    expect(transactionRecordSchema.safeParse({
+      txId: `0x${'b'.repeat(64)}`,
+      type: 'stake',
+      status: 'queued',
+      sender: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+    }).success).toBe(false)
+  })
+
+  it('rejects user stats with negative staking power', () => {
+    expect(userStatsSchema.safeParse({
+      address: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+      stakedBalance: 0,
+      availableBalance: 0,
+      pendingRewards: 0,
+      totalRewardsClaimed: 0,
+      positionCount: 0,
+      tier: 0,
+      stakingPower: -1,
+    }).success).toBe(false)
+  })
+
+  it('rejects protocol stats with negative active positions', () => {
+    expect(protocolStatsSchema.safeParse({
+      totalStaked: 0,
+      totalStakers: 0,
+      totalRewardsDistributed: 0,
+      currentAPR: 0,
+      tvl: 0,
+      treasuryBalance: 0,
+      activePositions: -1,
+    }).success).toBe(false)
+  })
+
+  it('rejects zero block heights in the block height schema', () => {
+    expect(blockHeightSchema.safeParse(0).success).toBe(false)
   })
 })
