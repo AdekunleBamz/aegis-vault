@@ -491,3 +491,5 @@ export function StakeForm() {
     </section>
   );
 }
+
+export default StakeForm;
