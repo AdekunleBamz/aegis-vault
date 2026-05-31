@@ -37,8 +37,13 @@ function formatAmount(value: number): string {
 
 export function StakeForm() {
   const { address, isConnected, connect } = useWallet();
-  const { stxBalance } = useBalances(address || '');
-  const { stake, isLoading, error } = useStaking(address || '');
+  const {
+    stxBalance,
+    isLoading: isBalanceLoading,
+    error: balanceError,
+    refetch: refetchBalances,
+  } = useBalances(address || '');
+  const { stake, isLoading: isStaking, error } = useStaking(address || '');
   const [amount, setAmount] = useState('');
   const [validationError, setValidationError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -88,6 +93,7 @@ export function StakeForm() {
       const result = await stake(numAmount);
       setSuccess(`Vault deposit successful. TX ID: ${result.txId.substring(0, 10)}...`);
       setAmount('');
+      await refetchBalances();
     } catch (err) {
       // Error is handled by the hook
     }
@@ -112,7 +118,7 @@ export function StakeForm() {
     { label: '75%', value: balanceSTX * 0.75 },
     { label: 'Max', value: balanceSTX }
   ].filter((preset) => preset.value > 0);
-  const canSubmit = Boolean(amount) && !hasError && !isLoading;
+  const canSubmit = Boolean(amount) && !hasError && !isStaking && !isBalanceLoading && !balanceError;
 
   return (
     <section id="stake-panel" className="py-24 px-4 relative overflow-hidden">
@@ -192,10 +198,10 @@ export function StakeForm() {
                     Available Balance
                   </p>
                   <p className="mt-2 text-2xl font-black tabular-nums">
-                    {formatSTX(stxBalance)} STX
+                    {isBalanceLoading ? 'Fetching...' : `${formatSTX(stxBalance)} STX`}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Use quick-fill controls below to prefill a sensible deposit size.
+                    {balanceError || 'Use quick-fill controls below to prefill a sensible deposit size.'}
                   </p>
                 </div>
                 <div>
@@ -223,6 +229,7 @@ export function StakeForm() {
                   <button
                     type="button"
                     onClick={() => setSuggestedAmount(balanceSTX)}
+                    disabled={isBalanceLoading || !!balanceError}
                     className="self-start rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan"
                     aria-label={`Use maximum balance: ${balanceSTX} STX`}
                   >
@@ -279,6 +286,16 @@ export function StakeForm() {
                     </motion.p>
                   )}
                 </AnimatePresence>
+
+                {balanceError && (
+                  <button
+                    type="button"
+                    onClick={refetchBalances}
+                    className="mt-4 rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
+                  >
+                    Refresh Wallet Balance
+                  </button>
+                )}
 
                 {quickAmounts.length > 0 && (
                   <div className="mt-4 flex flex-wrap gap-2 px-1" role="group" aria-label="Quick-fill amounts">
@@ -412,6 +429,18 @@ export function StakeForm() {
                     {error || validationError}
                   </motion.div>
                 )}
+                {balanceError && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-4 rounded-2xl bg-destructive/10 border border-destructive/20 text-destructive text-xs font-black uppercase tracking-widest flex gap-3 items-center"
+                    role="alert"
+                    aria-live="assertive"
+                  >
+                    <AlertCircle className="w-5 h-5" />
+                    Wallet balance could not be fetched. Refresh before staking.
+                  </motion.div>
+                )}
                 {success && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -445,11 +474,11 @@ export function StakeForm() {
                 <button
                   type="submit"
                   disabled={!canSubmit}
-                  aria-label={isLoading ? "Processing transaction" : "Confirm staking deposit"}
+                  aria-label={isStaking ? "Processing transaction" : "Confirm staking deposit"}
                   className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
-                    {isLoading ? (
+                    {isStaking ? (
                       <>
                         <motion.div
                           animate={{ rotate: 360 }}
@@ -458,6 +487,11 @@ export function StakeForm() {
                           <RefreshCw className="w-6 h-6" />
                         </motion.div>
                         SIGNING TRANSACTION...
+                      </>
+                    ) : isBalanceLoading ? (
+                      <>
+                        <RefreshCw className="w-6 h-6 animate-spin" />
+                        FETCHING BALANCE...
                       </>
                     ) : (
                       <>

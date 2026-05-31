@@ -58,12 +58,17 @@ export interface ContractReadResult {
  */
 
 export async function getAccountBalance(address: string): Promise<AccountBalance> {
-  const response = await fetch(`${API.STACKS_API}/v2/accounts/${address}`, {
-    next: { revalidate: 30 },
+  const principal = typeof address === 'string' ? address.trim() : '';
+  if (!principal) {
+    throw new Error('Account address is required');
+  }
+
+  const response = await fetch(`${API.STACKS_API}/extended/v1/address/${encodeURIComponent(principal)}/balances`, {
+    cache: 'no-store',
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch account balance');
+    throw new Error(`Failed to fetch account balance (${response.status})`);
   }
 
   return response.json();

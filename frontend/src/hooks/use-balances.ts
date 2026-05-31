@@ -8,7 +8,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { getAccountBalance, AccountBalance } from '@/lib/api';
+import { getAccountBalance } from '@/lib/api';
 
 /**
  * Return type for the useBalances hook.
@@ -20,6 +20,8 @@ export interface UseBalancesReturn {
   hasStxBalance: boolean;
   /** True if the AGS balance is greater than zero */
   hasAgsBalance: boolean;
+  /** True if either tracked token balance is greater than zero */
+  hasAnyBalance: boolean;
   isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
@@ -86,6 +88,6 @@ export function useBalances(address: string): UseBalancesReturn {
     isLoading,
     error,
     refetch: fetchBalances,
-    address: address ?? null,
+    address: typeof address === 'string' && address.trim() ? address.trim() : null,
   };
 }
