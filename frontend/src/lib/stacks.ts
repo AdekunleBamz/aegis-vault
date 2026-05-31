@@ -21,6 +21,7 @@ import {
 import { CONTRACTS } from './constants';
 
 const network = STACKS_MAINNET;
+const DEFAULT_LOCK_PERIOD_DAYS = 3n;
 
 /**
  * Result of a blockchain transaction submission.
@@ -41,7 +42,8 @@ export interface TransactionResult {
  */
 export async function executeStake(
   amount: bigint,
-  senderAddress: string
+  senderAddress: string,
+  lockPeriodDays: bigint = DEFAULT_LOCK_PERIOD_DAYS
 ): Promise<TransactionResult> {
   return new Promise((resolve, reject) => {
     const postConditions = [
@@ -60,7 +62,7 @@ export async function executeStake(
       contractAddress: contractAddr,
       contractName,
       functionName: 'stake',
-      functionArgs: [uintCV(amount)],
+      functionArgs: [uintCV(amount), uintCV(lockPeriodDays)],
       postConditions,
       postConditionMode: PostConditionMode.Deny,
       onFinish: (data: FinishedTxData) => {

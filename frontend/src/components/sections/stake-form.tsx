@@ -507,7 +507,7 @@ export function StakeForm() {
               <div className="flex items-center justify-center gap-8 pt-4">
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
                   <Lock className="w-3 h-3" />
-                  24h Lock
+                  3d Lock
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter" role="listitem" aria-label="Rewards status indicator">
                   <Activity className="w-3 h-3" aria-hidden="true" />

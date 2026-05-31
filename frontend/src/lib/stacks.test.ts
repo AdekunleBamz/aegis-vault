@@ -32,7 +32,10 @@ describe('stacks', () => {
       
       expect(connect.openContractCall).toHaveBeenCalledWith(expect.objectContaining({
         functionName: 'stake',
-        functionArgs: [expect.objectContaining({ value: amount })],
+        functionArgs: [
+          expect.objectContaining({ value: amount }),
+          expect.objectContaining({ value: 3n }),
+        ],
       }));
 
       // Simulate onFinish
