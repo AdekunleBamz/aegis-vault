@@ -24,6 +24,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
+const MICRO_STX_PER_STX = 1_000_000n;
+
 /**
  * Formats a numeric STX amount for display in the stake input field.
  * Returns an empty string for non-positive or non-finite values.
@@ -32,7 +34,23 @@ function formatAmount(value: number): string {
   if (!Number.isFinite(value) || value <= 0) {
     return '';
   }
-  return value.toFixed(2).replace(/\.00$/, '');
+  const floored = Math.floor(value * 1_000_000) / 1_000_000;
+  return floored.toFixed(6).replace(/\.?0+$/, '');
+}
+
+function formatMicroStxAmount(value: bigint): string {
+  if (value <= 0n) {
+    return '';
+  }
+
+  const whole = value / MICRO_STX_PER_STX;
+  const fraction = value % MICRO_STX_PER_STX;
+
+  if (fraction === 0n) {
+    return whole.toString();
+  }
+
+  return `${whole}.${fraction.toString().padStart(6, '0').replace(/0+$/, '')}`;
 }
 
 export function StakeForm() {
@@ -49,6 +67,8 @@ export function StakeForm() {
   const [success, setSuccess] = useState<string | null>(null);
   const balanceSTX = Number(stxBalance) / 1_000_000;
   const numAmount = Number(amount || 0);
+  const microAmount = toMicroSTX(numAmount);
+  const amountExceedsBalance = microAmount > stxBalance;
 
   const hasError = useMemo(() => {
     if (validationError) return validationError;
@@ -56,15 +76,20 @@ export function StakeForm() {
     if (!Number.isFinite(numAmount) || numAmount <= 0) {
       return 'Enter a valid STX amount';
     }
-    if (numAmount > balanceSTX) {
+    if (amountExceedsBalance) {
       return 'Amount exceeds available balance';
     }
     return null;
-  }, [amount, balanceSTX, numAmount, validationError]);
+  }, [amount, amountExceedsBalance, numAmount, validationError]);
 
   const setSuggestedAmount = (value: number) => {
     const safeBalance = Number.isFinite(balanceSTX) && balanceSTX >= 0 ? balanceSTX : 0;
     setAmount(formatAmount(Math.min(value, safeBalance)));
+    setValidationError(null);
+  };
+
+  const setMaxAmount = () => {
+    setAmount(formatMicroStxAmount(stxBalance));
     setValidationError(null);
   };
 
@@ -99,7 +124,6 @@ export function StakeForm() {
     }
   };
 
-  const microAmount = toMicroSTX(numAmount);
   const tier = determineTier(microAmount);
   const apy = calculateAPY(microAmount, tier);
 
@@ -121,7 +145,7 @@ export function StakeForm() {
   const canSubmit = Boolean(amount) && !hasError && !isStaking && !isBalanceLoading && !balanceError;
 
   return (
-    <section id="stake-panel" className="py-24 px-4 relative overflow-hidden">
+    <section id="stake-panel" className="relative overflow-hidden px-3 py-12 sm:px-4 sm:py-16 lg:py-24">
       {/* Dynamic background elements */}
       <motion.div
         animate={{
@@ -142,30 +166,30 @@ export function StakeForm() {
         className="absolute bottom-1/4 -left-20 w-[500px] h-[500px] bg-aegis-purple/20 rounded-full blur-[140px] pointer-events-none" aria-hidden="true"
       />
 
-      <div className="container max-w-2xl mx-auto relative z-10">
+      <div className="container relative z-10 mx-auto max-w-2xl px-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-background/40 backdrop-blur-3xl border border-border/40 hover:border-aegis-blue/20 rounded-[48px] p-8 md:p-12 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)]"
+          className="rounded-[28px] border border-border/40 bg-background/40 p-4 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] backdrop-blur-3xl hover:border-aegis-blue/20 sm:rounded-[36px] sm:p-6 md:rounded-[48px] md:p-12"
         >
           {/* Header */}
-          <div className="flex items-center justify-between mb-12">
-            <div>
+          <div className="mb-8 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
               <div className="flex items-center gap-2 mb-3">
                 <div className="px-3 py-1 bg-aegis-blue/10 border border-aegis-blue/20 rounded-full text-[10px] font-black uppercase tracking-widest text-aegis-blue flex items-center gap-2">
                   <span className="w-1.5 h-1.5 bg-aegis-blue rounded-full animate-pulse" />
                   Liquid Staking v2
                 </div>
               </div>
-              <h2 className="text-4xl font-black tracking-tighter mb-2">
+              <h2 className="mb-2 text-3xl font-black tracking-tight sm:text-4xl sm:tracking-tighter">
                 Compound <span className="text-gradient">Yield</span>
               </h2>
-              <p className="text-muted-foreground font-medium text-lg">
+              <p className="text-base font-medium text-muted-foreground sm:text-lg">
                 Deposit STX to earn AGS governance tokens.
               </p>
             </div>
-            <div className="w-16 h-16 bg-muted rounded-[28px] flex items-center justify-center group-hover:rotate-6 transition-transform" aria-hidden="true">
+            <div className="hidden h-16 w-16 shrink-0 items-center justify-center rounded-[28px] bg-muted transition-transform group-hover:rotate-6 sm:flex" aria-hidden="true">
               <Plus className="w-8 h-8 text-aegis-blue" aria-hidden="true" focusable="false" />
             </div>
           </div>
@@ -185,26 +209,26 @@ export function StakeForm() {
               </p>
               <button type="button"
                 onClick={connect}
-                className="px-12 py-5 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] transition-all active:scale-95 animate-pulse"
+                className="w-full rounded-full bg-foreground px-6 py-4 text-xs font-black uppercase tracking-widest text-background transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-95 sm:w-auto sm:px-12 sm:py-5"
               >
                 Connect Stacks Wallet
               </button>
             </motion.div>
           ) : (
             <form onSubmit={handleStake} className="space-y-8" aria-label="Stake STX in Aegis Vault">
-              <div className="grid gap-4 rounded-[32px] border border-border/30 bg-muted/15 p-5 md:grid-cols-2">
-                <div>
+              <div className="grid gap-4 rounded-[24px] border border-border/30 bg-muted/15 p-4 sm:rounded-[32px] sm:p-5 md:grid-cols-2">
+                <div className="min-w-0">
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                     Available Balance
                   </p>
-                  <p className="mt-2 text-2xl font-black tabular-nums">
+                  <p className="mt-2 break-words text-xl font-black tabular-nums sm:text-2xl">
                     {isBalanceLoading ? 'Fetching...' : `${formatSTX(stxBalance)} STX`}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     {balanceError || 'Use quick-fill controls below to prefill a sensible deposit size.'}
                   </p>
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                     Suggested Reserve
                   </p>
@@ -216,21 +240,21 @@ export function StakeForm() {
               </div>
 
               {/* Input Area */}
-              <div className="rounded-[36px] border border-border/40 bg-background/40 p-4 sm:p-5">
+              <div className="rounded-[28px] border border-border/40 bg-background/40 p-3 sm:rounded-[36px] sm:p-5">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                  <div className="px-2">
+                  <div className="px-1 sm:px-2">
                     <label htmlFor="stake-amount" className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
                       Deposit Amount
                     </label>
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p id="stake-amount-description" className="mt-2 text-sm text-muted-foreground">
                       Enter how much STX you want to lock. Maximum 6 decimal places allowed for protocol compatibility.
                     </p>
                   </div>
                   <button
                     type="button"
-                    onClick={() => setSuggestedAmount(balanceSTX)}
+                    onClick={setMaxAmount}
                     disabled={isBalanceLoading || !!balanceError}
-                    className="self-start rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan"
+                    className="w-full rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-3 text-center text-[10px] font-black uppercase tracking-widest text-aegis-blue transition-colors hover:text-aegis-cyan disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:self-start sm:py-2"
                     aria-label={`Use maximum balance: ${balanceSTX} STX`}
                   >
                     Use Max Balance
@@ -251,21 +275,21 @@ export function StakeForm() {
                       hasError && "stake-error"
                     )}
                     className={cn(
-                      "mt-4 w-full bg-muted/20 border-2 rounded-[32px] px-8 py-7 text-4xl font-black focus:outline-none transition-all duration-500 placeholder:text-muted-foreground/20",
+                      "mt-4 w-full rounded-[24px] border-2 bg-muted/20 px-4 py-5 pr-20 text-3xl font-black transition-all duration-500 placeholder:text-muted-foreground/20 focus:outline-none sm:rounded-[32px] sm:px-8 sm:py-7 sm:pr-24 sm:text-4xl",
                       hasError
                         ? "border-destructive/30 focus:border-destructive text-destructive"
                         : "border-border/30 focus:border-aegis-blue focus:bg-muted/40"
                     )}
                   />
-                  <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-4">
-                    <span className="text-xl font-black text-muted-foreground/40" aria-hidden="true">STX</span>
+                  <div className="pointer-events-none absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-4 sm:right-6">
+                    <span className="text-base font-black text-muted-foreground/40 sm:text-xl" aria-hidden="true">STX</span>
                   </div>
                 </div>
-                <div className="mt-6 p-4 rounded-2xl bg-muted/10 border border-border/30">
+                <div className="mt-6 rounded-2xl border border-border/30 bg-muted/10 p-3 sm:p-4">
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-3">Transaction Fee</p>
-                  <div className="flex gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     {['Standard', 'Fast', 'Instant'].map((speed) => (
-                      <button key={speed} type="button" className="flex-1 py-2 rounded-xl border border-border/50 text-[10px] font-bold hover:border-aegis-blue/40 transition-all">
+                      <button key={speed} type="button" className="min-h-10 rounded-xl border border-border/50 px-2 py-2 text-[10px] font-bold transition-all hover:border-aegis-blue/40">
                         {speed}
                       </button>
                     ))}
@@ -298,7 +322,7 @@ export function StakeForm() {
                 )}
 
                 {quickAmounts.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2 px-1" role="group" aria-label="Quick-fill amounts">
+                  <div className="mt-4 grid grid-cols-2 gap-2 px-1 sm:flex sm:flex-wrap" role="group" aria-label="Quick-fill amounts">
                     {quickAmounts.map((preset) => (
                       <button
                         key={preset.label}
@@ -306,7 +330,7 @@ export function StakeForm() {
                         onClick={() => setSuggestedAmount(preset.value)}
                         aria-label={`Set stake amount to ${preset.label} of balance`}
                         aria-current={numAmount === preset.value ? 'true' : undefined}
-                        className="rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground"
+                        className="rounded-full border border-border/50 bg-background/60 px-4 py-3 text-xs font-black uppercase tracking-widest text-muted-foreground transition-all hover:border-aegis-blue/40 hover:text-foreground sm:py-2"
                       >
                         {preset.label}
                       </button>
@@ -316,7 +340,7 @@ export function StakeForm() {
                         type="button"
                         onClick={() => setSuggestedAmount(nextTierMin)}
                         aria-label={`Set stake amount to reach ${nextTier.name} tier`}
-                        className="rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-2 text-xs font-black uppercase tracking-widest text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan"
+                        className="col-span-2 rounded-full border border-aegis-blue/30 bg-aegis-blue/10 px-4 py-3 text-xs font-black uppercase tracking-widest text-aegis-blue transition-all hover:border-aegis-cyan/40 hover:text-aegis-cyan sm:col-span-1 sm:py-2"
                       >
                         Reach {nextTier.name}
                       </button>
@@ -395,7 +419,7 @@ export function StakeForm() {
               {/* Progress to next tier */}
               {nextTier && numAmount > 0 && (
                 <div className="px-2">
-                  <div className="flex justify-between items-end mb-3">
+                  <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                       Path to <span className="text-foreground">{nextTier.name}</span>
                     </span>
@@ -456,7 +480,7 @@ export function StakeForm() {
               </AnimatePresence>
 
               {/* Submit Action */}
-              <div className="rounded-[32px] border border-border/40 bg-background/30 p-4">
+              <div className="rounded-[28px] border border-border/40 bg-background/30 p-3 sm:rounded-[32px] sm:p-4">
                 <div className="mb-4 flex items-start gap-3 rounded-[24px] bg-muted/20 p-4">
                   <div className="rounded-2xl bg-aegis-blue/10 p-2.5 text-aegis-blue">
                     <Sparkles className="h-5 w-5" />
@@ -475,9 +499,9 @@ export function StakeForm() {
                   type="submit"
                   disabled={!canSubmit}
                   aria-label={isStaking ? "Processing transaction" : "Confirm staking deposit"}
-                  className="group relative w-full py-6 bg-foreground text-background rounded-[32px] font-black text-xl tracking-tighter overflow-hidden disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="group relative w-full overflow-hidden rounded-[24px] bg-foreground px-4 py-5 text-base font-black tracking-tight text-background transition-all hover:shadow-[0_0_40px_-10px_hsl(var(--foreground)/0.5)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aegis-blue/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:rounded-[32px] sm:py-6 sm:text-xl sm:tracking-tighter"
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-3">
+                  <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
                     {isStaking ? (
                       <>
                         <motion.div
@@ -504,7 +528,7 @@ export function StakeForm() {
                 </button>
               </div>
 
-              <div className="flex items-center justify-center gap-8 pt-4">
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4 sm:gap-8">
                 <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-tighter">
                   <Lock className="w-3 h-3" />
                   3d Lock
